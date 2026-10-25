@@ -43,7 +43,7 @@ Target wording below is paraphrased; use the official UN wording in the report.
 ## 2. Goals and non-goals
 
 ### Goals
-1. Show **true monthly cost** (rent + utilities + commute) and **travel time** on every listing card, and a dedicated **commute options card** with per-mode time, cost and CO₂ estimate on the listing detail page.
+1. Show **true monthly cost** (rent + utilities + commute) and **travel time** on every Room card, and a dedicated **commute options card** with per-mode time, cost and CO₂ estimate on the listing detail page.
 2. Let verified UM students find rooms and housemates with explainable matching.
 3. Help housemates run a shared household: split rent and bills fairly, rotate chores and agree house rules.
 4. Give a safe, privacy-first experience for people meeting strangers.
@@ -254,7 +254,7 @@ There is no Ask tab. The AI features sit where they are used: plain-language sea
 | Unit | Shared expenses and who owes whom, chore rotation, house rules | 5 |
 
 ### Design principles
-1. **The commute is never hidden, but CO₂ stays out of the way:** travel time and monthly cost appear on every listing card; per-mode CO₂ lives in the commute options card on the detail page.
+1. **The commute is never hidden, but CO₂ stays out of the way:** travel time and monthly cost appear on every Room card; per-mode CO₂ lives in the commute options card on the detail page.
 2. **One main action per screen**, in brand blue (Continue, Connect, Post).
 3. **Accessible by default** for UM's diverse students.
 4. **Privacy by default:** initials instead of photos; address and phone hidden until a Connection exists.
@@ -273,7 +273,7 @@ Full tokens are in the Jiran design system canvas (style reference: Nextdoor; fo
 ### Key user journey (Mei Ling)
 1. Signs up with her UM email.
 2. Enters budget, timetable and habits, then searches "room under RM550, max 30 minutes to FSKTM by train, quiet housemates".
-3. Each listing card shows true monthly cost and travel time. Opening one shows a commute options card comparing train + shuttle, e-hailing and driving alone by time, cost and CO₂.
+3. Each Room card shows true monthly cost and travel time. Opening one shows a commute options card comparing train + shuttle, e-hailing and driving alone by time, cost and CO₂.
 4. Uploads the tenancy agreement; AI flags risky clauses such as three months' rent in advance.
 5. Finds a compatible housemate whose unit has a vacant small room at the price the host set; she sends a Connection request, the Host accepts, and chat opens so she can arrange a viewing.
 6. After moving in, the household sets up the rent split by room price, adds the monthly bills, rotates chores, and agrees the house rules in the Unit tab.
