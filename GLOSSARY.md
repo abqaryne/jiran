@@ -35,11 +35,11 @@ The search-result tile for one vacant Room, showing its price, travel time and t
 _Avoid_: Listing card
 
 **Host**:
-The verified UM student who holds, or is about to hold, the tenancy of a Unit and posts its Listing. There is at most one active Host per Unit. Landlords are not Hosts and have no account.
+The verified UM student who holds, or is about to hold, the tenancy of a Unit and posts its Listing. There is at most one active Host per Unit. When a Household forms from a Group, the member who signs the tenancy becomes Host. Landlords are not Hosts and have no account.
 _Avoid_: Landlord, owner, poster, agent
 
 **Evaluation**:
-A private what-if for a Unit found on another site, entered by a Group or a student to see room prices, monthly cost and commute. It is never shown to others and is not a Listing.
+A private what-if for a Unit found on another site, entered by a Group or a student to see room prices, monthly cost and commute. It is never shown to others and never becomes a Listing.
 _Avoid_: Draft listing, saved listing
 
 ### People and relationships
@@ -61,11 +61,23 @@ The state where both sides have accepted. Only a Connection opens chat and conta
 _Avoid_: Match, contact, friendship
 
 **Group**:
-Two to four people who plan to rent a whole Unit together and agree on a Room price split before anyone signs. It ends when the tenancy starts.
+Two to four people who plan to rent a whole Unit together and agree on a Room price split before anyone signs. If a member leaves, the split must be agreed again; a Group of fewer than two dissolves. It ends when the tenancy starts.
+
+**Target Unit**:
+The Unit a Group intends to rent, taken from a Listing or from an Evaluation.
+_Avoid_: Chosen unit, destination
 _Avoid_: Team, party, roommates
 
 **Household**:
 The people who currently live in a Unit. A Group becomes the Household when the tenancy starts, and a new member joins only after the Host confirms their move-in.
+
+**Move-in confirmation**:
+The step where a person confirms they have moved in after the Host marks their Room occupied. It is what makes them a Household member.
+_Avoid_: Check-in, joining
+
+**Occupant**:
+Anyone living in a Room, with or without a Jiran account. An Occupant without an account appears only as "Occupant of the Master room", with no personal details.
+_Avoid_: Tenant, resident
 _Avoid_: House, flat-mates (as a group), residents
 
 **Housemate**:

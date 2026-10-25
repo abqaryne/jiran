@@ -119,8 +119,11 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 - **Host rules:** a Host is a verified UM student who holds or is about to hold the tenancy; there is at most one active Host per unit, and landlords have no account. If the Host leaves, they hand the Host role to another member of the household. If nobody accepts it, the Listing closes automatically and the household stays.
 - Filters combine with AND logic; the travel-time filter uses the commute calculation from Module 4.
 - Reviews are visible only after moderation; users can report a listing or review.
+- A Building can be reviewed only by people who are, or were, members of a Household in a Unit of that Building, so reviews come from real residents.
+- A Listing closes by itself 30 days after it was posted or last renewed, unless the Host renews it; it also closes when its last vacant Room is marked occupied.
 - The Evaluate unit form needs only four things: property or building name (place search), total rent, number of rooms by type, and optionally deposit. It works without AI, so it cannot fail during a demo.
 - **Optional AI shortcut (P2):** a "Paste listing" button lets the user paste the listing text or upload a screenshot, and AI pre-fills the same fields. The user must confirm or edit them before any calculation runs; fields the AI could not read stay empty and highlighted. The user supplies text or an image, never a link for the server to fetch, so Jiran does not scrape other sites.
+- An Evaluation is private to the Group or student who made it and never becomes a Listing. It can be attached to a Group as its Target Unit; when the tenancy starts, its building, Unit rent and rooms with prices become the Household's Unit record, so nothing is typed again. An Evaluation that is not attached to a Group is deleted after 90 days.
 - In Evaluate unit (FR2.4), each member picks the room they would take; the form blocks confirmation while two members pick the same room or the prices do not add up to the total rent.
 
 **Listing flows**
@@ -140,6 +143,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 - The AI only writes the reasons; if the AI call fails, the app shows rule-generated reasons instead.
 - Contact details are not readable by either side until the request becomes a Connection, i.e. both have accepted (NFR2). A Match on its own never unlocks anything.
 - Groups hold two to four members.
+- If a member leaves a Group before the tenancy starts, every acceptance of the price split is reset and the remaining members must agree a new split that again adds up exactly to the Unit rent. They may invite a replacement through a Connection request. A Group with fewer than two members is dissolved automatically.
 - Group room prices must add up exactly to the unit's total rent, and every member must accept the split before the group is confirmed; changing any price resets the acceptances.
 
 ### Module 4: Commute planner and true monthly cost
@@ -178,6 +182,10 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 - Household data (expenses, chores, rules) is readable and writable only by that household's members.
 - A person becomes a household member **only after the Host marks their room occupied and they confirm their move-in**. Before that they only have a Connection with the Host, so shared expenses never include someone who has not moved in.
 - A Group that agreed a room price split becomes the household when the tenancy starts, with the same members and the same room prices; nothing is re-entered.
+- When a Household forms from a Group, the member who signs the tenancy becomes the Host. If several sign together, the Group picks one Host in the app before the tenancy starts.
+- A Room may be occupied by someone with no Jiran account. In the household they appear only as "Occupant of the Master room": no name, phone or other personal data, no notifications, no access. The Host can include their share in an expense and mark it paid by hand.
+- When a member moves out, their Room becomes vacant again at its previous price. The Host may change that price as long as the Room prices still do not add up to more than the Unit rent; the other members' prices only change if each of them accepts. The member's unsettled balance stays recorded as owed until it is marked settled, and they keep read-only access to their own balance history.
+- When the last member leaves or the tenancy ends, the household is closed and kept read-only for 6 months so balances can be settled, then deleted.
 - Chore rotation skips no one and repeats fairly; reminders arrive as push notifications.
 - Changing a house rule resets the acceptances.
 
@@ -210,6 +218,17 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 |---|---|---|---|
 | **NFR1 Performance** | Listing search results, including commute estimates, load within 3 s for 95% of requests at 100 concurrent users. | Searches spike before each semester; a slow app sends users back to Telegram. | Load test with 100 simulated users (k6 or JMeter) against the search endpoint; report p95. |
 | **NFR2 Privacy and security** | Only verified UM accounts access the app. A user's exact address, phone number and contract uploads are visible only to that user; contact details only once a Connection exists (both sides have accepted). | Students share where they live, their timetable and contracts with strangers; a leak is a real safety risk. | Firebase Security Rules unit tests in the emulator: every unauthorised read/write must be denied (target 100%). |
+
+**What another person can see, by stage**
+
+| Stage | Visible | Not visible |
+|---|---|---|
+| Match | initials, faculty, year, lifestyle tags, match score and reasons, days with overlapping classes | name, photo, phone, address, timetable details |
+| Connection request | same as Match, plus the short message the sender wrote | name, photo, phone, address |
+| Connection | chat, first name, the Unit's exact address (for a viewing, only to someone connected to the Host); phone number only if its owner ticked "share my number" | photo, full timetable |
+| Household | members' timetables, shared expenses, chores and rules, profile photos | anything a member hid in their privacy settings (FR1.3) |
+
+Users can hide any field at every stage through their privacy settings.
 
 Additional constraints taken from the proposal:
 - **Accessibility:** WCAG 2.1 AA contrast (4.5:1), touch targets ≥ 48 dp (Android guideline), status shown by words and colour, English and Malay at launch.
