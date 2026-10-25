@@ -12,12 +12,12 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 ## Right now: Step 0 (26 Oct to 8 Nov)
 - [ ] Add everyone as collaborators on the GitHub repo (collect their usernames in the group chat)
 - [ ] Email the lecturer: ask for Appendix 1 of the brief and confirm native Android (Java) is fine
-- [ ] Figma: tokens (navy `#14213D`, gold `#FFC72C`, green `#1E6B41`, grey `#F4F6FA`), type scale, buttons, cards, inputs
-- [ ] Design the 5 tabs: Home, Rooms (list, room details with the commute options card), Match, House, Ask, plus the Evaluate unit screen (P1)
+- [ ] Figma: tokens from the Jiran design system canvas (brand `#065BC3`, Geist, Material Symbols Rounded), type scale, buttons, cards, inputs
+- [ ] Design the 4 tabs and the Post button: Home, Rooms (list, room details with the commute options card, AI search in the search bar), Match, Unit, plus the contract check and Evaluate unit (P1) screens
 - [ ] Review the survey wording with Aly so questions match the screens
 
 ## Next
-**Step 1 (2 to 15 Nov):** app shell with the 5-tab bar, theme, and shared components (primary button in gold with navy text, cards, listing card, status chips with words not only colour, empty and error states). Publish the component list so others can build their screens with it.
+**Step 1 (2 to 15 Nov):** app shell with the floating 4-tab bar and Post button, theme, and shared components (primary button in brand blue, cards, listing card, status chips with words not only colour, empty and error states). Publish the component list so others can build their screens with it.
 
 **Wave A (16 to 29 Nov): Module 1**
 - Sign-up only with a UM student email, with a verification link (FR1.1)

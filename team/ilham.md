@@ -20,7 +20,7 @@
 - **FR6.2 contract checker:** upload a PDF or photo, a Cloud Function returns a plain-language summary with each clause marked **Red flag, Check or OK** (words, not only colours)
 - **FR6.1 plain-language search** (English or Malay): turns text into filters that the user can see and edit before results load. Use mock filters first.
 - **FR6.3:** every AI output labelled AI-generated; the contract result states it is not legal advice; a button to report a wrong result
-- The Ask screen in Android, using Ary's components
+- The AI screens in Android, using Ary's components: the plain-language search lives in the Rooms search bar (no separate Ask tab), and the contract check opens from a room's details page
 
 **Wave B (30 Nov to 13 Dec)**
 - Connect FR6.1 to the real listing filters (waits for Gathan's search)

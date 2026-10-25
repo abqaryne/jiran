@@ -24,7 +24,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - Unit tests: balances sum to zero, rounding, 2 and 4 members, a member who paid nothing
 
 **Wave B (30 Nov to 13 Dec)**
-- House tab screens: add expense, balances, mark as settled (waits for Gathan's `households` and `expenses` data, and Ary's shared components)
+- Unit tab screens: add expense, balances, mark as settled (waits for Gathan's `households` and `expenses` data, and Ary's shared components)
 
 ## Your PM routine
 - Daily: check Trello for blocked cards

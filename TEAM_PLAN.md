@@ -39,7 +39,7 @@ Names are assigned to roles by my best guess, not known skill; swap people betwe
 ### What the support members must code
 
 So the two support members meet the brief's development rule, each has real code in the graded demo:
-- **Dafi:** the expense and balance logic in Java (who owes whom, rent split by room price) with unit tests, and the expense screens of the House tab.
+- **Dafi:** the expense and balance logic in Java (who owes whom, rent split by room price) with unit tests, and the expense screens of the Unit tab.
 - **Aly:** the chore rotation (FR5.2) and house rules (FR5.3), plus automated tests (Espresso UI tests and k6 load scripts).
 
 Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fits next to their project and QA work.
@@ -126,7 +126,7 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 | Ary | Room details with the commute card; Module 3 screens | Aaron's commute API (use the stub until it lands); Module 1 profile data |
 | Aaron | Match score Cloud Function; P1 peak and off-peak, transit route detail | Gathan's profile and match fields |
 | Ilham | Match-reason text; connect plain-language search to the real filters | Aaron's score function; Gathan's listing search |
-| Dafi | House tab screens and rent split by room price | Gathan's rooms data; Ary's shared components |
+| Dafi | Unit tab screens and rent split by room price | Gathan's rooms data; Ary's shared components |
 | Aly | FR5.2 chores, FR5.3 house rules | Dafi's household data, Ary's components |
 | Gathan | Reviews and area page (P1), FCM notifications, rules tests | none |
 

@@ -232,30 +232,37 @@ Additional constraints taken from the proposal:
 ## 7. User experience
 
 ### Navigation
-Five-tab bar: **Home, Rooms, Match, House, Ask**.
+A floating bottom bar with four tabs, **Home, Rooms, Match, Unit**, plus a separate blue **Post** button for listing a room. "Home" and "Unit" use different icons (house vs. door) so they are not confused.
+
+There is no Ask tab. The AI features sit where they are used: plain-language search (FR6.1) is the Rooms search bar, and the contract check (FR6.2) opens from a room's details page.
 
 | Screen | Purpose | Modules |
 |---|---|---|
-| Home | When to leave for the next class and the best way to get there | 4 |
+| Home | When to leave for the next class, new rooms near you, new matches, getting started | 1, 2, 3, 4 |
+| Rooms | Room grid with filters; the search bar takes plain-language requests (AI) | 2, 6 |
+| Post | List a room: photos, building, room type, price | 2 |
 | Evaluate unit | Short form for any unit's name, rent and rooms (optional "Paste listing" AI shortcut, P2), see the default room price split (master, medium, small), each member's monthly cost and commute card | 2, 3, 4 |
-| Room details | Listing, true monthly cost, and a **commute options card** (walk, bus/LRT + shuttle, e-hailing, drive alone) with time, monthly cost and CO₂ per mode, and an expandable step-by-step public transport route | 2, 4 |
-| Roommate match | Match score, reasons, things to discuss, group rental | 3 |
-| House | Shared expenses and who owes whom, chore rotation, house rules | 5 |
-| Ask Jiran | Plain-language search and contract check results | 6 |
+| Room details | Listing, true monthly cost, and a **commute options card** (walk, bus/LRT + shuttle, e-hailing, drive alone) with time, monthly cost and CO₂ per mode, and an expandable step-by-step public transport route; entry to the contract check | 2, 4, 6 |
+| Contract check | Upload a tenancy agreement and see clauses marked Red flag, Check or OK (opened from Room details) | 6 |
+| Match | Match score, reasons, things to discuss, group rental | 3 |
+| Unit | Shared expenses and who owes whom, chore rotation, house rules | 5 |
 
 ### Design principles
 1. **The commute is never hidden, but CO₂ stays out of the way:** travel time and monthly cost appear on every listing card; per-mode CO₂ lives in the commute options card on the detail page.
-2. **One main action per screen**, in gold (Connect, Add expense).
+2. **One main action per screen**, in brand blue (Continue, Connect, Post).
 3. **Accessible by default** for UM's diverse students.
 4. **Privacy by default:** initials instead of photos; address and phone hidden until both sides accept.
 
-### Colour scheme
+### Colour scheme and type
+Full tokens are in the Jiran design system canvas (style reference: Nextdoor; font: Geist, semibold at most).
+
 | Colour | Hex | Use |
 |---|---|---|
-| Navy | `#14213D` | Text, primary buttons, selected states |
-| Gold | `#FFC72C` | Main action buttons, active tab (always with navy text) |
-| Green | `#1E6B41` | CO₂ savings and positive results |
-| Light grey | `#F4F6FA` | Page background |
+| Brand blue | `#065BC3` | Main action, links, Post button |
+| Ink | `#0B0B0C` | Text, strong secondary buttons |
+| Secondary text | `#5B5F66` | Meta lines, hints |
+| Ground | `#F3F4F6` | Grouped sections |
+| Surface | `#FFFFFF` | Screens, cards |
 
 ### Key user journey (Mei Ling)
 1. Signs up with her UM email.
@@ -263,7 +270,7 @@ Five-tab bar: **Home, Rooms, Match, House, Ask**.
 3. Each listing card shows true monthly cost and travel time. Opening one shows a commute options card comparing train + shuttle, e-hailing and driving alone by time, cost and CO₂.
 4. Uploads the tenancy agreement; AI flags risky clauses such as three months' rent in advance.
 5. Finds a compatible housemate whose unit has a vacant small room at the price the host set; they connect, chat opens after both accept, and she arranges a viewing.
-6. After moving in, the household sets up the rent split by room price, adds the monthly bills, rotates chores, and agrees the house rules in the House tab.
+6. After moving in, the household sets up the rent split by room price, adds the monthly bills, rotates chores, and agrees the house rules in the Unit tab.
 
 ---
 
