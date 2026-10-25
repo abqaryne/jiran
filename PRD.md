@@ -85,6 +85,15 @@ Target wording below is paraphrased; use the official UN wording in the report.
 
 Priority: **P0** = required for the graded demo, **P1** = should have, **P2** = if time allows. **[DRAFT]**
 
+**The P0 slice (what must work on a real device before 13 December):** sign-up with a UM email and profile (Module 1); post a Listing with priced Rooms, search with filters and Room cards showing true monthly cost (Module 2); the commute options card with walking, public transport, e-hailing estimate and driving, at the user's class start time (Module 4); the Match questionnaire, Matches with score and reasons, and Connection requests (Module 3); expenses and balances in the Unit tab (Module 5, FR5.1); plain-language search, contract check and AI labelling (Module 6). Everything marked P1 is built only after the P0 slice works end to end; anything not stable by 20 December is dropped.
+
+| P1 (after the P0 slice works) | P2 (only if time allows) |
+|---|---|
+| Peak and off-peak columns, e-hailing surge, step-by-step public transport route (Module 4) | Shared commute groups (Module 7) |
+| Area page and building reviews (FR2.3) | Impact dashboard, UM planning dashboard |
+| Evaluate unit and Group room price split (FR2.4, FR3.3) | "Paste listing" AI shortcut for Evaluate unit |
+| Chores and house rules (FR5.2, FR5.3) | |
+
 Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 
 ### Module 1: Authentication and verified profile
@@ -149,9 +158,9 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 ### Module 4: Commute planner and true monthly cost
 | ID | Requirement | Priority |
 |---|---|---|
-| FR4.1 | The system shall calculate travel time and monthly cost from a listing to the user's faculty for walking, bus or LRT plus UM shuttle, e-hailing (e.g. Grab) and driving alone, for both peak and off-peak departure times, based on the user's class times. | P0 |
+| FR4.1 | The system shall calculate travel time and monthly cost from a listing to the user's faculty for walking, bus or LRT plus UM shuttle, e-hailing (e.g. Grab) and driving alone, based on the user's class times **(P0)**, and for both peak and off-peak departure times **(P1)**. | P0 / P1 |
 | FR4.2 | The system shall show each Room card's true monthly cost and the travel time to the user's faculty. True monthly cost = the room price + the person's equal share of utilities + the commute cost of the cheapest travel mode that still reaches class on time at the user's real departure time; the detail page says which mode was used. | P0 |
-| FR4.3 | When the user opens a listing's details, the system shall show a commute options card comparing each travel mode by travel time, monthly cost and estimated CO₂ at **peak and off-peak**, and highlight the cheapest option that still gets the user to class on time at the time they actually travel. For the bus or LRT plus UM shuttle option it shall also show the step-by-step public transport route. | P0 |
+| FR4.3 | When the user opens a listing's details, the system shall show a commute options card comparing each travel mode by travel time, monthly cost and estimated CO₂, and highlight the cheapest option that still gets the user to class on time **(P0)**; with a **Peak / Off-peak** toggle and the step-by-step public transport route for the bus or LRT plus UM shuttle option **(P1)**. | P0 / P1 |
 
 **Acceptance criteria [DRAFT]**
 - CO₂ per trip = distance (maps service) × a published emission factor per mode; the source of each factor is named in the app.
@@ -160,13 +169,14 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 - If no travel mode reaches class on time, the Room card says so instead of showing a cost figure.
 - Room cards in search results show only true monthly cost and travel time; CO₂ appears **only** in the commute options card on the detail page.
 - E-hailing cost is estimated from a published fare formula (base fare + per-km rate), not live Grab prices; the card labels it as an estimate and names the assumption.
-- **Peak vs off-peak:** the card shows both columns for every mode. Road modes (driving alone, e-hailing, bus) use traffic-aware travel time from the Routes API for the given departure time; transit modes use scheduled times. The peak windows (e.g. weekday morning and evening) are a config value the team still has to define.
-- E-hailing at peak adds an assumed surge multiplier on top of the fare formula; the multiplier is an assumption, shown as a range or estimate, never as a live price.
-- The "on time" check and the highlighted option use the user's actual departure time from their timetable (peak or off-peak), not an average.
+- **P0 behaviour:** the card shows a single column, with each mode's time worked out for the user's class start time (arrive by); there is no toggle and no route steps yet. UM shuttle times appear only if seed data exists.
+- **Peak vs off-peak (P1):** the card shows both columns for every mode. Road modes (driving alone, e-hailing, bus) use traffic-aware travel time from the Routes API for the given departure time; transit modes use scheduled times. The peak windows (e.g. weekday morning and evening) are a config value the team still has to define.
+- **(P1)** E-hailing at peak adds an assumed surge multiplier on top of the fare formula; the multiplier is an assumption, shown as a range or estimate, never as a live price.
+- **(P1)** The "on time" check and the highlighted option use the user's actual departure time from their timetable (peak or off-peak), not an average.
 - Because each listing now needs two departure-time lookups per mode, results for the same area and faculty pair are cached in Firestore to protect NFR1 and the Maps quota.
-- **Public transport route:** tapping the bus or LRT plus UM shuttle option expands the full route: walk to the first stop or station, each bus or LRT line with its boarding and alighting stops and any transfer, the UM shuttle leg, the final walk, and total time and fare. It shows the next departures that arrive before the user's class start, using the user's real class time.
-- Public transport steps come from the Routes API transit mode. UM shuttle routes and timetables may not be in Google's transit data, so the team adds them as seed data (`areas.nearestStations[]` plus a shuttle stops and timetable table) and the card labels shuttle times as scheduled, not live.
-- The route detail loads only when the user expands it, so listing search stays within NFR1.
+- **Public transport route (P1):** tapping the bus or LRT plus UM shuttle option expands the full route: walk to the first stop or station, each bus or LRT line with its boarding and alighting stops and any transfer, the UM shuttle leg, the final walk, and total time and fare. It shows the next departures that arrive before the user's class start, using the user's real class time.
+- **(P1)** Public transport steps come from the Routes API transit mode. UM shuttle routes and timetables may not be in Google's transit data, so the team adds them as seed data (`areas.nearestStations[]` plus a shuttle stops and timetable table) and the card labels shuttle times as scheduled, not live.
+- **(P1)** The route detail loads only when the user expands it, so listing search stays within NFR1.
 
 ### Module 5: Shared house tools
 | ID | Requirement | Priority |

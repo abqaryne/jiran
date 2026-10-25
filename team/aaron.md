@@ -47,6 +47,11 @@
 - **Report:** section 3 Architecture and design (350 words), section 4 System implementation (400 words, you collect everyone's code segment)
 - **You also lead** the P0 code freeze on 13 Dec and review all Cloud Functions and Maps PRs
 
+## Numbers you find (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+- **#11 Maps cost and quota** and **#5 transit coverage** (due 8 Nov)
+- **#2 Peak hours** with Aly (due 12 Nov)
+- **#3 E-hailing fare formula**, **#4 car cost**, **#5 public transport fares**, **#6 CO₂ emission factors**, **#9 Match score weights** (due 13 Nov)
+
 ## Rules for everyone
 
 - Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.

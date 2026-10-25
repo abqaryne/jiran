@@ -44,6 +44,9 @@
 - **Video:** the AI features in the demo, 20 s on the AI data flow in segment 4
 - **Report:** section 6 Impact, limitations and future work (150 words), the AI usage statement in section 4, **Appendix: AI Usage Log**
 
+## Numbers you find (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+- **#10 AI provider, cost and quota:** compare Gemini and Claude on the sample contracts and requests, and recommend one (due 8 Nov)
+
 ## Rules for everyone
 
 - Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.

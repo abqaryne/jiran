@@ -39,6 +39,13 @@
 - **Report:** section 2a User study findings (350 words), section 5 Testing and validation (300 words)
 - **Keep as evidence:** anonymised survey results and charts, interview notes and quotes (with consent), test results, SUS scores, screenshots
 
+## Numbers you find (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+- **#1 Room price weights** from survey C5 to C7 (due 10 Nov)
+- **#7 Utilities estimate** from survey C9 (due 10 Nov)
+- **#2 Peak hours** from survey E5 and E6 (due 12 Nov)
+- **#3 E-hailing fares:** survey E7 plus a shared sheet where every team member logs Grab fare estimates for about 10 real routes, peak and off-peak (due 13 Nov)
+- **#9 Match weights** from survey F2 (due 13 Nov)
+
 ## Rules for everyone
 
 - Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.

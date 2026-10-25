@@ -38,6 +38,11 @@ You must also write real code (the brief says nobody does only documentation): t
 - **Report:** section 2b Functional requirements (compile all 18), section 7 Team roles and contributions, section 8 References and the final style pass. Watch the **2,500 word** limit: put the FRs in tables.
 - **Evidence:** weekly screenshot of Trello and the Git log per person
 
+## Numbers you find (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+- In your email to UM transport, also ask: shuttle stops and times, whether it is free, and the **parking fee** at UM (#4, #5; due 13 Nov)
+- **#8 Data retention periods:** help Gathan, and ask the lecturer if still unsure (due 13 Nov)
+- Check every row in the file has an owner and is on track at each weekly sync
+
 ## Rules for everyone
 
 - Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.

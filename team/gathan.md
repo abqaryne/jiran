@@ -37,6 +37,10 @@ Your schema and rules are the first thing others wait for, so they land first.
 - **Video:** the posting and search part of the demo, segment 5 NFR2 evidence (rules tests, all denied)
 - **Report:** section 2c Non-functional requirements (150 words), the database schema part of section 3, the rules tests in section 5
 
+## Numbers you find or use (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+- **#1 Room price weights** and **#7 Utilities estimate:** Aly finds them, you put them in config and seed data (by 10 Nov)
+- **#8 Data retention periods:** you own the reasoning against the PDPA 2010 Retention Principle, with Dafi (due 13 Nov)
+
 ## Rules for everyone
 
 - Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
