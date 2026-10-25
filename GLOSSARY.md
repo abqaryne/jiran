@@ -62,14 +62,15 @@ _Avoid_: Match, contact, friendship
 
 **Group**:
 Two to four people who plan to rent a whole Unit together and agree on a Room price split before anyone signs. If a member leaves, the split must be agreed again; a Group of fewer than two dissolves. It ends when the tenancy starts.
+_Avoid_: Team, party, roommates
 
 **Target Unit**:
 The Unit a Group intends to rent, taken from a Listing or from an Evaluation.
 _Avoid_: Chosen unit, destination
-_Avoid_: Team, party, roommates
 
 **Household**:
 The people who currently live in a Unit. A Group becomes the Household when the tenancy starts, and a new member joins only after the Host confirms their move-in.
+_Avoid_: House, flat-mates (as a group), residents
 
 **Move-in confirmation**:
 The step where a person confirms they have moved in after the Host marks their Room occupied. It is what makes them a Household member.
@@ -78,7 +79,6 @@ _Avoid_: Check-in, joining
 **Occupant**:
 Anyone living in a Room, with or without a Jiran account. An Occupant without an account appears only as "Occupant of the Master room", with no personal details.
 _Avoid_: Tenant, resident
-_Avoid_: House, flat-mates (as a group), residents
 
 **Housemate**:
 A member of a Household, seen from another member.
