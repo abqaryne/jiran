@@ -70,12 +70,83 @@ Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fit
 - **Aaron's Module 4 is the heaviest build** (peak and off-peak, transit route, e-hailing estimate, caching). Keep the P1 parts (peak and off-peak, route detail) behind the basic card.
 - **The support members' evidence** must show real commits, since it feeds their peer-evaluation factor.
 
-### Build order (dependencies)
+### Step-by-step workflow (who goes first, who works in parallel)
 
-1. **Week 1:** Gathan schema and rules, Ary app shell, theme and Figma tokens, Aaron repo, branching, CI, emulator and Cloud Functions skeleton with the Maps key, Dafi Trello board and sprint plan, Aly survey live.
-2. Module 1 (Ary) and Module 2 (Gathan) come first; they feed the commute card (Module 4, Aaron).
-3. Module 3 needs profile data; Module 6 needs listings (search filters) and commute and CO₂ numbers (explanations); Module 5 needs room prices from listings.
-4. Integration freeze led by Aaron, then testing.
+**Rule of thumb:** almost everything can start at the same time if each person works against an agreed stub (a sample JSON or a mock screen). Real waiting is limited to the few handoffs marked **WAIT** below.
+
+#### Step 0: Research and setup (26 Oct – 8 Nov): everyone in parallel, nobody waits
+
+| Who | Does |
+|---|---|
+| Aly | Puts the survey live, starts interviews, begins the test plan |
+| Dafi | Sets up the Trello board and sprint plan, requests the UMSU, BHEP and UMSDC meetings, keeps the PRD up to date |
+| Ary | Figma: tokens, colours, the five main screens |
+| Aaron | GitHub repo, branching rules, CI, Firebase project, Cloud Functions skeleton, Maps API key |
+| Gathan | Firestore schema draft and a first version of the Security Rules |
+| Ilham | Collects 10 sample tenancy agreements and tries prompts for the contract checker (needs nothing from anyone) |
+| Everyone | Share the survey link in their circles |
+
+**Gate 1 (8 Nov):** survey has 100+ responses, the repo runs, and the Firebase project exists.
+
+#### Step 1: Foundations (2 – 15 Nov): short chain, then parallel
+
+1. **Gathan first:** schema and rules merged. **WAIT:** Ary (profile and listing screens), Aaron (Cloud Functions that read data) and Dafi (household data) need the field names.
+2. **In parallel with Gathan:** Aaron finishes CI and the emulator; Ary builds the app shell, theme and shared components; Dafi freezes the requirements after the survey.
+3. **Handoff contract:** by 15 Nov Aaron posts the request and response format of each Cloud Function, and Gathan posts the collection fields. After that everyone can build against mock data.
+
+**Gate 2 (15 Nov):** requirements frozen (Dafi), app shell and schema merged, Auth working, every Cloud Function has an agreed stub.
+
+#### Step 2: Build core modules (16 Nov – 13 Dec): two waves
+
+**Wave A (16 – 29 Nov), all in parallel, no one waits:**
+
+| Who | Builds |
+|---|---|
+| Ary | Module 1: sign-up, login, profile and timetable |
+| Gathan | Module 2: post a unit with rooms, listings, search and filters, seed data |
+| Aaron | Module 4: basic commute calculation (walking, public transport, driving, e-hailing estimate) using stub listings |
+| Dafi | Module 5 FR5.1: the expense and balance logic in plain Dart with unit tests (needs no one) |
+| Ilham | Module 6: contract checker and plain-language search against mock filters |
+| Aly | Integration test scaffolding, survey analysis, room-price weights from the survey, test plan |
+
+**Wave B (30 Nov – 13 Dec), depends on Wave A (marked WAIT):**
+
+| Who | Builds | WAIT for |
+|---|---|---|
+| Ary | Room details with the commute card; Module 3 screens | Aaron's commute API (use the stub until it lands); Module 1 profile data |
+| Aaron | Match score Cloud Function; P1 peak and off-peak, transit route detail | Gathan's profile and match fields |
+| Ilham | Match-reason text; connect plain-language search to the real filters | Aaron's score function; Gathan's listing search |
+| Dafi | House tab screens and rent split by room price | Gathan's rooms data; Ary's shared components |
+| Aly | FR5.2 chores, FR5.3 house rules | Dafi's household data, Ary's components |
+| Gathan | Reviews and area page (P1), FCM notifications, rules tests | none |
+
+**Gate 3 (13 Dec):** every P0 feature works on a real device with real data; **P0 code freeze**, led by Aaron.
+
+#### Step 3: AI polish and integration (7 – 20 Dec): overlaps Step 2
+
+- Ilham finishes the AI evaluation (50 search requests, 10 contracts) and logs every AI use.
+- Aaron and Ary merge the remaining P1 features; anything not stable by 20 Dec is dropped, not rushed.
+- Dafi starts drafting the report sections as each owner finishes their part.
+
+#### Step 4: Testing (14 – 27 Dec): Aly leads, everyone fixes
+
+1. Aly runs the integration tests, the load test (NFR1) and the usability test (SUS) with 8 to 10 students.
+2. Gathan runs and reports the Security Rules tests (NFR2).
+3. Owners fix the bugs found, in the priority order Aly sets.
+
+**Gate 4 (27 Dec):** NFR1 and NFR2 evidence collected, no P0 bug left.
+
+#### Step 5: Video (28 Dec – 2 Jan) and report (4 – 9 Jan)
+
+- **Video:** record in parallel, each person captures their own segment; Aly assembles and edits, Ary reviews against the rubric.
+- **Report:** Dafi assembles from the sections already drafted; Ary reviews; a final word-count and style pass.
+
+#### What can always run in parallel
+
+- Survey and interviews (Aly) with all coding.
+- Unit tests, written by each owner alongside the code.
+- Report drafting (Dafi) with the build phase.
+- UI work against mock data, and backend work against stub requests.
 
 ## 3. Video division (10–15 min, target ≈ 13 min)
 
