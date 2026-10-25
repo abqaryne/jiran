@@ -18,7 +18,7 @@
 - **FR6.2 contract checker:** upload a PDF or photo, a Cloud Function returns a plain-language summary with each clause marked **Red flag, Check or OK** (words, not only colours)
 - **FR6.1 plain-language search** (English or Malay): turns text into filters that the user can see and edit before results load. Use mock filters first.
 - **FR6.3:** every AI output labelled AI-generated; the contract result states it is not legal advice; a button to report a wrong result
-- The Ask screen in Flutter, using Ary's components
+- The Ask screen in Android, using Ary's components
 
 **Wave B (30 Nov to 13 Dec)**
 - Connect FR6.1 to the real listing filters (waits for Gathan's search)
@@ -48,7 +48,7 @@
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, `flutter analyze` and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).

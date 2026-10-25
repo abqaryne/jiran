@@ -3,7 +3,7 @@
 ## You own
 - **Module 1** Authentication and verified profile (FR1.1, FR1.2, FR1.3)
 - **Module 3** Roommate matching screens (FR3.1 questionnaire, FR3.2 match list with score and reasons, FR3.3 connect and group)
-- Figma, the design system, the Flutter app shell, theme and shared components
+- Figma, the design system, the Android app shell (Activities, Fragments, bottom navigation), theme and shared components
 - Final check and merge of **every PR**
 - Main contact with the lecturer
 
@@ -11,7 +11,7 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 
 ## Right now: Step 0 (26 Oct to 8 Nov)
 - [ ] Add everyone as collaborators on the GitHub repo (collect their usernames in the group chat)
-- [ ] Email the lecturer: is Flutter allowed? Ask for Appendix 1 of the brief
+- [ ] Email the lecturer: ask for Appendix 1 of the brief and confirm native Android (Java) is fine
 - [ ] Figma: tokens (navy `#14213D`, gold `#FFC72C`, green `#1E6B41`, grey `#F4F6FA`), type scale, buttons, cards, inputs
 - [ ] Design the 5 tabs: Home, Rooms (list, room details with the commute options card), Match, House, Ask, plus the Evaluate unit screen (P1)
 - [ ] Review the survey wording with Aly so questions match the screens
@@ -38,7 +38,7 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 ## Your PR check-in routine
 1. CI is green and the PR links a Trello card.
 2. Backend or rules PRs already have Aaron's or Gathan's review.
-3. UI follows the design system: contrast 4.5:1, touch targets at least 44 px, status shown with words.
+3. UI follows the design system: contrast 4.5:1, touch targets at least 48 dp, status shown with words.
 4. Merge, and tell the owner so QA can pick it up.
 
 If PRs queue for more than a day, let Aaron merge backend-only PRs.
@@ -54,7 +54,7 @@ If PRs queue for more than a day, let Aaron merge backend-only PRs.
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, `flutter analyze` and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).

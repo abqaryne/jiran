@@ -19,7 +19,7 @@ You must also write real code (the brief says nobody does only documentation): t
 **Step 1 (2 to 15 Nov):** run the requirements freeze. Combine the survey findings with the PRD and make a table "finding, FR it shaped". Confirm P0 and P1 with Ary.
 
 **Wave A (16 to 29 Nov): needs nobody**
-- Write the balance logic in plain Dart: `Expense`, `Household`, `computeBalances()`, a settle-up that minimises the number of transfers
+- Write the balance logic in plain Java: `Expense`, `Household`, `computeBalances()`, a settle-up that minimises the number of transfers
 - Rent is split by each room's price; utilities and other expenses equally unless a custom split is chosen
 - Unit tests: balances sum to zero, rounding, 2 and 4 members, a member who paid nothing
 
@@ -44,7 +44,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, `flutter analyze` and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).

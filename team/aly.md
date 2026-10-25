@@ -21,8 +21,8 @@
 - The "finding, FR it shaped" table with Dafi
 
 **Wave A (16 to 29 Nov): needs nobody**
-- Flutter `integration_test` scaffolding and the k6 script for the search endpoint (100 concurrent users, 95% under 3 s)
-- Chore rotation logic in plain Dart with unit tests; house rules model
+- Espresso UI test scaffolding and the k6 script for the search endpoint (100 concurrent users, 95% under 3 s)
+- Chore rotation logic in plain Java with JUnit tests; house rules model
 
 **Wave B (30 Nov to 13 Dec)**
 - FR5.2 and FR5.3 screens (waits for Dafi's household data and Ary's components)
@@ -45,7 +45,7 @@
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, `flutter analyze` and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).

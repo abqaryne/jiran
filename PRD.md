@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Product** | Jiran (Malay: "neighbour") |
-| **Platform** | Android and iOS (Flutter), Firebase backend |
+| **Platform** | Native Android (Java, Android Studio), Firebase backend |
 | **Context** | WIA2007 Mobile Application Development, Sem 1 2026/2027, Universiti Malaya (UM) |
 | **SDG** | 11 Sustainable Cities and Communities: main target 11.1 (adequate, safe and affordable housing), supporting target 11.2 (affordable, sustainable transport, especially public transport) |
 | **Status** | Draft v0.2, converted from the group proposal (24 Oct 2026), revised through team discussion |
@@ -50,6 +50,7 @@ Target wording below is paraphrased; use the official UN wording in the report.
 ### Non-goals (v1)
 - No payments or deposits processed in-app (cost split is calculated and displayed only).
 - Shared commute groups (shared car or train + shuttle trips) are an optional P2 module (Module 7), not part of the core scope.
+- No iOS app in v1: the app is Android only.
 - No landlord-facing web app (future work).
 - No live train arrival times (future work).
 - No legal advice: the contract checker is advisory only.
@@ -205,7 +206,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 | **NFR2 Privacy and security** | Only verified UM accounts access the app. A user's exact address, phone number and contract uploads are visible only to that user; contact details only after both sides accept a match. | Students share where they live, their timetable and contracts with strangers; a leak is a real safety risk. | Firebase Security Rules unit tests in the emulator: every unauthorised read/write must be denied (target 100%). |
 
 Additional constraints taken from the proposal:
-- **Accessibility:** WCAG 2.1 AA contrast (4.5:1), touch targets ≥ 44 px, status shown by words and colour, English and Malay at launch.
+- **Accessibility:** WCAG 2.1 AA contrast (4.5:1), touch targets ≥ 48 dp (Android guideline), status shown by words and colour, English and Malay at launch.
 - **Data protection:** follow Malaysia's Personal Data Protection Act 2010; collect only what each feature needs; consent at sign-up.
 
 ---
@@ -297,7 +298,7 @@ Files (room photos, contract uploads) are stored in Firebase Storage and referen
 ## 9. System architecture
 
 ```
-Flutter app (Android + iOS)
+Android app (Java)
    ├─ Firebase Authentication
    ├─ Cloud Firestore
    ├─ Firebase Storage
@@ -313,19 +314,19 @@ Flutter app (Android + iOS)
 
 | Layer | Tool |
 |---|---|
-| Mobile app | Flutter (Dart) |
+| Mobile app | Native Android: Java, Android Studio, XML layouts with Material Components, Activities and Fragments, MVVM (ViewModel, LiveData), RecyclerView, Navigation component |
 | Sign-in | Firebase Authentication |
 | Database | Cloud Firestore |
 | File storage | Firebase Storage |
 | Server logic | Cloud Functions (Node.js) |
-| Maps and routes | Google Maps Platform (Routes API) |
+| Maps and routes | Google Maps Platform (Routes API, Places API, Maps SDK for Android) |
 | AI | Gemini API (or Claude API) |
 | Notifications | Firebase Cloud Messaging |
 | Design | Figma |
 | Code and tasks | GitHub, Trello |
-| Testing | Flutter test, Firebase Emulator Suite, k6 |
+| Testing | JUnit and Mockito, Espresso, Firebase Emulator Suite, k6 |
 
-**Engineering conventions:** feature branches merged by PR with one reviewer; Effective Dart style and `flutter analyze` must pass; commit messages name the module and FR (e.g. `M5 FR5.3: cost split`).
+**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the module and FR (e.g. `M5 FR5.3: cost split`).
 
 ---
 
@@ -351,8 +352,8 @@ Product metrics are targets for the demo and pilot, not production KPIs. **[DRAF
 
 | Test type | Covers | Tool | Pass criterion |
 |---|---|---|---|
-| Unit | Expense split and balances, CO₂ calculation, match score formula | Flutter test, Jest (Cloud Functions) | All pass |
-| Widget / integration | Sign-up, posting a listing, search, connect, create a household and add an expense | Flutter integration_test | Each FR's main flow completes |
+| Unit | Expense split and balances, CO₂ calculation, match score formula | JUnit and Mockito (app), Jest (Cloud Functions) | All pass |
+| Widget / integration | Sign-up, posting a listing, search, connect, create a household and add an expense | Espresso (UI tests) | Each FR's main flow completes |
 | Security rules (NFR2) | Unauthorised reads and writes on every collection | Firebase Emulator Suite | 100% denied |
 | Load (NFR1) | Search with commute estimates, 100 concurrent users | k6 or JMeter | 95% under 3 s |
 | AI evaluation | Search filters, contract flags, match reasons | Test sets (Section 6) | Targets in Section 6 |
@@ -395,15 +396,16 @@ Every FR has at least one test case; both NFRs have a measured test.
 ## 14. Open questions
 
 1. ~~SDG choice~~ **Decided:** SDG 11 (main target 11.1, supporting 11.2); the team has confirmed the brief allows any SDG, not only 6 or 13.
-2. Does the course allow Flutter rather than native Android? **Ask the lecturer.**
+2. ~~Platform~~ **Decided:** native Android in Java, because the team learned Java in earlier semesters and the brief itself talks about "activities". Confirm with the lecturer together with the Appendix 1 request.
 3. Which AI provider: Gemini or Claude? (Cost, quota, Malay language quality.)
 4. Which published emission factor source for each travel mode?
 5. Firestore collections: the proposal says ten but lists nine; this PRD adds `rooms` and `unitEvaluations`, so it now lists fifteen (two of them only for the P2 commute groups). A store for chat (FR3.3) is still missing (candidate: `chats`), plus possibly `reports` and `notifications`.
 6. Evidence is from 2022 news; the 2026 survey must confirm the current situation before requirements freeze.
 7. Does Google's transit data cover the bus/LRT routes and UM shuttle that students actually use around UM? Check a few real routes (e.g. Pantai Dalam, Kerinchi) early; if the UM shuttle is missing, the team seeds shuttle stops and timetables from UM transport.
 
+8. Cloud Functions for Firebase run on Node.js (or Python), not Java. Keep the functions small and written by Aaron and Ilham, or consider a Java backend on Cloud Run (more setup). Decide before Step 1.
 ---
 
 ## 15. Future work
 
-Web version for landlords; Malay and Chinese interface options (English and Malay at launch); live train arrival times; adoption by BHEP as UM's official off-campus housing channel.
+An iOS version; web version for landlords; Malay and Chinese interface options (English and Malay at launch); live train arrival times; adoption by BHEP as UM's official off-campus housing channel.

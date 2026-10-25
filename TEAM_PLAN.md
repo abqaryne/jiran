@@ -23,7 +23,7 @@ Work is divided **by module**: each module has one owner who builds it end to en
 
 | Person | Role | Owns | Also responsible for |
 |---|---|---|---|
-| **Ary** | Group leader, Frontend Lead, Lead UI/UX | **Module 1** Auth and verified profile (FR1.1–1.3) and **Module 3** Roommate matching screens (FR3.1–3.3) | Figma and design system; Flutter app shell, theme and shared components; final check-in (approve and merge) of every PR; main contact with the lecturer |
+| **Ary** | Group leader, Frontend Lead, Lead UI/UX | **Module 1** Auth and verified profile (FR1.1–1.3) and **Module 3** Roommate matching screens (FR3.1–3.3) | Figma and design system; Android app shell, theme and shared components; final check-in (approve and merge) of every PR; main contact with the lecturer |
 | **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3) | Architecture, Cloud Functions structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
 | **Gathan** | Backend and Database Developer | **Module 2** Listings and area guide (FR2.1–2.3) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, seed data (30–50 listings), FCM notifications |
 | **Ilham** | AI Engineer | **Module 6** AI assistant and contract checker (FR6.1–6.3) | The match-reason text for Module 3 (FR3.2), AI evaluation, API key handling, **AI Usage Log** |
@@ -39,8 +39,8 @@ Names are assigned to roles by my best guess, not known skill; swap people betwe
 ### What the support members must code
 
 So the two support members meet the brief's development rule, each has real code in the graded demo:
-- **Dafi:** the expense and balance logic in Dart (who owes whom, rent split by room price) with unit tests, and the expense screens of the House tab.
-- **Aly:** the chore rotation (FR5.2) and house rules (FR5.3), plus automated tests (Flutter integration_test and k6 load scripts).
+- **Dafi:** the expense and balance logic in Java (who owes whom, rent split by room price) with unit tests, and the expense screens of the House tab.
+- **Aly:** the chore rotation (FR5.2) and house rules (FR5.3), plus automated tests (Espresso UI tests and k6 load scripts).
 
 Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fits next to their project and QA work.
 
@@ -58,7 +58,7 @@ Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fit
 
 ### Working agreements
 
-- **Definition of Done:** merged by PR, `flutter analyze` and tests pass in CI, reviewed, FR card in Trello moved with hours logged, and checked by QA.
+- **Definition of Done:** merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, FR card in Trello moved with hours logged, and checked by QA.
 - **PR check-in:** Ary does the final check and merge of every PR. Before that, Aaron reviews Cloud Functions and Maps PRs, Gathan reviews schema and rules PRs, and one other member reviews each PR so everyone has review evidence.
 - **Tests:** every module owner writes unit tests for their module; Aly writes the integration tests and load test.
 - **Sprints:** one-week sprints planned by Dafi, short sync twice a week, 30-minute demo and retro on weekends.
@@ -107,7 +107,7 @@ Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fit
 | Ary | Module 1: sign-up, login, profile and timetable |
 | Gathan | Module 2: post a unit with rooms, listings, search and filters, seed data |
 | Aaron | Module 4: basic commute calculation (walking, public transport, driving, e-hailing estimate) using stub listings |
-| Dafi | Module 5 FR5.1: the expense and balance logic in plain Dart with unit tests (needs no one) |
+| Dafi | Module 5 FR5.1: the expense and balance logic in plain Java with JUnit tests (needs no one) |
 | Ilham | Module 6: contract checker and plain-language search against mock filters |
 | Aly | Integration test scaffolding, survey analysis, room-price weights from the survey, test plan |
 
@@ -156,8 +156,8 @@ Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fit
 |---|---|---|---|
 | 1 | Project overview (10): SDG 11 (target 11.1, supporting 11.2), the UM housing and commute problem | Ary | 1:30 |
 | 2 | System demo (30): scenario "Mei Ling" from sign-up to setting up her household. **Each member presents the part they built and names its FRs:** Ary (sign-up, profile, roommate matching), Gathan (posting a unit with rooms, search), Aaron (commute card, peak vs off-peak), Ilham (plain-language search, contract checker), Dafi (expenses), Aly (chores and house rules) | all six | 6:30 (≈1 min each) |
-| 3 | Design and usability (10): colours, 44px targets, EN and BM, privacy by default | Ary | 1:00 |
-| 4 | Technical implementation (10): Flutter, Firebase and Cloud Functions diagram, AI data flow | Aaron (AI flow: Ilham, 20 s) | 1:30 |
+| 3 | Design and usability (10): colours, 48 dp touch targets, EN and BM, privacy by default | Ary | 1:00 |
+| 4 | Technical implementation (10): Android (Java), Firebase and Cloud Functions diagram, AI data flow | Aaron (AI flow: Ilham, 20 s) | 1:30 |
 | 5 | NFR verification (10): NFR1 k6 results; NFR2 rules tests all denied | Aly (NFR1), Gathan (NFR2) | 1:30 |
 | 6 | Stakeholder validation (10): survey charts, interview quotes, UM unit feedback and what changed | Aly (survey), Dafi (UM units, 15 s) | 1:00 |
 | 7 | Team contributions (10) | Built into segment 2; Dafi adds 30 s with the Trello hours and commit summary | 0:30 |
@@ -202,7 +202,7 @@ Rule: report ownership is *in addition to* code, never instead of it.
 ## 6. Issues to resolve now
 
 1. **Group registration:** done (the brief's date, "Sunday 21 October 2026", is a Wednesday, so it was probably a typo for 25 Oct).
-2. **Open question:** is Flutter allowed? Ask the lecturer. (The team has confirmed any SDG is allowed, so the SDG is decided: SDG 11.)
+2. **Platform decided:** native Android in Java (the team knows Java; the brief talks about "activities"). Confirm with the lecturer when asking for Appendix 1. The SDG is also decided: SDG 11.
 3. **Member names** (Ary, Aaron, Dafi, Ilham, Gathan, Aly) still need filling in the proposal's team table (still `[Member 1–6]`).
 4. **Proposal is out of date** against the PRD (SDG, modules, roles).
 5. The brief's AI policy text refers to "parallel algorithms, thread synchronization" (copied from another course). The log requirement still applies to us in full.

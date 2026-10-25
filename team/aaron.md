@@ -7,9 +7,9 @@
 - The **match score** Cloud Function for Module 3
 
 ## Right now: Step 0 (26 Oct to 8 Nov)
-- [ ] Create the Flutter project in the repo and the folder structure
+- [ ] Create the Android Studio project (Java, Gradle) in the repo and the package structure (ui, data, util), with a Firebase connection
 - [ ] Branching rules: feature branches, PR required, Ary approves and merges. Turn on branch protection
-- [ ] GitHub Actions CI: `flutter analyze` and `flutter test` on every PR
+- [ ] GitHub Actions CI: `./gradlew lint test` on every PR
 - [ ] Create the Firebase project (Auth, Firestore, Storage, Functions, Messaging) and add everyone
 - [ ] Cloud Functions skeleton (Node.js) and Firebase emulator setup
 - [ ] Google Maps Platform key: restrict it, set a billing alert, never commit it
@@ -51,7 +51,7 @@
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, `flutter analyze` and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).
