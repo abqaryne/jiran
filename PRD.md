@@ -9,6 +9,8 @@
 | **Status** | Draft v0.2, converted from the group proposal (24 Oct 2026), revised through team discussion |
 | **Source** | `Jiran — WIA2007 Group Project Proposal.pdf`, `MAD Group Project.docx` |
 
+> Terms such as Unit, Room, Listing, Host, Match, Connection, Group and Household have fixed meanings: see [GLOSSARY.md](GLOSSARY.md).
+
 > Items marked **[DRAFT]** (priorities, acceptance criteria, success-metric baselines) were written during the proposal-to-PRD conversion and are not in the original proposal. The team should confirm them.
 
 ---
@@ -90,7 +92,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 |---|---|---|
 | FR1.1 | The user shall be able to register only with a UM student email address, confirmed through an email verification link. | P0 |
 | FR1.2 | The user shall be able to log in, log out and reset their password. | P0 |
-| FR1.3 | The user shall be able to create a profile with faculty, class timetable, monthly budget, lifestyle tags and whether they own a car, and choose which details stay hidden until a mutual match. | P0 |
+| FR1.3 | The user shall be able to create a profile with faculty, class timetable, monthly budget, lifestyle tags and whether they own a car, and choose which details stay hidden until a Connection. | P0 |
 
 **Acceptance criteria [DRAFT]**
 - Registration with a non-UM domain is rejected with a clear message; an unverified account cannot reach any screen except "verify your email".
@@ -113,7 +115,8 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 - **Default room price split:** the app divides the unit's total rent by room-type weights (master 1.3, medium 1.0, small 0.7) and rounds to the nearest RM1, giving any rounding remainder to the master room. Example: a RM1,500 unit with one room of each type suggests master RM650, medium RM500, small RM350. The weights are [DRAFT] assumptions to be checked against survey answers on what students actually pay, and are kept in config so they can change without a release.
 - The host (Flow A) or group (Flow B/C) can edit any suggested price, but the total can never exceed the unit's total rent (Flow A) or must equal it exactly (Flow B/C).
 - Utilities are shared equally among all residents, not priced per room.
-- Search results show one card per vacant room, so the "true monthly cost" is calculated for that room's price.
+- Search results show one **Room card** per vacant room, so the true monthly cost is calculated for that room's price.
+- **Host rules:** a Host is a verified UM student who holds or is about to hold the tenancy; there is at most one active Host per unit, and landlords have no account. If the Host leaves, they hand the Host role to another member of the household. If nobody accepts it, the Listing closes automatically and the household stays.
 - Filters combine with AND logic; the travel-time filter uses the commute calculation from Module 4.
 - Reviews are visible only after moderation; users can report a listing or review.
 - The Evaluate unit form needs only four things: property or building name (place search), total rent, number of rooms by type, and optionally deposit. It works without AI, so it cannot fail during a demo.
@@ -121,7 +124,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 - In Evaluate unit (FR2.4), each member picks the room they would take; the form blocks confirmation while two members pick the same room or the prices do not add up to the total rent.
 
 **Listing flows**
-- **Flow A, vacant room in an existing unit (P0):** the host already rents the unit and opens one or more vacant rooms. The host sets the room prices. Another student finds the room, connects (FR3.3), and after both accept, chats and arranges a viewing.
+- **Flow A, vacant room in an existing unit (P0):** the host already rents the unit and opens one or more vacant rooms. The host sets the room prices. Another student finds the room, sends a Connection request (FR3.3), and once the Host accepts it is a Connection: chat opens and they arrange a viewing.
 - **Flow B, group renting a whole unit together (P1):** nobody holds the tenancy yet. A group of two to four forms through roommate matching and splits the unit's room prices among themselves (see FR3.3).
 - **Flow C, friends who already have a group and need a unit (P1, FR2.4):** the group browses units posted in Jiran. If none fits, an optional **"Search on PropertyGuru"** button opens PropertyGuru's public search in the browser (area and budget prefilled where the site's URL allows); Jiran does not scrape or import PropertyGuru data. When the group finds a unit anywhere, they fill the short **Evaluate unit** form (property or building name, total rent, rooms by type, optional deposit; the name is picked from place search so no address is typed): the system applies the default room price split above, lets members edit it, and shows each member's monthly cost for the room they would take plus their own commute options card to their own faculty (peak and off-peak).
 
@@ -130,12 +133,12 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 |---|---|---|
 | FR3.1 | The user shall be able to complete a compatibility questionnaire (sleep time, cleanliness, noise, cooking, smoking, pets, budget). | P0 |
 | FR3.2 | The system shall show a ranked list of matches with a compatibility score and the reasons behind it, including overlapping class days. | P0 |
-| FR3.3 | The user shall be able to connect with a match or a room's host (chat opens only after both accept) **(P0)**, and form a group of two to four who agree a room price split to rent a whole unit together **(P1)**. | P0 / P1 |
+| FR3.3 | The user shall be able to send a Connection request to a Match or a room's Host (chat and contact details open only once both sides accept, which makes it a Connection) **(P0)**, and form a group of two to four who agree a room price split to rent a whole unit together **(P1)**. | P0 / P1 |
 
 **Acceptance criteria [DRAFT]**
 - The score comes from a transparent weighted formula (not the AI), is deterministic for identical inputs, and is unit-tested.
 - The AI only writes the reasons; if the AI call fails, the app shows rule-generated reasons instead.
-- Contact details are not readable by either side until both have accepted (NFR2).
+- Contact details are not readable by either side until the request becomes a Connection, i.e. both have accepted (NFR2). A Match on its own never unlocks anything.
 - Groups hold two to four members.
 - Group room prices must add up exactly to the unit's total rent, and every member must accept the split before the group is confirmed; changing any price resets the acceptances.
 
@@ -143,14 +146,15 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 | ID | Requirement | Priority |
 |---|---|---|
 | FR4.1 | The system shall calculate travel time and monthly cost from a listing to the user's faculty for walking, bus or LRT plus UM shuttle, e-hailing (e.g. Grab) and driving alone, for both peak and off-peak departure times, based on the user's class times. | P0 |
-| FR4.2 | The system shall show each listing card's true monthly cost (rent plus estimated utilities plus commute) and the travel time to the user's faculty. | P0 |
+| FR4.2 | The system shall show each Room card's true monthly cost and the travel time to the user's faculty. True monthly cost = the room price + the person's equal share of utilities + the commute cost of the cheapest travel mode that still reaches class on time at the user's real departure time; the detail page says which mode was used. | P0 |
 | FR4.3 | When the user opens a listing's details, the system shall show a commute options card comparing each travel mode by travel time, monthly cost and estimated CO₂ at **peak and off-peak**, and highlight the cheapest option that still gets the user to class on time at the time they actually travel. For the bus or LRT plus UM shuttle option it shall also show the step-by-step public transport route. | P0 |
 
 **Acceptance criteria [DRAFT]**
 - CO₂ per trip = distance (maps service) × a published emission factor per mode; the source of each factor is named in the app.
 - Figures are labelled as estimates.
 - The highlighted option must arrive before the user's class start time; if none do, the UI says so rather than highlighting a late option.
-- Listing cards in search results show only true monthly cost and travel time; CO₂ appears **only** in the commute options card on the detail page.
+- If no travel mode reaches class on time, the Room card says so instead of showing a cost figure.
+- Room cards in search results show only true monthly cost and travel time; CO₂ appears **only** in the commute options card on the detail page.
 - E-hailing cost is estimated from a published fare formula (base fare + per-km rate), not live Grab prices; the card labels it as an estimate and names the assumption.
 - **Peak vs off-peak:** the card shows both columns for every mode. Road modes (driving alone, e-hailing, bus) use traffic-aware travel time from the Routes API for the given departure time; transit modes use scheduled times. The peak windows (e.g. weekday morning and evening) are a config value the team still has to define.
 - E-hailing at peak adds an assumed surge multiplier on top of the fare formula; the multiplier is an assumption, shown as a range or estimate, never as a live price.
@@ -163,7 +167,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 ### Module 5: Shared house tools
 | ID | Requirement | Priority |
 |---|---|---|
-| FR5.1 | Users who live together shall be able to create a household (joined by invite code or from an accepted match or group), add shared expenses (rent, utilities, groceries) with who paid and who shares, and see who owes whom. | P0 |
+| FR5.1 | Users who live together shall be able to create a household (created when a Group's tenancy starts, or joined by invite code), add shared expenses (rent, utilities, groceries) with who paid and who shares, and see who owes whom. | P0 |
 | FR5.2 | The household shall be able to define recurring chores, and the system shall rotate the assignments, remind the person whose turn it is, and let them mark the chore done. | P1 |
 | FR5.3 | The household shall be able to keep a list of house rules (e.g. quiet hours, guests, cleaning) that each member must accept, and shall see which members have accepted. | P1 |
 
@@ -172,6 +176,8 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 - Balances across all members always sum to zero (unit-tested edge cases: 2 members, 4 members, rounding).
 - The app only calculates and tracks who owes whom; members mark a debt as settled. It does not process payments.
 - Household data (expenses, chores, rules) is readable and writable only by that household's members.
+- A person becomes a household member **only after the Host marks their room occupied and they confirm their move-in**. Before that they only have a Connection with the Host, so shared expenses never include someone who has not moved in.
+- A Group that agreed a room price split becomes the household when the tenancy starts, with the same members and the same room prices; nothing is re-entered.
 - Chore rotation skips no one and repeats fairly; reminders arrive as push notifications.
 - Changing a house rule resets the acceptances.
 
@@ -203,7 +209,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 | ID | Requirement | Why it matters at UM | Verification |
 |---|---|---|---|
 | **NFR1 Performance** | Listing search results, including commute estimates, load within 3 s for 95% of requests at 100 concurrent users. | Searches spike before each semester; a slow app sends users back to Telegram. | Load test with 100 simulated users (k6 or JMeter) against the search endpoint; report p95. |
-| **NFR2 Privacy and security** | Only verified UM accounts access the app. A user's exact address, phone number and contract uploads are visible only to that user; contact details only after both sides accept a match. | Students share where they live, their timetable and contracts with strangers; a leak is a real safety risk. | Firebase Security Rules unit tests in the emulator: every unauthorised read/write must be denied (target 100%). |
+| **NFR2 Privacy and security** | Only verified UM accounts access the app. A user's exact address, phone number and contract uploads are visible only to that user; contact details only once a Connection exists (both sides have accepted). | Students share where they live, their timetable and contracts with strangers; a leak is a real safety risk. | Firebase Security Rules unit tests in the emulator: every unauthorised read/write must be denied (target 100%). |
 
 Additional constraints taken from the proposal:
 - **Accessibility:** WCAG 2.1 AA contrast (4.5:1), touch targets ≥ 48 dp (Android guideline), status shown by words and colour, English and Malay at launch.
@@ -251,7 +257,7 @@ There is no Ask tab. The AI features sit where they are used: plain-language sea
 1. **The commute is never hidden, but CO₂ stays out of the way:** travel time and monthly cost appear on every listing card; per-mode CO₂ lives in the commute options card on the detail page.
 2. **One main action per screen**, in brand blue (Continue, Connect, Post).
 3. **Accessible by default** for UM's diverse students.
-4. **Privacy by default:** initials instead of photos; address and phone hidden until both sides accept.
+4. **Privacy by default:** initials instead of photos; address and phone hidden until a Connection exists.
 
 ### Colour scheme and type
 Full tokens are in the Jiran design system canvas (style reference: Nextdoor; font: Geist, semibold at most).
@@ -269,7 +275,7 @@ Full tokens are in the Jiran design system canvas (style reference: Nextdoor; fo
 2. Enters budget, timetable and habits, then searches "room under RM550, max 30 minutes to FSKTM by train, quiet housemates".
 3. Each listing card shows true monthly cost and travel time. Opening one shows a commute options card comparing train + shuttle, e-hailing and driving alone by time, cost and CO₂.
 4. Uploads the tenancy agreement; AI flags risky clauses such as three months' rent in advance.
-5. Finds a compatible housemate whose unit has a vacant small room at the price the host set; they connect, chat opens after both accept, and she arranges a viewing.
+5. Finds a compatible housemate whose unit has a vacant small room at the price the host set; she sends a Connection request, the Host accepts, and chat opens so she can arrange a viewing.
 6. After moving in, the household sets up the rent split by room price, adds the monthly bills, rotates chores, and agrees the house rules in the Unit tab.
 
 ---
