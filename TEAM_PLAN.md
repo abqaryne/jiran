@@ -30,6 +30,8 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, stakeholder meetings (UMSU, BHEP, UMSDC), report assembly, peer-evaluation evidence |
 | **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
 
+**Personal task files:** [Ary](team/ary.md), [Dafi](team/dafi.md), [Aaron](team/aaron.md), [Gathan](team/gathan.md), [Ilham](team/ilham.md), [Aly](team/aly.md).
+
 Role titles to write in the report: Ary (project leader, frontend developer, UI/UX designer), Dafi (project manager, developer), Aaron (software architect, backend developer), Gathan (database developer), Ilham (AI developer), Aly (tester, researcher, developer).
 
 Names are assigned to roles by my best guess, not known skill; swap people between roles if someone is stronger elsewhere.
