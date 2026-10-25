@@ -27,7 +27,7 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3) | Architecture, Cloud Functions structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
 | **Gathan** | Backend and Database Developer | **Module 2** Listings and area guide (FR2.1–2.3) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, seed data (30–50 listings), FCM notifications |
 | **Ilham** | AI Engineer | **Module 6** AI assistant and contract checker (FR6.1–6.3) | The match-reason text for Module 3 (FR3.2), AI evaluation, API key handling, **AI Usage Log** |
-| **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, stakeholder meetings (UMSU, BHEP, UMSDC), report assembly, peer-evaluation evidence |
+| **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, one short email to UM transport for the shuttle timetable, report assembly, peer-evaluation evidence |
 | **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
 
 **Personal task files:** [Ary](team/ary.md), [Dafi](team/dafi.md), [Aaron](team/aaron.md), [Gathan](team/gathan.md), [Ilham](team/ilham.md), [Aly](team/aly.md).
@@ -43,6 +43,13 @@ So the two support members meet the brief's development rule, each has real code
 - **Aly:** the chore rotation (FR5.2) and house rules (FR5.3), plus automated tests (Espresso UI tests and k6 load scripts).
 
 Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fits next to their project and QA work.
+
+### UM unit engagement is optional (extra credit)
+
+The brief gives **additional credit** (not required marks) for engaging a UM unit or office. The stakeholder validation marks can be earned with the survey, interviews and user testing alone. So we skip formal meetings with BHEP and UMSDC. What we keep, because it is cheap or practically needed:
+- A UMSU representative among the 5 to 8 interviews (a student, easy to reach).
+- One short email to UM transport for the shuttle stops and timetable, which the commute card needs (Dafi).
+- Optional, only if there is spare time: one short email each to BHEP and UMSDC. Any reply is a bonus for the report.
 
 ### Who decides what
 
@@ -82,7 +89,7 @@ Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fit
 | Who | Does |
 |---|---|
 | Aly | Puts the survey live, starts interviews, begins the test plan |
-| Dafi | Sets up the Trello board and sprint plan, requests the UMSU, BHEP and UMSDC meetings, keeps the PRD up to date |
+| Dafi | Sets up the Trello board and sprint plan, emails UM transport for the shuttle timetable, keeps the PRD up to date |
 | Ary | Figma: tokens, colours, the five main screens |
 | Aaron | GitHub repo, branching rules, CI, Firebase project, Cloud Functions skeleton, Maps API key |
 | Gathan | Firestore schema draft and a first version of the Security Rules |
@@ -160,7 +167,7 @@ Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fit
 | 3 | Design and usability (10): colours, 48 dp touch targets, EN and BM, privacy by default | Ary | 1:00 |
 | 4 | Technical implementation (10): Android (Java), Firebase and Cloud Functions diagram, AI data flow | Aaron (AI flow: Ilham, 20 s) | 1:30 |
 | 5 | NFR verification (10): NFR1 k6 results; NFR2 rules tests all denied | Aly (NFR1), Gathan (NFR2) | 1:30 |
-| 6 | Stakeholder validation (10): survey charts, interview quotes, UM unit feedback and what changed | Aly (survey), Dafi (UM units, 15 s) | 1:00 |
+| 6 | Stakeholder validation (10): survey charts, interview quotes, user testing results and what changed | Aly | 1:00 |
 | 7 | Team contributions (10) | Built into segment 2; Dafi adds 30 s with the Trello hours and commit summary | 0:30 |
 | 8 | Closing summary (10): achievements, lessons, adoption at UM | Dafi | 0:45 |
 
@@ -171,7 +178,7 @@ Editing and final cut: Aly records and edits; Ary reviews against the rubric. Ev
 | Section (marks) | Owner | Contributors | Word budget |
 |---|---|---|---|
 | 1. Introduction and problem context (10) | Ary | all: add evidence | 300 |
-| 2a. User study findings (10) | Aly | Dafi (UM unit interviews), all distribute survey | 350 |
+| 2a. User study findings (10) | Aly | all distribute survey | 350 |
 | 2b. Functional requirements (15): 6 modules × 3 FRs + SDG link | Dafi compiles | each module owner writes the justification for their FRs | tables + 250 |
 | 2c. Non-functional requirements (5) | Gathan | Aly (NFR1) | 150 |
 | 3. Architecture and design (10) | Aaron (architecture, AI flow with Ilham) | Ary (UI and colours), Gathan (database schema) | 350 |
@@ -190,7 +197,7 @@ Rule: report ownership is *in addition to* code, never instead of it.
 
 | Dates | Phase | Lead | Done when |
 |---|---|---|---|
-| 26 Oct – 8 Nov | Survey (100+ responses) and 5–8 interviews | Aly (survey), Dafi (UM unit and UMSU meetings) | Anonymised results, quotes and consent kept |
+| 26 Oct – 8 Nov | Survey (100+ responses) and 5–8 interviews | Aly (survey, interviews including a UMSU representative) | Anonymised results, quotes and consent kept |
 | 2 – 15 Nov | Requirements freeze, Figma, schema | Dafi (requirements), Ary (Figma), Gathan (schema) | FRs frozen, screens clickable, rules drafted |
 | 16 Nov – 13 Dec | Build core modules (1–5) | each module owner | Each FR demoable on a device |
 | 7 – 20 Dec | AI features and integration | Ilham, Aaron | FR6.x working, everything merged |

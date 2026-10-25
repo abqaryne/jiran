@@ -71,9 +71,9 @@ Target wording below is paraphrased; use the official UN wording in the report.
 | Stakeholder | Interest | Engagement |
 |---|---|---|
 | UMSU | Campaigned on housing shortage | Interview, concept feedback |
-| BHEP / off-campus student unit | Student welfare and housing | Meeting: validate problem, adoption |
-| UM transport / shuttle management | Plans shuttle routes and times | Share the planning dashboard idea (11.2) |
-| UMSDC | Campus emissions, SDG reporting | Validate CO₂ approach, possible endorsement |
+| BHEP / off-campus student unit | Student welfare and housing | Optional (extra credit): one short email to validate the problem |
+| UM transport / shuttle management | Plans shuttle routes and times | One short email asking for the shuttle stops and timetable |
+| UMSDC | Campus emissions, SDG reporting | Optional (extra credit): one short email on the CO₂ approach |
 | Landlords / agents | Reliable tenants | Indirect: listing requirements, contract checker scope |
 | Telegram channel admins | Run the informal market | Interview; possible launch channel |
 

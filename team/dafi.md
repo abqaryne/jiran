@@ -11,7 +11,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - [ ] Trello board with columns: Backlog, Ready, In progress, In review, QA, Done
 - [ ] One card per FR (18 cards), labelled P0, P1 or P2, with an owner and an hours field
 - [ ] Sprint 1 plan (one-week sprints), plus a weekly sync time and a place for minutes
-- [ ] Request meetings with **UMSU, BHEP (off-campus student unit) and UMSDC**. Ask for 20 minutes. Goals: validate the problem, ask about adoption, ask UM transport about shuttle routes and timetables
+- [ ] Send **one short email to UM transport** asking for the UM shuttle stops and timetable (the commute card needs it). No formal meetings with UMSU, BHEP or UMSDC: the brief only gives extra credit for them, so skip. Optional if you have spare time: one short email each to BHEP and UMSDC, and keep any reply for the report.
 - [ ] Keep PRD.md up to date as decisions change
 - [ ] Post a weekly hours summary in the group chat
 
@@ -34,7 +34,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - Start drafting the report as soon as each owner finishes their part
 
 ## Your parts in the graded deliverables
-- **Video:** the expenses part of the demo, UM unit feedback (15 s) in segment 6, segment 7 team contributions (30 s with Trello hours and commit summary), segment 8 closing (0:45)
+- **Video:** the expenses part of the demo, segment 7 team contributions (30 s with Trello hours and commit summary), segment 8 closing (0:45)
 - **Report:** section 2b Functional requirements (compile all 18), section 7 Team roles and contributions, section 8 References and the final style pass. Watch the **2,500 word** limit: put the FRs in tables.
 - **Evidence:** weekly screenshot of Trello and the Git log per person
 
