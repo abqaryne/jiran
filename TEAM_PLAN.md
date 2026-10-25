@@ -58,6 +58,7 @@ Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fit
 
 ### Working agreements
 
+- **Cloud Functions are Node.js** (Firebase does not support Java); the rest of the app is Java. Aaron and Ilham write them, kept small and simple: one function per job, no framework, unit tests with Jest.
 - **Definition of Done:** merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, FR card in Trello moved with hours logged, and checked by QA.
 - **PR check-in:** Ary does the final check and merge of every PR. Before that, Aaron reviews Cloud Functions and Maps PRs, Gathan reviews schema and rules PRs, and one other member reviews each PR so everyone has review evidence.
 - **Tests:** every module owner writes unit tests for their module; Aly writes the integration tests and load test.

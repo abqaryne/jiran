@@ -11,6 +11,8 @@
 - [ ] Try contract-checker prompts with Gemini and Claude on those agreements. Compare cost, quota, and Malay and English quality, then propose one provider (PRD open question 3)
 - [ ] Keep keys out of the app: Cloud Functions secrets only
 
+**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you two write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
+
 ## Next
 **Step 1 (by 15 Nov):** agree with Aaron the request and response shape for each AI function. After the survey, build the **50 test requests** written by surveyed students for plain-language search.
 

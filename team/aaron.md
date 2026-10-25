@@ -15,6 +15,8 @@
 - [ ] Google Maps Platform key: restrict it, set a billing alert, never commit it
 - [ ] **Check early (PRD open question 7):** does Google's transit data cover the bus, LRT and UM shuttle routes from Pantai Dalam and Kerinchi to UM? If the shuttle is missing, we seed shuttle stops and timetables from UM transport.
 
+**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you two write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
+
 ## Next
 **Step 1 (by 15 Nov):** write `docs/api-contracts.md` with the request and response JSON of each Cloud Function, so everyone can build against stubs:
 - `getCommuteOptions(listingId or unit, departTime)`

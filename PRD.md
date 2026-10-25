@@ -403,7 +403,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 6. Evidence is from 2022 news; the 2026 survey must confirm the current situation before requirements freeze.
 7. Does Google's transit data cover the bus/LRT routes and UM shuttle that students actually use around UM? Check a few real routes (e.g. Pantai Dalam, Kerinchi) early; if the UM shuttle is missing, the team seeds shuttle stops and timetables from UM transport.
 
-8. Cloud Functions for Firebase run on Node.js (or Python), not Java. Keep the functions small and written by Aaron and Ilham, or consider a Java backend on Cloud Run (more setup). Decide before Step 1.
+8. ~~Cloud Functions language~~ **Decided:** keep Node.js for Cloud Functions, written small and simple by Aaron and Ilham (the rest of the app is Java).
 ---
 
 ## 15. Future work
