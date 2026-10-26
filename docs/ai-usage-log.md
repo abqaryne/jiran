@@ -123,3 +123,10 @@ The full backend suite initially passed 166 tests. Deadline and size tests use r
 Response/ReadableStream objects, including stalled transport/body and cancellation.
 Review/final evidence is recorded in the adapter plan; no claim of live coverage,
 Google acceptance, sourced fares/emissions or NFR1 is made.
+
+CI follow-up under the same objective: read actual failed foundation runs through
+GitHub CLI using the repository's existing Git credential in memory. Identified
+the retired SDK `tools` package in Android setup before Gradle starts. Set the
+action's supported packages explicitly; validated workflow YAML. CI repair plan
+records sources, run links and remaining remote verification. Credentials were
+not logged or persisted, and no main-branch merge/protection setting was changed.

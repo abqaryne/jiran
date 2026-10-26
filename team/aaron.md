@@ -150,7 +150,7 @@ Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](
 |---|---|---|
 | 1: Functions and emulators | Node 22/Jest skeleton, emulator-only verified-auth diagnostic, demo Auth/Firestore/Functions/Storage configuration, deny-all baseline rules | 9 Jest tests pass; real emulator smoke verifies auth rejection, UID integrity, Function-to-Firestore write and denied client reads. Gathan's application rules remain pending. |
 | 2: Android foundation | Java Views developer shell; `ui`, `data`, `util`; pinned Gradle wrapper; debug-only Firebase setup and Android 17 local-network permission | Initial foundation tests passed; live setup now adds Email/Password flow and `liveDebug`. Registered application ID confirmed as `jiran.com`; Java namespace stays `com.jiran.app`. Ary's final product UI remains pending. |
-| 3: CI and handoff | GitHub Actions, PR template, setup/architecture documentation, draft API contracts and AI-use record | Local commands pass. Workflow has not run on GitHub; remote branch protection/reviews/merge and Trello/QA evidence remain pending. Draft contracts require team agreement. |
+| 3: CI and handoff | GitHub Actions, PR template, setup/architecture documentation, draft API contracts and AI-use record | Remote foundation runs failed Android setup on the retired SDK `tools` package. Explicit supported-package repair prepared; see [CI repair evidence](../docs/superpowers/plans/2026-10-27-ci-repair.md). Passing remote checks, branch protection, reviews and Trello/QA evidence remain pending. Draft contracts require team agreement. |
 
 The first **local** readiness milestone is verified on the API 37 AVD. The existing
 live project **jiran-mad** now has Email/Password Auth enabled, its existing Android
