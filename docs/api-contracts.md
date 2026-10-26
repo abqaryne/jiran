@@ -84,6 +84,45 @@ Rules verified by tests:
 
 This completes a calculation/fixture handoff, not production FR4 or NFR1 signoff.
 
+### Implemented configurable pricing layer
+
+`priceRoutes({routes,assumptions})` in `functions/src/commute-pricing.js` bridges
+normalized provider facts to `calculateCommute` inputs; it makes no external calls.
+Returns `{assumptionVersion,modes}`. Routes use calculator mode names and integer
+metres/seconds; transit may include nullable `transitFareSen` from the MYR adapter.
+At most four unique known modes; absent routes stay `missing_route`.
+
+`assumptions.version` is required. Each supplied mode configuration needs a source;
+no configuration/rates are implicitly loaded or considered approved. Fields:
+
+| Mode | Required values when configured | Per-trip sen formula |
+|---|---|---|
+| walking | No fare configuration needed | 0 |
+| transit | Optional sourced `perTripCostSen` fallback | Known provider fare (including explicit zero), otherwise fallback; unknown stays unavailable |
+| e_hailing | `baseSen`, `rateSenPerKm`, positive `multiplierBasisPoints`, `pickupSeconds`, `source` | (baseSen + metres × rateSenPerKm / 1000) × multiplierBasisPoints / 10000 |
+| driving | `fuelMillilitresPerKm`, `fuelSenPerLitre`, `parkingSenPerTrip`, `tollsSenPerTrip`, `source` | metres × fuelMillilitresPerKm × fuelSenPerLitre / 1000000 + parkingSenPerTrip + tollsSenPerTrip |
+
+All numeric inputs are safe nonnegative integers. Required zero pickup/parking/
+toll values must be explicit. E-hailing pickup seconds are added before the class
+arrival check. Round the final per-trip rational amount half-up using BigInt,
+including the multiplier before rounding. Overflow/malformed inputs fail. Missing
+road config returns `missing_fare_assumption`, not free travel. No live Grab fare
+or hidden surge default is claimed. Parking frequency/return trips must be agreed
+when composing monthly trips; this module prices explicitly defined trips only.
+
+Each mode may carry an explicitly sourced `emissionFactor` for the calculator.
+Transit can configure a factor without inventing a fallback fare. The caller must
+substantiate distance/factor coverage, including mixed bus/rail/shuttle legs and
+e-hailing occupancy/deadheading; the module cannot infer that evidence.
+
+Pricing emits `costSource`; route `source` becomes separate `routeSource` for
+provider attribution. Bounded `warnings` and boolean `trafficFallback` are copied.
+The monthly calculator validates/preserves these optional fields in available
+options. Consumers must display them as appropriate before provider activation;
+current fixture preview does not yet exercise the real provider/pricing path.
+No production configuration loader, authorization reader or live orchestration
+has been wired to this module. See the [pricing plan](superpowers/plans/2026-10-27-commute-pricing.md).
+
 ## getCommuteOptions — proposed production contract, FR4.1–4.3
 
 The following listing/unit interface is **not implemented**. The local endpoint

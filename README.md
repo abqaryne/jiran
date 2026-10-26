@@ -195,3 +195,10 @@ See [the server interface](docs/api-contracts.md#implemented-server-provider-bou
 and [plan/evidence](docs/superpowers/plans/2026-10-27-routes-adapter.md).
 Billing, API/key restrictions, real route probes, approved cost inputs and final
 schema/UI integration remain required. Never put a server Maps key in Android or Git.
+
+`functions/src/commute-pricing.js` turns explicit sourced per-mode assumptions
+into exact per-trip sen for the monthly calculator. It covers e-hailing base/km/
+multiplier plus pickup time, and driving fuel/tolls/parking. No production rate
+defaults are supplied. Missing fares stay unavailable, and route attribution,
+warnings and fallback status survive into the calculation response. See the
+[pricing contract](docs/api-contracts.md#implemented-configurable-pricing-layer).

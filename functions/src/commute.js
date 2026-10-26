@@ -31,6 +31,26 @@ function unavailable(mode, reason) {
   return {mode, status: 'unavailable', reason};
 }
 
+function displayMetadata(route) {
+  const metadata = {};
+  for (const field of ['costSource','routeSource']) {
+    if (route[field] !== undefined) {
+      if (typeof route[field] !== 'string' || !route[field].trim() || route[field].length > 500) invalid('Invalid route/cost source');
+      metadata[field] = route[field].trim();
+    }
+  }
+  if (route.warnings !== undefined) {
+    if (!Array.isArray(route.warnings) || route.warnings.length > 20
+        || route.warnings.some(warning => typeof warning !== 'string' || warning.length > 2000)) invalid('Invalid route warnings');
+    metadata.warnings = [...route.warnings];
+  }
+  if (route.trafficFallback !== undefined) {
+    if (typeof route.trafficFallback !== 'boolean') invalid('Invalid traffic fallback flag');
+    metadata.trafficFallback = route.trafficFallback;
+  }
+  return metadata;
+}
+
 function option(route, mode, monthlyTrips, departure, classStart) {
   if (!route) return unavailable(mode, 'missing_route');
   if (route.status === 'unavailable') {
@@ -59,7 +79,7 @@ function option(route, mode, monthlyTrips, departure, classStart) {
     co2GramsPerTrip = integer(Math.round(distanceMetres / 1000 * gramsPerKm), 'co2GramsPerTrip');
     emissionSource = source.trim();
   }
-  return {mode, status: 'available', durationSeconds, distanceMetres, perTripCostSen,
+  return {mode, status: 'available', durationSeconds, distanceMetres, perTripCostSen, ...displayMetadata(route),
     monthlyCostSen, co2GramsPerTrip, emissionSource,
     arrivalTime: new Date(arrival).toISOString(), arrivesOnTime: arrival < classStart};
 }

@@ -15,6 +15,22 @@ function input(overrides = {}) {
   };
 }
 
+test.each([{routeSource:''},{routeSource:42},{costSource:''},{costSource:42},{warnings:'text'},{warnings:[42]},
+  {warnings:['x'.repeat(2001)]},{trafficFallback:'true'}])('rejects malformed route display metadata %j', metadata => {
+  const data=input();
+  Object.assign(data.modes[1],metadata);
+  expect(()=>calculateCommute(data)).toThrow();
+});
+test('copies provider warnings so caller mutation does not change rendered facts', () => {
+  const data=input();
+  data.modes[1].warnings=['Use footpaths'];
+  data.modes[1].trafficFallback=false;
+  const result=calculateCommute(data);
+  data.modes[1].warnings.push('later mutation');
+  expect(result.options[1].warnings).toEqual(['Use footpaths']);
+  expect(result.options[1].trafficFallback).toBe(false);
+});
+
 test('selects costed on-time transit instead of late free walking and excludes deposit', () => {
   const result = calculateCommute(input({depositSen: 90000}));
   expect(result.selectedMode).toBe('transit');

@@ -150,7 +150,7 @@ Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](
 |---|---|---|
 | 1: Functions and emulators | Node 22/Jest skeleton, emulator-only verified-auth diagnostic, demo Auth/Firestore/Functions/Storage configuration, deny-all baseline rules | 9 Jest tests pass; real emulator smoke verifies auth rejection, UID integrity, Function-to-Firestore write and denied client reads. Gathan's application rules remain pending. |
 | 2: Android foundation | Java Views developer shell; `ui`, `data`, `util`; pinned Gradle wrapper; debug-only Firebase setup and Android 17 local-network permission | Initial foundation tests passed; live setup now adds Email/Password flow and `liveDebug`. Registered application ID confirmed as `jiran.com`; Java namespace stays `com.jiran.app`. Ary's final product UI remains pending. |
-| 3: CI and handoff | GitHub Actions, PR template, setup/architecture documentation, draft API contracts and AI-use record | Remote foundation runs failed Android setup on the retired SDK `tools` package. Explicit supported-package repair prepared; see [CI repair evidence](../docs/superpowers/plans/2026-10-27-ci-repair.md). Passing remote checks, branch protection, reviews and Trello/QA evidence remain pending. Draft contracts require team agreement. |
+| 3: CI and handoff | GitHub Actions, PR template, setup/architecture documentation, draft API contracts and AI-use record | Retired SDK package failure repaired. Both jobs passed on [PR #2 run 40406767308](https://github.com/abqaryne/jiran/actions/runs/40406767308) at 5c5ba1f. Branch protection, final review/merge and Trello/QA evidence remain pending. Draft contracts require team agreement. |
 
 The first **local** readiness milestone is verified on the API 37 AVD. The existing
 live project **jiran-mad** now has Email/Password Auth enabled, its existing Android
@@ -178,6 +178,7 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [ ] Real Maps routing/coverage and verified fares/emission factors; production schema/timetable integration.
 - [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../docs/maps-readiness.md); live quota/budget setup and coverage probes remain open.
 - [x] Server Routes provider adapter: strict request validation, bounded deadline/body, MYR fare parsing, warnings/fallback and sanitized errors; transport contract tests only. See [adapter plan](../docs/superpowers/plans/2026-10-27-routes-adapter.md). Live activation and production calculation integration remain open.
+- [x] Configurable e-hailing/driving/transit pricing with exact sen arithmetic, explicit pickup/cost inputs, and preserved cost/provider metadata; [pricing evidence](../docs/superpowers/plans/2026-10-27-commute-pricing.md). Real rates, monthly attendance/return-trip policy and production wiring remain open.
 - [ ] Ary's final Room card/details integration and NFR1 load evidence.
 
 Sample fixture values are not verified assumptions or production estimates. The
@@ -187,7 +188,7 @@ the FR4.1–4.3 calculation foundation; the complete production module stays ope
 ### Remaining Step 0 checklist
 - [x] Create the Android Studio project (Java, Gradle) in the repo and the package structure (ui, data, util), with a Firebase connection (existing `jiran-mad`, package `jiran.com`; debug remains local)
 - [ ] Branching rules: feature branches, PR required, Ary approves and merges. Turn on branch protection
-- [ ] GitHub Actions CI: `./gradlew lint test` on every PR
+- [x] GitHub Actions CI on PRs: lintDebug, testDebugUnitTest, Checkstyle, debug build, Jest/syntax and real emulator smoke. Both jobs passed at 5c5ba1f on PR #2; subsequent commits require their own run evidence.
 - [ ] Finish service setup and team invitations in existing `jiran-mad` (Auth Email/Password and Singapore Standard Firestore are ready; Storage, Functions, Messaging and membership still need review)
 - [x] Cloud Functions skeleton (Node.js) and Firebase emulator setup (local `demo-jiran`, real Android integration verified; production features pending)
 - [ ] Google Maps Platform key: restrict it, set a billing alert, never commit it

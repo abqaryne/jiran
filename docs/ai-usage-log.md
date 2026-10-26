@@ -130,3 +130,16 @@ the retired SDK `tools` package in Android setup before Gradle starts. Set the
 action's supported packages explicitly; validated workflow YAML. CI repair plan
 records sources, run links and remaining remote verification. Credentials were
 not logged or persisted, and no main-branch merge/protection setting was changed.
+
+The feature branch was pushed and draft PR #2 opened as required by Aaron's workflow.
+Both actual GitHub jobs passed at 5c5ba1f, including the Android checks and real
+Firebase emulator smoke on Ubuntu. Current credential has no admin/maintain rights;
+branch protection is still unverified. Ary's merge and team QA/Trello gates remain open.
+
+Commute fare continuation under the same objective: implemented explicit sourced
+e-hailing and driving formulas, transit fallback, pickup timing, exact rational sen
+rounding and the bridge to the real monthly calculator. Initial 22 tests failed
+before implementation. Additional failing tests drove metadata preservation and
+factor-only transit config; review caught lost route attribution, which was fixed
+through pricing and monthly output. No survey value was promoted to an approved
+rate. Final verification and boundaries are in the pricing plan.
