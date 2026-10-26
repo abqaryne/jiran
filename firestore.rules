@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Prototype infrastructure model: _connectionChecks/{auth.uid}
+    // checkedAt: required server timestamp; no other fields or ownership changes.
+    // Product schemas/rules remain Gathan's responsibility and are denied below.
+    function isVerifiedOwner(userId) {
+      return request.auth != null
+        && request.auth.uid == userId
+        && request.auth.token.email_verified == true;
+    }
+
+    function isValidConnectionCheck(data) {
+      return data.keys().hasAll(['checkedAt'])
+        && data.keys().hasOnly(['checkedAt'])
+        && data.checkedAt is timestamp
+        && data.checkedAt == request.time;
+    }
+
+    match /_connectionChecks/{userId} {
+      allow read, delete: if isVerifiedOwner(userId);
+      allow create, update: if isVerifiedOwner(userId)
+        && isValidConnectionCheck(request.resource.data);
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
