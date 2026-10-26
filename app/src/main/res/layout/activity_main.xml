@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:padding="24dp"
+    android:fitsSystemWindows="true">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/foundation_title" android:textSize="24sp" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:text="@string/foundation_description" />
+    <EditText android:id="@+id/local_email" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:minHeight="48dp"
+        android:inputType="textEmailAddress" android:autofillHints="emailAddress"
+        android:hint="@string/local_email" />
+    <EditText android:id="@+id/local_password" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:minHeight="48dp"
+        android:inputType="textPassword" android:autofillHints="password"
+        android:hint="@string/local_password" />
+    <Button android:id="@+id/check_connection" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:minHeight="48dp"
+        android:layout_marginTop="24dp" android:text="@string/check_connection" />
+    <Button android:id="@+id/open_auth_setup" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:minHeight="48dp" android:text="@string/auth_open" />
+    <TextView android:id="@+id/connection_status" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:accessibilityLiveRegion="polite" />
+</LinearLayout>

@@ -1,0 +1,9 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Safe foundation only. No public uploads while schema/rules are pending.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
