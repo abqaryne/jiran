@@ -64,6 +64,14 @@ _Avoid_: Match, contact, friendship
 Two to four people who plan to rent a whole Unit together and agree on a Room price split before anyone signs. If a member leaves, the split must be agreed again; a Group of fewer than two dissolves. It ends when the tenancy starts.
 _Avoid_: Team, party, roommates
 
+**Split option**:
+One way of dividing the Unit rent among a Group's members (equal, by room type, or custom). Every option adds up exactly to the Unit rent.
+_Avoid_: Split mode, formula
+
+**Member status**:
+A Group member's own answer about the plan: In, Not sure or Needs changes.
+_Avoid_: Vote, approval
+
 **Target Unit**:
 The Unit a Group intends to rent, taken from a Listing or from an Evaluation.
 _Avoid_: Chosen unit, destination

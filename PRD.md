@@ -92,6 +92,7 @@ Priority: **P0** = required for the graded demo, **P1** = should have, **P2** = 
 | Peak and off-peak columns, e-hailing surge, step-by-step public transport route (Module 4) | Shared commute groups (Module 7) |
 | Area page and building reviews (FR2.3) | Impact dashboard, UM planning dashboard |
 | Evaluate unit and Group room price split (FR2.4, FR3.3) | "Paste listing" AI shortcut for Evaluate unit |
+| Group decision aids: split options, member status, pre-signing checklist, compare Units (FR3.3) | AI trade-off summary and commute-adjusted split for a Group |
 | Chores and house rules (FR5.2, FR5.3) | |
 
 Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
@@ -145,13 +146,19 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 |---|---|---|
 | FR3.1 | The user shall be able to complete a compatibility questionnaire (sleep time, cleanliness, noise, cooking, smoking, pets, budget). | P0 |
 | FR3.2 | The system shall show a ranked list of matches with a compatibility score and the reasons behind it, including overlapping class days. | P0 |
-| FR3.3 | The user shall be able to send a Connection request to a Match or a room's Host (chat and contact details open only once both sides accept, which makes it a Connection) **(P0)**, and form a group of two to four who agree a room price split to rent a whole unit together **(P1)**. | P0 / P1 |
+| FR3.3 | The user shall be able to send a Connection request to a Match or a room's Host (chat and contact details open only once both sides accept, which makes it a Connection) **(P0)**, and form a group of two to four who agree a room price split to rent a whole unit together, with decision aids that help the group talk it through (split options, member status, a pre-signing checklist and a side-by-side comparison of Units) **(P1)**. | P0 / P1 |
 
 **Acceptance criteria [DRAFT]**
 - The score comes from a transparent weighted formula (not the AI), is deterministic for identical inputs, and is unit-tested.
 - The AI only writes the reasons; if the AI call fails, the app shows rule-generated reasons instead.
 - Contact details are not readable by either side until the request becomes a Connection, i.e. both have accepted (NFR2). A Match on its own never unlocks anything.
 - Groups hold two to four members.
+- **Decision aids for a Group (P1).** The app never decides for the group and never shows one "best unit" score; it puts the same facts in front of everyone:
+  - **Split options:** with one tap the group switches between equal split, split by room type (the default weights) and custom. Each member's amount updates immediately, and every option still adds up exactly to the Unit rent.
+  - **Member status:** each member marks themselves In, Not sure or Needs changes, with one short note, so nobody silently disagrees. The Group can only be confirmed when everyone is In.
+  - **Pre-signing checklist:** the contract has been checked, deposit and advance rent have been discussed, and the signer is chosen. It is a reminder, not a gate.
+  - **Compare Units:** two or three Evaluations side by side, showing for each Unit the rent, deposit, every member's true monthly cost and every member's travel time to their faculty. This is built last of the four.
+  - P2: an AI summary of the trade-offs in two or three sentences, written only from numbers already on screen (for example "Unit B costs Rina RM 90 less but is 20 min farther for Aisyah"), and a split that shifts rent toward people with shorter commutes.
 - If a member leaves a Group before the tenancy starts, every acceptance of the price split is reset and the remaining members must agree a new split that again adds up exactly to the Unit rent. They may invite a replacement through a Connection request. A Group with fewer than two members is dissolved automatically.
 - Group room prices must add up exactly to the unit's total rent, and every member must accept the split before the group is confirmed; changing any price resets the acceptances.
 
@@ -218,6 +225,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
   - FR7.3: the system shall split the trip's costs equally among all members, never above the trip's cost, record the CO₂ saved per trip compared with each member travelling alone, and let members rate each other.
   - Acceptance notes: a group cannot exceed its maximum members; cost split ≤ trip cost; share-my-trip link for every member; push notifications for join requests. Cold start is the main risk, since it needs enough students from the same area.
 - **Impact dashboard:** each user's and UM's total CO₂ and money saved (depends on Module 7).
+- **Group decision aids, extra:** the AI trade-off summary and the commute-adjusted split described under Module 3.
 - **UM planning dashboard:** anonymised counts of where off-campus students live and when they travel, shown only as totals, for shuttle planning (supports target 11.2).
 
 ---
@@ -322,7 +330,7 @@ Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms` and 
 | `reviews` | reviewId, listingId or buildingName, authorUid, water, internet, security, noise (1–5), text, moderated | M2 |
 | `matchProfiles` | uid, answers{sleep, clean, noise, cook, smoke, pets}, updatedAt | M3 |
 | `matches` | matchId, uidA, uidB, score, reasons[], statusA, statusB, createdAt | M3 |
-| `groups` | groupId, memberUids[], targetListingId, spots, roomSplit[{memberUid, roomType, price}], acceptedBy[], status | M3 |
+| `groups` | groupId, memberUids[], targetListingId, spots, roomSplit[{memberUid, roomType, price}], splitOption, memberStatus[{uid, status, note}], checklist{}, acceptedBy[], status | M3 |
 | `unitEvaluations` | evalId, groupId, buildingName, areaId or lat/lng, referenceUrl (optional, a note typed by the user, never fetched), totalRent, deposit, rooms[{type, price, assignedUid}], createdAt | M2, M3 |
 | `households` | householdId, memberUids[], listingId, rules[{text, acceptedBy[]}], createdAt | M5 |
 | `expenses` | expenseId, householdId, description, amount, paidByUid, splitAmong[{uid, share}], date, settled | M5 |
