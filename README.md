@@ -208,3 +208,17 @@ multiplier plus pickup time, and driving fuel/tolls/parking. No production rate
 defaults are supplied. Missing fares stay unavailable, and route attribution,
 warnings and fallback status survive into the calculation response. See the
 [pricing contract](docs/api-contracts.md#implemented-configurable-pricing-layer).
+
+## Published emissions factors
+
+The [versioned catalogue](functions/config/emission-factors.json) records exact
+UK DESNZ2026 CO₂-component factors and source workbook cells/hashes. The mixed-leg
+calculator sums walking/bus/rail/vehicle emissions with exact integer mass units,
+explicit vehicle occupancy and one final rounding step. UK proxies require opt-in;
+missing factors or incomplete leg distances leave CO₂ unknown. Pricing preserves
+the profile into the monthly calculation without changing known costs/timing.
+
+These are operational CO₂ estimates with UK fleet/grid limitations, not total
+lifecycle CO₂e or measured Malaysian emissions. Existing local fixture factors
+remain synthetic. See [methodology and sources](docs/emission-methodology.md) and
+[the contract](docs/api-contracts.md#implemented-published-factor-emission-profile).

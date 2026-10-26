@@ -163,3 +163,21 @@ Review found no important defects. Renamed the generic cost label to cover drivi
 costs accurately and removed redundant row clearing. Maps billing owner/budget was
 asked asynchronously as a real activation prerequisite; silence is not approval.
 See the Android metadata plan for final verification and remaining gates.
+
+## Published emissions continuation
+
+Same active user objective: "until the aaron.md is completely finished, keep
+implementing and ensure to the highest quality". Used spreadsheet/PDF read-only
+skills to inspect official UK2026 full/revised-flat workbooks and the Malaysian
+MITI starter kit. Both UK workbook values/cells and their SHA256 hashes were
+checked; MITI's table was visually inspected and reports EPA2022 CO₂e. Selected
+gas-specific UK CO₂ components with explicit proxy caveats instead of relabelling
+total CO₂e or presenting UK electricity as Malaysian rail data. Downloaded research
+files remain ignored; no spreadsheet was edited/exported and no production Python
+dependency was introduced.
+
+Added a provenance catalogue, exact mixed-leg/occupancy calculation and pricing
+to monthly-profile preservation. 24 tests failed against the empty calculator,
+then passed. Two further failing integration tests drove profile copying and
+malformed/conflict handling. Source selection and limits are recorded in
+docs/emission-methodology.md; full verification/review evidence is in the batch plan.

@@ -180,6 +180,7 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../docs/maps-readiness.md); live quota/budget setup and coverage probes remain open.
 - [x] Server Routes provider adapter: strict request validation, bounded deadline/body, MYR fare parsing, warnings/fallback and sanitized errors; transport contract tests only. See [adapter plan](../docs/superpowers/plans/2026-10-27-routes-adapter.md). Live activation and production calculation integration remain open.
 - [x] Configurable e-hailing/driving/transit pricing with exact sen arithmetic, explicit pickup/cost inputs, and preserved cost/provider metadata; [pricing evidence](../docs/superpowers/plans/2026-10-27-commute-pricing.md). Real rates, monthly attendance/return-trip policy and production wiring remain open.
+- [x] Published CO₂-only source catalogue and exact mixed-leg emissions calculation with explicit occupancy/UK proxy selection; [method and values](../docs/emission-methodology.md). Source extraction/arithmetic verified; Malaysian calibration, real leg mapping and production activation remain open.
 - [ ] Ary's final Room card/details integration and NFR1 load evidence.
 
 Sample fixture values are not verified assumptions or production estimates. The

@@ -134,6 +134,41 @@ the fixture preview exercises synthetic metadata, not the real provider/pricing 
 No production configuration loader, authorization reader or live orchestration
 has been wired to this module. See the [pricing plan](superpowers/plans/2026-10-27-commute-pricing.md).
 
+### Implemented published-factor emission profile
+
+Available normalized route facts may supply `emissionProfile` instead of a legacy
+`emissionFactor`. Pricing validates/copies the profile; monthly calculation uses
+the route's own `distanceMetres` as the required coverage total. Both methods
+together are invalid. Example profile (UK proxy explicitly selected):
+
+```json
+{"allowUkProxy":true,"legs":[
+  {"factorId":"walking-operational-zero","distanceMetres":1000},
+  {"factorId":"uk-average-local-bus","distanceMetres":2000},
+  {"factorId":"uk-light-rail","distanceMetres":3000}
+]}
+```
+
+This 6 km example produces 264 g CO2 after one final rounding step, with a named
+CO2-only operational UK proxy source. Vehicle-based factors require explicit
+`occupants` (travellers to allocate the vehicle among); passenger factors reject
+that field. UK proxies are unavailable unless `allowUkProxy` is explicitly true.
+At most 50 legs; safe nonnegative integer metres; exact full-distance coverage.
+
+Standalone `calculateTripEmissions` also returns `gas`, `factorVersion`, `isProxy`
+for available results, or null grams/source with `reason` for unavailable data:
+`missing_legs`, `unknown_factor`, `proxy_not_enabled`, `missing_occupancy`,
+`incomplete_distance_coverage`. Malformed inputs fail `invalid-argument`. The
+`legs` array is required; an omitted/non-array field is malformed, whereas an empty
+array returns `missing_legs`. The
+monthly DTO retains its existing CO2/source fields; unknown emissions preserve
+the known-cost route and its timing/total. The existing synthetic fixtures stay
+synthetic, and no live callable/route-leg mapper is activated by this library.
+
+See [source values and boundaries](emission-methodology.md). The caller must verify
+factor-to-mode mapping, actual occupancy and any provider distance-rounding mismatch.
+This is not a Malaysian emissions measurement or total lifecycle CO2e estimate.
+
 ## getCommuteOptions — proposed production contract, FR4.1–4.3
 
 The following listing/unit interface is **not implemented**. The local endpoint

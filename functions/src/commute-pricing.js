@@ -1,4 +1,5 @@
 const MODES = ['walking','transit','e_hailing','driving'];
+const {calculateTripEmissions} = require('./emissions');
 function invalid() { const error = new TypeError('Invalid commute pricing inputs'); error.code='invalid-argument'; throw error; }
 function object(value) { return value !== null && typeof value === 'object' && !Array.isArray(value); }
 function integer(value) { return Number.isSafeInteger(value) && value >= 0; }
@@ -41,6 +42,10 @@ function priceRoutes(input) {
         || route.warnings.some(value=>typeof value!=='string' || value.length > 2000))) invalid();
     if (route.trafficFallback !== undefined && typeof route.trafficFallback!=='boolean') invalid();
     if (route.source !== undefined && !source(route.source)) invalid();
+    if (route.emissionProfile != null) {
+      if (route.status!=='available' || assumptions[route.mode]?.emissionFactor!==undefined) invalid();
+      calculateTripEmissions({...route.emissionProfile,distanceMetres:route.distanceMetres});
+    }
     byMode.set(route.mode,route);
   }
   const modes=MODES.map(mode=>{
@@ -66,6 +71,8 @@ function priceRoutes(input) {
       result.costSource=config.source.trim();
     }
     if (config?.emissionFactor !== undefined) result.emissionFactor={...config.emissionFactor};
+    if (route.emissionProfile != null) result.emissionProfile={...route.emissionProfile,
+      legs:route.emissionProfile.legs.map(leg=>({...leg}))};
     if (route.warnings !== undefined) result.warnings=[...route.warnings];
     if (route.trafficFallback !== undefined) result.trafficFallback=route.trafficFallback;
     if (route.source !== undefined) result.routeSource=route.source.trim();

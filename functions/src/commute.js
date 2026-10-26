@@ -1,4 +1,5 @@
 const MODES = Object.freeze(['walking', 'transit', 'e_hailing', 'driving']);
+const {calculateTripEmissions} = require('./emissions');
 
 function invalid(message) {
   const error = new TypeError(message);
@@ -70,6 +71,12 @@ function option(route, mode, monthlyTrips, departure, classStart) {
   }
   let co2GramsPerTrip = null;
   let emissionSource = null;
+  if (route.emissionProfile != null && route.emissionFactor != null) invalid('Choose one emission method');
+  if (route.emissionProfile != null) {
+    const estimate = calculateTripEmissions({...route.emissionProfile, distanceMetres});
+    co2GramsPerTrip = estimate.co2GramsPerTrip;
+    emissionSource = estimate.emissionSource;
+  }
   if (route.emissionFactor != null) {
     const {gramsPerKm, source} = route.emissionFactor;
     if (!Number.isFinite(gramsPerKm) || gramsPerKm < 0
