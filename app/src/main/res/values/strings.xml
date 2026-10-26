@@ -25,6 +25,10 @@
     <string name="commute_late">Does not arrive before class</string>
     <string name="commute_co2">%1$d g CO₂/trip · %2$s</string>
     <string name="commute_unknown_co2">CO₂ factor not configured</string>
+    <string name="commute_route_source">Route source: %1$s</string>
+    <string name="commute_cost_source">Cost source: %1$s</string>
+    <string name="commute_warning">Route warning: %1$s</string>
+    <string name="commute_fallback">Provider fallback used; timing may not reflect the requested traffic conditions.</string>
     <string name="commute_missing_schedule">Scheduled service data unavailable</string>
     <string name="commute_missing_fare">Fare not configured</string>
     <string name="commute_provider_unavailable">Route provider unavailable</string>

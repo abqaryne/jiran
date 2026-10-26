@@ -161,9 +161,15 @@ There is no live Maps integration, verified fare/emission dataset, occupancy
 rounding default or inferred attendance assumption in this batch. Gathan/Ary/Aly
 still need to agree the production inputs and UI integration.
 
-The existing REST smoke now also checks callable authorization, all scenarios,
-selection and cost arithmetic. Its `--android` mode runs three Android integration
-tests, including the SDK/repository/parser flow for all commute scenarios.
+The existing REST smoke checks callable authorization, all scenarios, selection
+and cost arithmetic. Its `--android` mode runs four Android integration checks,
+including the SDK/repository/parser flow for all scenarios and native preview
+source/warning/fallback text after a verified local callable. The on-time fixture
+includes explicitly synthetic provenance, a walking warning and driving fallback.
+These are sample display states, not Google results. Optional sources/warnings are
+validated and retained by the immutable Android model. Local instrumentation with
+`capturePreview=true` writes a full-content native render to the app's external
+files directory as `commute-preview.png` for layout QA.
 
 ## Deterministic match backend
 

@@ -91,6 +91,30 @@ public final class CommuteSummary {
         return (String) value;
     }
 
+    private static String optionalText(Map<?, ?> raw, String field) {
+        if (!raw.containsKey(field)) {
+            return null;
+        }
+        String value = text(raw.get(field));
+        require(value.length() <= 500);
+        return value.trim();
+    }
+
+    private static List<String> warnings(Map<?, ?> raw) {
+        if (!raw.containsKey("warnings")) {
+            return Collections.emptyList();
+        }
+        require(raw.get("warnings") instanceof List);
+        List<?> values = (List<?>) raw.get("warnings");
+        require(values.size() <= 20);
+        List<String> copy = new ArrayList<>();
+        for (Object value : values) {
+            require(value instanceof String && ((String) value).length() <= 2000);
+            copy.add((String) value);
+        }
+        return Collections.unmodifiableList(copy);
+    }
+
     private static long number(Object value) {
         require(value instanceof Number);
         double result = ((Number) value).doubleValue();
@@ -113,9 +137,18 @@ public final class CommuteSummary {
         public final String emissionSource;
         public final Instant arrivalTime;
         public final boolean arrivesOnTime;
+        public final String costSource;
+        public final String routeSource;
+        public final List<String> warnings;
+        public final Boolean trafficFallback;
 
         private Option(Map<?, ?> raw, long monthlyTrips, Instant departure, Instant classStart) {
             mode = text(raw.get("mode"));
+            costSource = optionalText(raw, "costSource");
+            routeSource = optionalText(raw, "routeSource");
+            warnings = warnings(raw);
+            require(!raw.containsKey("trafficFallback") || raw.get("trafficFallback") instanceof Boolean);
+            trafficFallback = raw.containsKey("trafficFallback") ? (Boolean) raw.get("trafficFallback") : null;
             if ("unavailable".equals(raw.get("status"))) {
                 reason = text(raw.get("reason"));
                 require(Arrays.asList("missing_route", "missing_schedule", "missing_fare_assumption",

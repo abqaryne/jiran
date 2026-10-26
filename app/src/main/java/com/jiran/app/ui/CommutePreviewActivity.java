@@ -49,6 +49,7 @@ public final class CommutePreviewActivity extends Activity {
     }
 
     private void load() {
+        options.removeAllViews();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null || !user.isEmailVerified()) {
             status.setText(R.string.commute_sign_in);
@@ -60,7 +61,6 @@ public final class CommutePreviewActivity extends Activity {
         }
         calculate.setEnabled(false);
         scenario.setEnabled(false);
-        options.removeAllViews();
         status.setText(R.string.commute_loading);
         new CommuteRepository().preview(SCENARIOS[scenario.getSelectedItemPosition()])
                 .addOnCompleteListener(task -> {
@@ -106,10 +106,28 @@ public final class CommutePreviewActivity extends Activity {
                         money(option.monthlyCostSen), getString(option.arrivesOnTime
                                 ? R.string.commute_before_class : R.string.commute_late));
                 detail = getString(R.string.commute_row, route, emissions);
+                detail = withMetadata(detail, option);
             }
             row.setText(getString(R.string.commute_row, title, detail));
             options.addView(row);
         }
+    }
+
+    private String withMetadata(String detail, CommuteSummary.Option option) {
+        StringBuilder text = new StringBuilder(detail);
+        if (option.routeSource != null) {
+            text.append('\n').append(getString(R.string.commute_route_source, option.routeSource));
+        }
+        if (option.costSource != null) {
+            text.append('\n').append(getString(R.string.commute_cost_source, option.costSource));
+        }
+        for (String warning : option.warnings) {
+            text.append('\n').append(getString(R.string.commute_warning, warning));
+        }
+        if (Boolean.TRUE.equals(option.trafficFallback)) {
+            text.append('\n').append(getString(R.string.commute_fallback));
+        }
+        return text.toString();
     }
 
     private String modeName(String mode) {

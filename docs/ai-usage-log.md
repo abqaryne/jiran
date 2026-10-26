@@ -143,3 +143,23 @@ before implementation. Additional failing tests drove metadata preservation and
 factor-only transit config; review caught lost route attribution, which was fixed
 through pricing and monthly output. No survey value was promoted to an approved
 rate. Final verification and boundaries are in the pricing plan.
+
+## Android commute metadata continuation
+
+Same active user objective: "until the aaron.md is completely finished, keep
+implementing and ensure to the highest quality". Revalidated at959f7e0 and checked
+run40407910952, which completed with both jobs successful. Used the official
+Firebase Auth skill for the verified local SDK flow; no live Firebase setting changed.
+
+Added bounded optional metadata parsing, copied immutable warnings, plain-text
+source/warning/fallback rendering and synthetic server metadata. Two JVM metadata
+tests failed against default-field stubs before implementation; a backend fixture
+expectation failed before adding metadata. Real Android smoke initially passed
+three SDK checks and failed the new native preview assertion because it dropped
+metadata. After rendering was implemented, all four checks passed. Native
+full-content capture was inspected; this is not viewport/scroll-gesture coverage.
+
+Review found no important defects. Renamed the generic cost label to cover driving
+costs accurately and removed redundant row clearing. Maps billing owner/budget was
+asked asynchronously as a real activation prerequisite; silence is not approval.
+See the Android metadata plan for final verification and remaining gates.

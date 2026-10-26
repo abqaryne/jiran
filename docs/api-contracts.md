@@ -84,6 +84,17 @@ Rules verified by tests:
 
 This completes a calculation/fixture handoff, not production FR4 or NFR1 signoff.
 
+The on-time fixture also exercises optional display metadata: walking has a
+synthetic route source and warning, transit a synthetic cost source, and driving
+a synthetic route source and `trafficFallback: true`. Their labels do not imply
+actual Google data or a verified fare source. Android validates sources up to
+500 UTF-16 units, up to 20 string warnings of 2000 units each, and boolean fallback.
+Absent metadata stays absent/empty; present null/wrong types/overflow are rejected.
+Warnings are copied immutably and rendered as plain text. Sources and a true
+fallback caveat are shown in the local preview. Native instrumentation checks
+bound row text (including offscreen rows); a full-content native render supports
+layout inspection, not viewport visibility or final product UI verification.
+
 ### Implemented configurable pricing layer
 
 `priceRoutes({routes,assumptions})` in `functions/src/commute-pricing.js` bridges
@@ -119,7 +130,7 @@ Pricing emits `costSource`; route `source` becomes separate `routeSource` for
 provider attribution. Bounded `warnings` and boolean `trafficFallback` are copied.
 The monthly calculator validates/preserves these optional fields in available
 options. Consumers must display them as appropriate before provider activation;
-current fixture preview does not yet exercise the real provider/pricing path.
+the fixture preview exercises synthetic metadata, not the real provider/pricing path.
 No production configuration loader, authorization reader or live orchestration
 has been wired to this module. See the [pricing plan](superpowers/plans/2026-10-27-commute-pricing.md).
 

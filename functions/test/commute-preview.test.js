@@ -19,6 +19,9 @@ test('returns deterministic labelled fixture calculations without private identi
     selectedMode:'transit', trueMonthlyCostSen:61200});
   expect(result).not.toHaveProperty('uid');
   expect(result).toEqual(commutePreview({...verified, data:{scenarioId:'on-time'}}));
+  expect(result.options[0]).toMatchObject({routeSource:'Synthetic routing fixture',warnings:['Synthetic warning: use designated footpaths.']});
+  expect(result.options[1].costSource).toBe('Synthetic fare assumption');
+  expect(result.options[3].trafficFallback).toBe(true);
 });
 
 test('no on-time fixture returns null selected mode and monthly total', () => {

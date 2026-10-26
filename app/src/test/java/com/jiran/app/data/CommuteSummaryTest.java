@@ -51,6 +51,53 @@ public final class CommuteSummaryTest {
     }
 
     @Test
+    public void preservesProvenanceAndCopiesWarningsWithoutInventingFallback() {
+        Map<String, Object> raw = valid();
+        List<String> warnings = new ArrayList<>(List.of("Use footpaths", "<b>plain text</b>"));
+        transit(raw).put("costSource", "Synthetic fare");
+        transit(raw).put("routeSource", "Synthetic route");
+        transit(raw).put("warnings", warnings);
+        transit(raw).put("trafficFallback", true);
+        CommuteSummary.Option option = CommuteSummary.from(raw).options.get(1);
+        assertEquals("Synthetic fare", option.costSource);
+        assertEquals("Synthetic route", option.routeSource);
+        assertEquals(Boolean.TRUE, option.trafficFallback);
+        warnings.clear();
+        assertEquals(List.of("Use footpaths", "<b>plain text</b>"), option.warnings);
+        assertThrows(UnsupportedOperationException.class, () -> option.warnings.clear());
+        CommuteSummary.Option absent = CommuteSummary.from(valid()).options.get(1);
+        assertNull(absent.trafficFallback);
+        assertNull(absent.costSource);
+        assertNull(absent.routeSource);
+        assertEquals(List.of(), absent.warnings);
+    }
+
+    @Test
+    public void rejectsMalformedPresentMetadataInsteadOfDroppingWarnings() {
+        for (String field : List.of("costSource", "routeSource")) {
+            for (Object value : new Object[]{null, "", "   ", 42, "x".repeat(501)}) {
+                Map<String, Object> raw = valid();
+                transit(raw).put(field, value);
+                assertThrows(IllegalArgumentException.class, () -> CommuteSummary.from(raw));
+            }
+        }
+        for (Object value : new Object[]{null, "warning", List.of(42), List.of("x".repeat(2001)),
+                java.util.Collections.nCopies(21, "warning")}) {
+            Map<String, Object> raw = valid();
+            transit(raw).put("warnings", value);
+            assertThrows(IllegalArgumentException.class, () -> CommuteSummary.from(raw));
+        }
+        for (Object value : new Object[]{null, "true", 1}) {
+            Map<String, Object> raw = valid();
+            transit(raw).put("trafficFallback", value);
+            assertThrows(IllegalArgumentException.class, () -> CommuteSummary.from(raw));
+        }
+        Map<String, Object> explicitFalse = valid();
+        transit(explicitFalse).put("trafficFallback", false);
+        assertEquals(Boolean.FALSE, CommuteSummary.from(explicitFalse).options.get(1).trafficFallback);
+    }
+
+    @Test
     public void parsesIntegralSdkNumbersAndConsistentCosts() {
         CommuteSummary result = CommuteSummary.from(valid());
         assertEquals("transit", result.selectedMode);

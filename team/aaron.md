@@ -174,6 +174,7 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [x] Missing-route/fare and no-on-time states; deposit exclusion; optional explicitly sourced CO₂.
 - [x] Verified-auth emulator-only `getCommuteOptions` fixture interface.
 - [x] Typed Android response parsing and local developer preview; loading/error/retry states.
+- [x] Android validates and displays optional route/cost provenance, warnings and fallback notices; verified with labelled local metadata and native row checks. Final shared UI/provider attribution requirements remain with production integration.
 - [x] Real Android commute SDK integration verification: all three fixture scenarios pass through Firebase SDK → callable → typed parser.
 - [ ] Real Maps routing/coverage and verified fares/emission factors; production schema/timetable integration.
 - [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../docs/maps-readiness.md); live quota/budget setup and coverage probes remain open.
@@ -188,7 +189,7 @@ the FR4.1–4.3 calculation foundation; the complete production module stays ope
 ### Remaining Step 0 checklist
 - [x] Create the Android Studio project (Java, Gradle) in the repo and the package structure (ui, data, util), with a Firebase connection (existing `jiran-mad`, package `jiran.com`; debug remains local)
 - [ ] Branching rules: feature branches, PR required, Ary approves and merges. Turn on branch protection
-- [x] GitHub Actions CI on PRs: lintDebug, testDebugUnitTest, Checkstyle, debug build, Jest/syntax and real emulator smoke. Both jobs passed at 5c5ba1f on PR #2; subsequent commits require their own run evidence.
+- [x] GitHub Actions CI on PRs: lintDebug, testDebugUnitTest, Checkstyle, debug build, Jest/syntax and real emulator smoke. Both jobs passed at 959f7e0 on [PR #2 run40407910952](https://github.com/abqaryne/jiran/actions/runs/40407910952); subsequent commits require their own run evidence.
 - [ ] Finish service setup and team invitations in existing `jiran-mad` (Auth Email/Password and Singapore Standard Firestore are ready; Storage, Functions, Messaging and membership still need review)
 - [x] Cloud Functions skeleton (Node.js) and Firebase emulator setup (local `demo-jiran`, real Android integration verified; production features pending)
 - [ ] Google Maps Platform key: restrict it, set a billing alert, never commit it

@@ -72,10 +72,10 @@ async function main() {
       runAdb(['shell', 'pm', 'grant', 'jiran.com', 'android.permission.ACCESS_LOCAL_NETWORK']);
     }
     const output = runAdb(['shell', 'am', 'instrument', '-w', '-e', 'class',
-      'com.jiran.app.FirebaseConnectionTest,com.jiran.app.EmailPasswordFlowTest,com.jiran.app.CommuteIntegrationTest', '-e', 'email', email,
-      '-e', 'password', password, 'jiran.com.test/androidx.test.runner.AndroidJUnitRunner']);
+      'com.jiran.app.FirebaseConnectionTest,com.jiran.app.EmailPasswordFlowTest,com.jiran.app.CommuteIntegrationTest,com.jiran.app.CommutePreviewTest', '-e', 'email', email,
+      '-e', 'password', password, '-e', 'capturePreview', 'true', 'jiran.com.test/androidx.test.runner.AndroidJUnitRunner']);
     console.log(output);
-    assert.match(output, /OK \(3 tests\)/, 'All three Android integration tests must pass');
+    assert.match(output, /OK \(4 tests\)/, 'All four Android integration tests must pass');
   }
 }
 

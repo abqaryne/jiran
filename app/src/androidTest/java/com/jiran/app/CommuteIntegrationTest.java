@@ -34,6 +34,10 @@ public final class CommuteIntegrationTest {
         assertEquals(Long.valueOf(61200), onTime.trueMonthlyCostSen);
         assertEquals(Long.valueOf(10000), onTime.options.get(1).monthlyCostSen);
         assertFalse(onTime.options.get(0).arrivesOnTime);
+        assertEquals("Synthetic routing fixture", onTime.options.get(0).routeSource);
+        assertEquals("Synthetic warning: use designated footpaths.", onTime.options.get(0).warnings.get(0));
+        assertEquals("Synthetic fare assumption", onTime.options.get(1).costSource);
+        assertEquals(Boolean.TRUE, onTime.options.get(3).trafficFallback);
         CommuteSummary late = Tasks.await(repository.preview("no-on-time-route"), 30, TimeUnit.SECONDS);
         assertNull(late.selectedMode);
         assertNull(late.trueMonthlyCostSen);
