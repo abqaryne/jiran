@@ -13,3 +13,22 @@ test.each([
     });
   expect(JSON.parse(result)).toEqual([]);
 });
+
+test('unsafe environment does not load Firebase SDKs or fixture handlers at all', () => {
+  const script = `
+    const Module = require('node:module');
+    const originalLoad = Module._load;
+    Module._load = function(request, ...args) {
+      if (request.startsWith('firebase-') || request.includes('-preview')) {
+        throw new Error('SDK/fixture initialization outside emulator guard');
+      }
+      return originalLoad.call(this, request, ...args);
+    };
+    process.stdout.write(JSON.stringify(Object.keys(require('./index'))));
+  `;
+  const result = execFileSync(process.execPath, ['-e',script], {
+    cwd:path.resolve(__dirname,'..'),encoding:'utf8',timeout:15000,
+    env:{...process.env,FUNCTIONS_EMULATOR:'',GCLOUD_PROJECT:'jiran-mad',FIRESTORE_EMULATOR_HOST:''},
+  });
+  expect(JSON.parse(result)).toEqual([]);
+});

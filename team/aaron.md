@@ -177,6 +177,7 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [x] Real Android commute SDK integration verification: all three fixture scenarios pass through Firebase SDK → callable → typed parser.
 - [ ] Real Maps routing/coverage and verified fares/emission factors; production schema/timetable integration.
 - [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../docs/maps-readiness.md); live quota/budget setup and coverage probes remain open.
+- [x] Server Routes provider adapter: strict request validation, bounded deadline/body, MYR fare parsing, warnings/fallback and sanitized errors; transport contract tests only. See [adapter plan](../docs/superpowers/plans/2026-10-27-routes-adapter.md). Live activation and production calculation integration remain open.
 - [ ] Ary's final Room card/details integration and NFR1 load evidence.
 
 Sample fixture values are not verified assumptions or production estimates. The

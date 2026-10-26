@@ -128,6 +128,58 @@ sources in detail responses; fixture zeros are not published emission factors.
 
 ## getTransitRoute — P1
 
+### Implemented server provider boundary (not a callable)
+
+`createRoutesClient({apiKey, fetchImpl?, timeoutMs?, now?}).computeRoute(input)`
+in `functions/src/routes-client.js` performs one Routes Compute Routes request.
+The caller must authenticate/authorize resources before invoking it and inject a
+managed server credential. The module reads no environment credentials itself,
+exports no live endpoint, caches/logs nothing and does not retry.
+
+Input: `origin` and `destination` each `{latitude,longitude}`, `travelMode`
+(`WALK`, `TRANSIT`, `DRIVE`), `departTime` (explicit-offset ISO timestamp), optional
+boolean `trafficAware` (true only for DRIVE). Unknown top-level fields are rejected.
+Times normalize to UTC; TRANSIT allows the documented -7/+100 day window, other
+modes reject past departure. Input time precision is at most milliseconds.
+
+The fixed HTTPS endpoint gets a narrow mask for duration/distance/warnings/transit
+fare/fallback. Region MY, metric units and English labels are explicit. Alternatives,
+waypoints, toll computation and arrive-by requests are not enabled. Explicit
+traffic-aware DRIVE uses the relevant paid SKU; no call runs without caller action.
+See [official request reference](https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRoutes)
+and [readiness/pricing gates](maps-readiness.md).
+
+Available result example:
+
+```json
+{"status":"available","durationSeconds":1800,"distanceMetres":6000,
+ "transitFareSen":250,"warnings":[],"trafficFallback":false,"source":"Google Maps"}
+```
+
+Duration rounds upward to whole seconds; local commuter-route sanity limit is 48h.
+MYR Money converts to integer sen using exact half-up rounding. Absent/foreign
+currency fare returns null; an explicit MYR zero remains zero. The adapter returns
+route facts even with unknown fare; the cost layer must preserve missing-fare state.
+No raw addresses, tokens, polylines or provider diagnostics are projected.
+
+Empty routes return `{status:"unavailable",reason:"missing_route",source:"Google Maps"}`.
+Malformed provider data/network/HTTP errors reject with sanitized `unavailable`;
+HTTP 429 uses `resource-exhausted`, deadline uses `deadline-exceeded` and bad inputs
+use `invalid-argument`. Missing credential/bad client config use `failed-precondition`.
+The 2500ms default includes response streaming; configurable 1..10000ms, max 128KiB.
+Cancellation is requested on timeout/oversize/non-success bodies; no raw error body
+or credential is attached to thrown errors. Upstream request/candidate rate limits
+still belong in the authorized callable before production activation.
+
+Warnings must be displayed downstream, as plain text with the appropriate provider
+attribution. `trafficFallback: true` must not be labelled a fully traffic-aware
+result. This adapter has contract tests, not live API acceptance/coverage evidence.
+Initial transit waiting/timing semantics and fares must be inspected in the five
+real probes before feeding real class-time selections. Step-by-step transit and
+seeded UM shuttle composition remain separate P1/data work.
+
+### Proposed callable
+
 Request:
 
 ```json

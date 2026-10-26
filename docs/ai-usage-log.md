@@ -108,3 +108,18 @@ Recorded sourced facts, illustrative request/cost arithmetic and five unrun rout
 probes in docs/maps-readiness.md. Corrected the role's unqualified cache directive;
 the implementation must respect provider content retention terms. No API key,
 billing change, live route call or real transit-coverage claim was made.
+
+## Routes adapter continuation
+
+Same active user objective: "until the aaron.md is completely finished, keep
+implementing and ensure to the highest quality". Revalidated the clean worktree
+at 4b94a29 and retained the authorized feature branch. Implemented the fixed-endpoint
+Node Routes provider boundary, without wiring a live callable or using a key.
+Official Compute Routes, Duration, RouteTravelAdvisory and FallbackInfo references
+informed field masks and parsing. The transport was injected for tests.
+
+Observed 60 tests failing against an empty client, then passing after implementation.
+The full backend suite initially passed 166 tests. Deadline and size tests use real
+Response/ReadableStream objects, including stalled transport/body and cancellation.
+Review/final evidence is recorded in the adapter plan; no claim of live coverage,
+Google acceptance, sourced fares/emissions or NFR1 is made.

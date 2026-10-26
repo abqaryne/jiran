@@ -181,3 +181,17 @@ See [the contract](docs/api-contracts.md#computematchscores--implemented-local-f
 for normalization, rounding and validation, and [the plan](docs/superpowers/plans/2026-10-27-match-core.md)
 for evidence. Production questionnaire mapping, survey weights, candidate privacy
 and the final Match screen remain team integration work.
+
+## Routes provider adapter
+
+The server-only `functions/src/routes-client.js` accepts explicit authorized
+coordinates, mode and departure time, with an injected server credential. It
+validates before sending a request, enforces a deadline and response size cap,
+normalizes duration/MYR fare, and retains route warnings/fallback status. Tests
+inject transport and use synthetic responses; no Google request runs during
+ordinary tests, builds or emulator startup. No callable activates this client yet.
+
+See [the server interface](docs/api-contracts.md#implemented-server-provider-boundary-not-a-callable)
+and [plan/evidence](docs/superpowers/plans/2026-10-27-routes-adapter.md).
+Billing, API/key restrictions, real route probes, approved cost inputs and final
+schema/UI integration remain required. Never put a server Maps key in Android or Git.
