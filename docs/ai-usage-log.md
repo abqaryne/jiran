@@ -84,3 +84,20 @@ Tests were written first and observed failing before implementation. Independent
 review found no blocking issue. The server remains the selection authority; the
 client checks response types, timing and money consistency without duplicating
 the cheapest/tie algorithm. Final evidence is in the commute batch plan.
+
+## Match backend continuation
+
+Exact active user objective:
+
+> until the aaron.md is completely finished, keep implementing and ensure to the highest quality
+
+Implemented the next independent Aaron P0 requirement, FR3.2's pure deterministic
+match engine and verified-auth emulator callable. Proposed normalized answer
+scales and similarity rules are documented as implementation choices for review,
+not approved questionnaire fields. No survey weights or private production schema
+were invented; sample weights/profiles are labelled synthetic. No live endpoint,
+Firestore profile reader or AI scoring was introduced.
+
+Tests first: 34 calculator cases and 12 adapter cases failed against empty
+implementations before passing. Full suite and real emulator evidence, review
+findings and remaining production dependencies are recorded in the match plan.

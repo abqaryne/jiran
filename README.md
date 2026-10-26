@@ -164,3 +164,20 @@ still need to agree the production inputs and UI integration.
 The existing REST smoke now also checks callable authorization, all scenarios,
 selection and cost arithmetic. Its `--android` mode runs three Android integration
 tests, including the SDK/repository/parser flow for all commute scenarios.
+
+## Deterministic match backend
+
+`functions/src/match.js` implements FR3.2's deterministic weighted scoring with
+explicit versioned weights, seven factor breakdowns, stable ranking, overlapping
+class weekdays and rule reason codes for AI fallback. Missing required answers
+produce an unscored state. It returns no raw answers, private contact fields or
+exact timetables. This core requires an authorized candidate set from its caller.
+
+With the local emulators running, the callable `computeMatchScores` accepts only
+`{"scenarioId":"ranked"}`, `missing-answers` or `empty`, from a verified local
+account. The REST smoke exercises it automatically. The synthetic ranked fixture
+returns sample-a at 100 and sample-b at 50; these are not live recommendations.
+See [the contract](docs/api-contracts.md#computematchscores--implemented-local-fixture-interface-fr32)
+for normalization, rounding and validation, and [the plan](docs/superpowers/plans/2026-10-27-match-core.md)
+for evidence. Production questionnaire mapping, survey weights, candidate privacy
+and the final Match screen remain team integration work.

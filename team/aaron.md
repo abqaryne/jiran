@@ -161,7 +161,8 @@ See [live setup instructions](../README.md#use-the-existing-live-firebase-backen
 and the [live setup plan](../docs/superpowers/plans/2026-10-27-firebase-live-setup.md).
 Team invitations, billing for later paid features, restricted Maps credentials, transit coverage,
 production UM verification, schema, commute/match formulas and full NFR tests are
-not complete. No push or merge has been performed.
+not complete. The foundation branch was pushed and merged through PR #1;
+continuation commits remain on the feature branch until reviewed by PR.
 
 ## Right now: Step 0 (26 Oct to 8 Nov)
 ### Module 4 continuation — calculation batch
@@ -189,6 +190,18 @@ the FR4.1–4.3 calculation foundation; the complete production module stays ope
 - [x] Cloud Functions skeleton (Node.js) and Firebase emulator setup (local `demo-jiran`, real Android integration verified; production features pending)
 - [ ] Google Maps Platform key: restrict it, set a billing alert, never commit it
 - [ ] **Check early (PRD open question 7):** does Google's transit data cover the bus, LRT and UM shuttle routes from Pantai Dalam and Kerinchi to UM? If the shuttle is missing, we seed shuttle stops and timetables from UM transport.
+
+### Module 3 continuation — deterministic scoring batch
+
+See the [match backend plan](../docs/superpowers/plans/2026-10-27-match-core.md)
+and [contract](../docs/api-contracts.md). Production formula approval is still open.
+
+- [x] Pure deterministic seven-factor match scoring with explicit versioned weights and transparent basis-point breakdown.
+- [x] Missing-answer state, stable ranking, self exclusion, bounded candidate count and rule reason codes.
+- [x] Authenticated emulator-only `computeMatchScores` with synthetic ranked, incomplete and empty scenarios.
+- [ ] Survey-derived weight approval and agreed questionnaire mapping with Aly/Ary.
+- [ ] Production authorized candidate reader/privacy projection with Gathan; final Match UI and explanation handoff with Ary/Ilham.
+- [ ] Production end-to-end and QA evidence; no matching completion claim from fixtures alone.
 
 **Cloud Functions are Node.js (decided).** Firebase does not support Java, so you two write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
 

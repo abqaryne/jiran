@@ -3,6 +3,7 @@ const {execFileSync} = require('node:child_process');
 const path = require('node:path');
 const {checkConnectionRules} = require('./firestore-smoke.cjs');
 const {checkCommuteCallable} = require('./commute-smoke.cjs');
+const {checkMatchCallable} = require('./match-smoke.cjs');
 
 const project = 'demo-jiran';
 const authHost = process.env.FIREBASE_AUTH_EMULATOR_HOST;
@@ -50,6 +51,7 @@ async function main() {
   await checkConnectionRules({token: login.body.idToken,
     unverifiedToken: signup.body.idToken, uid: signup.body.localId});
   await checkCommuteCallable({token: login.body.idToken, unverifiedToken: signup.body.idToken});
+  await checkMatchCallable({token: login.body.idToken, unverifiedToken: signup.body.idToken});
 
   const docUrl = `http://${firestoreHost}/v1/projects/${project}/databases/(default)/documents/_diagnostics/${signup.body.localId}`;
   const stored = await fetch(docUrl, {headers: {Authorization: 'Bearer owner'}});

@@ -1,7 +1,7 @@
 # Cloud Function contracts — draft for team agreement
 
 Status: **DRAFT**, 27 October 2026. Emulator-only `sessionCheck` and the labelled
-fixture version of `getCommuteOptions` are implemented; production endpoints are
+fixture versions of `getCommuteOptions` and `computeMatchScores` are implemented; production endpoints are
 not exported. JSON uses example fixture values,
 not approved fares, weights or collections. Aaron coordinates approval with Ary,
 Gathan and Ilham before clients depend on the shapes.
@@ -144,7 +144,72 @@ Available steps must specify walk/board/alight/transfer/shuttle legs, stops,
 scheduled departures and arrivals, total time/fare and source. Label seeded UM
 shuttle information as scheduled, not live; do not invent missing routes.
 
-## computeMatchScores — FR3.2
+## computeMatchScores — implemented local fixture interface, FR3.2
+
+Availability: only the safe `demo-jiran` emulator environment, same verified-auth
+policy as `getCommuteOptions`. Request has exactly one field:
+
+```json
+{"scenarioId":"ranked"}
+```
+
+Valid scenarios: `ranked`, `missing-answers`, `empty`. No `userId`, candidate IDs,
+profile answers or weight overrides are accepted. These are synthetic profiles,
+not recommendations from the live user pool. No Firestore access occurs.
+
+Response fields: `dataSource: "fixture"`, `scenarioId`, `status: "ok"`,
+`formulaVersion: "normalized-v1"`, `weightVersion: "synthetic-v1"`, `matches`.
+Example match (actual result also has seven factor records and reason codes):
+
+```json
+{
+  "candidateId":"sample-a","status":"scored",
+  "scoreBasisPoints":10000,"score":100,"missingFactors":[],
+  "overlappingClassDays":[1,3],
+  "factors":[{"factor":"sleep","weightBasisPoints":2000,"similarityBasisPoints":10000}],
+  "reasons":[{"factor":"sleep","code":"similar"}]
+}
+```
+
+The pure `rankMatches({subject,candidates,config})` engine requires explicit
+versioned weights. Seven named integer weights, each 0..10000, must sum to 10000.
+There is no production default. Input profiles have `id`, normalized `answers`,
+and nullable `classDays` (unique ISO weekdays 1..7). Proposed normalization:
+
+| Factor | Input | Similarity before basis-point rounding |
+|---|---|---|
+| sleep | Minutes after midnight, 0..1439 | 1 − shortest cyclic difference / 720 |
+| cleanliness, noise, cooking | Ordinal integer 0..4 | 1 − absolute difference / 4 |
+| smoking, pets | Boolean | 1 for agreement, otherwise 0 |
+| budget | `{minSen,maxSen}`, safe nonnegative integers, min ≤ max | Interval intersection / union; identical point intervals = 1; other zero overlap = 0 |
+
+Each similarity is rounded half-up to 0..10000 basis points. Overall basis points
+are the weighted sum divided by 10000, rounded half-up using integer arithmetic.
+`score` = overall basis points / 100. Positive-weight missing answers on either
+profile yield `status: "insufficient_data"`, null score/basis points, and the
+missing factor names. Zero-weight missing answers do not block scoring. Invalid
+present values fail even if their weight is zero; absence is never incompatibility.
+
+Sort scored candidates by descending score, then ASCII candidate ID; unscored
+candidates sort last by ID. Exclude the subject, reject duplicate IDs, cap the
+candidate array at 100. IDs use 1..128 ASCII letters, digits, underscore or hyphen.
+Day intersections are sorted; unknown weekdays produce null, known no overlap
+produces `[]`. Class overlap does not alter the score.
+
+Factor output contains weight and similarity only, never raw answers. Rule reason
+codes for known positive-weight factors are `similar` (≥7500), `different`
+(≤2500), otherwise `partial_overlap`. These codes support deterministic fallback
+rendering and Ilham's explanation; they do not unlock contact access. No exact
+class times, addresses, phone/email or other profile fields are projected.
+
+Questionnaire mapping, interpretation of preferences, visibility of each factor
+breakdown/day overlap, survey-derived weights and candidate eligibility need
+Ary/Gathan/Aly/Ilham agreement before production use. Similarity is not a hard
+smoking/pet preference filter. No production reader is implemented: an adapter must
+load only authorized candidates and apply privacy policies before scoring or
+returning any result. The core is not an authorization boundary.
+
+## computeMatchScores — proposed production contract, FR3.2
 
 Request: `{}` (preferred). If retaining the planned `userId` parameter for legacy
 callers, require it to equal auth UID; it never grants cross-user access.
@@ -155,7 +220,7 @@ Fixture response:
 {"matches":[],"formulaVersion":null,"status":"configuration_required"}
 ```
 
-After questionnaire scales/weights are agreed, return only permitted candidate
+The production endpoint is not implemented. After questionnaire scales/weights are agreed, return only permitted candidate
 fields, deterministic scores, factor breakdown and overlapping class days. Never
 return private contact data or raw timetables. Define candidate limits, missing
 answers, tie sorting and weight normalization before implementation. Ilham's
