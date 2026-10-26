@@ -176,6 +176,7 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [x] Typed Android response parsing and local developer preview; loading/error/retry states.
 - [x] Real Android commute SDK integration verification: all three fixture scenarios pass through Firebase SDK → callable → typed parser.
 - [ ] Real Maps routing/coverage and verified fares/emission factors; production schema/timetable integration.
+- [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../docs/maps-readiness.md); live quota/budget setup and coverage probes remain open.
 - [ ] Ary's final Room card/details integration and NFR1 load evidence.
 
 Sample fixture values are not verified assumptions or production estimates. The
@@ -217,7 +218,7 @@ and [contract](../docs/api-contracts.md). Production formula approval is still o
 - Walking, bus or LRT plus UM shuttle, e-hailing estimate (fare formula), and driving alone
 - Travel time and monthly cost from a listing to the user's faculty; true monthly cost = rent plus utilities plus commute
 - CO2 per mode = distance times a published emission factor (pick and cite the source, PRD open question 4)
-- Cache results per area and faculty pair so search stays under 3 seconds (NFR1)
+- Meet NFR1 with provider-term-compliant request reuse/architecture. Persistent area/faculty Google route caching is not assumed permitted; see [Maps readiness evidence](../docs/maps-readiness.md). Actual p95 ≤3s at 100 concurrent users still needs end-to-end load testing.
 
 **Wave B (30 Nov to 13 Dec)**
 - Match score Cloud Function: transparent weighted formula, deterministic, unit-tested

@@ -23,4 +23,11 @@ Rules for finding data:
 
 ## Status
 
+27 October 2026: Aaron checked official Maps pricing, SKU triggers, transit limits
+and caching/display requirements. See [Maps readiness evidence](docs/maps-readiness.md).
+Assumption #11's documentation research is recorded; actual billing/quota/budget
+setup and measured workload remain pending. Assumption #5's five real route probes
+remain not run, so coverage/fares are still unknown. No current value is marked
+fully verified from documentation alone.
+
 Keep this updated as you go: put the value found and the source in the "Current value" column, and add "Verified" with the date at the end of the row.

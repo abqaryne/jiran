@@ -101,3 +101,10 @@ Firestore profile reader or AI scoring was introduced.
 Tests first: 34 calculator cases and 12 adapter cases failed against empty
 implementations before passing. Full suite and real emulator evidence, review
 findings and remaining production dependencies are recorded in the match plan.
+
+Maps follow-up under the same objective: inspected current official pricing,
+SKU triggers, transit/reference, policy, service terms and security/budget guides.
+Recorded sourced facts, illustrative request/cost arithmetic and five unrun route
+probes in docs/maps-readiness.md. Corrected the role's unqualified cache directive;
+the implementation must respect provider content retention terms. No API key,
+billing change, live route call or real transit-coverage claim was made.
