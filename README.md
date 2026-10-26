@@ -139,3 +139,28 @@ See [architecture](docs/architecture.md), [draft API contracts](docs/api-contrac
 The [live setup plan](docs/superpowers/plans/2026-10-27-firebase-live-setup.md) records
 current setup evidence. Team invitations, Maps/billing/coverage, product schema,
 scoring weights and remaining feature work still require their team inputs.
+
+## Module 4 calculation preview
+
+On branch `feature/aaron-commute-core`, the pure commute calculator and a local
+Android preview implement the calculation behavior of FR4.1–4.3 against explicit
+server-owned fixtures. Run the ordinary **debug** variant with local emulators,
+sign in with a verified local account, and open **Commute calculator preview**.
+Choose an on-time, no-on-time or missing-data scenario and tap **Calculate sample**.
+
+The preview labels every figure as synthetic sample data, compares four modes,
+and chooses only a known-cost mode that arrives before class. In the on-time
+fixture, late free walking is rejected and transit gives RM612.00: room RM450.00,
+utilities RM62.00 and commute RM100.00. If no option qualifies, no total appears.
+Missing fares/schedules and unknown CO₂ stay explicit. Deposit is excluded.
+
+The callable is emulator-only and accepts `{scenarioId}`; production listing/unit
+requests remain draft. See the [API contract](docs/api-contracts.md) and
+[implementation plan](docs/superpowers/plans/2026-10-27-commute-core.md).
+There is no live Maps integration, verified fare/emission dataset, occupancy
+rounding default or inferred attendance assumption in this batch. Gathan/Ary/Aly
+still need to agree the production inputs and UI integration.
+
+The existing REST smoke now also checks callable authorization, all scenarios,
+selection and cost arithmetic. Its `--android` mode runs three Android integration
+tests, including the SDK/repository/parser flow for all commute scenarios.

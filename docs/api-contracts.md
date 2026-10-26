@@ -1,7 +1,8 @@
 # Cloud Function contracts — draft for team agreement
 
-Status: **DRAFT**, 27 October 2026. Except for emulator-only `sessionCheck`, none
-of these endpoints is implemented/exported. JSON uses example fixture values,
+Status: **DRAFT**, 27 October 2026. Emulator-only `sessionCheck` and the labelled
+fixture version of `getCommuteOptions` are implemented; production endpoints are
+not exported. JSON uses example fixture values,
 not approved fares, weights or collections. Aaron coordinates approval with Ary,
 Gathan and Ilham before clients depend on the shapes.
 
@@ -25,7 +26,69 @@ Request: `{}`. Response: `{"uid":"local-user-id","status":"ok"}`.
 Missing auth → `unauthenticated`; email not verified → `permission-denied`.
 No production export. This check does not validate UM affiliation.
 
-## getCommuteOptions — FR4.1–4.3
+## getCommuteOptions — implemented local fixture interface
+
+Availability: **only** the `demo-jiran` Functions emulator with the expected
+loopback Firestore emulator. Requires authenticated, email-verified caller.
+No live export, listing/profile reads, Maps calls or user-specific data.
+
+```json
+{"scenarioId":"on-time"}
+```
+
+The only accepted body field is `scenarioId`; valid IDs are `on-time`,
+`no-on-time-route` and `missing-data`. Unknown IDs, production listing/unit
+requests, `userId` and cost overrides return `invalid-argument`. Missing auth
+returns `unauthenticated`; unverified email returns `permission-denied`.
+
+Response includes `dataSource: "fixture"`, `assumptionVersion: "fixture-v1"`,
+`scenarioId`, `isEstimate: true`, `status`, exactly four ordered `options`,
+`selectedMode`, `trueMonthlyCostSen`, component amounts, `monthlyTrips`,
+`departTime` and `classStartTime` (UTC ISO timestamps). Example summary:
+
+```json
+{
+  "scenarioId":"on-time","dataSource":"fixture","assumptionVersion":"fixture-v1",
+  "isEstimate":true,"status":"ok","selectedMode":"transit",
+  "roomPriceSen":45000,"utilitiesShareSen":6200,"monthlyTrips":40,
+  "trueMonthlyCostSen":61200,
+  "departTime":"2026-11-16T00:00:00.000Z",
+  "classStartTime":"2026-11-16T01:00:00.000Z"
+}
+```
+
+The actual response also includes the ordered walking/transit/e_hailing/driving
+options. Available options contain `durationSeconds`, `distanceMetres`,
+`perTripCostSen`, `monthlyCostSen`, nullable `co2GramsPerTrip`/`emissionSource`,
+`arrivalTime` and `arrivesOnTime`. Unavailable options contain `mode`,
+`status: "unavailable"` and a reason: `missing_route`, `missing_schedule`,
+`missing_fare_assumption` or `provider_unavailable`.
+
+Rules verified by tests:
+
+- Arrival must be **strictly before** class; arriving exactly at class start is
+  ineligible. Offset timestamps compare absolute instants.
+- Monthly commute = integer per-trip sen × explicit `monthlyTrips`. The preview
+  does not infer attendance days, return trips, seasonal passes or parking frequency.
+- Utilities input is the already-calculated equal share; occupancy division and
+  rounding policy stay with the agreed schema/calculation contract.
+- Choose lowest monthly cost among known-cost, available, on-time options; ties
+  prefer shorter duration then walking/transit/e_hailing/driving order.
+- No eligible option → `status: "no_on_time_route"`, null selection and total.
+  Missing fares remain unavailable, never zero. Deposit is excluded.
+- CO₂ = distance in km × explicitly supplied grams/km, rounded to whole grams,
+  with a required source. Unknown factors stay null and do not become zero.
+  The fixture's synthetic factor is **not** a published source or verified assumption.
+- Inputs must have safe nonnegative integer units and valid calendar timestamps.
+  Invalid/overflowing calculations fail rather than emitting NaN or imprecise totals.
+
+This completes a calculation/fixture handoff, not production FR4 or NFR1 signoff.
+
+## getCommuteOptions — proposed production contract, FR4.1–4.3
+
+The following listing/unit interface is **not implemented**. The local endpoint
+above deliberately rejects these request shapes until schema and provider inputs
+are agreed.
 
 Example request:
 

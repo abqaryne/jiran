@@ -20,6 +20,8 @@
         android:layout_marginTop="24dp" android:text="@string/check_connection" />
     <Button android:id="@+id/open_auth_setup" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:minHeight="48dp" android:text="@string/auth_open" />
+    <Button android:id="@+id/open_commute_preview" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:minHeight="48dp" android:text="@string/commute_title" />
     <TextView android:id="@+id/connection_status" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:accessibilityLiveRegion="polite" />
 </LinearLayout>

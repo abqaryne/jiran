@@ -66,3 +66,21 @@ fixed CI variant selection and background completion handling; environment-speci
 instrumentation tests now skip incompatible variants. Local Auth/Firestore flow
 and read-only live SDK probe passed. No live test account or data was created.
 See `docs/superpowers/plans/2026-10-27-firebase-live-setup.md` for final evidence.
+
+## Module 4 continuation
+
+Exact user instruction:
+
+> continue from the last passover session, keep implementing thoroughly
+
+Context: Git fetch found the prior foundation merged as PR #1, so implementation
+continues from merged `main` on `feature/aaron-commute-core`. Aaron's role and PRD
+define FR4.1–4.3. Missing provider/schema assumptions were kept explicit; no fares,
+attendance or published emission factors were invented.
+
+Output: pure JavaScript calculator, authenticated emulator fixture callable,
+immutable Java parser/repository, local preview UI and regression/integration tests.
+Tests were written first and observed failing before implementation. Independent
+review found no blocking issue. The server remains the selection authority; the
+client checks response types, timing and money consistency without duplicating
+the cheapest/tie algorithm. Final evidence is in the commute batch plan.

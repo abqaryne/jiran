@@ -164,6 +164,24 @@ production UM verification, schema, commute/match formulas and full NFR tests ar
 not complete. No push or merge has been performed.
 
 ## Right now: Step 0 (26 Oct to 8 Nov)
+### Module 4 continuation — calculation batch
+
+The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
+`feature/aaron-commute-core`; see the [calculation plan](../docs/superpowers/plans/2026-10-27-commute-core.md).
+
+- [x] Pure commute calculation with explicit units/trips and cheapest-before-class selection.
+- [x] Missing-route/fare and no-on-time states; deposit exclusion; optional explicitly sourced CO₂.
+- [x] Verified-auth emulator-only `getCommuteOptions` fixture interface.
+- [x] Typed Android response parsing and local developer preview; loading/error/retry states.
+- [x] Real Android commute SDK integration verification: all three fixture scenarios pass through Firebase SDK → callable → typed parser.
+- [ ] Real Maps routing/coverage and verified fares/emission factors; production schema/timetable integration.
+- [ ] Ary's final Room card/details integration and NFR1 load evidence.
+
+Sample fixture values are not verified assumptions or production estimates. The
+UI says so, and the endpoint is not exported in a live environment. This advances
+the FR4.1–4.3 calculation foundation; the complete production module stays open.
+
+### Remaining Step 0 checklist
 - [x] Create the Android Studio project (Java, Gradle) in the repo and the package structure (ui, data, util), with a Firebase connection (existing `jiran-mad`, package `jiran.com`; debug remains local)
 - [ ] Branching rules: feature branches, PR required, Ary approves and merges. Turn on branch protection
 - [ ] GitHub Actions CI: `./gradlew lint test` on every PR

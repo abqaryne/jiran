@@ -1,5 +1,38 @@
 <resources>
     <string name="app_name">Jiran</string>
+    <string name="commute_title">Commute calculator preview</string>
+    <string name="commute_fixture_notice">SAMPLE DATA ONLY · These times, fares, attendance and emission factors are synthetic fixtures, not real travel estimates.</string>
+    <string name="commute_scenario_label">Sample commute scenario</string>
+    <string-array name="commute_scenarios">
+        <item>On-time comparison</item>
+        <item>No on-time option</item>
+        <item>Missing data</item>
+    </string-array>
+    <string name="commute_calculate">Calculate sample</string>
+    <string name="commute_start">Choose a sample scenario, then calculate.</string>
+    <string name="commute_sign_in">Sign in with a verified local emulator account using Account setup, then try again.</string>
+    <string name="commute_loading">Calculating sample…</string>
+    <string name="commute_error">Could not load the sample. Check the local emulators and verified login, then retry.</string>
+    <string name="commute_total">Sample true monthly cost: %1$s · %2$s</string>
+    <string name="commute_none">No available mode arrives before class. No monthly total can be shown.</string>
+    <string name="commute_components">Room %1$s + equal utilities share %2$s + selected commute. Deposit excluded.</string>
+    <string name="commute_timing">Depart %1$s · Class %2$s · Sample monthly trips: %3$d</string>
+    <string name="commute_summary_lines">%1$s\n%2$s\n%3$s</string>
+    <string name="commute_row">%1$s\n%2$s</string>
+    <string name="commute_recommended">Recommended sample · %1$s</string>
+    <string name="commute_option">%1$d min · %2$s/month · %3$s</string>
+    <string name="commute_before_class">Arrives before class</string>
+    <string name="commute_late">Does not arrive before class</string>
+    <string name="commute_co2">%1$d g CO₂/trip · %2$s</string>
+    <string name="commute_unknown_co2">CO₂ factor not configured</string>
+    <string name="commute_missing_schedule">Scheduled service data unavailable</string>
+    <string name="commute_missing_fare">Fare not configured</string>
+    <string name="commute_provider_unavailable">Route provider unavailable</string>
+    <string name="commute_missing_route">Route data unavailable</string>
+    <string name="commute_walking">Walking</string>
+    <string name="commute_transit">Public transport</string>
+    <string name="commute_e_hailing">E-hailing estimate</string>
+    <string name="commute_driving">Driving alone</string>
     <string name="auth_title">Jiran · Account setup</string>
     <string name="auth_environment_local">Local emulators · demo-jiran</string>
     <string name="auth_environment_live">Connected to Firebase · jiran-mad</string>
