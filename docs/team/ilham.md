@@ -5,27 +5,35 @@
 - The **match reason text** for Module 3 (FR3.2)
 - AI evaluation, API key handling, and the **AI Usage Log** (mandatory appendix)
 
-## Right now: Step 0 (26 Oct to 8 Nov)
-- [ ] **Start the AI Usage Log today.** Use the Appendix 2(b) template from the brief: which tool, the exact prompt, how the output was used, tested and changed. Everyone logs their AI use; you merge it.
-- [ ] Collect **10 sample tenancy agreements** (anonymised) and write the list of known risky clauses for each (for example three months' rent in advance). This is the ground truth for evaluation.
-- [ ] Try contract-checker prompts with Gemini and Claude on those agreements. Compare cost, quota, and Malay and English quality, then propose one provider (PRD open question 3)
-- [ ] Keep keys out of the app: Cloud Functions secrets only
+## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you two write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
 
-## Next
-**Step 1 (by 15 Nov):** agree with Aaron the request and response shape for each AI function. After the survey, build the **50 test requests** written by surveyed students for plain-language search.
+**Stories you lead** (8)
 
-**Wave A (16 to 29 Nov): needs nobody**
-- **FR6.2 contract checker:** upload a PDF or photo, a Cloud Function returns a plain-language summary with each clause marked **Red flag, Check or OK** (words, not only colours)
-- **FR6.1 plain-language search** (English or Malay): turns text into filters that the user can see and edit before results load. Use mock filters first.
-- **FR6.3:** every AI output labelled AI-generated; the contract result states it is not legal advice; a button to report a wrong result
-- The AI screens in Android, using Ary's components: the plain-language search lives in the Rooms search bar (no separate Ask tab), and the contract check is private: it opens only from the agreement shared in a Connection chat or from Profile, never from a listing or room page
+| Story | FR, priority | Due | Waits for |
+|---|---|---|---|
+| **E3.5** Plain-language AI search *(can start early)* | FR6.1, P0 | 4 Dec | E3.2 for the real filters (use mock filters first) |
+| **E6.3** Match reasons | FR3.2, P0 | 10 Dec | E6.2 |
+| **E8.1** Choose and set up the AI provider *(can start early)* | P0 | 8 Nov |  |
+| **E8.2** Sample agreements and the contract function *(can start early)* | FR6.2, P0 | 13 Dec | E8.1 |
+| **E8.3** Upload and result screens | FR6.2, P0 | 20 Dec | E5.2 (the file arrives in a chat) |
+| **E8.4** AI labels and reporting a wrong result | FR6.3, P0 | 20 Dec | E3.5, E6.3, E8.3 |
+| **E8.5** AI evaluation for the report | FR6.1, FR6.2, P0 | 20 Dec | E3.5, E8.3 |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | P0 | 9 Jan | everyone's logs |
 
-**Wave B (30 Nov to 13 Dec)**
-- Connect FR6.1 to the real listing filters (waits for Gathan's search)
-- Match reasons: the prompt uses the score breakdown from Aaron's formula. If the AI fails, show rule-generated reasons.
-- **P2:** listing reader that pre-fills Evaluate unit from pasted text or a screenshot
+**Stories where you do a subtask** (6): open the story card to see yours.
+
+| Story | Lead | Due |
+|---|---|---|
+| **E0.4** Project management and docs | Dafi | 30 Oct |
+| **E0.6** Function contracts (stubs) | Aaron | 15 Nov |
+| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
+| **T1.3** Verify the assumed numbers | Dafi | 13 Nov |
+| **T3.1** Script and screen captures | Ary | 20 Dec |
+| **T4.1** Report sections | Dafi | 9 Jan |
+
+**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Aaron write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You build your own AI screens with Ary's components. **Start the AI Usage Log today.**
 
 ## Design rules
 - The compatibility score and CO2 are computed by code, never by the AI
@@ -49,11 +57,11 @@
 
 ## Rules for everyone
 
-- Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
+- Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

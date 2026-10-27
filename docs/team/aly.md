@@ -6,33 +6,35 @@
 - The test plan, integration tests, the load test (NFR1), and the usability test
 - The release checklist and the video editing
 
-## Right now: Step 0 (26 Oct to 8 Nov)
-- [ ] Put [SURVEY.md](../product/SURVEY.md) into a Google Form, in **English and Malay**
-- [ ] **Pilot with 5 people** and time it (aim for 8 minutes or less); cut questions if needed
-- [ ] Launch and share. Target **100 or more** responses by 8 Nov, spread across faculties and areas (not only FSKTM). Ask Telegram channel admins for permission before posting.
-- [ ] Plan **5 to 8 interviews** (20 minutes each): 3 to 4 off-campus students, a UMSU representative, a Telegram admin. Prepare a consent form.
-- [ ] Start the test plan: one test case per FR, plus the NFR1 and NFR2 tests
+## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-## Next
-**Step 1 (by 15 Nov):** analyse the survey and send to the team:
-- Room prices for master, medium and small (to set the 1.3 / 1.0 / 0.7 weights) to Gathan
-- Peak hours and e-hailing fares to Aaron
-- Feature importance (question H1) to Dafi, to confirm P0 and P1
-- The "finding, FR it shaped" table with Dafi
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
 
-**Wave A (16 to 29 Nov): needs nobody**
-- Espresso UI test scaffolding and the k6 script for the search endpoint (100 concurrent users, 95% under 3 s)
-- Chore rotation logic in plain Java with JUnit tests; house rules model
+**Stories you lead** (9)
 
-**Wave B (30 Nov to 13 Dec)**
-- FR5.2 and FR5.3 screens (waits for Dafi's household data and Ary's components)
+| Story | FR, priority | Due | Waits for |
+|---|---|---|---|
+| **E7.5** Recurring chores *(can start early)* | FR5.2, P1 | 13 Dec | E7.2 (logic can start now) |
+| **E7.6** House rules | FR5.3, P1 | 13 Dec | E7.2 |
+| **T1.1** Survey and interviews | P0 | 8 Nov (launch 31 Oct) |  |
+| **T1.2** Survey analysis | P0 | 15 Nov | T1.1 |
+| **T2.1** Test plan and integration tests | P0 | 15 Nov (plan), 27 Dec (run) |  |
+| **T2.2** NFR1: speed under load | P0 | 27 Dec | working search |
+| **T2.4** Usability test | P0 | 27 Dec | working app |
+| **T2.5** Release check | P0 | 27 Dec | all P0 flows |
+| **T3.2** Record, edit and final cut | P0 | 2 Jan | T3.1 |
 
-**Step 4 (14 to 27 Dec): you lead testing**
-1. Integration tests for each FR's main flow
-2. Load test (NFR1) and report the 95th percentile
-3. **Usability test:** 8 to 10 UM students, five tasks, SUS score at least 68 and 80% task success
-4. Collect the NFR2 evidence from Gathan's rules tests
-5. Release checklist: no P0 bug left before the video
+**Stories where you do a subtask** (5): open the story card to see yours.
+
+| Story | Lead | Due |
+|---|---|---|
+| **E0.4** Project management and docs | Dafi | 30 Oct |
+| **T1.3** Verify the assumed numbers | Dafi | 13 Nov |
+| **T3.1** Script and screen captures | Ary | 20 Dec |
+| **T4.1** Report sections | Dafi | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
+
+You also record, assemble and edit the video (T3.2); Ary reviews it against the rubric.
 
 ## Your parts in the graded deliverables
 - **Video:** the chores and house rules part of the demo, segment 5 NFR1 results, segment 6 survey and interview findings. You also record, assemble and edit the video (Ary reviews against the rubric).
@@ -48,11 +50,11 @@
 
 ## Rules for everyone
 
-- Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
+- Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

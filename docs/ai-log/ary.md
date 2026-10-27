@@ -65,3 +65,98 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose branch names, asked for a PR instead of a direct push, and decided to merge #4 then #5. TODO (Ary): your own review of the code.
 - **What the human understands and can explain:** TODO (Ary): the MVVM split, how a component view reads its XML attributes, and how the design tokens map to Android resources.
 - **Limits:** components were verified on one emulator only; known differences from Figma are listed in `docs/design/DESIGN.md`.
+
+## 2026-10-27 · App logo and launcher icon · Frontend
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code with the Figma tool
+- **Task:** use the logo drawn in Figma as the app logo and launcher icon.
+- **Prompts (exact):**
+  > coba update logonya make logo yang di figma dong
+- **Output used:** `drawable/ic_logo.xml`, adaptive launcher icon (`mipmap-anydpi/ic_launcher*.xml`, foreground and monochrome vectors), manifest icon, DESIGN.md section 3.5. The vector paths come straight from the SVG exported from the Figma `logo` frame (Thumbnail page).
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed; debug APK installed on the Pixel_9 emulator; the logo in the component gallery and the launcher icons in the app drawer were compared with Figma by the assistant. Not checked: other launchers and icon shapes, Android 13 themed icon on a real device.
+- **What the human changed or rejected:** Ary drew the logo in Figma and chose which frame is the master. TODO (Ary): anything you changed.
+- **What the human understands and can explain:** TODO (Ary): how an adaptive icon uses a background layer, a foreground layer and a safe zone.
+- **Limits:** the foreground was scaled to fit the safe zone, so it is smaller than the Figma frame; the door runs off the bottom edge on purpose.
+
+## 2026-10-27 · Rules for listing data and seed data · Module 2
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** decide whether listings may be collected from PropertyGuru or other sites for the course, and write the rule.
+- **Prompts (exact):**
+  > ini kan cuma buat cours aja ya klo kita kumpulin 30 sampai 50 listings dari property guru atau web di online gt boleh ga
+  > ya boleh deh
+- **Output used:** rule in `docs/product/ASSUMPTIONS.md`, Gathan's seed data task, PRD cold-start wording. The assistant said it is not legal advice and did not read the sites' current terms.
+- **How it was tested or checked:** documents only. TODO (Ary): check the terms of the sites you use, and ask the lecturer if unsure.
+- **What the human changed or rejected:** Ary accepted the "reference prices by hand plus fictional seed listings" approach in place of collecting 30 to 50 real listings.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the assistant did not verify any site's terms; fictional listings still need realistic numbers from real reference prices.
+
+## 2026-10-27 · Dafi's shuttle task wording · Module 4
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** reword Dafi's task: find the UM shuttle timetable, email only if needed (no live tracking in the app).
+- **Prompts (exact):**
+  > gausah udh apus aja nanti aku suruh dafi cari tau jadwal dan mungkin baru kira kira commute nya berapa
+  > ya tulis ulang
+- **Output used:** `docs/team/dafi.md`, ASSUMPTIONS #5 and TEAM_PLAN wording. An earlier research note was deleted at Ary's request and never pushed.
+- **How it was tested or checked:** documents only. Not checked with UM.
+- **What the human changed or rejected:** Ary rejected the research note and chose to brief Dafi directly. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** none of the shuttle data was verified.
+
+## 2026-10-27 · Project board cards document · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** write the cards to put in the project management app (Trello).
+- **Prompts (exact):**
+  > coba buat md untuk kartu kartunya yang ditaro di project management app deh
+  > tolong dibuat task-tasknya lebih kayak giini deh soalnya agak bingungin task task yang sekarang (with a screenshot of an Initiative, Epic, Story/Task, Subtask diagram)
+- **Output used:** `docs/team/trello-cards.md`, first as a flat list of cards, then restructured into Initiative, Epics, Stories and Subtasks at Ary's request because the flat list was confusing. Also corrected "18 FRs" to 19 in `docs/team/dafi.md` and `docs/team/TEAM_PLAN.md` (the PRD has 19 FRs).
+- **How it was tested or checked:** cards were derived from the PRD FR table, the team plan (owners, waves, gates, video and report tables) and ASSUMPTIONS.md; link check passed. The due dates for setup cards are proposals by the assistant. TODO (Ary, Dafi): confirm owners, estimates and dates with the team.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** estimates (hours) are left empty on purpose; owners of mixed UI and backend cards are suggestions.
+
+## 2026-10-27 · Align TEAM_PLAN and personal task files with the work breakdown · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** update TEAM_PLAN and the six personal task files so they use the same epics and stories as `docs/team/trello-cards.md`.
+- **Prompts (exact):**
+  > dan coba update juga secara keselurhan di docs docs yang lain related pembagian task ini di TEAM_PLAN dan .md personal masing masing
+- **Output used:** `docs/team/TEAM_PLAN.md` (epic map, story IDs in the step tables), the task sections of `ary.md`, `dafi.md`, `aaron.md`, `gathan.md`, `ilham.md`, `aly.md`; two stories added to the breakdown (E0.5 data schema and rules, E0.6 function contracts); each module owner now builds their own screens with Ary's components.
+- **How it was tested or checked:** documents only; story IDs and links cross-checked by script. Owners and due dates are the assistant's proposal from the existing plan. TODO (Ary, Dafi): confirm them with each person before the board is filled in.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** Aaron's file is also edited on his own branch, so a small merge conflict is likely when he merges `main`.
+
+## 2026-10-27 · Epics reorganised as flows, in build order · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** change the work breakdown so epics are the flows of the app, done in order (E0 first, then E1 and so on), and update TEAM_PLAN and the personal files to match.
+- **Prompts (exact):**
+  > bisa dibuat kayak per flow aja gitu ga, E0 itu buat dikerjain awal kemudian E1 seterusnya dan seterusnya
+- **Output used:** `docs/team/trello-cards.md` (11 flow epics E0 to E11 and 4 parallel tracks T1 to T4), the story tables in the six personal files, the epic table and the new Step 2 flow order in `docs/team/TEAM_PLAN.md`. The files were generated from one data list so IDs, owners and dates agree.
+- **How it was tested or checked:** documents only; every story ID mentioned in the plan exists in the breakdown and links resolve. Owners and dates are the assistant's proposal. TODO (Ary, Dafi): check that building the flows in this order fits the 13 December P0 freeze, and confirm owners and dates with each person.
+- **What the human changed or rejected:** Ary replaced the earlier module-based epics with flows in build order. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** Aaron's master prompt in `aaron.md` still mentions Wave A and Wave B (it is his own prompt record, so it was left as it is).
+
+## 2026-10-27 · Remove the 20-hour minimum from the docs · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** remove the "minimum 20 hours" requirement from all team documents.
+- **Prompts (exact):**
+  > buat yang requirement minimal 20jam itu apus aja dari semua docs
+- **Output used:** `docs/team/TEAM_PLAN.md`, the six personal files and `docs/team/trello-cards.md`. Logging actual hours on Trello cards is kept as evidence for the peer evaluation. The assistant noted that the course brief itself says each member is expected to contribute at least 20 hours; only our own documents were changed.
+- **How it was tested or checked:** text search shows no remaining mention in the docs.
+- **What the human changed or rejected:** Ary decided to drop the 20-hour wording from the documents.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the brief's expectation still applies to the team.
+
