@@ -256,3 +256,19 @@ to monthly-profile preservation. 24 tests failed against the empty calculator,
 then passed. Two further failing integration tests drove profile copying and
 malformed/conflict handling. Source selection and limits are recorded in
 docs/emission-methodology.md; full verification/review evidence is in the batch plan.
+
+## Solo work: verification-key hardening
+
+Implemented the authorized six-workstream plan's first cache batch using the
+Firebase Auth skill and generated in-memory RSA keys. Added bounded key retrieval,
+provider freshness, refresh coalescing and unknown-key/failure cooldowns. Runtime
+verification exposed unsupported Workers fetch redirect:error; manual handling
+now rejects redirects. Failing regressions drove stale-stream cancellation,
+fresh-key preservation during rotation outages and concurrent rotation joining.
+Independent review found a zero/short-TTL amplification defect; added failing
+regressions and retained only key IDs for cooldown checks. Follow-up review found
+no remaining actionable defect. All55 experiment tests pass, including25 workerd
+HTTP/crypto tests; production dependency audit reports zero vulnerabilities.
+
+The reported6 personal hours on26 October are recorded as a draft. No session
+times, dates, task breakdown or Trello evidence were fabricated or posted.

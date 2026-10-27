@@ -34,9 +34,25 @@ unconfigured tenant. It ignores caller-selected key URLs. Its fixed key URL uses
 the [official Google service-account public JWK format](https://docs.cloud.google.com/iam/docs/service-account-creds),
 for `securetoken@system.gserviceaccount.com`. Firebase's [third-party verification
 requirements](https://firebase.google.com/docs/auth/admin/verify-id-tokens) define
-the claims; JOSE's [remote resolver](https://github.com/panva/jose/blob/main/docs/jwks/remote/functions/createRemoteJWKSet.md)
-performs signature/key selection. Generated-key tests exercise crypto and HTTP
+the claims; JOSE's [local resolver](https://github.com/panva/jose/blob/main/docs/jwks/local/functions/createLocalJWKSet.md)
+performs signature/key selection after the bounded fetch below. Generated-key tests exercise crypto and HTTP
 behavior; they do not prove real Firebase token acceptance or live key retrieval.
+
+## Verification-key cache
+
+The fixed Google endpoint is fetched with a one-second deadline covering headers
+and streamed body, a64KiB response cap and manual redirect rejection. Workers
+rejects `redirect: 'error'`, so every non200 response fails without following its
+Location. Only bounded public RSA signing keys are accepted. Errors are sanitized.
+
+Reuse follows response Cache-Control max-age minus Age, capped at six hours and
+measured conservatively from request start. Missing/invalid freshness, no-cache,
+no-store and private responses cannot be reused. Expired keys never provide an
+outage fallback. Concurrent fetches share a promise; rotated keys join an ongoing
+refresh. Unknown-key refreshes and failed-fetch retries have a30-second cooldown.
+Retained key IDs enforce that cooldown even when key TTL is zero or very short.
+A failed rotation lookup preserves still-fresh known keys without extending their
+expiry. These caches and cooldowns are per isolate, not global abuse controls.
 
 ## Toolchain finding
 
@@ -51,10 +67,9 @@ the locked experiment dependencies; that is not a security-completion claim.
 
 ## What remains before adopting the alternative
 
-- Real project token/key validation, key-rotation/error behavior and cache policy.
-  This prototype sets JOSE cacheMaxAge to60 seconds and cooldown to30 seconds;
-  it does not implement Firebase's response Cache-Control/max-age refresh policy.
-  Resolve that before production. Verify revocation/disabled accounts, tenancy
+- Real project token/key validation and observed production rotation behavior.
+  Offline tests cover cache policy and synthetic rotation only.
+  Verify revocation/disabled accounts, tenancy
   and approved UM affiliation policy rather than treating verified email as UM.
 - Firestore authorization, private matching projection and per-user/global atomic
   quota persistence. No service-account/Admin SDK workaround is included.

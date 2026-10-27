@@ -1,13 +1,11 @@
-import {createRemoteJWKSet,jwtVerify} from 'jose';
+import {jwtVerify} from 'jose';
+import {createFirebaseKeyResolver} from './firebase-keys.mjs';
+import {HttpError} from './http-error.mjs';
 
-export class HttpError extends Error {
-  constructor(status,code) { super(code); this.status=status; this.code=code; }
-}
+export {HttpError} from './http-error.mjs';
 const issuer='https://securetoken.google.com/demo-jiran';
 // Public verification keys, never an account credential or a client-selected URL.
-const keys=createRemoteJWKSet(new URL(
-  'https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com'),
-{timeoutDuration:1000,cooldownDuration:30000,cacheMaxAge:60000});
+const keys=createFirebaseKeyResolver();
 function denied() { throw new HttpError(401,'authentication-required'); }
 
 /** Local feasibility verifier only: no revocation, UM or Firestore authorization. */

@@ -227,6 +227,14 @@ and [contract](../docs/api-contracts.md). Production formula approval is still o
 **Cloud Functions are Node.js (decided).** Firebase does not support Java, so you two write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
 
 ## Next
+
+The [six solo workstreams](../docs/superpowers/plans/2026-10-27-aaron-solo-work.md)
+are in progress. The isolated Worker experiment now has bounded verification-key
+fetching, provider freshness handling, rotation coalescing and cooldown protection,
+with55 offline/runtime tests passing. This does not adopt a production runtime;
+atomic quotas, real routing evidence and production verification remain open.
+The [hours draft](../docs/aaron-work-log.md) contains the reported6 hours on26 October.
+
 **Step 1 (by 15 Nov):** write `docs/api-contracts.md` with the request and response JSON of each Cloud Function, so everyone can build against stubs:
 - `getCommuteOptions(listingId or unit, departTime)`
 - `getTransitRoute(...)`
