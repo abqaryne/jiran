@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Welcome screen: the pale blue panel behind the three example cards. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/color_brand_tint" />
+    <corners android:radius="@dimen/radius_16" />
+</shape>

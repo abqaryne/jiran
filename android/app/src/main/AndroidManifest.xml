@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
         <activity android:name=".ui.EmailPasswordActivity" android:exported="false" />
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Jiran"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.CommutePreviewActivity" android:exported="false" />
         <activity android:name=".ui.MatchPreviewActivity" android:exported="false" />
         <!-- Product shell (tabs + navigation). Not launched yet: Ary wires it in after sign-in. -->

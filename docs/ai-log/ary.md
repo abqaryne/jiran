@@ -202,3 +202,17 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose free-only and an in-app map without a Google Maps link.
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the peak factor for road travel time is a placeholder idea, since openrouteservice has no live traffic. Aaron and Gathan must confirm the server, photo storage and contract-file handling. The aaron.md master prompt still mentions Cloud Functions (his file).
+
+## 2026-10-27 · E1.1 Sign up with a UM email: Welcome, Sign up, Verify email · Module 1 (FR1.1)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** build the first part of story E1.1: the UM email rule and form check in plain Java with unit tests, the two view models, and the three screens (Welcome, Sign up, Verify email) from the Figma Starting Flow, connected to the existing Firebase email and password repository.
+- **Prompts (exact):**
+  > yang bisa aku lakuin sekarang E1 ya?
+  > lanjut task kita aja yang E1
+- **Output used:** `domain/auth/UmEmailPolicy.java` and `SignUpCheck.java` (the rules); `data/AccountService.java` and `FirebaseAccountService.java`; `ui/auth/` (`AuthActivity`, `WelcomeFragment`, `SignUpFragment`, `VerifyEmailFragment`, `SignUpViewModel`, `VerifyEmailViewModel`, `AuthViewModelFactory`); layouts, `nav_auth.xml`, `strings_auth.xml`; a debug button "Sign up screens (Module 1)" on the developer screen. Tests: 11 for the rules, 12 for the view models.
+- **How it was tested or checked:** `lintDebug testDebugUnitTest checkstyleMain assembleDebug` pass (47 unit tests). Run on the Pixel_9 emulator against the local Firebase Auth emulator: empty and wrong-domain forms show errors under the fields, a valid sign-up reaches Verify email with the resend countdown, opening the emulator's verification link and returning to the app opens the product shell, and signing up with the same email again shows the "already has an account" message. not verified: a real device, a real email inbox, the live `jiran-mad` project, screen rotation, TalkBack.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Read these first: `UmEmailPolicy` (why the domain must match exactly and why two `@` signs are rejected), `SignUpCheck` (one problem per field), and how `SignUpViewModel` decides when to call Firebase.
+- **Limits:** the allowed domains (`siswa.um.edu.my` and `um.edu.my`) follow the Figma design and are still a team decision (story E1.1, with Dafi). The Figma tip said the link works for 24 hours; that was removed because it is not verified. Log in is a placeholder message until E1.2. After verification the product shell opens as a stand-in until profile setup (E1.3) exists. "Change email" signs the unverified account out but does not delete it from Firebase. The full name is stored as the Firebase display name only; the `users` profile document waits for Gathan's schema.

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Module 1: Welcome, Sign up, Verify email. Copy follows the Figma Starting Flow. -->
+<resources>
+    <string name="auth_welcome_headline">Rooms, housemates and your way to class.</string>
+    <string name="auth_welcome_subtitle">Made for UM students living off campus.</string>
+    <string name="auth_welcome_sign_up">Sign up with your UM email</string>
+    <string name="auth_welcome_log_in">Log in</string>
+    <string name="auth_welcome_verified_only">Only for verified UM students</string>
+    <string name="auth_login_soon">Log in is coming in the next step.</string>
+    <string name="auth_sample_room_title">Small room · Pantai Dalam</string>
+    <string name="auth_sample_room_subtitle">RM 712 true monthly cost</string>
+    <string name="auth_sample_room_value">RM 450</string>
+    <string name="auth_sample_match_title">Sofea A. · FSKTM Year 2</string>
+    <string name="auth_sample_match_subtitle">Classes overlap on 3 days</string>
+    <string name="auth_sample_match_value">86%</string>
+    <string name="auth_sample_commute_title">LRT + UM shuttle</string>
+    <string name="auth_sample_commute_subtitle">Cheapest way to reach class on time</string>
+    <string name="auth_sample_commute_value">34 min</string>
+    <string name="auth_sample_note">Examples only</string>
+
+    <string name="auth_open_sign_up_flow">Sign up screens (Module 1)</string>
+    <string name="auth_back">Back</string>
+    <string name="auth_sign_up_title">Sign up with your UM email</string>
+    <string name="auth_sign_up_subtitle">We email you a link to confirm that you are a UM student.</string>
+    <string name="auth_field_name">Full name</string>
+    <string name="auth_field_email">UM email</string>
+    <string name="auth_field_password">Password</string>
+    <string name="auth_password_hint">At least %1$d characters. Only @siswa.um.edu.my and @um.edu.my emails work.</string>
+    <string name="auth_create_account">Create account</string>
+    <string name="auth_creating_account">Creating account…</string>
+    <string name="auth_terms">By continuing you accept the Terms and the Privacy Policy. We handle your data under PDPA 2010.</string>
+    <string name="auth_error_name_required">Enter your full name.</string>
+    <string name="auth_error_email_required">Enter your UM email.</string>
+    <string name="auth_error_email_invalid">Check the email address. It should look like name@siswa.um.edu.my.</string>
+    <string name="auth_error_email_not_um">Only UM emails can sign up (@siswa.um.edu.my or @um.edu.my).</string>
+    <string name="auth_error_password_required">Enter a password.</string>
+    <string name="auth_error_password_short">Use at least %1$d characters.</string>
+    <string name="auth_error_email_taken">This email already has an account. Log in instead.</string>
+    <string name="auth_error_network">No connection. Check your internet and try again.</string>
+    <string name="auth_error_local_network">Allow local network access, then tap Create account again.</string>
+    <string name="auth_error_unknown">Something went wrong. Try again in a moment.</string>
+
+    <string name="auth_verify_title">Check your email</string>
+    <string name="auth_verify_body">We sent a link to %1$s. Open it on this phone to continue.</string>
+    <string name="auth_verify_tip">Cannot see it? Look in Junk.</string>
+    <string name="auth_verify_open_email">Open email app</string>
+    <string name="auth_verify_no_email_app">No email app found. Open your email in a browser.</string>
+    <string name="auth_verify_resend">Resend link</string>
+    <string name="auth_verify_resend_wait">Resend link in %1$d:%2$02d</string>
+    <string name="auth_verify_resend_sent">Link sent again.</string>
+    <string name="auth_verify_resend_failed">Could not send the link. Try again.</string>
+    <string name="auth_verify_change_email">Wrong email? Change it</string>
+</resources>
