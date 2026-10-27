@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Section header. Title on the left, optional brand-coloured action ("See all") on the right. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="28dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Jiran.Section"
+        tools:text="New rooms near you" />
+
+    <TextView
+        android:id="@+id/header_action"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/touch_target_min"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.Jiran.Label"
+        android:textColor="@color/color_brand_primary"
+        android:visibility="gone"
+        tools:text="See all"
+        tools:visibility="visible" />
+</LinearLayout>

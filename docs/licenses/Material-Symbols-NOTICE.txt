@@ -1,0 +1,4 @@
+Material Symbols (Rounded, weight 400) vector drawables in app/src/main/res/drawable/ic_*.xml
+Copyright Google LLC. Licensed under the Apache License, Version 2.0.
+https://github.com/google/material-design-icons  (symbols/android)
+You may obtain a copy of the licence at https://www.apache.org/licenses/LICENSE-2.0
