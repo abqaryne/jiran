@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Starting Flow: Welcome, Sign up, Verify email. Log in and Reset password join this graph in E1.2. -->
+<!-- Starting Flow: Welcome, Sign up, Verify email, Log in, Reset password. -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_welcome_to_sign_up"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_welcome_to_log_in"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -23,6 +26,25 @@
             app:destination="@id/verifyEmailFragment"
             app:popUpTo="@id/signUpFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.jiran.app.ui.auth.LogInFragment"
+        tools:layout="@layout/fragment_log_in">
+        <action
+            android:id="@+id/action_log_in_to_sign_up"
+            app:destination="@id/signUpFragment"
+            app:popUpTo="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_log_in_to_reset_password"
+            app:destination="@id/resetPasswordFragment" />
+        <action
+            android:id="@+id/action_log_in_to_verify_email"
+            app:destination="@id/verifyEmailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.jiran.app.ui.auth.ResetPasswordFragment"
+        tools:layout="@layout/fragment_reset_password" />
     <fragment
         android:id="@+id/verifyEmailFragment"
         android:name="com.jiran.app.ui.auth.VerifyEmailFragment"

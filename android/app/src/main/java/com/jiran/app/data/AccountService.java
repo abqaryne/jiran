@@ -10,7 +10,10 @@ import androidx.annotation.Nullable;
 public interface AccountService {
 
     /** Why an account call failed. Screens turn this into a message. */
-    enum AccountError { EMAIL_TAKEN, NETWORK, UNKNOWN }
+    enum AccountError { EMAIL_TAKEN, INVALID_CREDENTIALS, TOO_MANY_ATTEMPTS, NETWORK, UNKNOWN }
+
+    /** Who is using the app right now. */
+    enum Session { SIGNED_OUT, UNVERIFIED, VERIFIED }
 
     /** Result of a call that returns nothing. */
     interface Callback {
@@ -28,6 +31,21 @@ public interface AccountService {
 
     /** Creates the account, stores the name, and sends the verification email. */
     void signUp(String fullName, String email, String password, Callback callback);
+
+    /**
+     * Signs in and reports whether the email is verified. A wrong email and a wrong password give the same
+     * {@link AccountError#INVALID_CREDENTIALS}, so the app never tells which one was wrong.
+     */
+    void signIn(String email, String password, VerifiedCallback callback);
+
+    /**
+     * Sends a password reset link. It reports success even when the address has no account, so nobody can use
+     * this screen to find out who is registered.
+     */
+    void sendPasswordReset(String email, Callback callback);
+
+    /** The state of the saved session, read without a network call. */
+    Session session();
 
     /** Sends the verification email again to the signed-in account. */
     void resendVerification(Callback callback);

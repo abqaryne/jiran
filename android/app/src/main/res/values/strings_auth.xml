@@ -6,8 +6,7 @@
     <string name="auth_welcome_sign_up">Sign up with your UM email</string>
     <string name="auth_welcome_log_in">Log in</string>
     <string name="auth_welcome_verified_only">Only for verified UM students</string>
-    <string name="auth_login_soon">Log in is coming in the next step.</string>
-    <string name="auth_sample_room_title">Small room · Pantai Dalam</string>
+        <string name="auth_sample_room_title">Small room · Pantai Dalam</string>
     <string name="auth_sample_room_subtitle">RM 712 true monthly cost</string>
     <string name="auth_sample_room_value">RM 450</string>
     <string name="auth_sample_match_title">Sofea A. · FSKTM Year 2</string>
@@ -16,9 +15,8 @@
     <string name="auth_sample_commute_title">LRT + UM shuttle</string>
     <string name="auth_sample_commute_subtitle">Cheapest way to reach class on time</string>
     <string name="auth_sample_commute_value">34 min</string>
-    <string name="auth_sample_note">Examples only</string>
 
-    <string name="auth_open_sign_up_flow">Sign up screens (Module 1)</string>
+    <string name="auth_open_sign_up_flow">Welcome and sign up screens (Module 1)</string>
     <string name="auth_back">Back</string>
     <string name="auth_sign_up_title">Sign up with your UM email</string>
     <string name="auth_sign_up_subtitle">We email you a link to confirm that you are a UM student.</string>
@@ -50,4 +48,22 @@
     <string name="auth_verify_resend_sent">Link sent again.</string>
     <string name="auth_verify_resend_failed">Could not send the link. Try again.</string>
     <string name="auth_verify_change_email">Wrong email? Change it</string>
+
+    <string name="auth_login_title">Welcome back</string>
+    <string name="auth_login_subtitle">Log in with your UM email.</string>
+    <string name="auth_login_forgot">Forgot password?</string>
+    <string name="auth_login_button">Log in</string>
+    <string name="auth_login_loading">Logging in…</string>
+    <string name="auth_login_new_here">New to Jiran?</string>
+    <string name="auth_login_sign_up">Sign up</string>
+    <string name="auth_error_credentials">The email or password is not right. Check both and try again.</string>
+    <string name="auth_error_too_many">Too many attempts. Wait a few minutes, or reset your password.</string>
+
+    <string name="auth_reset_title">Reset your password</string>
+    <string name="auth_reset_subtitle">Enter your UM email and we send you a link to choose a new password.</string>
+    <string name="auth_reset_send">Send reset link</string>
+    <string name="auth_reset_sending">Sending…</string>
+    <string name="auth_reset_link_sent">If this email has an account, the link is on its way. Look in Junk too.</string>
+
+    <string name="home_log_out">Log out</string>
 </resources>

@@ -103,14 +103,6 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_4"
-                android:text="@string/auth_sample_note"
-                android:textAppearance="@style/TextAppearance.Jiran.Caption"
-                android:textColor="@color/color_text_secondary" />
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_24"

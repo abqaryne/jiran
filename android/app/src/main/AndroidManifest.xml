@@ -24,7 +24,14 @@
             android:name=".ui.shell.ShellActivity"
             android:exported="false"
             android:theme="@style/Theme.Jiran" />
-        <activity android:name=".ui.MainActivity" android:exported="true">
+        <!-- Developer screen from the backend foundation. Debug builds open it from the "Jiran dev" launcher icon. -->
+        <activity android:name=".ui.MainActivity" android:exported="true" />
+        <!-- The front door: reads the saved session and opens Welcome, Verify email or the product. -->
+        <activity
+            android:name=".ui.auth.LauncherActivity"
+            android:exported="true"
+            android:noHistory="true"
+            android:theme="@style/Theme.Jiran">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

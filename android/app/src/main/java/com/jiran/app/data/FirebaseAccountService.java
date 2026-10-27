@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
+import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -39,6 +42,38 @@ public final class FirebaseAccountService implements AccountService {
         FirebaseUser user = repository.currentUser();
         UserProfileChangeRequest request = new UserProfileChangeRequest.Builder().setDisplayName(fullName).build();
         return user.updateProfile(request);
+    }
+
+    @Override
+    public void signIn(String email, String password, VerifiedCallback callback) {
+        repository.signIn(email.trim().toLowerCase(Locale.ROOT), password).addOnCompleteListener(done -> {
+            if (done.isSuccessful()) {
+                callback.onResult(Boolean.TRUE.equals(done.getResult()));
+            } else {
+                callback.onError(map(done.getException()));
+            }
+        });
+    }
+
+    @Override
+    public void sendPasswordReset(String email, Callback callback) {
+        repository.resetPassword(email.trim().toLowerCase(Locale.ROOT)).addOnCompleteListener(done -> {
+            // "No account for this address" counts as success on purpose: see AccountService.
+            if (done.isSuccessful() || done.getException() instanceof FirebaseAuthInvalidUserException) {
+                callback.onSuccess();
+            } else {
+                callback.onError(map(done.getException()));
+            }
+        });
+    }
+
+    @Override
+    public Session session() {
+        FirebaseUser user = repository.currentUser();
+        if (user == null) {
+            return Session.SIGNED_OUT;
+        }
+        return user.isEmailVerified() ? Session.VERIFIED : Session.UNVERIFIED;
     }
 
     @Override
@@ -79,6 +114,13 @@ public final class FirebaseAccountService implements AccountService {
     private static AccountError map(@Nullable Exception exception) {
         if (exception instanceof FirebaseAuthUserCollisionException) {
             return AccountError.EMAIL_TAKEN;
+        }
+        if (exception instanceof FirebaseAuthInvalidCredentialsException
+                || exception instanceof FirebaseAuthInvalidUserException) {
+            return AccountError.INVALID_CREDENTIALS;
+        }
+        if (exception instanceof FirebaseTooManyRequestsException) {
+            return AccountError.TOO_MANY_ATTEMPTS;
         }
         if (exception instanceof FirebaseNetworkException) {
             return AccountError.NETWORK;

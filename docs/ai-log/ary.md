@@ -216,3 +216,17 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary). Read these first: `UmEmailPolicy` (why the domain must match exactly and why two `@` signs are rejected), `SignUpCheck` (one problem per field), and how `SignUpViewModel` decides when to call Firebase.
 - **Limits:** the allowed domains (`siswa.um.edu.my` and `um.edu.my`) follow the Figma design and are still a team decision (story E1.1, with Dafi). The Figma tip said the link works for 24 hours; that was removed because it is not verified. Log in is a placeholder message until E1.2. After verification the product shell opens as a stand-in until profile setup (E1.3) exists. "Change email" signs the unverified account out but does not delete it from Firebase. The full name is stored as the Firebase display name only; the `users` profile document waits for Gathan's schema.
+
+## 2026-10-27 · E1.2 Log in, reset password, session routing, Log out · Module 1 (FR1.2)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** build story E1.2 (Log in and Reset password screens, session handling, log out), make Welcome the first screen through a launcher that reads the saved session, and remove the "Examples only" label from Welcome.
+- **Prompts (exact):**
+  > ini ui nya emg belum diupdate ya buat login?
+  > sekaligus dan apus label examples only di welcome
+- **Output used:** `domain/auth/LogInCheck.java`; `data/AccountService` and `FirebaseAccountService` (sign in, password reset, session state); `ui/auth/` (`LogInFragment`, `ResetPasswordFragment`, `LogInViewModel`, `ResetPasswordViewModel`, `StartRoute`, `LauncherActivity`); layouts, `nav_auth.xml` and strings; a temporary Log out button on the Home tab; a debug-only "Jiran dev" launcher icon for the developer screen. Tests: 16 new (63 in total).
+- **How it was tested or checked:** `lintDebug testDebugUnitTest checkstyleMain assembleDebug` pass. On the Pixel_9 emulator with the local Firebase Auth emulator: a wrong login shows one message for both a wrong email and a wrong password; Reset password shows the same "if this email has an account" message for an unknown address; sign up, opening the verification link and returning opens the product; Log out returns to Welcome; logging in again with the verified account opens the product; after killing the app, an unverified account reopens on Verify email; logging in with an unverified account goes to Verify email. not verified: a real device, a real inbox, the live project, rotation, TalkBack, and the "too many attempts" message from Firebase.
+- **What the human changed or rejected:** Ary asked to remove the "Examples only" label. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Read first: `FirebaseAccountService.sendPasswordReset` (why an unknown address counts as success), `StartRoute` (who may reach which screen), and the sign-in error mapping.
+- **Limits:** the "link works for 1 hour" text from Figma was left out because it is not verified. Log out sits on the Home placeholder until Profile and settings (E10.1). The product shell opens after verification as a stand-in for profile setup (E1.3). Aaron's earlier string `auth_reset_sent` existed, so the new text is named `auth_reset_link_sent`.

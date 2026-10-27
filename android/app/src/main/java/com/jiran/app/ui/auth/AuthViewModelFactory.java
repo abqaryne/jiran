@@ -20,6 +20,12 @@ final class AuthViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(VerifyEmailViewModel.class)) {
             return (T) new VerifyEmailViewModel(accounts);
         }
+        if (modelClass.isAssignableFrom(LogInViewModel.class)) {
+            return (T) new LogInViewModel(accounts);
+        }
+        if (modelClass.isAssignableFrom(ResetPasswordViewModel.class)) {
+            return (T) new ResetPasswordViewModel(accounts);
+        }
         throw new IllegalArgumentException("Unknown view model " + modelClass.getName());
     }
 }
