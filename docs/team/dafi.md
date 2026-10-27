@@ -9,20 +9,34 @@ You must also write real code (the brief says nobody does only documentation): t
 
 ## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-Epics E0.4, E4.5, E5.1 and E10 are yours; E7.4 and a few numbers too.
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
 
-| Story | Priority | Due | Waits for |
+**Stories you lead** (8)
+
+| Story | FR, priority | Due | Waits for |
 |---|---|---|---|
-| **E0.4** Project management: build the board (initiative, epics, story cards, subtask checklists), sprint 1 plan, weekly sync, PRD upkeep, hours summary, start `docs/ai-log/dafi.md` | P0 | 30 Oct | none |
-| **E4.5** UM shuttle timetable and commute estimates: find the timetable (a timetable is enough, no API or live tracking), email UM transport only if it cannot be found, then estimate commute time and cost with Aaron | P0 | 8 Nov (timetable), 13 Nov (estimates) | none |
-| **E7.3** (part) Numbers #4 parking and #5 shuttle: the shuttle times and whether it is free, and the parking fee | P0 | 13 Nov | E4.5 |
-| **E7.3** (part) #8 Data retention periods against PDPA 2010, with Gathan | P0 | 13 Nov | none |
-| **E7.4** Requirements freeze: confirm P0 and P1 with Ary and freeze the PRD | P0 | 15 Nov | Aly's survey analysis (E7.2) |
-| **E5.1** Expenses and balances (FR5.1): the balance and settle-up logic in plain Java with JUnit first, then the Unit tab screens | P0 | logic 29 Nov, screens 13 Dec | Gathan's household data; Ary's components |
-| **E10** Report: assemble all sections, requirements table (19 FRs), team roles, references, final style pass | P0 | draft during the build; 4 to 9 Jan assembly | each owner's section |
-| **E9.1** (part) Team contributions (0:30) and closing summary (0:45) for the video | P0 | 20 Dec | Trello hours, commit summary |
+| **E0.4** Project management and docs | P0 | 30 Oct |  |
+| **E7.1** Balance and settle-up logic *(can start early)* | FR5.1, P0 | start now, due 29 Nov |  |
+| **E7.3** Expenses and balances screens | FR5.1, P0 | 12 Dec | E7.1, E7.2 |
+| **E7.4** Move out | FR5.1, P0 | 13 Dec | E7.3 |
+| **T1.3** Verify the assumed numbers | P0 | 13 Nov | T1.1 |
+| **T1.4** UM shuttle timetable and commute estimates | P0 | 8 Nov (timetable), 13 Nov (estimates) |  |
+| **T1.5** Requirements freeze | P0 | 15 Nov | T1.2 |
+| **T4.1** Report sections | P0 | 9 Jan | each owner's part |
 
-You must also write real code (the brief says nobody does only documentation): the balance logic and the expense screens in E5.1.
+**Stories where you do a subtask** (7): open the story card to see yours.
+
+| Story | Lead | Due |
+|---|---|---|
+| **E1.1** Sign up with a UM email and verify it | Ary | 19 Nov |
+| **E5.3** Move-in confirmation | Ary | 9 Dec |
+| **E7.2** Household data and rules | Gathan | 8 Dec |
+| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
+| **T1.2** Survey analysis | Aly | 15 Nov |
+| **T3.1** Script and screen captures | Ary | 20 Dec |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
+
+You must also write real code (the brief says nobody does only documentation): the balance logic and the expense screens in E7.
 
 ## Your PM routine
 - Daily: check Trello for blocked cards

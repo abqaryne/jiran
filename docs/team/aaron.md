@@ -165,23 +165,35 @@ not complete. No push or merge has been performed.
 
 ## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-Epics E4 and E0.1, E0.2, E0.6 are yours, plus the match score in E3.2 and the P0 code freeze.
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
 
-| Story | Priority | Due | Waits for |
+**Stories you lead** (7)
+
+| Story | FR, priority | Due | Waits for |
 |---|---|---|---|
-| **E0.1** Repo and CI healthy: fix the CI Android SDK step, merge `main` into the commute branch, fix the paths after the folder change | P0 | 2 Nov | none |
-| **E0.2** Firebase and Maps ready: Functions region and billing plan decided, restricted Maps key with a billing alert (#11), emulator smoke test in CI. The service setup in `jiran-mad` is partly done (see the status above). | P0 | 8 Nov | team decision on billing |
-| **E7.3** (part) #5 transit coverage and #11 Maps cost and quota. Check early (PRD open question 7): does Google's transit data cover bus, LRT and the UM shuttle from Pantai Dalam and Kerinchi to UM? If the shuttle is missing, Dafi supplies the timetable (E4.5). | P0 | 8 Nov | none |
-| **E0.6** Function contracts (stubs): `docs/api-contracts.md` with `getCommuteOptions`, `getTransitRoute`, `computeMatchScores`, `splitRoomPrices`, and the AI functions agreed with Ilham | P0 | 15 Nov (Gate 2) | none |
-| **E4.1** Commute per travel mode (FR4.1): walking, bus or LRT plus the UM shuttle, e-hailing estimate, driving | P0 | 29 Nov | #3, #4, #5; shuttle timetable (E4.5) |
-| **E7.3** (part) #2 peak hours (with Aly), #3 e-hailing fares, #4 car cost, #6 CO₂ factors, #9 match weights | P0 | 12 to 13 Nov | Aly's survey |
-| **E4.2** True monthly cost (FR4.2): room price plus utilities plus the cheapest mode that is on time; cache per area and faculty (NFR1) | P0 | 13 Dec | Gathan's listings (E2.1) |
-| **E4.3** Commute options card data (FR4.3): time, cost and CO₂ per mode, cheapest on-time option | P0 | 13 Dec | E4.1 |
-| **E3.2** (part) Match score Cloud Function: transparent weighted formula, deterministic, unit-tested | P0 | 13 Dec | Gathan's match fields, weights (#9) |
-| **E4.4** Peak and off-peak (traffic-aware Routes API), e-hailing surge assumption, step-by-step transit route | P1 | 13 Dec | E4.3 |
-| **Gate 3** Lead the P0 code freeze | P0 | 13 Dec | all P0 stories |
+| **E0.1** Repo and CI are healthy | P0 | 2 Nov |  |
+| **E0.2** Firebase and Maps are ready | P0 | 8 Nov | team decision on billing |
+| **E0.6** Function contracts (stubs) | P0 | 15 Nov |  |
+| **E3.3** Commute per travel mode *(can start early)* | FR4.1, P0 | start now, due 29 Nov | Maps coverage and fares (#3, #4, #5), shuttle timetable (T1) |
+| **E3.4** True monthly cost and travel time on the Room card | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
+| **E4.4** Public transport route page, peak and off-peak | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
+| **E6.2** Match score function *(can start early)* | FR3.2, P0 | 10 Dec | match weights (#9), `matchProfiles` (E6.1) |
 
-**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
+**Stories where you do a subtask** (9): open the story card to see yours.
+
+| Story | Lead | Due |
+|---|---|---|
+| **E0.4** Project management and docs | Dafi | 30 Oct |
+| **E1.1** Sign up with a UM email and verify it | Ary | 19 Nov |
+| **E4.2** Commute options card | Ary | 7 Dec |
+| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
+| **T1.3** Verify the assumed numbers | Dafi | 13 Nov |
+| **T1.4** UM shuttle timetable and commute estimates | Dafi | 8 Nov (timetable), 13 Nov (estimates) |
+| **T3.1** Script and screen captures | Ary | 20 Dec |
+| **T4.1** Report sections | Dafi | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
+
+**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You also lead the P0 code freeze (Gate 3, 13 Dec).
 
 ## Hand-offs
 | You wait for | From | Use meanwhile |

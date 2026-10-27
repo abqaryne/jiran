@@ -8,20 +8,33 @@
 
 ## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-Epics E7 and E8 are yours, plus E5.2 and E5.3 with Dafi and the video editing in E9.2.
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
 
-| Story | Priority | Due | Waits for |
+**Stories you lead** (9)
+
+| Story | FR, priority | Due | Waits for |
 |---|---|---|---|
-| **E7.1** Survey and interviews: put [SURVEY.md](../product/SURVEY.md) into a Google Form (English and Malay), pilot with 5 people and time it (8 minutes or less), launch, reach **100+ responses** across faculties and areas (not only FSKTM; ask Telegram admins for permission), plan 5 to 8 interviews (20 minutes) and a consent form, review the wording with Ary | P0 | launch 31 Oct, 100+ responses 8 Nov | none |
-| **E8.1** Test plan: one test case per FR, plus the NFR1 and NFR2 tests; Espresso scaffolding | P0 | 15 Nov (plan), 29 Nov (scaffolding) | none |
-| **E7.2** Survey analysis: room prices to Gathan, peak hours and fares to Aaron, feature importance (H1) to Dafi, the "finding, FR it shaped" table with Dafi | P0 | 15 Nov | E7.1 |
-| **E7.3** (part) Numbers: #1 room price weights (C5 to C7) and #7 utilities (C9) by 10 Nov, #2 peak hours (E5, E6) by 12 Nov, #3 e-hailing fares (E7 plus a shared sheet where everyone logs Grab estimates for about 10 routes) and #9 match weights (F2) by 13 Nov | P0 | 10 to 13 Nov | E7.1 |
-| **E5.2** Recurring chores (FR5.2): rotation logic in plain Java with JUnit, then the screens and reminders | P1 | 13 Dec | E5.1; FCM from Gathan |
-| **E5.3** House rules (FR5.3), with Dafi: the rules model and screen; changing a rule resets everyone's acceptance | P1 | 13 Dec | E5.1 |
-| **E8.2** NFR1 load test: the k6 script in `backend/tests/load`, 100 concurrent users, 95% under 3 s | P0 | 27 Dec | working search |
-| **E8.4** Usability test: 8 to 10 UM students, five tasks, SUS at least 68 and 80% task success | P0 | 27 Dec | working app |
-| **E8.5** Release check: integration tests for each main flow, no P0 bug left before recording | P0 | 27 Dec | all P0 stories |
-| **E9.2** Record, assemble and edit the video; Ary checks it against the rubric | P0 | 28 Dec to 2 Jan | everyone's captures |
+| **E7.5** Recurring chores *(can start early)* | FR5.2, P1 | 13 Dec | E7.2 (logic can start now) |
+| **E7.6** House rules | FR5.3, P1 | 13 Dec | E7.2 |
+| **T1.1** Survey and interviews | P0 | 8 Nov (launch 31 Oct) |  |
+| **T1.2** Survey analysis | P0 | 15 Nov | T1.1 |
+| **T2.1** Test plan and integration tests | P0 | 15 Nov (plan), 27 Dec (run) |  |
+| **T2.2** NFR1: speed under load | P0 | 27 Dec | working search |
+| **T2.4** Usability test | P0 | 27 Dec | working app |
+| **T2.5** Release check | P0 | 27 Dec | all P0 flows |
+| **T3.2** Record, edit and final cut | P0 | 2 Jan | T3.1 |
+
+**Stories where you do a subtask** (5): open the story card to see yours.
+
+| Story | Lead | Due |
+|---|---|---|
+| **E0.4** Project management and docs | Dafi | 30 Oct |
+| **T1.3** Verify the assumed numbers | Dafi | 13 Nov |
+| **T3.1** Script and screen captures | Ary | 20 Dec |
+| **T4.1** Report sections | Dafi | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
+
+You also record, assemble and edit the video (T3.2); Ary reviews it against the rubric.
 
 ## Your parts in the graded deliverables
 - **Video:** the chores and house rules part of the demo, segment 5 NFR1 results, segment 6 survey and interview findings. You also record, assemble and edit the video (Ary reviews against the rubric).

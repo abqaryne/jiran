@@ -7,22 +7,33 @@
 
 ## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-Epic E6 is yours, plus the match reasons in E3.2, the AI evaluation and the AI Usage Log appendix.
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
 
-**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Aaron write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You build your own AI screens in Android with Ary's components.
+**Stories you lead** (8)
 
-| Story | Priority | Due | Waits for |
+| Story | FR, priority | Due | Waits for |
 |---|---|---|---|
-| **E6.1** Choose and set up the AI provider (#10): compare Gemini and Claude on cost, quota, speed, Malay and English quality, keys in Cloud Functions secrets only, **start the AI Usage Log today** (Appendix 2(b): tool, exact prompt, how the output was used, tested and changed) | P0 | 8 Nov | none |
-| **E6.3** (part) Collect **10 sample tenancy agreements** (anonymised) and write the known risky clauses of each; this is the ground truth for evaluation | P0 | 8 Nov | none |
-| **E0.6** (part) Agree with Aaron the request and response shape of each AI function | P0 | 15 Nov | none |
-| **E6.2** Plain-language search (FR6.1): turns English or Malay text into filters the user can see and edit before results load, in the Rooms search bar (no separate Ask tab); mock filters first; the 50 test requests written by surveyed students | P0 | 13 Dec | E2.2 for the real filters |
-| **E6.3** Private contract check (FR6.2): upload a PDF or photo, a function marks each clause Red flag, Check or OK; the screens open only from a chat attachment or Profile, never from a listing | P0 | 20 Dec | Gathan's private file rules |
-| **E6.4** AI labels and reporting a wrong result (FR6.3): every AI output labelled AI-generated, "not legal advice" on the contract result, a button to report a wrong result | P0 | 20 Dec | E6.2, E6.3 |
-| **E3.2** (part) Match reasons from the score breakdown of Aaron's formula; rule-generated reasons if the AI fails | P0 | 13 Dec | Aaron's score function |
-| **E6.5** AI evaluation for the report: 50 requests, 10 contracts, user ratings of the reasons | P0 | 20 Dec | E6.2, E6.3 |
-| **E10.2** AI Usage Log appendix: merge everyone's logs, check nothing is invented | P0 | 4 to 9 Jan | everyone's logs |
-| **P2** Listing reader that pre-fills Evaluate unit from pasted text or a screenshot | P2 | only if time | E2.4 |
+| **E3.5** Plain-language AI search *(can start early)* | FR6.1, P0 | 4 Dec | E3.2 for the real filters (use mock filters first) |
+| **E6.3** Match reasons | FR3.2, P0 | 10 Dec | E6.2 |
+| **E8.1** Choose and set up the AI provider *(can start early)* | P0 | 8 Nov |  |
+| **E8.2** Sample agreements and the contract function *(can start early)* | FR6.2, P0 | 13 Dec | E8.1 |
+| **E8.3** Upload and result screens | FR6.2, P0 | 20 Dec | E5.2 (the file arrives in a chat) |
+| **E8.4** AI labels and reporting a wrong result | FR6.3, P0 | 20 Dec | E3.5, E6.3, E8.3 |
+| **E8.5** AI evaluation for the report | FR6.1, FR6.2, P0 | 20 Dec | E3.5, E8.3 |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | P0 | 9 Jan | everyone's logs |
+
+**Stories where you do a subtask** (6): open the story card to see yours.
+
+| Story | Lead | Due |
+|---|---|---|
+| **E0.4** Project management and docs | Dafi | 30 Oct |
+| **E0.6** Function contracts (stubs) | Aaron | 15 Nov |
+| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
+| **T1.3** Verify the assumed numbers | Dafi | 13 Nov |
+| **T3.1** Script and screen captures | Ary | 20 Dec |
+| **T4.1** Report sections | Dafi | 9 Jan |
+
+**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Aaron write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You build your own AI screens with Ary's components. **Start the AI Usage Log today.**
 
 ## Design rules
 - The compatibility score and CO2 are computed by code, never by the AI

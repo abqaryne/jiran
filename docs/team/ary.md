@@ -11,37 +11,47 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 
 ## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-Epics E1 and E3 are yours. You build the screens of Modules 1 and 3, the Room details and commute card, and you check every PR.
-Everyone else builds their own module's screens with your components.
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
 
-**This week (Step 0, until 8 Nov)**
+**Stories you lead** (18)
 
-| Story | Priority | Due |
+| Story | FR, priority | Due | Waits for |
+|---|---|---|---|
+| **E0.3** Design system and app shell | P0 | 15 Nov |  |
+| **E1.1** Sign up with a UM email and verify it | FR1.1, P0 | 19 Nov | UM email policy decision |
+| **E1.2** Log in, log out and reset password | FR1.2, P0 | 20 Nov | E1.1 |
+| **E1.3** Profile setup and privacy | FR1.3, P0 | 22 Nov | `users` fields (E0.5) |
+| **E1.4** Home and the four tabs after sign-in | P0 | 22 Nov | E1.2 |
+| **E4.1** Room details screen | FR2.2, P0 | 4 Dec | E3.1 |
+| **E4.2** Commute options card | FR4.3, P0 | 7 Dec | E3.3 (use the stub until it lands) |
+| **E4.3** Send a request to the Host | FR3.3, P0 | 7 Dec | E5.1 |
+| **E5.1** Requests inbox and Connection | FR3.3, P0 | 7 Dec | E1.3 |
+| **E5.2** Chat and viewing | FR3.3, P0 | 9 Dec | E5.1 |
+| **E5.3** Move-in confirmation | FR3.3, FR5.1, P0 | 9 Dec | E5.2 |
+| **E6.1** Compatibility questions | FR3.1, P0 | 8 Dec | E1.3 |
+| **E6.4** Match list, match profile and connect | FR3.2, FR3.3, P0 | 11 Dec | E6.2 (fake scores meanwhile), E5.1 |
+| **E9.2** Group, split options and member status | FR3.3, P1 | 19 Dec | E5.2 |
+| **E9.3** Compare units | FR3.3, P1 | 20 Dec | E9.1, E9.2 |
+| **E10.1** Profile and privacy settings screens | FR1.3, P1 | 18 Dec | E1.3 |
+| **E10.2** Polish: empty states, errors, accessibility | P1 | 20 Dec | all P0 flows |
+| **T3.1** Script and screen captures | P0 | 20 Dec |  |
+
+**Stories where you do a subtask** (10): open the story card to see yours.
+
+| Story | Lead | Due |
 |---|---|---|
-| **E0.1** Repo and CI healthy: add collaborators, branch protection, email the lecturer | P0 | 30 Oct |
-| **E7.1** (part) Review the survey wording with Aly so the questions match the screens | P0 | 2 Nov |
-| **E0.3** Design system and app shell: Figma and components are done; announce the components, make the shell the first screen after sign-in, empty and error states | P0 | 15 Nov |
+| **E0.1** Repo and CI are healthy | Aaron | 2 Nov |
+| **E0.4** Project management and docs | Dafi | 30 Oct |
+| **E4.4** Public transport route page, peak and off-peak | Aaron | 14 Dec |
+| **E5.4** Notifications | Gathan | 13 Dec |
+| **E9.1** Evaluate any unit | Gathan | 17 Dec |
+| **E9.4** Area page and building reviews | Gathan | 20 Dec |
+| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
+| **T3.2** Record, edit and final cut | Aly | 2 Jan |
+| **T4.1** Report sections | Dafi | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
 
-**Wave A (16 to 29 Nov): Module 1**
-
-| Story | Priority | Due | Waits for |
-|---|---|---|---|
-| **E1.1** Sign up with a UM email and verify it (FR1.1) | P0 | 29 Nov (auth works 15 Nov) | UM email policy decision |
-| **E1.2** Log in, log out, reset password (FR1.2) | P0 | 29 Nov | E1.1 |
-| **E1.3** Profile and privacy (FR1.3) | P0 | 29 Nov | Gathan's `users` fields (E0.5) |
-
-**Wave B (30 Nov to 13 Dec)**
-
-| Story | Priority | Due | Waits for |
-|---|---|---|---|
-| **E4.3** Commute options card and the public transport route page (screens) | P0 | 13 Dec | Aaron's commute API (use the stub) |
-| **E3.1** Compatibility questions (FR3.1) | P0 | 13 Dec | E1.3 |
-| **E3.2** Ranked matches with score and reasons (screens) | P0 | 13 Dec | E3.1; Aaron's score, Ilham's reasons (fake scores meanwhile) |
-| **E3.3** Connection request and chat (screens) | P0 | 13 Dec | Gathan's `chats` |
-| **E3.4** Group and split decision aids | P1 | 13 Dec | E3.3 |
-| **E4.4** Peak and off-peak toggle and route steps (screens) | P1 | 13 Dec | E4.3 |
-
-**Always:** check and merge every PR, and help owners use the components. If the load gets too heavy, hand E3.4 or the Module 3 screens to Ilham or Gathan.
+**Always:** check and merge every PR, and help owners use the components. If the load gets too heavy, hand the Module 3 screens (E6, E9.2) to Ilham or Gathan.
 
 ## Hand-offs
 | You wait for | From | Use meanwhile |

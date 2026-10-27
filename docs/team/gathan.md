@@ -9,21 +9,45 @@ Your schema and rules are the first thing others wait for, so they land first.
 
 ## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-Epic E2 is yours, plus the data and rules for every module. Your schema and rules land first because the others wait for the field names.
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
 
-| Story | Priority | Due | Waits for |
+**Stories you lead** (12)
+
+| Story | FR, priority | Due | Waits for |
 |---|---|---|---|
-| **E0.5** Data schema and Security Rules: schema from PRD section 8 plus `chats`, first rules draft, rules tests, reference prices and 10 to 15 fictional seed listings (do not copy listings, see the rule in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md)), send the field list to the group | P0 | draft 8 Nov, merged 15 Nov | none |
-| **E7.3** (part) #1 room price weights and #7 utilities (Aly finds them, you put them in config and seed data), #8 retention periods with Dafi | P0 | 10 to 13 Nov | Aly's survey |
-| **E2.1** Post a unit with priced rooms (FR2.1): data, photos, building picker, the room price rule with JUnit, My listing, the post screens | P0 | 29 Nov | E0.5 |
-| **E2.2** Search and filter rooms (FR2.2): query, Rooms screen with Room cards and the filters sheet, travel-time filter, import the seed listings | P0 | 13 Dec | E2.1; Aaron's commute function (E4.2) |
-| **E3.3** (part) `chats` data and rules for what each stage may see; the contract file shared in a chat is private to the two people | P0 | 13 Dec | E0.5 |
-| **E2.3** Area page and moderated building reviews | P1 | 13 Dec | E2.1, E2.2 |
-| **E2.4** Evaluate any unit: `unitEvaluations`, room price split, screens, delete after 90 days | P1 | 13 Dec | E2.1, E4.2 |
-| **E3.4** (part) `groups` data and rules | P1 | 13 Dec | E3.3 |
-| **E5.1** (part) `households` and `expenses` data and rules, members only; FCM notifications | P0 | 13 Dec | E0.5 |
-| **E8.3** NFR2 evidence: rules tests where every unauthorised access is denied, privacy checklist with screenshots | P0 | 27 Dec | all rules |
-| **E6.3** (part) Private contract file rules and deletion after 30 days | P0 | 20 Dec | Ilham |
+| **E0.5** Data schema and Security Rules | P0 | draft 8 Nov, merged 15 Nov |  |
+| **E2.1** Pick the building and enter rent and deposit | FR2.1, P0 | 25 Nov | E0.5, E1.3 |
+| **E2.2** Rooms and prices with the price rule | FR2.1, P0 | 27 Nov | E2.1 |
+| **E2.3** My listing: renew, requests and mark occupied | FR2.1, P0 | 29 Nov | E2.2 |
+| **E2.4** Fictional seed listings *(can start early)* | P0 | 29 Nov | E0.5 |
+| **E3.1** Rooms screen and Room cards | FR2.2, P0 | 2 Dec | E2.4 |
+| **E3.2** Filters | FR2.2, P0 | 3 Dec | E3.1 |
+| **E5.4** Notifications | P1 | 13 Dec | E5.1 |
+| **E7.2** Household data and rules | FR5.1, P0 | 8 Dec | E0.5 |
+| **E9.1** Evaluate any unit | FR2.4, P1 | 17 Dec | E3.4 |
+| **E9.4** Area page and building reviews | FR2.3, P1 | 20 Dec | E2, E3 |
+| **T2.3** NFR2: privacy and security evidence | P0 | 27 Dec | all rules |
+
+**Stories where you do a subtask** (14): open the story card to see yours.
+
+| Story | Lead | Due |
+|---|---|---|
+| **E0.4** Project management and docs | Dafi | 30 Oct |
+| **E1.3** Profile setup and privacy | Ary | 22 Nov |
+| **E3.4** True monthly cost and travel time on the Room card | Aaron | 4 Dec |
+| **E4.3** Send a request to the Host | Ary | 7 Dec |
+| **E5.1** Requests inbox and Connection | Ary | 7 Dec |
+| **E5.2** Chat and viewing | Ary | 9 Dec |
+| **E6.1** Compatibility questions | Ary | 8 Dec |
+| **E8.3** Upload and result screens | Ilham | 20 Dec |
+| **E9.2** Group, split options and member status | Ary | 19 Dec |
+| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
+| **T1.3** Verify the assumed numbers | Dafi | 13 Nov |
+| **T3.1** Script and screen captures | Ary | 20 Dec |
+| **T4.1** Report sections | Dafi | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
+
+Your schema and rules (E0.5) land first because everyone waits for the field names.
 
 ## Privacy checklist (NFR2 and PDPA 2010)
 - Only verified UM accounts can read anything
