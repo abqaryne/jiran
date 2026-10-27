@@ -8,12 +8,22 @@
 You must also write real code (the brief says nobody does only documentation): the balance logic and the expense screens.
 
 ## Right now: Step 0 (26 Oct to 8 Nov)
+
+**Team admin (do first)**
 - [ ] Trello board with columns: Backlog, Ready, In progress, In review, QA, Done
 - [ ] One card per FR (18 cards), labelled P0, P1 or P2, with an owner and an hours field
-- [ ] Sprint 1 plan (one-week sprints), plus a weekly sync time and a place for minutes
-- [ ] **Find the UM shuttle timetable** (routes, stops, departure times, which days it runs) for the commute card. The app shows the shuttle as *scheduled, not live*, so a timetable is enough: **no API or live tracking is needed**. Look for what UM already publishes first; send **one short email to UM transport only if you cannot find it** or need to confirm it is current. No formal meetings with UMSU, BHEP or UMSDC: the brief only gives extra credit for them, so skip. Optional if you have spare time: one short email each to BHEP and UMSDC, and keep any reply for the report.
-- [ ] Keep docs/product/PRD.md up to date as decisions change
+- [ ] Sprint 1 plan (one-week sprints), a weekly sync time, and a place for minutes
 - [ ] Post a weekly hours summary in the group chat
+
+**UM shuttle timetable (for the commute card)**
+- [ ] Find the UM shuttle timetable: routes, stops, departure times and which days it runs. The app shows the shuttle as *scheduled, not live*, so a timetable is enough. **No API and no live tracking are needed.**
+- [ ] Look for what UM already publishes first. Send **one short email to UM transport only if you cannot find it** or need to confirm it is current. If you do email, also ask whether the shuttle is free and what the **parking fee** at UM is, in the same email.
+- [ ] Give the timetable to Aaron. Together, work out roughly how long and how much the commute is for a few example routes (for example Pantai Dalam and Kerinchi to a faculty). Write the numbers as estimates and name the source.
+- No formal meetings with UMSU, BHEP or UMSDC: the brief only gives extra credit for them, so skip. Optional if you have spare time: one short email each to BHEP and UMSDC, and keep any reply for the report.
+
+**Requirements and AI log**
+- [ ] Keep [PRD.md](../product/PRD.md) up to date as decisions change
+- [ ] Start your own AI Usage Log in [docs/ai-log/dafi.md](../ai-log/dafi.md) today (the course requires it; rules in [AGENTS.md](../../AGENTS.md))
 
 ## Next
 **Step 1 (2 to 15 Nov):** run the requirements freeze. Combine the survey findings with the PRD and make a table "finding, FR it shaped". Confirm P0 and P1 with Ary.
@@ -39,7 +49,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - **Evidence:** weekly screenshot of Trello and the Git log per person
 
 ## Numbers you find (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
-- Find the shuttle stops and times, whether the shuttle is free, and the **parking fee** at UM (#4, #5; due 13 Nov). If an email to UM transport is still needed, ask all of it in the same email
+- **#4 Car cost (parking) and #5 Public transport (UM shuttle):** the shuttle timetable and whether it is free, plus the parking fee at UM (due 13 Nov)
 - **#8 Data retention periods:** help Gathan, and ask the lecturer if still unsure (due 13 Nov)
 - Check every row in the file has an owner and is on track at each weekly sync
 
