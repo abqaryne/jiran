@@ -45,7 +45,7 @@ the *can start early* ones, belong in Ready.
 PR link · AI log link.
 
 **Rules**
-- Log your **actual hours on the story card** (minimum 20 hours each; this is the evidence for the peer evaluation).
+- Log your **actual hours on the story card** (this is the evidence for the peer evaluation).
 - Max two stories In progress per person.
 - If AI helped, add the entry to `docs/ai-log/<name>.md` and link it on the card.
 - Screenshot the board every week (evidence for the report).

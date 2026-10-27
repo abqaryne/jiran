@@ -134,3 +134,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** Aaron's master prompt in `aaron.md` still mentions Wave A and Wave B (it is his own prompt record, so it was left as it is).
 
+## 2026-10-27 · Remove the 20-hour minimum from the docs · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** remove the "minimum 20 hours" requirement from all team documents.
+- **Prompts (exact):**
+  > buat yang requirement minimal 20jam itu apus aja dari semua docs
+- **Output used:** `docs/team/TEAM_PLAN.md`, the six personal files and `docs/team/trello-cards.md`. Logging actual hours on Trello cards is kept as evidence for the peer evaluation. The assistant noted that the course brief itself says each member is expected to contribute at least 20 hours; only our own documents were changed.
+- **How it was tested or checked:** text search shows no remaining mention in the docs.
+- **What the human changed or rejected:** Ary decided to drop the 20-hour wording from the documents.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the brief's expectation still applies to the team.
+

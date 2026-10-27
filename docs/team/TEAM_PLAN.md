@@ -12,7 +12,7 @@ Work is divided **by module**, with one owner per module and specialists helping
 | Peer evaluation | after submission | multiplier | Final mark = (video + report) × contribution factor (0–1.0) |
 | AI Usage Log | appendix to report | mandatory | Tool, exact prompts, how output was tested/modified. Missing/inaccurate log = penalties |
 
-Other rules: ≥20 h per member; **every member must take part in development** and no one may do *only* documentation; every member's tasks need evidence (Git commits / Trello); ≥5 modules × 3 FRs; ≤2 NFRs; late submission needs lecturer approval *before* the deadline (−5%/day).
+Other rules: **every member must take part in development** and no one may do *only* documentation; every member's tasks need evidence (Git commits / Trello); ≥5 modules × 3 FRs; ≤2 NFRs; late submission needs lecturer approval *before* the deadline (−5%/day).
 
 **Video marking (100):** Overview 10 · **System demo 30** · Design/usability 10 · Technical implementation 10 · NFR verification 10 · Stakeholder validation 10 · Team contributions 10 · Closing 10
 **Report marking (100):** Intro 10 · User study 10 · **FRs 15** · NFRs 5 · Architecture/design 10 · **System implementation 20** · Testing 10 · Impact/limits 5 · Team roles 10 · References/writing 5

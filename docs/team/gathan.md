@@ -65,7 +65,7 @@ Your schema and rules (E0.5) land first because everyone waits for the field nam
 
 ## Rules for everyone
 
-- Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
+- Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
