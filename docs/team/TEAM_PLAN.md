@@ -191,7 +191,7 @@ Editing and final cut: Aly records and edits; Ary reviews against the rubric. Ev
 
 Rule: report ownership is *in addition to* code, never instead of it.
 
-**Word-limit tactic:** the 2,500 cap is tight for 18 FRs. Put FRs in tables (double-spacing exempt) and move extended detail (full schema, all screenshots, survey data, FR to test matrix) to appendices.
+**Word-limit tactic:** the 2,500 cap is tight for 19 FRs. Put FRs in tables (double-spacing exempt) and move extended detail (full schema, all screenshots, survey data, FR to test matrix) to appendices.
 
 ## 5. Timeline (from the proposal)
 

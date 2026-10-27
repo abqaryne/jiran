@@ -11,7 +11,7 @@ You must also write real code (the brief says nobody does only documentation): t
 
 **Team admin (do first)**
 - [ ] Trello board with columns: Backlog, Ready, In progress, In review, QA, Done
-- [ ] One card per FR (18 cards), labelled P0, P1 or P2, with an owner and an hours field
+- [ ] One card per FR (19 cards), labelled P0, P1 or P2, with an owner and an hours field. The full list of cards is in [trello-cards.md](trello-cards.md)
 - [ ] Sprint 1 plan (one-week sprints), a weekly sync time, and a place for minutes
 - [ ] Post a weekly hours summary in the group chat
 
@@ -45,7 +45,7 @@ You must also write real code (the brief says nobody does only documentation): t
 
 ## Your parts in the graded deliverables
 - **Video:** the expenses part of the demo, segment 7 team contributions (30 s with Trello hours and commit summary), segment 8 closing (0:45)
-- **Report:** section 2b Functional requirements (compile all 18), section 7 Team roles and contributions, section 8 References and the final style pass. Watch the **2,500 word** limit: put the FRs in tables.
+- **Report:** section 2b Functional requirements (compile all 19), section 7 Team roles and contributions, section 8 References and the final style pass. Watch the **2,500 word** limit: put the FRs in tables.
 - **Evidence:** weekly screenshot of Trello and the Git log per person
 
 ## Numbers you find (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))

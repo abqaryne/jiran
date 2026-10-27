@@ -14,6 +14,7 @@ docs/
 │   └── DESIGN.md         design system, components, Figma file, Android resources
 ├── team/           who does what and when
 │   ├── TEAM_PLAN.md      roles, timeline, workflow
+│   ├── trello-cards.md   board setup and every card to create (FRs, setup, numbers, gates, video, report)
 │   └── aaron.md ary.md aly.md dafi.md gathan.md ilham.md   personal task files
 ├── ai-log/         AI Usage Log (mandatory appendix of the report): README with the template, one file per person
 ├── architecture.md, api-contracts.md, ai-usage-log.md, superpowers/   engineering notes (Aaron)

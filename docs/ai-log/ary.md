@@ -94,3 +94,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** none of the shuttle data was verified.
 
+## 2026-10-27 · Project board cards document · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** write the cards to put in the project management app (Trello).
+- **Prompts (exact):**
+  > coba buat md untuk kartu kartunya yang ditaro di project management app deh
+- **Output used:** `docs/team/trello-cards.md`. Also corrected "18 FRs" to 19 in `docs/team/dafi.md` and `docs/team/TEAM_PLAN.md` (the PRD has 19 FRs).
+- **How it was tested or checked:** cards were derived from the PRD FR table, the team plan (owners, waves, gates, video and report tables) and ASSUMPTIONS.md; link check passed. The due dates for setup cards are proposals by the assistant. TODO (Ary, Dafi): confirm owners, estimates and dates with the team.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** estimates (hours) are left empty on purpose; owners of mixed UI and backend cards are suggestions.
+
