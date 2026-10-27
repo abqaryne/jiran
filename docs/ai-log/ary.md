@@ -101,7 +101,8 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **Task:** write the cards to put in the project management app (Trello).
 - **Prompts (exact):**
   > coba buat md untuk kartu kartunya yang ditaro di project management app deh
-- **Output used:** `docs/team/trello-cards.md`. Also corrected "18 FRs" to 19 in `docs/team/dafi.md` and `docs/team/TEAM_PLAN.md` (the PRD has 19 FRs).
+  > tolong dibuat task-tasknya lebih kayak giini deh soalnya agak bingungin task task yang sekarang (with a screenshot of an Initiative, Epic, Story/Task, Subtask diagram)
+- **Output used:** `docs/team/trello-cards.md`, first as a flat list of cards, then restructured into Initiative, Epics, Stories and Subtasks at Ary's request because the flat list was confusing. Also corrected "18 FRs" to 19 in `docs/team/dafi.md` and `docs/team/TEAM_PLAN.md` (the PRD has 19 FRs).
 - **How it was tested or checked:** cards were derived from the PRD FR table, the team plan (owners, waves, gates, video and report tables) and ASSUMPTIONS.md; link check passed. The due dates for setup cards are proposals by the assistant. TODO (Ary, Dafi): confirm owners, estimates and dates with the team.
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary)

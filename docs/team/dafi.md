@@ -11,7 +11,7 @@ You must also write real code (the brief says nobody does only documentation): t
 
 **Team admin (do first)**
 - [ ] Trello board with columns: Backlog, Ready, In progress, In review, QA, Done
-- [ ] One card per FR (19 cards), labelled P0, P1 or P2, with an owner and an hours field. The full list of cards is in [trello-cards.md](trello-cards.md)
+- [ ] Build the board from [trello-cards.md](trello-cards.md): Initiative (the board), Epics (colour labels), Stories (cards, one per deliverable, labelled P0, P1 or P2, with an owner and an hours field) and Subtasks (checklist items on each card)
 - [ ] Sprint 1 plan (one-week sprints), a weekly sync time, and a place for minutes
 - [ ] Post a weekly hours summary in the group chat
 
