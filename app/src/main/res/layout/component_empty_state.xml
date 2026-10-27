@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: Empty state. One icon, one bold sentence, one line of help. Use EmptyStateView. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_24">
+
+    <ImageView
+        android:id="@+id/empty_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@null"
+        app:tint="@color/color_text_primary"
+        tools:srcCompat="@drawable/ic_chat_bubble" />
+
+    <TextView
+        android:id="@+id/empty_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_12"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Jiran.Title"
+        tools:text="No chats yet" />
+
+    <TextView
+        android:id="@+id/empty_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_4"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Jiran.Meta"
+        tools:text="When a host or housemate accepts your request, your conversation shows up here." />
+</LinearLayout>

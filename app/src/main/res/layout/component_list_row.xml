@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Figma: List row. Icon circle (or avatar), title, subtitle, trailing text or chevron.
-  A thin divider sits under every row except the last (use bg_divider_bottom on the root, or an ItemDecoration).
-  Min height 64 dp, whole row is the touch target.
+  Figma: List row. Icon circle or avatar, title, subtitle, trailing text, optional chevron.
+  Use it through ListRowView. Min height 64 dp, the whole row is the touch target.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/row_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_divider_bottom"
@@ -24,7 +24,15 @@
         android:contentDescription="@null"
         android:padding="9dp"
         app:tint="@color/color_text_primary"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/ic_bolt" />
+
+    <com.jiran.app.ui.common.AvatarView
+        android:id="@+id/avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:avatarSize="medium"
+        tools:visibility="gone" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -36,23 +44,32 @@
 
         <TextView
             android:id="@+id/title"
-            android:textAppearance="@style/TextAppearance.Jiran.Label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Jiran.Label"
             tools:text="TNB electricity" />
 
         <TextView
             android:id="@+id/subtitle"
-            android:textAppearance="@style/TextAppearance.Jiran.Meta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Jiran.Meta"
             tools:text="Paid by Aisyah · split equally" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/trailing"
-        android:textAppearance="@style/TextAppearance.Jiran.Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.Jiran.Label"
         tools:text="RM 186" />
+
+    <ImageView
+        android:id="@+id/chevron"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:contentDescription="@null"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_chevron_right"
+        app:tint="@color/color_text_secondary" />
 </LinearLayout>

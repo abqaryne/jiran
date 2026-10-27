@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.jiran.app.R;
 import com.jiran.app.databinding.ActivityShellBinding;
+import com.jiran.app.ui.common.JiranTabBar;
 
 /**
  * The product shell (single-activity architecture). It hosts the navigation graph and the floating tab bar.
@@ -35,18 +36,44 @@ public class ShellActivity extends AppCompatActivity {
     }
 
     private void bindTabs(NavController navController) {
-        binding.tabBarContainer.tabHome.setOnClickListener(v -> openTab(navController, R.id.homeFragment));
-        binding.tabBarContainer.tabRooms.setOnClickListener(v -> openTab(navController, R.id.roomsFragment));
-        binding.tabBarContainer.tabMatch.setOnClickListener(v -> openTab(navController, R.id.matchFragment));
-        binding.tabBarContainer.tabUnit.setOnClickListener(v -> openTab(navController, R.id.unitFragment));
+        binding.tabBar.setOnTabListener(new JiranTabBar.OnTabListener() {
+            @Override
+            public void onTabSelected(JiranTabBar.Tab tab) {
+                openTab(navController, destinationFor(tab));
+            }
+
+            @Override
+            public void onPostClicked() {
+                // Module 2: open the Post a room flow here.
+            }
+        });
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
-            binding.tabBarContainer.tabHome.setSelected(id == R.id.homeFragment);
-            binding.tabBarContainer.tabRooms.setSelected(id == R.id.roomsFragment);
-            binding.tabBarContainer.tabMatch.setSelected(id == R.id.matchFragment);
-            binding.tabBarContainer.tabUnit.setSelected(id == R.id.unitFragment);
+            if (id == R.id.homeFragment) {
+                binding.tabBar.setSelectedTab(JiranTabBar.Tab.HOME);
+            } else if (id == R.id.roomsFragment) {
+                binding.tabBar.setSelectedTab(JiranTabBar.Tab.ROOMS);
+            } else if (id == R.id.matchFragment) {
+                binding.tabBar.setSelectedTab(JiranTabBar.Tab.MATCH);
+            } else if (id == R.id.unitFragment) {
+                binding.tabBar.setSelectedTab(JiranTabBar.Tab.UNIT);
+            }
         });
+    }
+
+    private int destinationFor(JiranTabBar.Tab tab) {
+        switch (tab) {
+            case ROOMS:
+                return R.id.roomsFragment;
+            case MATCH:
+                return R.id.matchFragment;
+            case UNIT:
+                return R.id.unitFragment;
+            case HOME:
+            default:
+                return R.id.homeFragment;
+        }
     }
 
     private void openTab(NavController navController, int destinationId) {

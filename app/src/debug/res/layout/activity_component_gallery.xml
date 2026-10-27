@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Debug-only. One of each design system component with sample data (see DESIGN.md section 4). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_bg_surface"
+    tools:ignore="HardcodedText">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
+        android:paddingBottom="120dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jiran design system"
+                android:textAppearance="@style/TextAppearance.Jiran.Display" />
+
+            <!-- Typography -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="Typography" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Display 32" android:textAppearance="@style/TextAppearance.Jiran.Display" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Headline 26" android:textAppearance="@style/TextAppearance.Jiran.Headline" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Section 22" android:textAppearance="@style/TextAppearance.Jiran.Section" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Title 17" android:textAppearance="@style/TextAppearance.Jiran.Title" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Body 16, plain regular text" android:textAppearance="@style/TextAppearance.Jiran.Body" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Label 16 semibold" android:textAppearance="@style/TextAppearance.Jiran.Label" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Meta 14, 2d · 3.1 km from FSKTM" android:textAppearance="@style/TextAppearance.Jiran.Meta" />
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Caption 12" android:textAppearance="@style/TextAppearance.Jiran.Caption" />
+
+            <!-- Buttons -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerAction="See all"
+                app:headerTitle="Buttons" />
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Jiran.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Continue" />
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Jiran.Button.Ink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:text="Edit profile" />
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Jiran.Button.Soft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:text="See conversation" />
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Jiran.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:enabled="false"
+                android:text="Disabled" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Jiran.Button.Primary.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Post" />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Jiran.Button.Ink.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:text="Next" />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Jiran.Button.Soft.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:text="Remind" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_12"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Jiran.IconButton.Soft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Back"
+                    app:icon="@drawable/ic_arrow_back" />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Jiran.IconButton.Outline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:contentDescription="Save"
+                    app:icon="@drawable/ic_bookmark" />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Jiran.IconButton.Ink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:contentDescription="Send"
+                    app:icon="@drawable/ic_arrow_upward" />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Jiran.IconButton.Brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:contentDescription="Edit"
+                    app:icon="@drawable/ic_edit" />
+            </LinearLayout>
+
+            <!-- Chips -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="Chips" />
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Jiran.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="All" />
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Jiran.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hosts" />
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Jiran.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Housemates" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Badges -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="Badges" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.jiran.app.ui.common.BadgeView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OK"
+                    app:badgeIcon="@drawable/ic_check"
+                    app:badgeStatus="success" />
+                <com.jiran.app.ui.common.BadgeView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:text="Check"
+                    app:badgeIcon="@drawable/ic_error"
+                    app:badgeStatus="warning" />
+                <com.jiran.app.ui.common.BadgeView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:text="Red flag"
+                    app:badgeIcon="@drawable/ic_flag"
+                    app:badgeStatus="danger" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:orientation="horizontal">
+
+                <com.jiran.app.ui.common.BadgeView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vacant"
+                    app:badgeIcon="@drawable/ic_door_open"
+                    app:badgeStatus="brand" />
+                <com.jiran.app.ui.common.BadgeView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:text="AI-generated"
+                    app:badgeIcon="@drawable/ic_auto_awesome"
+                    app:badgeStatus="neutral" />
+            </LinearLayout>
+
+            <!-- Avatars -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="Avatars" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.jiran.app.ui.common.AvatarView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:avatarInitial="A"
+                    app:avatarSize="small" />
+                <com.jiran.app.ui.common.AvatarView
+                    android:id="@+id/avatar_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    app:avatarSize="medium" />
+                <com.jiran.app.ui.common.AvatarView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    app:avatarInitial="R"
+                    app:avatarSize="large" />
+            </LinearLayout>
+
+            <!-- Fields -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="Fields" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Jiran.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/Widget.Jiran.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mei Ling" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/field_error"
+                style="@style/Widget.Jiran.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_12"
+                android:hint="UM email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/Widget.Jiran.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="meiling@gmail.com" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.jiran.app.ui.common.SearchBarView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/search_height"
+                android:layout_marginTop="@dimen/spacing_12"
+                app:searchAi="true"
+                app:searchHint="Quiet room near LRT under RM550" />
+            <com.jiran.app.ui.common.SearchBarView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/search_height"
+                android:layout_marginTop="@dimen/spacing_8"
+                app:searchHint="Search areas, buildings" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Utilities included"
+                    android:textAppearance="@style/TextAppearance.Jiran.Label" />
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:contentDescription="Utilities included" />
+            </LinearLayout>
+
+            <!-- Banners -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="Banners" />
+            <com.jiran.app.ui.common.InfoBannerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bannerKind="info"
+                app:bannerText="Your address stays private. Others only see the area until you both accept." />
+            <com.jiran.app.ui.common.InfoBannerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                app:bannerKind="success"
+                app:bannerText="You are connected. Say hi." />
+            <com.jiran.app.ui.common.InfoBannerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                app:bannerKind="warning"
+                app:bannerText="Changing a rule asks everyone to accept it again." />
+            <com.jiran.app.ui.common.InfoBannerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                app:bannerKind="danger"
+                app:bannerText="RM 200 over the unit rent. Lower one price to publish." />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/show_toast"
+                style="@style/Widget.Jiran.Button.Soft.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_12"
+                android:text="Show toast" />
+
+            <!-- List rows -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="List rows" />
+            <com.jiran.app.ui.common.ListRowView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:rowIcon="@drawable/ic_bolt"
+                app:rowSubtitle="Paid by Aisyah · split equally"
+                app:rowTitle="TNB electricity"
+                app:rowTrailing="RM 186" />
+            <com.jiran.app.ui.common.ListRowView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:rowAvatarInitial="R"
+                app:rowShowChevron="true"
+                app:rowSubtitle="Rent share, TNB, groceries"
+                app:rowTitle="Rina owes you" />
+            <com.jiran.app.ui.common.ListRowView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:rowIcon="@drawable/ic_event"
+                app:rowShowChevron="true"
+                app:rowShowDivider="false"
+                app:rowSubtitle="3 classes · leave by 9:18 on Mon"
+                app:rowTitle="Class timetable" />
+
+            <!-- Progress -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="Progress" />
+            <com.jiran.app.ui.common.StepProgressView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:stepCurrent="2"
+                app:stepTotal="4" />
+
+            <!-- Commute -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerTitle="Commute options" />
+            <com.jiran.app.ui.common.CommuteOptionView
+                android:id="@+id/commute_selected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:selected="true"
+                app:commuteCost="RM 50/mo · 9 kg CO₂"
+                app:commuteIcon="@drawable/ic_train"
+                app:commuteMode="LRT + UM shuttle"
+                app:commuteNote="Cheapest on time"
+                app:commuteTime="34 min" />
+            <com.jiran.app.ui.common.CommuteOptionView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_8"
+                app:commuteCost="RM 540/mo"
+                app:commuteIcon="@drawable/ic_local_taxi"
+                app:commuteMode="E-hailing"
+                app:commuteNote="Estimate, surge at peak"
+                app:commuteTime="17 min" />
+
+            <!-- Room cards -->
+            <com.jiran.app.ui.common.SectionHeaderView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:headerAction="See all"
+                app:headerTitle="New rooms near you" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <com.jiran.app.ui.common.RoomCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:roomMeta="2d · 18 min · Pantai Dalam"
+                    app:roomPrice="RM 450"
+                    app:roomTitle="Small room · Residensi Pantai Dalam"
+                    app:roomTrueCost="RM 712 true cost" />
+                <com.jiran.app.ui.common.RoomCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_8"
+                    android:layout_weight="1"
+                    app:roomMeta="3d · 22 min · Kerinchi"
+                    app:roomPrice="RM 480"
+                    app:roomTitle="Medium room · Kerinchi Residence"
+                    app:roomTrueCost="RM 748 true cost" />
+            </LinearLayout>
+
+            <!-- Empty state -->
+            <com.jiran.app.ui.common.EmptyStateView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_24"
+                app:emptyIcon="@drawable/ic_chat_bubble"
+                app:emptyMessage="When a host or housemate accepts your request, your conversation shows up here."
+                app:emptyTitle="No chats yet" />
+        </LinearLayout>
+    </ScrollView>
+
+    <com.jiran.app.ui.common.JiranTabBar
+        android:id="@+id/tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+</FrameLayout>

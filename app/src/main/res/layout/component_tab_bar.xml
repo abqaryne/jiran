@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Figma: Tab bar + Post button. A floating white pill with four tabs (Home, Rooms, Match, Unit) and a blue Post button beside it.
-  The selected tab is set in code with setSelected(true) (icon and label turn ink, the rest stay grey).
-  Icons: import Material Symbols Rounded as vector drawables (ic_home, ic_bed, ic_group, ic_door_front, ic_add)
-  and set them as the ImageView src. The selected tab uses the filled symbol.
-  The content above this bar needs about 96 dp of bottom padding.
+  Use it through JiranTabBar. The selected tab gets the filled icon and ink colour. Content above needs ~96 dp bottom padding.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipChildren="false"
+    android:clipToPadding="false"
     android:paddingStart="@dimen/spacing_16"
     android:paddingEnd="@dimen/spacing_16"
     android:paddingBottom="@dimen/spacing_16">
@@ -30,6 +27,7 @@
             android:id="@+id/tab_home"
             android:layout_width="64dp"
             android:layout_height="match_parent"
+            android:contentDescription="@string/home_title"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -37,8 +35,8 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:contentDescription="@null"
-                app:tint="@color/tab_item_color"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@drawable/ic_tab_home"
+                app:tint="@color/tab_item_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,6 +50,7 @@
             android:id="@+id/tab_rooms"
             android:layout_width="64dp"
             android:layout_height="match_parent"
+            android:contentDescription="@string/rooms_title"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -59,8 +58,8 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:contentDescription="@null"
-                app:tint="@color/tab_item_color"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@drawable/ic_tab_bed"
+                app:tint="@color/tab_item_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,6 +73,7 @@
             android:id="@+id/tab_match"
             android:layout_width="64dp"
             android:layout_height="match_parent"
+            android:contentDescription="@string/match_title"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -81,8 +81,8 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:contentDescription="@null"
-                app:tint="@color/tab_item_color"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@drawable/ic_tab_group"
+                app:tint="@color/tab_item_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -96,6 +96,7 @@
             android:id="@+id/tab_unit"
             android:layout_width="64dp"
             android:layout_height="match_parent"
+            android:contentDescription="@string/unit_title"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -103,8 +104,8 @@
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
                 android:contentDescription="@null"
-                app:tint="@color/tab_item_color"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:srcCompat="@drawable/ic_tab_door_front"
+                app:tint="@color/tab_item_color" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -122,5 +123,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:contentDescription="@string/tab_post"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/ic_add" />
 </FrameLayout>

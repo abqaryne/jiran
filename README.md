@@ -146,7 +146,10 @@ app/src/main/java/com/jiran/app/
     group/ chat/                          Module 3 (with match/)
     commute/                              Module 4
     contract/                             Module 6 (private contract check)
-    notifications/ common/                shared
+    notifications/                        Profile and settings screens
+    common/        design system views: BadgeView, AvatarView, RoomCardView, ListRowView, CommuteOptionView,
+                   InfoBannerView, SectionHeaderView, SearchBarView, EmptyStateView, StepProgressView, JiranTabBar
+    gallery/       (src/debug only) ComponentGalleryActivity, launcher icon "Jiran UI"
 ```
 
 MVVM: Fragment draws, ViewModel holds LiveData state (no Views or Context), a Repository is the only door to
