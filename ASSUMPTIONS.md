@@ -23,6 +23,11 @@ Rules for finding data:
 
 ## Status
 
+User budget decision on 27 October 2026: **free only**. Assumption #11 now requires
+a no-billing production alternative, not Google billing activation. See
+[researched options and limits](docs/no-billing-production.md). Spark Auth/Firestore
+remain; Worker/alternative-routing feasibility, transit and NFR1 remain open.
+
 27 October 2026: Aaron checked official Maps pricing, SKU triggers, transit limits
 and caching/display requirements. See [Maps readiness evidence](docs/maps-readiness.md).
 Assumption #11's documentation research is recorded; actual billing/quota/budget

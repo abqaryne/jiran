@@ -4,6 +4,11 @@ Native Android **Java** app with Firebase **JavaScript / Node 22** Cloud Functio
 Read [Aaron's checklist and master prompt](team/aaron.md), [PRD](PRD.md) and
 [team ownership](TEAM_PLAN.md) before changing the foundation.
 
+Budget is **free-only**. Keep Firebase Auth/Firestore on Spark; no billing upgrade
+or paid provider activation. See [no-billing production research](docs/no-billing-production.md)
+for the candidate Worker/openrouteservice architecture and unresolved transit,
+capacity and team decisions. It has not replaced the current local Functions stack.
+
 ## Local setup
 
 Use Android Studio with API 37, Build Tools 36.0.0, Platform Tools, and an Android

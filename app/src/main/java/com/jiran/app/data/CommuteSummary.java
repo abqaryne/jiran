@@ -152,7 +152,7 @@ public final class CommuteSummary {
             if ("unavailable".equals(raw.get("status"))) {
                 reason = text(raw.get("reason"));
                 require(Arrays.asList("missing_route", "missing_schedule", "missing_fare_assumption",
-                        "provider_unavailable").contains(reason));
+                        "provider_unavailable", "vehicle_unavailable").contains(reason));
                 durationSeconds = null;
                 distanceMetres = null;
                 monthlyCostSen = null;

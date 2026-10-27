@@ -31,6 +31,7 @@
     <string name="commute_fallback">Provider fallback used; timing may not reflect the requested traffic conditions.</string>
     <string name="commute_missing_schedule">Scheduled service data unavailable</string>
     <string name="commute_missing_fare">Fare not configured</string>
+    <string name="commute_vehicle_unavailable">Vehicle unavailable for this profile</string>
     <string name="commute_provider_unavailable">Route provider unavailable</string>
     <string name="commute_missing_route">Route data unavailable</string>
     <string name="commute_walking">Walking</string>

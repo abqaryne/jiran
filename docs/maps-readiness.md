@@ -4,6 +4,13 @@ Checked against official sources on **27 October 2026**. This is documentation
 research, not evidence that the project's billing, APIs, credentials or route
 coverage have been configured/tested. No paid request was sent.
 
+**Current constraint:** user selected free-only and no-billing production research.
+The paid setup described below is not authorized for activation. The default live
+Google transport is blocked by `functions/config/routing-policy.json`; injected
+transports remain trusted local test seams, not a network firewall. See
+[alternative research](no-billing-production.md) for the current candidate,
+free quota evidence and unresolved transit/concurrency requirements.
+
 ## Pricing baseline for assumption #11
 
 Global pay-as-you-go prices in USD, first paid tier up to 100,000 monthly events:

@@ -35,7 +35,7 @@ function priceRoutes(input) {
   for (const route of routes) {
     if (!object(route) || !MODES.includes(route.mode) || byMode.has(route.mode)) invalid();
     if (route.status==='unavailable') {
-      if (!['missing_route','missing_schedule','missing_fare_assumption','provider_unavailable'].includes(route.reason)) invalid();
+      if (!['missing_route','missing_schedule','missing_fare_assumption','provider_unavailable','vehicle_unavailable'].includes(route.reason)) invalid();
     } else if (route.status!=='available' || !integer(route.durationSeconds) || !integer(route.distanceMetres)
         || (route.transitFareSen != null && !integer(route.transitFareSen))) invalid();
     if (route.warnings !== undefined && (!Array.isArray(route.warnings) || route.warnings.length > 20

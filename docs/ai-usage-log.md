@@ -1,6 +1,25 @@
 # Aaron AI usage record — draft for Ilham's appendix
 
 Date: 27 October 2026. Tool: Codex in the shared repository. Human owner: Aaron.
+
+## Authorized commute service and free-only research continuation
+
+User steering: "free only", followed by "Research a no-billing production alternative".
+Continued the existing authorized Aaron implementation; preserved Java Android,
+JavaScript domain code, Firebase Auth/Firestore, and local Functions fixtures.
+Read official Firebase Auth/Firestore skills; researched only primary provider
+documentation. No account/key created, billing activated or production deployment.
+Candidate runtime/providers, limits and remaining team decisions are in
+`docs/no-billing-production.md`; research is not adoption approval.
+
+Implemented the internal mandatory authorization/config/quota/provider service,
+pickup-aware request sharing, privacy projection, cancellation and per-mode
+emissions mapping. Added `vehicle_unavailable` throughout JS/Java and native text.
+Default Google transport is blocked; injected transports remain trusted tests.
+Observed failing tests before implementation. Final checks exposed synchronous
+deadline gaps; regression tests drove monotonic and per-dispatch checks.
+Independent review caught the latter dispatch issue. Full backend277 tests and
+Android lint/Checkstyle/build/JVM checks passed; see service plan for scope.
 No actual human hours are inferred; record actual hours separately in Trello.
 
 Exact user prompts for this work:

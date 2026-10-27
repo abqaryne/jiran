@@ -1,5 +1,10 @@
 # Cloud Function contracts — draft for team agreement
 
+Budget update: free-only. A candidate HTTPS Worker alternative is researched in
+[no-billing production](no-billing-production.md); no transport/runtime migration
+has been adopted. Firebase callable SDK/protocol conventions below still describe
+the current local implementation, not a ready Worker API.
+
 Status: **DRAFT**, 27 October 2026. Emulator-only `sessionCheck` and the labelled
 fixture versions of `getCommuteOptions` and `computeMatchScores` are implemented; production endpoints are
 not exported. JSON uses example fixture values,

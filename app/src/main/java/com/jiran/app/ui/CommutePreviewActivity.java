@@ -144,6 +144,7 @@ public final class CommutePreviewActivity extends Activity {
         switch (reason) {
             case "missing_schedule": return getString(R.string.commute_missing_schedule);
             case "missing_fare_assumption": return getString(R.string.commute_missing_fare);
+            case "vehicle_unavailable": return getString(R.string.commute_vehicle_unavailable);
             case "provider_unavailable": return getString(R.string.commute_provider_unavailable);
             default: return getString(R.string.commute_missing_route);
         }

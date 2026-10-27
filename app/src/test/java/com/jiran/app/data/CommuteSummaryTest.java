@@ -51,6 +51,16 @@ public final class CommuteSummaryTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
+    public void acceptsUnavailableVehicleWithoutInventingCost() {
+        Map<String, Object> raw = valid();
+        ((List<Map<String, Object>>) raw.get("options")).get(3).put("reason", "vehicle_unavailable");
+        CommuteSummary.Option option = CommuteSummary.from(raw).options.get(3);
+        assertEquals("vehicle_unavailable", option.reason);
+        assertNull(option.monthlyCostSen);
+    }
+
+    @Test
     public void preservesProvenanceAndCopiesWarningsWithoutInventingFallback() {
         Map<String, Object> raw = valid();
         List<String> warnings = new ArrayList<>(List.of("Use footpaths", "<b>plain text</b>"));

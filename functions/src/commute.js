@@ -55,7 +55,7 @@ function displayMetadata(route) {
 function option(route, mode, monthlyTrips, departure, classStart) {
   if (!route) return unavailable(mode, 'missing_route');
   if (route.status === 'unavailable') {
-    const reasons = ['missing_route', 'missing_schedule', 'missing_fare_assumption', 'provider_unavailable'];
+    const reasons = ['missing_route', 'missing_schedule', 'missing_fare_assumption', 'provider_unavailable', 'vehicle_unavailable'];
     if (!reasons.includes(route.reason)) invalid('Unavailable route needs a known reason');
     return unavailable(mode, route.reason);
   }

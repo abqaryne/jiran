@@ -2,6 +2,7 @@ const ENDPOINT = 'https://routes.googleapis.com/directions/v2:computeRoutes';
 const FIELD_MASK = 'routes.duration,routes.distanceMeters,routes.warnings,routes.travelAdvisory.transitFare,fallbackInfo';
 const MAX_BYTES = 128 * 1024;
 const DAY_MS = 86400000;
+const routingPolicy = require('../config/routing-policy.json');
 
 class RoutesError extends Error {
   constructor(code, message) { super(message); this.code = code; }
@@ -79,21 +80,36 @@ function normalize(payload) {
 
 /** Server-only boundary. Caller authorizes resources and supplies managed credentials. No cache/retries. */
 function createRoutesClient({apiKey,fetchImpl=globalThis.fetch,timeoutMs=2500,now=Date.now} = {}) {
+  if (!routingPolicy.liveGoogleRoutingEnabled && fetchImpl===globalThis.fetch) {
+    fail('failed-precondition', 'Live Google routing disabled by free-only policy');
+  }
   if (typeof apiKey !== 'string' || !/^[\x21-\x7e]{1,200}$/.test(apiKey)) {
     fail('failed-precondition', 'Routes server credential required');
   }
   if (typeof fetchImpl !== 'function' || typeof now !== 'function' || !Number.isInteger(timeoutMs)
       || timeoutMs < 1 || timeoutMs > 10000) fail('failed-precondition', 'Invalid Routes client configuration');
-  return {async computeRoute(input) {
+  return {async computeRoute(input, options={}) {
+    if (!object(options) || Object.keys(options).some(key=>key!=='signal')
+        || (options.signal!==undefined && !(options.signal instanceof AbortSignal))) invalid();
+    const callerSignal=options.signal;
+    if (callerSignal?.aborted) fail('cancelled', 'Routes provider request cancelled');
     const body = requestBody(input, now()); // Validate before a billable request.
     const controller = new AbortController();
-    let reader, timer;
+    let reader, timer, onCallerAbort;
     const deadline = new Promise((resolve, reject) => {
       timer = setTimeout(() => {
         reject(new RoutesError('deadline-exceeded', 'Routes provider timed out'));
         controller.abort();
         if (reader) reader.cancel().catch(() => {});
       }, timeoutMs);
+    });
+    const cancellation = new Promise((resolve, reject) => {
+      onCallerAbort = () => {
+        reject(new RoutesError('cancelled', 'Routes provider request cancelled'));
+        controller.abort();
+        if (reader) reader.cancel().catch(() => {});
+      };
+      callerSignal?.addEventListener('abort', onCallerAbort, {once:true});
     });
     async function execute() {
       const response = await fetchImpl(ENDPOINT, {method:'POST',redirect:'error',
@@ -122,11 +138,14 @@ function createRoutesClient({apiKey,fetchImpl=globalThis.fetch,timeoutMs=2500,no
       try { payload = JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { malformed(); }
       return normalize(payload);
     }
-    try { return await Promise.race([deadline, execute()]); }
+    try { return await Promise.race([deadline, cancellation, execute()]); }
     catch (error) {
       if (error instanceof RoutesError) throw error;
       fail('unavailable', 'Routes provider unavailable');
-    } finally { clearTimeout(timer); }
+    } finally {
+      clearTimeout(timer);
+      callerSignal?.removeEventListener('abort', onCallerAbort);
+    }
   }};
 }
-module.exports = {createRoutesClient};
+module.exports = {createRoutesClient,parseDepartureTime:departure,validateRouteRequest:requestBody};

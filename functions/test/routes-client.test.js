@@ -1,4 +1,12 @@
 const {createRoutesClient} = require('../src/routes-client');
+
+test('free-only policy blocks default live transport before any network request',()=>{
+  const fetchSpy=jest.spyOn(globalThis,'fetch').mockImplementation(()=>{throw new Error('Network forbidden');});
+  try {
+    expect(()=>createRoutesClient({apiKey:'test-server-key'})).toThrow('Live Google routing disabled by free-only policy');
+    expect(fetchSpy).not.toHaveBeenCalled();
+  } finally { fetchSpy.mockRestore(); }
+});
 const now = Date.parse('2026-11-16T00:00:00Z');
 const request = () => ({origin:{latitude:3.1,longitude:101.65},destination:{latitude:3.12,longitude:101.66},
   travelMode:'TRANSIT',departTime:'2026-11-16T08:05:00+08:00'});
@@ -132,5 +140,27 @@ test('caps streamed response bytes and cancels instead of buffering unbounded da
   const body=new ReadableStream({pull(controller){controller.enqueue(new Uint8Array(131073));},cancel});
   const {client}=setup(()=>new Response(body));
   await expect(client.computeRoute(request())).rejects.toMatchObject({code:'unavailable'});
+  expect(cancel).toHaveBeenCalled();
+});
+test('already aborted caller signal prevents any provider request',async()=>{
+  const controller=new AbortController();controller.abort();
+  const {client,fetchImpl}=setup();
+  await expect(client.computeRoute(request(),{signal:controller.signal})).rejects.toMatchObject({code:'cancelled'});
+  expect(fetchImpl).not.toHaveBeenCalled();
+});
+test('caller cancellation aborts in-flight request and cleans up without waiting for transport',async()=>{
+  const controller=new AbortController();
+  const {client,fetchImpl}=setup(()=>new Promise(()=>{}));
+  const pending=client.computeRoute(request(),{signal:controller.signal});
+  controller.abort();
+  await expect(pending).rejects.toMatchObject({code:'cancelled',message:'Routes provider request cancelled'});
+  expect(fetchImpl.mock.calls[0][1].signal.aborted).toBe(true);
+});
+test('caller cancellation during streaming cancels body',async()=>{
+  const controller=new AbortController();const cancel=jest.fn();
+  const {client}=setup(()=>new Response(new ReadableStream({start(c){c.enqueue(new Uint8Array([123]));},cancel})));
+  const pending=client.computeRoute(request(),{signal:controller.signal});
+  await new Promise(resolve=>setImmediate(resolve));controller.abort();
+  await expect(pending).rejects.toMatchObject({code:'cancelled'});
   expect(cancel).toHaveBeenCalled();
 });

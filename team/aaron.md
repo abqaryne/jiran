@@ -4,6 +4,14 @@
 
 Prepared on **27 October 2026**. The original preparation update created documentation only. Current local and live Firebase progress is tracked below and in the batch plans; remaining cloud work is identified explicitly. Keep the responsibilities and schedule below as the role checklist.
 
+**Latest budget decision:** the user confirmed **free only** and requested research
+into a no-billing production alternative retaining Firebase Auth and Firestore.
+Do not enable billing, upgrade plans or activate Google Routes/production
+Functions/Storage. Earlier billing/key setup items below are historical plan
+dependencies, not current activation instructions. See the [candidate architecture,
+limits and staged feasibility plan](../docs/no-billing-production.md). Java and
+JavaScript code remain; no runtime migration or NFR completion is claimed.
+
 ### Confirm the stack before downloading anything
 
 The [PRD](../PRD.md) and [team plan](../TEAM_PLAN.md) specify **native Android in Java with Gradle**, and **Firebase Cloud Functions in Node.js/JavaScript**. The pasted Flutter setup advice was based on an unverified role file and does not apply to this repository. Flutter, Dart and FlutterFire CLI are not prerequisites. VS Code is optional; Android Studio is the main Android IDE. Cloud Functions use JavaScript by team decision; the Java runtime used by Firebase emulators does not change the Functions language.
@@ -127,6 +135,10 @@ Finish with what changed, checks and results, remaining blockers/assumptions,
 and the next Aaron action. Update this role checklist only with verified work.
 
 Current task: <insert one specific Aaron task here>
+Budget constraint: free only. Keep Firebase Auth/Firestore on Spark. Do not enable
+billing, deploy Firebase Functions/Storage or activate Google Routes. Research
+alternatives per docs/no-billing-production.md; document team/runtime decisions
+before migrating. Preserve Java Android and reusable JavaScript domain code.
 Acceptance criteria: <insert what must be demonstrably true>
 ```
 
@@ -182,6 +194,8 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [x] Configurable e-hailing/driving/transit pricing with exact sen arithmetic, explicit pickup/cost inputs, and preserved cost/provider metadata; [pricing evidence](../docs/superpowers/plans/2026-10-27-commute-pricing.md). Real rates, monthly attendance/return-trip policy and production wiring remain open.
 - [x] Published CO₂-only source catalogue and exact mixed-leg emissions calculation with explicit occupancy/UK proxy selection; [method and values](../docs/emission-methodology.md). Source extraction/arithmetic verified; Malaysian calibration, real leg mapping and production activation remain open.
 - [ ] Ary's final Room card/details integration and NFR1 load evidence.
+- [x] Internal authorized commute orchestration with mandatory context/config/quota adapters, bounded shared deadline, cancellation, private projection and mode-specific emissions mapping; [service plan](../docs/superpowers/plans/2026-10-27-commute-service.md). No production reader, quota store or endpoint is wired.
+- [x] Free-only policy recorded and default live Google transport disabled; [alternative research](../docs/no-billing-production.md) identifies Worker/free-routing candidate and transit/NFR gaps. Deployment feasibility remains open.
 
 Sample fixture values are not verified assumptions or production estimates. The
 UI says so, and the endpoint is not exported in a live environment. This advances
