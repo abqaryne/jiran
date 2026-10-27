@@ -4,6 +4,14 @@
 
 Prepared on **27 October 2026**. The original preparation update created documentation only. Current local and live Firebase progress is tracked below and in the batch plans; remaining cloud work is identified explicitly. Keep the responsibilities and schedule below as the role checklist.
 
+**Latest budget decision:** the user confirmed **free only** and requested research
+into a no-billing production alternative retaining Firebase Auth and Firestore.
+Do not enable billing, upgrade plans or activate Google Routes/production
+Functions/Storage. Earlier billing/key setup items below are historical plan
+dependencies, not current activation instructions. See the [candidate architecture,
+limits and staged feasibility plan](../no-billing-production.md). Java and
+JavaScript code remain; no runtime migration or NFR completion is claimed.
+
 ### Confirm the stack before downloading anything
 
 The [PRD](../product/PRD.md) and [team plan](TEAM_PLAN.md) specify **native Android in Java with Gradle**, and **Firebase Cloud Functions in Node.js/JavaScript**. The pasted Flutter setup advice was based on an unverified role file and does not apply to this repository. Flutter, Dart and FlutterFire CLI are not prerequisites. VS Code is optional; Android Studio is the main Android IDE. Cloud Functions use JavaScript by team decision; the Java runtime used by Firebase emulators does not change the Functions language.
@@ -127,6 +135,10 @@ Finish with what changed, checks and results, remaining blockers/assumptions,
 and the next Aaron action. Update this role checklist only with verified work.
 
 Current task: <insert one specific Aaron task here>
+Budget constraint: free only. Keep Firebase Auth/Firestore on Spark. Do not enable
+billing, deploy Firebase Functions/Storage or activate Google Routes. Research
+alternatives per docs/no-billing-production.md; document team/runtime decisions
+before migrating. Preserve Java Android and reusable JavaScript domain code.
 Acceptance criteria: <insert what must be demonstrably true>
 ```
 
@@ -150,7 +162,7 @@ Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](
 |---|---|---|
 | 1: Functions and emulators | Node 22/Jest skeleton, emulator-only verified-auth diagnostic, demo Auth/Firestore/Functions/Storage configuration, deny-all baseline rules | 9 Jest tests pass; real emulator smoke verifies auth rejection, UID integrity, Function-to-Firestore write and denied client reads. Gathan's application rules remain pending. |
 | 2: Android foundation | Java Views developer shell; `ui`, `data`, `util`; pinned Gradle wrapper; debug-only Firebase setup and Android 17 local-network permission | Initial foundation tests passed; live setup now adds Email/Password flow and `liveDebug`. Registered application ID confirmed as `jiran.com`; Java namespace stays `com.jiran.app`. Ary's final product UI remains pending. |
-| 3: CI and handoff | GitHub Actions, PR template, setup/architecture documentation, draft API contracts and AI-use record | Local commands pass. Workflow has not run on GitHub; remote branch protection/reviews/merge and Trello/QA evidence remain pending. Draft contracts require team agreement. |
+| 3: CI and handoff | GitHub Actions, PR template, setup/architecture documentation, draft API contracts and AI-use record | Retired SDK package failure repaired. Both jobs passed on [PR #2 run 40406767308](https://github.com/abqaryne/jiran/actions/runs/40406767308) at 5c5ba1f. Branch protection, final review/merge and Trello/QA evidence remain pending. Draft contracts require team agreement. |
 
 The first **local** readiness milestone is verified on the API 37 AVD. The existing
 live project **jiran-mad** now has Email/Password Auth enabled, its existing Android
@@ -161,7 +173,8 @@ See [live setup instructions](../../README.md#use-the-existing-live-firebase-bac
 and the [live setup plan](../superpowers/plans/2026-10-27-firebase-live-setup.md).
 Team invitations, billing for later paid features, restricted Maps credentials, transit coverage,
 production UM verification, schema, commute/match formulas and full NFR tests are
-not complete. No push or merge has been performed.
+not complete. The foundation branch was pushed and merged through PR #1;
+continuation commits remain on the feature branch until reviewed by PR.
 
 ## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
@@ -179,6 +192,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 | **E4.4** Public transport route page, peak and off-peak | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
 | **E6.2** Match score function *(can start early)* | FR3.2, P0 | 10 Dec | match weights (#9), `matchProfiles` (E6.1) |
 
+
 **Stories where you do a subtask** (9): open the story card to see yours.
 
 | Story | Lead | Due |
@@ -194,6 +208,74 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
 
 **Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You also lead the P0 code freeze (Gate 3, 13 Dec).
+
+## Solo implementation progress
+
+The [six solo workstreams](../superpowers/plans/2026-10-27-aaron-solo-work.md)
+are in progress. The isolated Worker experiment now has bounded verification-key
+fetching, provider freshness handling, rotation coalescing and cooldown protection,
+with75 offline/runtime tests passing, including bounded body reading and atomic
+SQLite quota reservations. This does not adopt a production runtime; identity-bound
+quota integration, real routing evidence and production verification remain open.
+The [hours draft](../aaron-work-log.md) contains the reported6 hours on26 October.
+The [350/400-word report drafts and demo script](../aaron-deliverable-drafts.md)
+and [handoff/freeze checklist](../aaron-handoff.md) need Aaron's personal review.
+The [GTFS processor checkpoint](../transit-processing.md) adds calendar, frequency,
+transfer and stale-feed handling with62 focused tests and recorded snapshot probes.
+Independent follow-up review found no remaining actionable defect; production
+coverage remains open. [Local50/100-user load preparation](../../backend/tests/load/README.md)
+records both a failed run and a passing run, without claiming production NFR1.
+
+
+## Local implementation evidence (not story acceptance)
+
+### Module 4 continuation — calculation batch
+
+The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
+`feature/aaron-commute-core`; see the [calculation plan](../superpowers/plans/2026-10-27-commute-core.md).
+
+- [x] Pure commute calculation with explicit units/trips and cheapest-before-class selection.
+- [x] Missing-route/fare and no-on-time states; deposit exclusion; optional explicitly sourced CO₂.
+- [x] Verified-auth emulator-only `getCommuteOptions` fixture interface.
+- [x] Typed Android response parsing and local developer preview; loading/error/retry states.
+- [x] Android validates and displays optional route/cost provenance, warnings and fallback notices; verified with labelled local metadata and native row checks. Final shared UI/provider attribution requirements remain with production integration.
+- [x] Real Android commute SDK integration verification: all three fixture scenarios pass through Firebase SDK → callable → typed parser.
+- [ ] Real Maps routing/coverage and verified fares/emission factors; production schema/timetable integration.
+- [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../maps-readiness.md); live quota/budget setup and coverage probes remain open.
+- [x] Server Routes provider adapter: strict request validation, bounded deadline/body, MYR fare parsing, warnings/fallback and sanitized errors; transport contract tests only. See [adapter plan](../superpowers/plans/2026-10-27-routes-adapter.md). Live activation and production calculation integration remain open.
+- [x] Configurable e-hailing/driving/transit pricing with exact sen arithmetic, explicit pickup/cost inputs, and preserved cost/provider metadata; [pricing evidence](../superpowers/plans/2026-10-27-commute-pricing.md). Real rates, monthly attendance/return-trip policy and production wiring remain open.
+- [x] Published CO₂-only source catalogue and exact mixed-leg emissions calculation with explicit occupancy/UK proxy selection; [method and values](../emission-methodology.md). Source extraction/arithmetic verified; Malaysian calibration, real leg mapping and production activation remain open.
+- [ ] Ary's final Room card/details integration and NFR1 load evidence.
+- [x] Internal authorized commute orchestration with mandatory context/config/quota adapters, bounded shared deadline, cancellation, private projection and mode-specific emissions mapping; [service plan](../superpowers/plans/2026-10-27-commute-service.md). No production reader, quota store or endpoint is wired.
+- [x] Free-only policy recorded and default live Google transport disabled; [alternative research](../no-billing-production.md) identifies Worker/free-routing candidate and transit/NFR gaps. Deployment feasibility remains open.
+- [x] Isolated [local Worker feasibility experiment](../../experiments/worker-feasibility/README.md): generated-key signature/claim checks and existing commute/match fixtures run in workerd;25 tests pass. No live Firebase token, database/quota, production migration or Free CPU claim.
+
+Sample fixture values are not verified assumptions or production estimates. The
+UI says so, and the endpoint is not exported in a live environment. This advances
+the FR4.1–4.3 calculation foundation; the complete production module stays open.
+
+### Remaining Step 0 checklist
+- [x] Create the Android Studio project (Java, Gradle) in the repo and the package structure (ui, data, util), with a Firebase connection (existing `jiran-mad`, package `jiran.com`; debug remains local)
+- [ ] Branching rules: feature branches, PR required, Ary approves and merges. Turn on branch protection
+- [x] GitHub Actions CI on PRs: lintDebug, testDebugUnitTest, Checkstyle, debug build, Jest/syntax and real emulator smoke. Both jobs passed at 959f7e0 on [PR #2 run40407910952](https://github.com/abqaryne/jiran/actions/runs/40407910952); subsequent commits require their own run evidence.
+- [ ] Finish service setup and team invitations in existing `jiran-mad` (Auth Email/Password and Singapore Standard Firestore are ready; Storage, Functions, Messaging and membership still need review)
+- [x] Cloud Functions skeleton (Node.js) and Firebase emulator setup (local `demo-jiran`, real Android integration verified; production features pending)
+- [ ] Google Maps Platform key: restrict it, set a billing alert, never commit it
+- [ ] **Check early (PRD open question 7):** does Google's transit data cover the bus, LRT and UM shuttle routes from Pantai Dalam and Kerinchi to UM? If the shuttle is missing, we seed shuttle stops and timetables from UM transport.
+
+### Module 3 continuation — deterministic scoring batch
+
+See the [match backend plan](../superpowers/plans/2026-10-27-match-core.md)
+and [contract](../api-contracts.md). Production formula approval is still open.
+
+- [x] Pure deterministic seven-factor match scoring with explicit versioned weights and transparent basis-point breakdown.
+- [x] Missing-answer state, stable ranking, self exclusion, bounded candidate count and rule reason codes.
+- [x] Authenticated emulator-only `computeMatchScores` with synthetic ranked, incomplete and empty scenarios.
+- [x] Typed Java match response/repository and guarded developer preview with score, rule reasons, missing/empty states, overlap days and factor breakdown; real local SDK/native checks. See [Android handoff evidence](../superpowers/plans/2026-10-27-android-match-preview.md). Ary's final product UI and production candidates remain open.
+- [ ] Survey-derived weight approval and agreed questionnaire mapping with Aly/Ary.
+- [ ] Production authorized candidate reader/privacy projection with Gathan; final Match UI and explanation handoff with Ary/Ilham.
+- [ ] Production end-to-end and QA evidence; no matching completion claim from fixtures alone.
+
 
 ## Hand-offs
 | You wait for | From | Use meanwhile |

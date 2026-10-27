@@ -47,8 +47,8 @@ The brief requires **significant and original human contribution** and a real un
 - **AI features must earn their place**: AI is allowed in the product only where rules cannot do the job (plain-language
   search, contract reading, match explanations). Each one needs a justification, a label **AI-generated**, graceful
   fallback when it fails, and an evaluation on sample data (50 search requests, 10 contracts, user ratings for reasons).
-  The match score and CO₂ are computed by code, never by the AI. All AI and Maps calls run in Cloud Functions; keys never
-  ship in the app.
+  The match score and CO₂ are computed by code, never by the AI. All AI and routing calls run on the server (a Cloudflare Worker, free
+  plan only); keys never ship in the app.
 - Use the terms in [docs/product/GLOSSARY.md](docs/product/GLOSSARY.md). UI follows
   [docs/design/DESIGN.md](docs/design/DESIGN.md): only design system tokens and styles, 48 dp touch targets, status with a
   word and an icon, estimates labelled as estimates.
@@ -80,6 +80,11 @@ The existing live project is `jiran-mad`; its Android app is named Jiran with
 application ID `jiran.com`. Do not create duplicate apps/projects. Use explicit
 `--project jiran-mad` for authorized live operations. Default local development
 uses `demo-jiran`. Never commit Firebase configuration keys or service accounts.
+
+Budget is free-only (user confirmed 27 October 2026). Do not enable billing,
+upgrade plans, or activate billable providers. Research a no-billing production
+alternative retaining Firebase Auth and Firestore; preserve the Java/JavaScript
+code while documenting proposed runtime/provider changes before adopting them.
 
 Repository layout: `android/` is the Gradle project (run `./gradlew` there), `backend/` holds Firebase config,
 `backend/functions` and the emulator scripts (run `firebase` and `node scripts/...` there), `docs/` holds all documents.

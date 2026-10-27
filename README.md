@@ -28,6 +28,11 @@ jiran/
 Working on screens, components or app logic: `android/`. Working on data, rules or AI and Maps calls: `backend/`.
 Writing or reading requirements, design or the plan: `docs/`.
 
+Budget is **free-only**. Keep Firebase Auth/Firestore on Spark; no billing upgrade
+or paid provider activation. See [no-billing production research](docs/no-billing-production.md)
+for the candidate Worker/openrouteservice architecture and unresolved transit,
+capacity and team decisions. It has not replaced the current local Functions stack.
+
 ## Local setup
 
 Use Android Studio with API 37, Build Tools 36.0.0, Platform Tools, and an Android
@@ -85,6 +90,7 @@ then run (the script installs both APKs and grants the debug local-network permi
 
 ```powershell
 ./gradlew.bat assembleDebug assembleDebugAndroidTest
+$env:FUNCTIONS_DISCOVERY_TIMEOUT = '30'
 npx.cmd -y firebase-tools@latest emulators:exec --project demo-jiran --only auth,firestore,functions,storage 'node scripts/emulator-smoke.cjs --android'
 ```
 
@@ -199,3 +205,95 @@ See [architecture](docs/architecture.md), [draft API contracts](docs/api-contrac
 The [live setup plan](docs/superpowers/plans/2026-10-27-firebase-live-setup.md) records
 current setup evidence. Team invitations, Maps/billing/coverage, product schema,
 scoring weights and remaining feature work still require their team inputs.
+
+## Module 4 calculation preview
+
+On branch `feature/aaron-commute-core`, the pure commute calculator and a local
+Android preview implement the calculation behavior of FR4.1–4.3 against explicit
+server-owned fixtures. Run the ordinary **debug** variant with local emulators,
+sign in with a verified local account, and open **Commute calculator preview**.
+Choose an on-time, no-on-time or missing-data scenario and tap **Calculate sample**.
+
+The preview labels every figure as synthetic sample data, compares four modes,
+and chooses only a known-cost mode that arrives before class. In the on-time
+fixture, late free walking is rejected and transit gives RM612.00: room RM450.00,
+utilities RM62.00 and commute RM100.00. If no option qualifies, no total appears.
+Missing fares/schedules and unknown CO₂ stay explicit. Deposit is excluded.
+
+The callable is emulator-only and accepts `{scenarioId}`; production listing/unit
+requests remain draft. See the [API contract](docs/api-contracts.md) and
+[implementation plan](docs/superpowers/plans/2026-10-27-commute-core.md).
+There is no live Maps integration, approved local fare or Malaysian-calibrated
+emissions dataset, occupancy rounding default or inferred attendance assumption.
+Published UK proxy factors are sourced separately in `docs/emission-methodology.md`. Gathan/Ary/Aly
+still need to agree the production inputs and UI integration.
+
+The existing REST smoke checks callable authorization, all scenarios, selection
+and cost arithmetic. Its `--android` mode runs six Android integration checks,
+including the SDK/repository/parser flow for all scenarios and native preview
+source/warning/fallback text after a verified local callable. The on-time fixture
+includes explicitly synthetic provenance, a walking warning and driving fallback.
+These are sample display states, not Google results. Optional sources/warnings are
+validated and retained by the immutable Android model. Local instrumentation with
+`capturePreview=true` writes a full-content native render to the app's external
+files directory as `commute-preview.png` for layout QA.
+
+## Deterministic match backend
+
+`backend/functions/src/match.js` implements FR3.2's deterministic weighted scoring with
+explicit versioned weights, seven factor breakdowns, stable ranking, overlapping
+class weekdays and rule reason codes for AI fallback. Missing required answers
+produce an unscored state. It returns no raw answers, private contact fields or
+exact timetables. This core requires an authorized candidate set from its caller.
+
+With the local emulators running, the callable `computeMatchScores` accepts only
+`{"scenarioId":"ranked"}`, `missing-answers` or `empty`, from a verified local
+account. The REST smoke exercises it automatically. The synthetic ranked fixture
+returns sample-a at 100 and sample-b at 50; these are not live recommendations.
+See [the contract](docs/api-contracts.md#computematchscores--implemented-local-fixture-interface-fr32)
+for normalization, rounding and validation, and [the plan](docs/superpowers/plans/2026-10-27-match-core.md)
+for evidence. Production questionnaire mapping, survey weights, candidate privacy
+and the final Match screen remain team integration work.
+
+The developer shell now opens a local Match score preview. `MatchRepository` and
+immutable `MatchSummary` verify the SDK handoff with ranked, missing-answer and
+empty fixture scenarios. The guarded screen shows sample scores, rule reasons,
+overlap days and sample weights/similarity; it does not call AI or recalculate
+scores. Native checks cover the bound data and missing/empty display states.
+`capturePreview=true` also writes `match-preview.png`; these are full-content
+render captures, not scroll-gesture coverage. See the [Android handoff plan](docs/superpowers/plans/2026-10-27-android-match-preview.md).
+
+## Routes provider adapter
+
+The server-only `backend/functions/src/routes-client.js` accepts explicit authorized
+coordinates, mode and departure time, with an injected server credential. It
+validates before sending a request, enforces a deadline and response size cap,
+normalizes duration/MYR fare, and retains route warnings/fallback status. Tests
+inject transport and use synthetic responses; no Google request runs during
+ordinary tests, builds or emulator startup. No callable activates this client yet.
+
+See [the server interface](docs/api-contracts.md#implemented-server-provider-boundary-not-a-callable)
+and [plan/evidence](docs/superpowers/plans/2026-10-27-routes-adapter.md).
+Billing, API/key restrictions, real route probes, approved cost inputs and final
+schema/UI integration remain required. Never put a server Maps key in Android or Git.
+
+`backend/functions/src/commute-pricing.js` turns explicit sourced per-mode assumptions
+into exact per-trip sen for the monthly calculator. It covers e-hailing base/km/
+multiplier plus pickup time, and driving fuel/tolls/parking. No production rate
+defaults are supplied. Missing fares stay unavailable, and route attribution,
+warnings and fallback status survive into the calculation response. See the
+[pricing contract](docs/api-contracts.md#implemented-configurable-pricing-layer).
+
+## Published emissions factors
+
+The [versioned catalogue](backend/functions/config/emission-factors.json) records exact
+UK DESNZ2026 CO₂-component factors and source workbook cells/hashes. The mixed-leg
+calculator sums walking/bus/rail/vehicle emissions with exact integer mass units,
+explicit vehicle occupancy and one final rounding step. UK proxies require opt-in;
+missing factors or incomplete leg distances leave CO₂ unknown. Pricing preserves
+the profile into the monthly calculation without changing known costs/timing.
+
+These are operational CO₂ estimates with UK fleet/grid limitations, not total
+lifecycle CO₂e or measured Malaysian emissions. Existing local fixture factors
+remain synthetic. See [methodology and sources](docs/emission-methodology.md) and
+[the contract](docs/api-contracts.md#implemented-published-factor-emission-profile).

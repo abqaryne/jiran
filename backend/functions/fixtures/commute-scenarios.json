@@ -1,0 +1,32 @@
+{
+  "on-time": {
+    "roomPriceSen": 45000, "utilitiesShareSen": 6200, "monthlyTrips": 40,
+    "departTime": "2026-11-16T08:00:00+08:00", "classStartTime": "2026-11-16T09:00:00+08:00",
+    "modes": [
+      {"mode":"walking","status":"available","durationSeconds":4000,"distanceMetres":5000,"perTripCostSen":0,"routeSource":"Synthetic routing fixture","warnings":["Synthetic warning: use designated footpaths."]},
+      {"mode":"transit","status":"available","durationSeconds":1800,"distanceMetres":6000,"perTripCostSen":250,"emissionFactor":{"gramsPerKm":50,"source":"Synthetic fixture only; not a published emission factor"},"costSource":"Synthetic fare assumption"},
+      {"mode":"e_hailing","status":"available","durationSeconds":900,"distanceMetres":8000,"perTripCostSen":1200},
+      {"mode":"driving","status":"available","durationSeconds":1000,"distanceMetres":7000,"perTripCostSen":500,"routeSource":"Synthetic routing fixture","trafficFallback":true}
+    ]
+  },
+  "no-on-time-route": {
+    "roomPriceSen": 45000, "utilitiesShareSen": 6200, "monthlyTrips": 40,
+    "departTime": "2026-11-16T08:00:00+08:00", "classStartTime": "2026-11-16T08:05:00+08:00",
+    "modes": [
+      {"mode":"walking","status":"available","durationSeconds":4000,"distanceMetres":5000,"perTripCostSen":0},
+      {"mode":"transit","status":"available","durationSeconds":1800,"distanceMetres":6000,"perTripCostSen":250},
+      {"mode":"e_hailing","status":"available","durationSeconds":900,"distanceMetres":8000,"perTripCostSen":1200},
+      {"mode":"driving","status":"available","durationSeconds":1000,"distanceMetres":7000,"perTripCostSen":500}
+    ]
+  },
+  "missing-data": {
+    "roomPriceSen": 45000, "utilitiesShareSen": 6200, "monthlyTrips": 40,
+    "departTime": "2026-11-16T08:00:00+08:00", "classStartTime": "2026-11-16T09:00:00+08:00",
+    "modes": [
+      {"mode":"walking","status":"available","durationSeconds":4000,"distanceMetres":5000,"perTripCostSen":0},
+      {"mode":"transit","status":"unavailable","reason":"missing_schedule"},
+      {"mode":"e_hailing","status":"available","durationSeconds":900,"distanceMetres":8000,"perTripCostSen":null},
+      {"mode":"driving","status":"unavailable","reason":"provider_unavailable"}
+    ]
+  }
+}

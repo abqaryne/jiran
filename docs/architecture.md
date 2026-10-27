@@ -1,5 +1,11 @@
 # Local foundation architecture
 
+**Free-only constraint:** Firebase Auth/Firestore stay on Spark. Production
+Functions, Google Routes and Firebase Storage activation is outside the current
+budget. [No-billing production research](no-billing-production.md) proposes a
+JavaScript Worker/alternative routing path for feasibility work; the runtime
+change is not adopted and the original production flow below remains unwired.
+
 Status: developer foundation with live Firebase connection, 27 October 2026.
 Live project `jiran-mad`; registered package `jiran.com`; Java namespace `com.jiran.app`.
 Auth Email/Password is enabled. Firestore `(default)` is Standard edition in Singapore.
