@@ -237,6 +237,9 @@ quota integration, real routing evidence and production verification remain open
 The [hours draft](../aaron-work-log.md) contains the reported6 hours on26 October.
 The [350/400-word report drafts and demo script](../aaron-deliverable-drafts.md)
 and [handoff/freeze checklist](../aaron-handoff.md) need Aaron's personal review.
+The [GTFS processor checkpoint](../transit-processing.md) adds calendar, frequency,
+transfer and stale-feed handling with59 focused tests and recorded snapshot probes.
+Its follow-up independent review and production coverage remain open.
 
 **Step 1 (by 15 Nov):** write `docs/api-contracts.md` with the request and response JSON of each Cloud Function, so everyone can build against stubs:
 - `getCommuteOptions(listingId or unit, departTime)`

@@ -33,6 +33,7 @@ docs/
 | [aaron-deliverable-drafts.md](aaron-deliverable-drafts.md) | Assisted350/400-word report drafts and90-second demo script; needs human review |
 | [aaron-handoff.md](aaron-handoff.md) | Open decisions, owners and P0 freeze gates |
 | [commute-input-evidence.md](commute-input-evidence.md) | Dated fare/fuel/parking research and five public-stop route probes; confirmed inputs and gaps |
+| [transit-processing.md](transit-processing.md) | Bounded JavaScript GTFS processor, actual snapshot probe results and supported/unsupported semantics |
 | [ai-log/README.md](ai-log/README.md) | AI Usage Log: rules, template and one file per person (mandatory appendix) |
 | [ai-usage-log.md](ai-usage-log.md) | Aaron's earlier AI record |
 

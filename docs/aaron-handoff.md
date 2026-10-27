@@ -12,6 +12,7 @@ The live budget is free-only. No team messages or Trello entries were sent.
 | Real data access | Listings, rooms, profiles, timetable, private candidates and Connection privacy | Gathan/Ary; agreed schemas and authorized readers pending |
 | Match weights | Versioned formula and missing-data behavior implemented | Aly/Ary approve survey mapping; Ilham reviews explanation input |
 | Free backend choice | Isolated Worker/token/quota experiments; existing Firebase Auth/Firestore | Team approval required; no runtime migration or billing activation |
+| Transit processor | [Offline GTFS normalization and probes](transit-processing.md);59 focused tests | Implemented research checkpoint; follow-up independent review, live coverage and physical transfers remain open |
 | Product UI | Local commute/match previews and immutable response models | Ary integrates final screens; fixtures remain labelled |
 | NFR1 | PRD specifies p95 below3s at100 users; AGENTS also specifies50-user latency and100-user operation | Aaron prepares both scenarios; Aly runs/reviews complete production load evidence |
 | NFR2 | Local connection-rule checks pass; UM affiliation and production collections remain open | Gathan defines rules; Aly verifies denied accesses |

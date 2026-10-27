@@ -131,3 +131,35 @@ its missing JAR. Human review remains TODO (owner).
   No paid routing/booking, private scraping, survey numbers, production defaults
   or verified student timetable. Parking tariff and current UM shuttle evidence
   still need primary confirmation; no student discount adopted from snippets.
+
+## 2026-10-27 · Bounded GTFS normalization and schedule research · FR4.1 / FR4.3
+
+- **Human owner:** Aaron.
+- **AI tool and model:** Codex; exact deployed model version not recorded.
+- **Task:** Continue the solo plan's JavaScript transit processing and inspect the
+  existing public feeds against the five route probes.
+- **Prompts (exact):**
+  > implement those on the previous prompts
+- **Output used:** backend/functions/src/gtfs.js and gtfs-journey.js, focused tests,
+  fixture helper, offline scripts/gtfs-inspect.cjs, syntax checks and
+  docs/transit-processing.md. No production endpoint or runtime migration.
+- **How it was tested or checked:** Positive normalization/journey tests failed
+  against stubs. Additional failing tests drove strict timestamp validation,
+  transfer-history enforcement, feed validity and bounded-state pruning. All336
+  backend tests pass, including59 transit cases. Syntax checks pass. Android lint,
+  JVM tests, Checkstyle and debug build pass;75 Worker tests pass. Three official
+  public GTFS snapshots were processed offline, recording table hashes and
+  exclusions. Five probes plus an expiry repeat were evaluated. R4 initially hit
+  the work limit; pruning ended trips and dominated states produced a provisional
+  bus alternative within the same bound. No fare or live coverage was invented.
+- **Independent AI review:** Partial. Reviewer identified transfer-rule bypass
+  through chained walks and ignored feed_info validity, then hit a usage limit.
+  Both were reproduced with failing tests and fixed. No clean final review is
+  claimed; follow-up review remains open.
+- **What the human changed or rejected:** TODO (owner).
+- **What the human understands and can explain:** TODO (owner). Read the two
+  modules and run their tests. Explain calendars/exceptions, extended service
+  days, estimated headways, transfer context, freshness/validity and unknown fares.
+- **Limits:** Needs human review. Only UTC+08 zones and bounded supported semantics.
+  No live route/fare/punctuality, physical transfer-path validation, deployment,
+  NFR1 result or complete independent-review claim. Personal work hours unchanged.

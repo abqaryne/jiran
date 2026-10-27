@@ -205,3 +205,55 @@ and the similarly named Universiti stop that does not join T789. Joins were run
 on existing public GTFS ZIPs, not private listings. Research artifact completion
 is not completion of assumption#5, current shuttle/fare validation or real route
 coverage. No value entered production configuration.
+
+## Batch G: bounded GTFS normalization and journey evaluation
+
+Ruling: process public feeds in JavaScript, preserving source metadata and
+namespaced IDs. Implement bounded CSV parsing, Malaysian UTC+08 agency time,
+calendar weekdays/exceptions and extended service-day times before routing.
+Quarantine unsupported or malformed trips rather than inventing intermediate
+times. Evaluate chronological stop sequences and explicit transfers with a
+bounded search. Exact frequency grids may yield scheduled times; headway-only
+service stays estimated and cannot establish on-time eligibility. Missing fares
+remain null. Explicit as-of/freshness policy and service-date coverage are
+separate checks. Support up to72-hour service days; reject other time zones,
+unbounded feeds and unsupported semantics explicitly. No live endpoint/provider
+or approved faculty paths are introduced by the processor.
+
+Official semantics checked against https://gtfs.org/documentation/schedule/reference/:
+service-day times can exceed24h; frequencies end_time is exclusive;
+exact_times=0 is headway service, not a fixed schedule. Calendar additions may
+activate a date outside the base calendar; removals override the weekday flag.
+
+Substeps: (1) CSV/time/calendar normalization with failing tests; (2) bounded
+journeys and transfers with failing tests; (3) inspect existing official feed
+samples and the five probes, record provenance and limits; (4) independent review
+and appropriate backend/runtime verification. Each substep is reviewable code,
+not a claim of complete production transit integration.
+
+Batch G checkpoint:59 focused transit tests and all336 backend tests/13 suites
+pass; syntax checks include both modules and the offline inspection CLI. Android
+lint/unit tests/Checkstyle/debug build passed, and75 Worker tests passed. No live
+Firebase/provider operation or production transit endpoint was added.
+
+Actual public snapshots normalized to2,118 bus,48 rail and6,291 feeder trips.
+Three T4069 weekend trip IDs lack stop_times rows and were excluded explicitly.
+Ran the five probes plus the feeder-expiry repeat without inferred walking links:
+R1 returns a headway estimate; R2/R3 cannot form the missing connections; R4 now
+returns a provisional bus alternative after bounded pruning; R5 returns a
+scheduled28 October result and no16 November journey. All fares remain unknown.
+See docs/transit-processing.md for reproducible inputs, exact outcomes and limits.
+
+Independent review was PARTIAL: reviewer identified chained-walk transfer-rule
+bypass and ignored feed_info coverage, then stopped due an account usage limit.
+Three new tests reproduced both findings before fixes. Transfer state now retains
+original alighting place/time; published validity is separate from freshness.
+Additional failing tests drove Pareto dominance and pruning of already-ended
+service days. All pass, including minimum-transfer exact-boundary acceptance.
+Do not call the independent review complete or this production-ready. A follow-up
+review remains open; work can continue on load scenarios while that is pending.
+
+Needs human review: Aaron should read gtfs.js and gtfs-journey.js, run the focused
+tests, and explain service dates vs wall-clock dates, frequency estimates vs exact
+grids, transfer history, unknown fares and why snapshot forecasts are not observed
+commutes. Current AI-assisted drafts do not establish his personal understanding.
