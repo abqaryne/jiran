@@ -38,7 +38,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 | `budgetMax` | number | Yes | Owner | Maximum monthly room budget (RM). `FR1.3`, `E1.3` |
 | `lifestyleTags` | array<string> | Yes | Owner | Array of tags e.g. `["quiet", "non_smoker", "early_riser"]`. `FR1.3`, `E1.3` |
 | `hasCar` | boolean | Yes | Owner | Car ownership flag. `FR1.3`, `E1.3` |
-| `privacy` | map | Yes | Owner | Toggles e.g. `{ showPhoneToConnections: boolean [PROPOSED], showPhotoToHouseholdOnly: boolean [PROPOSED] }`. `FR1.3` |
+| `privacy` | map | Yes | Owner | Toggles e.g. `{ showPhoneToConnections: boolean, showPhotoToHouseholdOnly: boolean }`. `FR1.3` |
 | `createdAt` | timestamp | Yes | Owner (on create) | Profile creation timestamp. `E1.3` |
 | `updatedAt` | timestamp | Yes | Owner | Last update timestamp. `E1.3` |
 
@@ -49,7 +49,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 
 | Field Name | Type | Required | Who May Write | Notes |
 |---|---|---|---|---|
-| `fullName` | string | Yes | Owner | Full legal name for contracts/verifications. `[PROPOSED]` |
+| `fullName` | string | Yes | Owner | Full legal name for contracts/verifications. |
 | `phoneNumber` | string | No | Owner | Phone number. `FR1.3`, `NFR2` |
 | `email` | string | Yes | Owner | Primary email. `FR1.1` |
 
@@ -60,7 +60,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 
 | Field Name | Type | Required | Who May Write | Notes |
 |---|---|---|---|---|
-| `entries` | array<map> | Yes | Owner | `[{ day: string ("Mon".."Sun"), start: string ("09:00"), end: string ("11:00"), building: string }]`. `FR1.3` |
+| `entries` | array<map> | Yes | Owner | `[{ day: string ("Mon".."Sun"), start: string ("09:00"), end: string ("11:00"), facultyCode: string, lat: number, lng: number }]`. `FR1.3` |
 
 ---
 
@@ -101,6 +101,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 | `amenities` | array<string> | Yes | Host | Amenities list e.g. `["wifi", "aircon", "washing_machine"]`. `FR2.1`, `E2.1` |
 | `photoPaths` | array<string> | Yes | Host | Firebase Storage relative paths to unit photos. `FR2.1`, `E2.1` |
 | `status` | string | Yes | Host / Function | Status: `"active"`, `"closed"`, `"expired"`. `E2.3` |
+| `transitCache` | map | No | Cloud Function | `{ nearestStation: string, peakFareRm: number, offPeakFareRm: number, co2GramsPerKm: number }`. |
 | `createdAt` | timestamp | Yes | Host (on create) | Creation timestamp. `E2.1` |
 | `updatedAt` | timestamp | Yes | Host | Last update timestamp. `E2.1` |
 | `expiresAt` | timestamp | Yes | Host / Function | Auto-expiry date (30 days from creation/renewal). `PRD Section 8` |
@@ -113,7 +114,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 | Field Name | Type | Required | Who May Write | Notes |
 |---|---|---|---|---|
 | `exactAddress` | string | Yes | Host | Full address with unit/door number (e.g. "A-12-03, Menara Bangsar"). `NFR2`, `E2.1` |
-| `landlordContact` | string | No | Host | Optional landlord name/contact note for Host reference. `[PROPOSED]` |
+| `landlordContact` | string | No | Host | Optional landlord name/contact note for Host reference. |
 
 ---
 
@@ -129,7 +130,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 | `type` | string | Yes | Host | Room type: `"master"`, `"medium"`, `"small"`. `FR2.1`, `E2.2` |
 | `price` | number | Yes | Host | Monthly room rent price (RM). Price Rule: sum of all room prices for listing <= `listings.totalRent`. `FR2.1`, `E2.2` |
 | `status` | string | Yes | Host | Room status: `"vacant"`, `"occupied"`. `FR2.1`, `E2.3` |
-| `occupiedByUid` | string | No | Host | Auth UID of resident occupying the room (if applicable). `[PROPOSED]` |
+| `occupiedByUid` | string | No | Host | Auth UID of resident occupying the room (if applicable). |
 | `createdAt` | timestamp | Yes | Host (on create) | Creation timestamp. `E2.2` |
 | `updatedAt` | timestamp | Yes | Host | Last update timestamp. `E2.2` |
 
@@ -144,7 +145,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 |---|---|---|---|---|
 | `reviewId` | string | Yes | Author (on create) | Unique review ID. `E9.4` |
 | `buildingName` | string | Yes | Author | Primary key for building reviews. `FR2.3`, `E9.4` |
-| `placeId` | string | No | Author | Google Places ID for building verification. `[PROPOSED]` |
+| `placeId` | string | No | Author | Google Places ID for building verification. |
 | `listingId` | string | No | Author | Associated listing ID if reviewed via a listing. `PRD Section 8` |
 | `authorUid` | string | Yes | Author (on create) | Auth UID of the reviewer (must be verified current/former resident). `FR2.3` |
 | `water` | number | Yes | Author | Rating 1–5. `FR2.3` |
@@ -181,10 +182,11 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 | `uidA` | string | Yes | Function / User | First user Auth UID. `FR3.2`, `E6.2` |
 | `uidB` | string | Yes | Function / User | Second user Auth UID. `FR3.2`, `E6.2` |
 | `score` | number | Yes | Cloud Function | Deterministic compatibility score (0–100%). Calculated by Cloud Function. `FR3.2` |
+| `scores` | map | Yes | Cloud Function | Breakdown map `{ lifestyle: number, timetable: number, budget: number }`. |
 | `reasons` | array<string> | Yes | Cloud Function | AI-generated (or rule fallback) match reasons. `FR3.2` |
-| `statusA` | string | Yes | User A | User A response: `"none"`, `"requested"`, `"accepted"`, `"rejected"`. `FR3.3`, `E5.1` |
-| `statusB` | string | Yes | User B | User B response: `"none"`, `"requested"`, `"accepted"`, `"rejected"`. `FR3.3`, `E5.1` |
-| `status` | string | Yes | Function / User | Combined state: `"match"`, `"requested"`, `"connected"`, `"rejected"`. `[PROPOSED]` |
+| `statusA` | string | Yes | User A | User A response: `"none"`, `"requested"`, `"accepted"`, `"declined"`. `FR3.3`, `E5.1` |
+| `statusB` | string | Yes | User B | User B response: `"none"`, `"requested"`, `"accepted"`, `"declined"`. `FR3.3`, `E5.1` |
+| `status` | string | Yes | Function / User | Combined state: `"suggested"`, `"requested"`, `"connected"`, `"declined"`. |
 | `createdAt` | timestamp | Yes | Function / User | Creation timestamp. `E6.2` |
 | `updatedAt` | timestamp | Yes | Function / User | Last state change timestamp. `E5.1` |
 
@@ -200,7 +202,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 | `groupId` | string | Yes | Member (on create) | Unique group ID. `E9.2` |
 | `memberUids` | array<string> | Yes | Member | Array of member Auth UIDs (2–4 members). `FR3.3`, `E9.2` |
 | `targetListingId` | string | No | Member | Foreign key to `listings/{listingId}` if targeting a Jiran listing. `FR3.3` |
-| `targetEvalId` | string | No | Member | Foreign key to `unitEvaluations/{evalId}` if targeting an evaluated unit. `[PROPOSED]` |
+| `targetEvalId` | string | No | Member | Foreign key to `unitEvaluations/{evalId}` if targeting an evaluated unit. |
 | `spots` | number | Yes | Member | Maximum group size (2–4). `FR3.3`, `E9.2` |
 | `roomSplit` | array<map> | Yes | Member | `[{ memberUid: string, roomType: string, price: number }]`. Sum must equal unit total rent. `FR3.3`, `E9.2` |
 | `splitOption` | string | Yes | Member | Option: `"equal"`, `"room_type"`, `"custom"`. `FR3.3`, `E9.2` |
@@ -221,7 +223,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
 | `evalId` | string | Yes | Creator (on create) | Unique evaluation ID. `E9.1` |
-| `createdByUid` | string | Yes | Creator (on create) | Auth UID of creator. `[PROPOSED]` |
+| `createdByUid` | string | Yes | Creator (on create) | Auth UID of creator. |
 | `groupId` | string | No | Creator / Member | Foreign key to `groups/{groupId}` if attached to a group. Private to creator/group members. `FR2.4`, `E9.1` |
 | `buildingName` | string | Yes | Creator | Building name from Google Places autocomplete. `FR2.4`, `E9.1` |
 | `areaId` | string | No | Creator | Foreign key to `areas/{areaId}`. `FR2.4` |
@@ -245,9 +247,9 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 |---|---|---|---|---|
 | `householdId` | string | Yes | Member (on create) | Unique household ID. `E7.2` |
 | `memberUids` | array<string> | Yes | Member | Auth UIDs of active household members. `FR5.1`, `E7.2` |
-| `hostUid` | string | Yes | Member | Auth UID of designated Host / tenancy holder. `[PROPOSED]` |
+| `hostUid` | string | Yes | Member | Auth UID of designated Host / tenancy holder. |
 | `listingId` | string | No | Member | Associated listing ID (if converted from a Jiran listing). `PRD Section 8` |
-| `inviteCode` | string | Yes | Member / Function | Secret invite code to join household. `FR5.1` `[PROPOSED]` |
+| `inviteCode` | string | Yes | Member / Function | Secret invite code to join household. `FR5.1` |
 | `rules` | array<map> | Yes | Member | `[{ text: string, acceptedBy: array<string> }]`. Modifying resets `acceptedBy`. `FR5.3`, `E7.2` |
 | `status` | string | Yes | Member | Status: `"active"`, `"closed"`. `FR5.1` |
 | `closedAt` | timestamp | No | Member / Function | Closure timestamp (retained read-only for 6 months). `PRD Section 8` |
@@ -312,7 +314,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 
 ---
 
-### 2.14 Collection: `chats` `[PROPOSED]`
+### 2.14 Collection: `chats`
 - **Purpose:** Private messaging channels between connected users or Host/applicant pairs. (Addresses PRD Open Question 5: "A store for chat is still missing").
 - **Document ID:** `{chatId}` (auto-generated ID or `"{uidA}_{uidB}"`).
 - **Used by:** Module 3 (FR3.3), Module 6 (FR6.2).
@@ -334,13 +336,13 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 | `messageId` | string | Yes | Sender (on create) | Unique message ID. `E5.2` |
 | `senderUid` | string | Yes | Sender (on create) | Auth UID of sender. `E5.2` |
 | `text` | string | Yes | Sender | Text content. `E5.2` |
-| `attachmentType` | string | No | Sender | Type: `"contract"`, `"photo"`, `"none"`. `FR6.2` `[PROPOSED]` |
-| `attachmentPath` | string | No | Sender | Firebase Storage path if attachment present. `FR6.2` `[PROPOSED]` |
+| `attachmentType` | string | No | Sender | Type: `"contract"`, `"photo"`, `"none"`. `FR6.2` |
+| `attachmentPath` | string | No | Sender | Firebase Storage path if attachment present. `FR6.2` |
 | `sentAt` | timestamp | Yes | Sender (on create) | Sent timestamp. `E5.2` |
 
 ---
 
-### 2.15 Collection: `config` `[PROPOSED]`
+### 2.15 Collection: `config`
 - **Purpose:** Read-only global system application configuration parameters.
 - **Document ID:** `app` (single document in `config`).
 - **Used by:** Module 2 (FR2.1, FR2.4), Module 4 (FR4.2).
@@ -353,23 +355,23 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 
 ---
 
-### 2.16 Optional Collections `[PROPOSED]`
+### 2.16 Optional Collections
 
-#### `reports` `[PROPOSED]`
+#### `reports`
 - **Purpose:** User reporting mechanism for inappropriate listings, reviews, or chat messages.
 - **Fields:** `reportId` (string), `reporterUid` (string), `targetType` (string: `"listing"`/`"review"`/`"user"`), `targetId` (string), `reason` (string), `createdAt` (timestamp), `resolved` (boolean).
 
-#### `notifications` `[PROPOSED]`
+#### `notifications`
 - **Purpose:** In-app notification delivery log and FCM push history.
 - **Fields:** `notificationId` (string), `recipientUid` (string), `title` (string), `body` (string), `type` (string), `data` (map), `read` (boolean), `createdAt` (timestamp).
 
 ---
 
-## 3. Data Retention & Deletion Schedule `[DRAFT]`
+## 3. Data Retention & Deletion Schedule
 
 In compliance with the **Retention Principle of PDPA 2010** (personal data must not be retained longer than necessary for its purpose), automated cleanup schedules are specified below:
 
-| Collection / Data | Retention Period | Deletion Mechanism | PDPA 2010 Justification `[DRAFT]` |
+| Collection / Data | Retention Period | Deletion Mechanism | PDPA 2010 Justification |
 |---|---|---|---|
 | `contractChecks` | **30 days** | Scheduled Cloud Function / TTL | Analysis result is temporary. Tenancy agreements contain highly confidential terms; 30 days allows sufficient time for student review before permanent purge. |
 | Unattached `unitEvaluations` | **90 days** | Scheduled Cloud Function | Evaluations not linked to an active Group expire after 90 days as market prices change and search intent ends. |
@@ -381,32 +383,22 @@ In compliance with the **Retention Principle of PDPA 2010** (personal data must 
 
 ## 4. Document Conflicts & Ambiguities
 
-During schema synthesis across `PRD.md`, `ASSUMPTIONS.md`, and `trello-cards.md`, the following conflicts were identified:
+During schema synthesis across `PRD.md`, `ASSUMPTIONS.md`, and `trello-cards.md`, the following conflicts were identified and resolved:
 
 1. **Exact Unit Address Visibility vs. NFR2 Rule Statement:**
-   - *PRD Section 5 Table ("What another person can see, by stage"):* States that in the **Connection** stage, a connected user can see the Unit's exact address for a viewing.
-   - *PRD Section 5 NFR2 Text & Section 8 Access Rules:* States that exact address is "visible only to that user" (the Host).
-   - *Resolution Required:* Schema isolates exact address into `listings/{id}/private/location`, allowing access ONLY when `matches` status between requester and Host is `"connected"`.
+  - *Resolution:* Schema isolates exact address into `listings/{id}/private/location`, allowing access ONLY when `matches` status between requester and Host is `"connected"`.
 
 2. **Profile Photo Visibility vs. Public User Document:**
-   - *PRD Section 1.3 & Stage Table:* States initials are shown by default; profile photos are hidden until the **Household** stage.
-   - *PRD Section 8 `users` table:* Lists profile photo directly alongside user metadata.
-   - *Resolution Required:* `photoUrl` is kept out of `users/{uid}` public document and exposed only via `users/{uid}/private/contact` or household context.
+  - *Resolution:* `photoUrl` is kept out of `users/{uid}` public document and exposed only via `users/{uid}/private/contact` or household context.
 
 3. **`reviews` Primary Key (`listingId` vs. `buildingName`):**
-   - *PRD Section 8 `reviews` table:* States `listingId or buildingName`.
-   - *Problem:* Listings expire after 30 days, whereas building reviews must persist permanently on area pages (FR2.3).
-   - *Resolution:* `reviews` uses `buildingName` (and `placeId`) as the primary key reference, with `listingId` marked optional.
+  - *Resolution:* `reviews` uses `buildingName` (and `placeId`) as the primary key reference, with `listingId` marked optional.
 
 4. **`unitEvaluations` Ownership (`groupId` vs. Individual Creator):**
-   - *PRD Section 8:* Lists `unitEvaluations` with `groupId`.
-   - *FR2.4:* Mentions an evaluation can be made by an individual student before joining/forming a group, or attached to a group later.
-   - *Resolution:* Added `createdByUid` as required, with `groupId` marked optional.
+  - *Resolution:* Added `createdByUid` as required, with `groupId` marked optional.
 
 5. **Contract Check Shared Attachment Access:**
-   - *PRD FR6.2:* States the Host shares tenancy agreement in Connection chat, and applicant checks it from chat.
-   - *PRD Section 8 & NFR2:* States `contractChecks` document is visible ONLY to the uploader (`uid`).
-   - *Resolution:* Sharing in chat sends a new chat message attachment (`attachmentPath`). The applicant creates their *own* private `contractChecks` record referencing that file path.
+  - *Resolution:* Sharing in chat sends a new chat message attachment (`attachmentPath`). The applicant creates their *own* private `contractChecks` record referencing that file path.
 
 ---
 
@@ -415,18 +407,16 @@ During schema synthesis across `PRD.md`, `ASSUMPTIONS.md`, and `trello-cards.md`
 Firestore Security Rules cannot execute multi-document aggregations, complex arithmetic across subcollections, or third-party API calls. The following logic **cannot** be enforced by rules alone and MUST be performed by Cloud Functions:
 
 1. **Room Price Cap Rule Validation (FR2.1):**
-   - *Rule:* Sum of room prices (`rooms` collection) for a listing must not exceed `listings.totalRent`.
-   - *Why Rules fail:* Security Rules cannot aggregate prices across multiple `rooms` documents when individual room documents are created or updated.
-   - *Function:* A Cloud Function validates or writes room collections atomically via transaction / callable function (`splitRoomPrices`).
+  - *Function:* A Cloud Function validates or writes room collections atomically via transaction / callable function (`splitRoomPrices`).
 
 2. **Deterministic Match Score & AI Reasons (FR3.2):**
-   - *Function:* `computeMatchScores` Callable Function reads `matchProfiles`, calculates weighted score formula, calls Gemini/Claude API for reasons, and writes to `matches`.
+  - *Function:* `computeMatchScores` Callable Function reads `matchProfiles`, calculates weighted score formula, calls Gemini API for reasons, and writes to `matches`.
 
 3. **Automated Data Retention Cleanup (NFR2 & PDPA 2010):**
-   - *Function:* Scheduled Cron Cloud Functions run daily to delete expired `contractChecks` (>30 days), unattached `unitEvaluations` (>90 days), closed `listings` (>30 days), and closed `households` (>6 months).
+  - *Function:* Scheduled Cron Cloud Functions run daily to delete expired `contractChecks` (>30 days), unattached `unitEvaluations` (>90 days), closed `listings` (>30 days), and closed `households` (>6 months).
 
 4. **Commute Calculation & Routes API Caching (FR4.1, FR4.2):**
-   - *Function:* `getCommuteOptions` and `getTransitRoute` Callable Functions call Google Maps Routes API, calculate peak/off-peak fares and CO2 estimates, and return cached results.
+  - *Function:* `getCommuteOptions` and `getTransitRoute` Callable Functions call Google Maps Routes API, calculate peak/off-peak fares and CO2 estimates, and return cached results.
 
 5. **Atomic State Transitions:**
-   - *Function:* Converting a `groups` + `unitEvaluations` into a live `households` record when a tenancy starts; issuing FCM push notifications on match requests or chore turn changes.
+  - *Function:* Converting a `groups` + `unitEvaluations` into a live `households` record when a tenancy starts; issuing FCM push notifications on match requests or chore turn changes.
