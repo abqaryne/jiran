@@ -76,4 +76,37 @@
     <string name="checking_connection">Checking…</string>
     <string name="connection_ok">Backend connected for %1$s</string>
     <string name="connection_failed">Connection check failed. Start the local emulators and sign in with a verified account.</string>
+    <string name="match_preview_title">Match score preview</string>
+    <string name="match_fixture_notice">Synthetic local fixtures only. Sample weights are unapproved; no real matches or AI.</string>
+    <string name="match_scenario_label">Sample match scenario</string>
+    <string name="match_calculate">Load sample matches</string>
+    <string name="match_start">Choose a sample scenario to test the score backend.</string>
+    <string name="match_sign_in">Sign in with a verified local emulator account first.</string>
+    <string name="match_loading">Loading sample matches…</string>
+    <string name="match_error">Could not load sample matches. Check the emulator connection and try again.</string>
+    <string name="match_versions">Formula: %1$s\nSample weights: %2$s</string>
+    <string name="match_empty">No sample matches</string>
+    <string name="match_insufficient">Not enough answers</string>
+    <string name="match_missing">Missing answers: %1$s</string>
+    <string name="match_candidate">%1$d. %2$s — %3$s</string>
+    <string name="match_overlap">Overlapping class days: %1$s</string>
+    <string name="match_none">None</string>
+    <string name="match_unknown">Unknown</string>
+    <string name="match_rule_heading">Rule-based reasons (no AI)</string>
+    <string name="match_reason">%1$s: %2$s</string>
+    <string name="match_similar">Similar</string>
+    <string name="match_different">Different</string>
+    <string name="match_partial">Partial overlap</string>
+    <string name="match_breakdown">%1$s — weight %2$s, similarity %3$s</string>
+    <string name="match_weights_heading">Sample weight and similarity breakdown</string>
+    <string-array name="match_scenarios">
+        <item>Ranked sample matches</item><item>Missing answers</item><item>No candidates</item>
+    </string-array>
+    <string-array name="match_factors">
+        <item>Sleep time</item><item>Cleanliness</item><item>Noise</item><item>Cooking</item>
+        <item>Smoking</item><item>Pets</item><item>Budget</item>
+    </string-array>
+    <string-array name="match_weekdays">
+        <item>Mon</item><item>Tue</item><item>Wed</item><item>Thu</item><item>Fri</item><item>Sat</item><item>Sun</item>
+    </string-array>
 </resources>

@@ -2,6 +2,26 @@
 
 Date: 27 October 2026. Tool: Codex in the shared repository. Human owner: Aaron.
 
+## Android match-score handoff continuation
+
+User steering: "continue" and "continue again", under the persistent Aaron goal.
+Used official Firebase Auth guidance and the existing Java/JavaScript fixture
+contract. No production backend migration or paid service. Added typed immutable
+match parsing, a gated Java Firebase SDK repository and labelled developer preview
+for score/reasons, overlap days, missing answers, weights and empty data.
+
+Three positive parser tests failed against the stub before implementation;
+all22 JVM tests then passed. Native checks initially hit the CLI's default10s
+Functions discovery timeout, diagnosed from the precise log and resolved with
+CI's existing30s startup setting. A subsequent real native red run passed the
+existing4 checks and failed the2 new unwired SDK/UI checks. After implementation,
+all6 passed through the actual demo SDK and bound TextViews; full-content native
+capture was inspected. Extended native UI missing/empty checks are tracked in the
+batch plan. Lint/Checkstyle/debug/live/test builds passed. Independent review found
+no blockers and noted that safe private-field projection is inspection evidence,
+not a claimed serialization test. Ary still owns the final shared Match UI;
+survey weights, UM policy and production candidate permissions remain open.
+
 ## Local Worker feasibility continuation
 
 Same persistent user objective and free-only research instruction. Created an

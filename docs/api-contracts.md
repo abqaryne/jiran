@@ -351,6 +351,20 @@ smoking/pet preference filter. No production reader is implemented: an adapter m
 load only authorized candidates and apply privacy policies before scoring or
 returning any result. The core is not an authorization boundary.
 
+## computeMatchScores — Android fixture handoff, FR3.2
+
+The implemented local Android handoff uses `MatchRepository.preview(scenarioId)`
+and `MatchSummary` for the fixture contract above. The repository and developer
+activity are gated to emulator builds; liveDebug/release do not invoke fixture
+Functions. The parser accepts the current `normalized-v1` envelope, validates
+bounded integer basis points and score percentage consistency, seven canonical
+factors with weights summing 10000, missing-answer/reason membership, unique IDs
+and ISO overlap days. It preserves server order and copies typed immutable lists;
+it does not compute new scores or retain raw maps/contact fields. Native labels
+identify synthetic unapproved weights and rule-generated reasons without AI.
+This is a tested developer handoff, not the final Match product screen or an
+approved production questionnaire/privacy schema.
+
 ## computeMatchScores — proposed production contract, FR3.2
 
 Request: `{}` (preferred). If retaining the planned `userId` parameter for legacy

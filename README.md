@@ -63,6 +63,7 @@ then run (the script installs both APKs and grants the debug local-network permi
 
 ```powershell
 ./gradlew.bat assembleDebug assembleDebugAndroidTest
+$env:FUNCTIONS_DISCOVERY_TIMEOUT = '30'
 npx.cmd -y firebase-tools@latest emulators:exec --project demo-jiran --only auth,firestore,functions,storage 'node scripts/emulator-smoke.cjs --android'
 ```
 
@@ -162,12 +163,13 @@ Missing fares/schedules and unknown CO₂ stay explicit. Deposit is excluded.
 The callable is emulator-only and accepts `{scenarioId}`; production listing/unit
 requests remain draft. See the [API contract](docs/api-contracts.md) and
 [implementation plan](docs/superpowers/plans/2026-10-27-commute-core.md).
-There is no live Maps integration, verified fare/emission dataset, occupancy
-rounding default or inferred attendance assumption in this batch. Gathan/Ary/Aly
+There is no live Maps integration, approved local fare or Malaysian-calibrated
+emissions dataset, occupancy rounding default or inferred attendance assumption.
+Published UK proxy factors are sourced separately in `docs/emission-methodology.md`. Gathan/Ary/Aly
 still need to agree the production inputs and UI integration.
 
 The existing REST smoke checks callable authorization, all scenarios, selection
-and cost arithmetic. Its `--android` mode runs four Android integration checks,
+and cost arithmetic. Its `--android` mode runs six Android integration checks,
 including the SDK/repository/parser flow for all scenarios and native preview
 source/warning/fallback text after a verified local callable. The on-time fixture
 includes explicitly synthetic provenance, a walking warning and driving fallback.
@@ -192,6 +194,14 @@ See [the contract](docs/api-contracts.md#computematchscores--implemented-local-f
 for normalization, rounding and validation, and [the plan](docs/superpowers/plans/2026-10-27-match-core.md)
 for evidence. Production questionnaire mapping, survey weights, candidate privacy
 and the final Match screen remain team integration work.
+
+The developer shell now opens a local Match score preview. `MatchRepository` and
+immutable `MatchSummary` verify the SDK handoff with ranked, missing-answer and
+empty fixture scenarios. The guarded screen shows sample scores, rule reasons,
+overlap days and sample weights/similarity; it does not call AI or recalculate
+scores. Native checks cover the bound data and missing/empty display states.
+`capturePreview=true` also writes `match-preview.png`; these are full-content
+render captures, not scroll-gesture coverage. See the [Android handoff plan](docs/superpowers/plans/2026-10-27-android-match-preview.md).
 
 ## Routes provider adapter
 

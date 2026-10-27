@@ -219,6 +219,7 @@ and [contract](../docs/api-contracts.md). Production formula approval is still o
 - [x] Pure deterministic seven-factor match scoring with explicit versioned weights and transparent basis-point breakdown.
 - [x] Missing-answer state, stable ranking, self exclusion, bounded candidate count and rule reason codes.
 - [x] Authenticated emulator-only `computeMatchScores` with synthetic ranked, incomplete and empty scenarios.
+- [x] Typed Java match response/repository and guarded developer preview with score, rule reasons, missing/empty states, overlap days and factor breakdown; real local SDK/native checks. See [Android handoff evidence](../docs/superpowers/plans/2026-10-27-android-match-preview.md). Ary's final product UI and production candidates remain open.
 - [ ] Survey-derived weight approval and agreed questionnaire mapping with Aly/Ary.
 - [ ] Production authorized candidate reader/privacy projection with Gathan; final Match UI and explanation handoff with Ary/Ilham.
 - [ ] Production end-to-end and QA evidence; no matching completion claim from fixtures alone.

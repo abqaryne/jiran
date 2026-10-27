@@ -12,6 +12,7 @@
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
         <activity android:name=".ui.EmailPasswordActivity" android:exported="false" />
         <activity android:name=".ui.CommutePreviewActivity" android:exported="false" />
+        <activity android:name=".ui.MatchPreviewActivity" android:exported="false" />
         <activity android:name=".ui.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
