@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A thin line under a list row. Use on every row except the last. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:bottom="0dp" android:gravity="bottom" android:height="@dimen/stroke_thin">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/color_border_divider" />
+        </shape>
+    </item>
+</layer-list>

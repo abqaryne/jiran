@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Theme.Jiran: Material Components, restyled with the Jiran tokens.
+  Set it on <application> in AndroidManifest.xml: android:theme="@style/Theme.Jiran"
+  There is no secondary or accent colour: brand blue is the only action colour.
+-->
+<resources>
+    <style name="Theme.Jiran.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Colour -->
+        <item name="colorPrimary">@color/color_brand_primary</item>
+        <item name="colorPrimaryVariant">@color/color_brand_pressed</item>
+        <item name="colorOnPrimary">@color/color_text_on_brand</item>
+        <item name="colorSecondary">@color/color_brand_primary</item>
+        <item name="colorSecondaryVariant">@color/color_brand_pressed</item>
+        <item name="colorOnSecondary">@color/color_text_on_brand</item>
+        <item name="colorSurface">@color/color_bg_surface</item>
+        <item name="colorOnSurface">@color/color_text_primary</item>
+        <item name="android:colorBackground">@color/color_bg_surface</item>
+        <item name="colorOnBackground">@color/color_text_primary</item>
+        <item name="colorError">@color/color_status_danger_text</item>
+        <item name="colorOnError">@color/color_text_on_brand</item>
+        <item name="android:textColorPrimary">@color/color_text_primary</item>
+        <item name="android:textColorSecondary">@color/color_text_secondary</item>
+
+        <!-- Edge to edge, dark icons on light bars -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/color_bg_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- Type: map Material's slots onto the Jiran scale -->
+        <item name="textAppearanceHeadline3">@style/TextAppearance.Jiran.Display</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.Jiran.Headline</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Jiran.Section</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Jiran.Title</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Jiran.Label</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Jiran.LabelSmall</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Jiran.Body</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Jiran.Meta</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Jiran.Label</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Jiran.Caption</item>
+
+        <!-- Shape: 8 dp photos and chips, 12 dp inputs and cards, 16 dp sheets, pill buttons -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Jiran.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Jiran.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Jiran.Large</item>
+
+        <!-- Default styles so plain widgets already look right -->
+        <item name="materialButtonStyle">@style/Widget.Jiran.Button.Primary</item>
+        <item name="chipStyle">@style/Widget.Jiran.Chip.Filter</item>
+        <item name="textInputStyle">@style/Widget.Jiran.TextInputLayout</item>
+        <item name="materialCardViewStyle">@style/Widget.Jiran.Card</item>
+        <item name="toolbarStyle">@style/Widget.Jiran.Toolbar</item>
+        <item name="switchStyle">@style/Widget.Jiran.Switch</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Jiran.BottomSheetDialog</item>
+    </style>
+
+    <style name="Theme.Jiran" parent="Theme.Jiran.Base" />
+
+    <style name="ShapeAppearance.Jiran.Small" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_8</item>
+    </style>
+    <style name="ShapeAppearance.Jiran.Medium" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_12</item>
+    </style>
+    <style name="ShapeAppearance.Jiran.Large" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_16</item>
+    </style>
+    <style name="ShapeAppearance.Jiran.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="ShapeAppearance.Jiran.BottomSheet" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/radius_16</item>
+        <item name="cornerSizeTopRight">@dimen/radius_16</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="ThemeOverlay.Jiran.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Jiran.BottomSheet</item>
+    </style>
+</resources>

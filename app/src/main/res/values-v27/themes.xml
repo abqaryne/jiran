@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dark icons on the light navigation bar (Android 8.1 and up). The base theme is in values/themes.xml. -->
+<resources>
+    <style name="Theme.Jiran" parent="Theme.Jiran.Base">
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>

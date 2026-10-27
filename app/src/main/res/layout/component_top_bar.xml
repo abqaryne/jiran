@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Figma: top bar. 60 dp, back or close button on the left (Icon button, Soft), centred Title, one small action on the right.
+  Right action is a Small Ink button (Next, Post, Publish) or a plain brand-coloured text (Skip, Edit).
+-->
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Jiran.Toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/top_bar_height"
+    android:paddingStart="@dimen/spacing_16"
+    android:paddingEnd="@dimen/spacing_16"
+    app:title="@string/placeholder_title"
+    tools:title="New listing">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/action"
+        style="@style/Widget.Jiran.Button.Ink.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/action_next" />
+</com.google.android.material.appbar.MaterialToolbar>
