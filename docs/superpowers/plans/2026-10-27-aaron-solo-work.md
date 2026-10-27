@@ -121,3 +121,24 @@ Firebase calls/settings, shared calculation behavior or Android changes.
 Needs human review: read src/read-json.mjs and explain why byte limits alone do
 not stop slow uploads, why cancellation is not awaited, and why the body deadline
 is not a production p95 guarantee.
+
+## Batch C: maintained CI action runtimes
+
+Ruling: use inspected official checkout7.0.1, setup-node7.1.0, setup-java6.1.0 and
+Gradle actions6.4.0 releases. Their actions run on Node24; application Node22 and
+JDK25 remain explicit. Keep job/check names, triggers, contents:read permissions,
+cache lockfile paths and android/backend working directories. Gradle6 no longer
+has build-root-directory; the Gradle command's working-directory already selects
+android. Set cache-provider:basic explicitly to retain open-source GitHub cache
+and avoid the new commercial enhanced default. No paid integration is activated.
+Configuration changes are verified by the actual three-job CI run, not a test
+that mirrors YAML text. Live Firebase deployment stays disabled.
+
+Sources inspected27 October2026:
+- https://raw.githubusercontent.com/actions/checkout/v7.0.1/action.yml
+- https://raw.githubusercontent.com/actions/setup-node/v7.1.0/action.yml
+- https://raw.githubusercontent.com/actions/setup-java/v6.1.0/action.yml
+- https://raw.githubusercontent.com/gradle/actions/v6.4.0/setup-gradle/action.yml
+
+CI40450523624 at317fc9c completed successfully across all three jobs. New workflow
+YAML parses successfully; current versioned action changes await exact-head CI.

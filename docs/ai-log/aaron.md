@@ -57,3 +57,24 @@ its missing JAR. Human review remains TODO (owner).
   and its tests; explain byte limits, elapsed-time checks, cancellation and cleanup.
 - **Limits:** Needs human review. This does not prove production overall latency,
   persisted quotas or global abuse protection. Personal review/hours not verified.
+
+## 2026-10-27 · Maintained CI actions · Infrastructure
+
+- **Human owner:** Aaron.
+- **AI tool and model:** Codex; exact deployed model version not recorded.
+- **Task:** Replace deprecated CI action runtimes within the authorized solo plan.
+- **Prompts (exact):**
+  > implement those on the previous prompts
+- **Output used:** .github/workflows/ci.yml now selects official release versions
+  checkout7.0.1, setup-node7.1.0, setup-java6.1.0 and Gradle6.4.0. Selected basic
+  GitHub cache explicitly; removed the unsupported build-root-directory input.
+- **How it was tested or checked:** Inspected official versioned action definitions
+  and release pages. Parsed workflow YAML successfully. Previous exact-head
+  CI40450523624 at317fc9c passed all three jobs. New action execution awaits CI.
+  Application Node22/JDK25, job names, permissions and working directories retained.
+- **What the human changed or rejected:** TODO (owner).
+- **What the human understands and can explain:** TODO (owner). Explain the
+  distinction between the action's Node24 runtime and the application's Node22;
+  explain why basic caching was selected for the free-only requirement.
+- **Limits:** Needs human review; no claim updated actions passed until CI finishes.
+  No billing, dependency submission or new deployment/provider was activated.
