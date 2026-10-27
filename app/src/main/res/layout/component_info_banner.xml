@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Figma: info banner. Blue = info; success, warning and danger use the status colours. Use InfoBannerView. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/banner_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_12">
+
+    <ImageView
+        android:id="@+id/banner_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="1dp"
+        android:contentDescription="@null"
+        tools:srcCompat="@drawable/ic_info" />
+
+    <TextView
+        android:id="@+id/banner_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_8"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Jiran.Meta"
+        tools:text="Your address stays private until you both accept." />
+</LinearLayout>

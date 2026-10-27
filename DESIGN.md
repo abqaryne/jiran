@@ -120,7 +120,7 @@ Layout: 16 dp side margin, 24 dp between sections, 12 dp inside a card between l
 
 **Material Symbols Rounded**, weight 400, optical size 24, **outlined** by default. Filled only for the selected or active state (for example the active tab). Sizes: 24 dp standard, 18 dp inside badges and banners, 22 dp inside circles.
 
-Import them into Android Studio with **New → Vector Asset → Material Icons**, keep the exact Symbol name (`ic_home`, `ic_bed`). The names we use:
+The icons we use are already in the project as vector drawables, named `ic_<symbol>` (for example `ic_home`, `ic_bed`, `ic_arrow_back`) in `app/src/main/res/drawable`. The four tab icons also have `_filled` versions and a selector (`ic_tab_home`, ...). Tint them in the layout (`app:tint`), never by editing the file. Need another icon? Add the Material Symbols Rounded vector from [google/material-design-icons](https://github.com/google/material-design-icons/tree/master/symbols/android) (weight 400, 24 dp) with the same `ic_<symbol>` name. Licence: Apache 2.0 (see `docs/licenses`). The names we use:
 
 | Where | Symbols |
 |---|---|
@@ -143,15 +143,15 @@ Master components live in Figma → 🎨 Design System. Each row: Figma componen
 | **Button** | Style: Primary, Ink, Soft, Disabled · Size: Large, Small · Label | Large 52 dp, Small 40 dp, pill | `Widget.Jiran.Button.Primary / .Ink / .Soft` (+ `.Small`). Disabled is just `enabled=false`. | Primary: the one forward action, full width at the bottom of a step. Ink: strong secondary (Edit profile, Remind). Soft: quiet actions. Small: top bar and inline. |
 | **Icon button** | Style: Soft, Outline, Ink, Brand · Icon | 40 dp circle | `Widget.Jiran.IconButton.Soft / .Outline / .Ink / .Brand` | Back, close, share, save, filter. Give it a content description. |
 | **Chip** | Selected: False, True · Chevron · Label | 36 dp high, 8 dp radius | `Widget.Jiran.Chip.Filter` | Filters, segmented choices, tags. Chevron = opens a sheet. Selected = ink border. |
-| **Badge** | Status: Success, Warning, Danger, Brand, Neutral | 26 dp high, 8 dp radius | `Widget.Jiran.Badge.Success / .Warning / .Danger / .Brand / .Neutral` | One word plus an icon: OK, Check, Red flag, Vacant, AI-generated. |
-| **Avatar** | Size: Small 32, Medium 40, Large 56 · Initial | circle | `Widget.Jiran.Avatar.Small / .Medium / .Large` | Initials on soft blue. Real photos only once people live together. |
+| **Badge** | Status: Success, Warning, Danger, Brand, Neutral | 26 dp high, 8 dp radius | `BadgeView` (`app:badgeStatus`, `app:badgeIcon`); style `Widget.Jiran.Badge.*` for plain TextViews | One word plus an icon: OK, Check, Red flag, Vacant, AI-generated. |
+| **Avatar** | Size: Small 32, Medium 40, Large 56 · Initial | circle | `AvatarView` (`app:avatarSize`, `app:avatarInitial`) | Initials on soft blue. Real photos only once people live together. |
 | **Field** | State: Default, Focused, Error · Label · Value | 60 dp high, 12 dp radius | `Widget.Jiran.TextInputLayout` | Any text input. Label sits inside the box. |
-| **Search bar** | Placeholder | 44 dp, pill | `Widget.Jiran.SearchBar` | Rooms search (also takes plain-language requests). |
-| **Tab item / Tab bar / Post button** | State: Active, Inactive | bar 60 dp, Post 60 dp | [`component_tab_bar.xml`](app/src/main/res/layout/component_tab_bar.xml), `Widget.Jiran.FloatingActionButton.Post` | Main navigation: Home, Rooms, Match, Unit + Post. |
-| **Room card** | Price · Title · Meta · True cost | 2 per row in search | [`component_room_card.xml`](app/src/main/res/layout/component_room_card.xml) | One card per vacant Room. Price, title, meta, true monthly cost. **No CO₂ here.** |
-| **Section header** | Title · Action | 28 dp | `TextAppearance.Jiran.Section` + brand "See all" text | Heading of a list or carousel. |
-| **List row** | Icon · Title · Subtitle · Trailing | min 64 dp | [`component_list_row.xml`](app/src/main/res/layout/component_list_row.xml) | Settings, expenses, steps, requests. Divider under every row but the last. |
-| **Commute option** | Selected: False, True · Icon · Mode · Note · Time · Cost | 72 dp, 16 dp radius | [`component_commute_option.xml`](app/src/main/res/layout/component_commute_option.xml) with `setSelected(true)` | One travel mode. The cheapest one that is on time is Selected (blue border + blue note). |
+| **Search bar** | Placeholder | 44 dp, pill | `SearchBarView` (`app:searchHint`, `app:searchAi`) | Rooms search (also takes plain-language requests; the sparkle icon marks AI). |
+| **Tab item / Tab bar / Post button** | State: Active, Inactive | bar 60 dp, Post 60 dp | `JiranTabBar` (`setSelectedTab`, `setOnTabListener`) | Main navigation: Home, Rooms, Match, Unit + Post. |
+| **Room card** | Price · Title · Meta · True cost | 2 per row in search | `RoomCardView` (`setPrice`, `setTitle`, `setMeta`, `setTrueCost`, `getPhotoView`) | One card per vacant Room. Price, title, meta, true monthly cost. **No CO₂ here.** |
+| **Section header** | Title · Action | 28 dp | `SectionHeaderView` (`app:headerTitle`, `app:headerAction`) | Heading of a list or carousel. |
+| **List row** | Icon · Title · Subtitle · Trailing | min 64 dp | `ListRowView` (`app:rowIcon` or `app:rowAvatarInitial`, `rowShowChevron`, `rowShowDivider`) | Settings, expenses, steps, requests. Divider under every row but the last. |
+| **Commute option** | Selected: False, True · Icon · Mode · Note · Time · Cost | 72 dp, 16 dp radius | `CommuteOptionView`, call `setSelected(true)` on the highlighted one | One travel mode. The cheapest one that is on time is Selected (blue border + blue note). |
 | **Status bar** (mockups only) | | 28 / 44 | none | Picture only. Do not build it. |
 
 Components made from several parts (use the same pieces, then compose):
@@ -160,10 +160,10 @@ Components made from several parts (use the same pieces, then compose):
 |---|---|---|
 | **Top bar** | Icon button + Title + Small Ink button or brand text | 60 dp, [`component_top_bar.xml`](app/src/main/res/layout/component_top_bar.xml). Back on the left, one action on the right. |
 | **Footer** | Top border `border/divider` + 1 to 2 Buttons (Large) | 16 dp padding, 24 dp at the bottom. Primary first, Soft second. |
-| **Info banner** | `Widget.Jiran.Card.Info` + icon + Meta text | Blue = info. Success, warning, danger use the status pairs. |
+| **Info banner** | `InfoBannerView` (`app:bannerKind`, `app:bannerText`) | Blue = info. Success, warning, danger use the status pairs. |
 | **Bottom sheet** | `Widget.Jiran.BottomSheet` (16 dp top radius, handle 40×4) | Title in Section style, close top right, one Primary button at the bottom. |
-| **Toast** | Ink pill, white text, optional "Undo" | Near the bottom, above the tab bar. |
-| **Empty state** | Line drawing + one bold sentence + one line of help | "No chats yet". |
+| **Toast** | `JiranSnackbar.make(view, text)`: ink pill, white text, optional "Undo" | Near the bottom, above the tab bar. |
+| **Empty state** | `EmptyStateView`: icon + one bold sentence + one line of help | "No chats yet". |
 | **Timeline** (route) | Time column + dot and line + content | Dot is a ring for walking, blue for LRT/bus, ink for shuttle. Used in Public transport route. |
 | **Segment bar** | Rounded track with `brand/600`, `brand/300`, `brand/100` | Room price allocation: total must not pass the Unit rent. |
 
@@ -232,8 +232,10 @@ app/src/main/res/
 - `Theme.Jiran` is applied to the product shell (`ui/shell/ShellActivity`). Product screens use it; the temporary foundation screens keep their old theme until they are replaced.
 - Geist is bundled. `minSdk` is 26, so `android:lineHeight` in `type.xml` is ignored on Android 8 (API 26 and 27) and works from Android 9; set `app:lineHeight` on a TextView if that matters for a screen.
 - Material Components 1.14, so `titleCentered` and the other attributes are available.
-- Icons are not bundled yet: import them as you need them with **New → Vector Asset → Material Icons** and keep the Symbol name (`ic_home`, `ic_bed`, ...). The tab bar and Post button wait for `ic_home`, `ic_bed`, `ic_group`, `ic_door_front`, `ic_add`.
+- Icons are bundled (about 75 Material Symbols, see section 3.4). The shell tab bar and Post button already use them.
 - Add system bar insets as padding on the top bar and the footer of each screen (the shell already calls `EdgeToEdge.enable`).
+
+**See every component at once.** In a debug build a second launcher icon called **Jiran UI** opens the component gallery (`ui/gallery/ComponentGalleryActivity`, debug source set only). It shows typography, buttons, chips, badges, avatars, fields, banners, list rows, progress, commute options, room cards, the empty state and the tab bar with real data, so a screen can be compared with the Figma frame. When you add a component, add it to the gallery (`src/debug/res/layout/activity_component_gallery.xml`).
 
 **Use the components**
 

@@ -15,10 +15,9 @@
         app:navGraph="@navigation/nav_main"
         xmlns:app="http://schemas.android.com/apk/res-auto" />
 
-    <!-- Floating tab bar + Post button (design system component) -->
-    <include
-        android:id="@+id/tab_bar_container"
-        layout="@layout/component_tab_bar"
+    <!-- Floating tab bar + Post button (design system view) -->
+    <com.jiran.app.ui.common.JiranTabBar
+        android:id="@+id/tab_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom" />
