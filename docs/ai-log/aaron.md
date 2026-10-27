@@ -222,3 +222,50 @@ Final local checks:339Jest tests/13suites,7load tests, syntax checks and75Worker
 tests pass. Artifact links resolve; report body counts remain350/400words.
 Measured workload/helper hashes match; token file absent. Final exact-head CI
 will be reported separately; no unobserved result or human review is claimed.
+
+Final CI40476858580 atbad15a4 passed backend, Worker and Android. Annotation review
+found Android setup still targetingNode20; inspected the official4.0.4 definition
+(Node24, supported platform-tools input) and updated that remaining deprecated
+CI action. No app runtime/tool version or permission change. New exact-head CI
+is required before closing this task; prior success is not reused as its result.
+
+## 2026-10-27 · Rename latest commit to current story format · E0.1
+
+- **Human owner:** Aaron.
+- **AI tool and model:** Codex; exact model identifier not recorded.
+- **Task:** Rename the latest CI commit using the newest repository story convention.
+- **Prompts (exact):**
+  > can u rename ur commit based on the newest rules
+- **Output used:** Latest commit subject changed from `[Infra][CI] update remaining Android setup action` to `[E0.1] Update Android setup action`; this entry appended to `docs/ai-log/aaron.md` on the existing PR #2 branch.
+- **How it was tested or checked:** Fetched origin/main and checked its AGENTS.md convention; mapped CI maintenance to E0.1 in docs/team/aaron.md. Checked the amendment diff and commit subject. No application code changed; application tests were not rerun for this metadata/log-only task.
+- **What the human changed or rejected:** TODO (owner).
+- **What the human understands and can explain:** TODO (owner).
+- **Limits:** Needs human review. Only the latest commit is renamed; historical commits retain their original subjects. Publishing the amended commit requires explicit permission for a force-with-lease push under AGENTS.md; remote publication is pending that permission.
+
+Publication follow-up (27 October 2026): exact human prompt `yes` approved the
+requested force-with-lease push. The push succeeded and `git ls-remote` confirmed
+492236f42e46f3be58a45b6fd71a90fb375327f1 on the feature branch. This approval and
+publication record is included by amending the same E0.1 commit, then publishing
+with a lease against that verified remote hash. No application code changed;
+new-head CI results are not claimed here. Human review fields remain TODO (owner).
+
+## 2026-10-27 · Apply story subjects across Aaron's PR commits · E0.1
+
+- **Human owner:** Aaron.
+- **AI tool and model:** Codex; exact model identifier not recorded.
+- **Task:** Correct the earlier latest-only interpretation and apply current story IDs to all Aaron commits exclusive to PR #2.
+- **Prompts (exact):**
+  > commit messages use [Story] short description (for example [E7.1] Add balance calculation; the story card holds the FR, see docs/team/TEAM_PLAN.md), branches use feature/<short-name>.
+  >
+  > ok?
+
+  > why only one with the epic format walao
+  > [6:07 PM, 10/27/2026] Ary Nasution: commit messages use [Story] short description (for example [E7.1] Add balance calculation; the story card holds the FR, see docs/team/TEAM_PLAN.md), branches use feature/<short-name>.
+  > [6:08 PM, 10/27/2026] Ary Nasution: refer to my newest commit @Aaron Tan
+  >
+  > do it for my others too
+- **Output used:** Reword 24 remaining legacy subjects in the 25 Aaron commits exclusive to `feature/aaron-commute-core`, using E0.1, E0.2, E3.3, E4.2 and E6.2 from docs/team/trello-cards.md and the team/personal plan. The latest E0.1 subject is retained. PR #2 remains the review location. Preserve existing subject detail and message bodies. Retain an ignored local old/new commit map and backup ref for recovery.
+- **How it was tested or checked:** Fetched origin/main and inspected Ary's latest convention commit and the story cards. Rewrite verification requires identical trees for every historical commit, with only this log appended at the final tree; identical author/committer metadata, correctly mapped parents and message bodies; unchanged upstream commit objects; all 25 final subjects in story format and a clean worktree. Remote publication uses the previously approved force-with-lease method with an explicit expected old tip, followed by remote-hash verification.
+- **What the human changed or rejected:** TODO (owner).
+- **What the human understands and can explain:** TODO (owner).
+- **Limits:** Needs human review. Subject labels do not mean story acceptance or production readiness. Already-merged commits on main and teammates' commits are not renamed. No application code change or new application-test/CI result is claimed. Earlier hashes cited in historical evidence remain historical observations.

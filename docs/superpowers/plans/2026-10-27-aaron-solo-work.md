@@ -338,3 +338,11 @@ all syntax checks and75Worker tests passed. All primary artifact local links
 resolve; marked report bodies remain350/400words. Measured workload/helper hashes
 match current files; generated token file is absent. Publication/exact-head CI is
 still pending; no production or whole-role completion is claimed.
+
+Final CI audit atbad15a4: run40476858580 passed all three jobs. Its annotation
+revealed one remaining Node20 action, android-actions/setup-android@v3. Official
+latest release4.0.4/action.yml usesNode24 and retains the configured platform-tools
+input. Upgraded that action only; app Node22/JDK25, SDK/build tools, job names and
+permissions are unchanged. Official definition inspected:
+https://raw.githubusercontent.com/android-actions/setup-android/v4.0.4/action.yml
+The final maintained-action head needs its own CI run before closure.
