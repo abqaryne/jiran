@@ -20,7 +20,8 @@ created or activated during this research.
 | Email/password login | Existing Firebase Auth on Spark | Keep `jiran-mad` and `jiran.com`; no migration or duplicate app. [Firebase pricing](https://firebase.google.com/pricing) lists Spark without a payment method. Retain verification and abuse limits; no paid SMS dependency. |
 | Database | Existing Standard Firestore on Spark | [Free quotas](https://firebase.google.com/docs/firestore/quotas): 1 GiB, 50,000 reads/day, 20,000 writes/day, 20,000 deletes/day, 10 GiB outbound/month. Only one free database/project; no billing-only backup/PITR/TTL features. Usage exhaustion must produce unavailable states. |
 | Trusted calculations/API | Cloudflare Workers Free, JavaScript | [Pricing](https://developers.cloudflare.com/workers/platform/pricing/) and [limits](https://developers.cloudflare.com/workers/platform/limits/): 100,000 requests/day/account, 10 ms CPU/request, 128 MB, 50 subrequests. Network wait is outside CPU time. Free signup is offered in the [official workshop](https://developers.cloudflare.com/labs/workers). Account onboarding and full auth/calculation CPU benchmark are still needed. Use the free `workers.dev` hostname, no domain purchase. |
-| Walking and road estimates | HeiGIT/openrouteservice Standard | [Official homepage](https://openrouteservice.org/) offers a free Standard key through HeiGIT; [FAQ](https://giscience.github.io/openrouteservice/frequently-asked-questions) documents a default 2,000 directions requests/day with a rolling reset. The [staging plans page](https://staging.openrouteservice.org/plans/) lists 40/minute, but confirm the current account limit before activation. [Profiles](https://giscience.github.io/openrouteservice/run-instance/configuration/engine/profiles/) include walking/car. No key or live Malaysian query tested. |
+| Walking and road estimates | HeiGIT/openrouteservice Standard | [Official homepage](https://openrouteservice.org/) offers a free Standard key through HeiGIT; [current FAQ](https://giscience.github.io/openrouteservice/frequently-asked-questions) documents default 2,000 directions calls in a 24-hour window starting at the first request, and 40 per sliding 60 seconds. Confirm the actual owner's dashboard allowance before activation. [Profiles](https://giscience.github.io/openrouteservice/run-instance/configuration/engine/profiles/) include walking/car. No key or live Malaysian query tested. |
+| Atomic quota coordination | SQLite-backed Durable Object on Workers Free, candidate only | [Official pricing](https://developers.cloudflare.com/durable-objects/platform/pricing/) permits SQLite-backed objects on Free: 100,000 requests/day, 13,000 GB-s/day duration, 5 million row reads/day, 100,000 row writes/day and 5 GB storage. Exceeding a Free allowance fails operations. KV-backed namespaces require Paid. No object, storage adapter or concurrent/persistence test is implemented yet. |
 | Bus/rail timetable input | Malaysia official GTFS Static | [Government documentation](https://developer.data.gov.my/realtime-api/gtfs-static) provides Prasarana KL bus, MRT feeder and rail ZIP feeds, CC BY 4.0. These are schedules/geography, not a ready-to-call journey planner or complete fare engine. It also documents omitted bus trips due to data issues. Coverage/validity/fare completeness must be inspected. UM shuttle coverage is not established. |
 | Opening directions | External Maps URL | [Google Maps URLs](https://developers.google.com/maps/documentation/urls/get-started) require no API key. Useful as a user navigation link; cannot supply numeric travel results to our calculator. No scraping or importing Maps UI results. |
 | Listing photos, broader team impact | Cloudinary Free, candidate only | [Official free-plan FAQ](https://cloudinary.com/documentation/developer_onboarding_faq_free_plan) allows production within allowance without financial details; [billing docs](https://cloudinary.com/documentation/billing_and_plans) list 25 monthly credits shared across usage. Requires team agreement, authenticated signed uploads, deletion/ownership rules and size limits. Never expose upload signing secrets or put image blobs in Firestore. |
@@ -58,6 +59,12 @@ and benchmark a free transactional store before adopting the runtime; do not
 claim the existing injected quota adapter implements persistence. Limit request,
 response, candidate count and route legs; reject overload, never upgrade plans.
 No logs may contain tokens, coordinates, private schedules or provider keys.
+
+The current [HeiGIT FAQ](https://giscience.github.io/openrouteservice/frequently-asked-questions)
+states that each API key belongs to one person and recommends server-side
+requests for applications. Assign an accountable individual owner; do not share
+an account or embed a key in Java. Its FAQ confirms the minute limit as a rolling
+window; a fixed calendar-minute counter would not enforce that provider limit.
 
 Reuse pure JavaScript pricing, emissions and match modules through a tested
 bundle; do not assume Firebase Admin/Functions SDKs work inside Workers. Validate
@@ -109,8 +116,9 @@ remain open. No Android transport or production runtime has been replaced.
 - **B: authorized data boundary.** Agree normalized listing/profile/timetable
   contracts with Gathan/Ary, add rules and cross-user tests, select atomic free
   quota storage. Confirm UM policy and survey fares/trips/weights.
-- **C: free-account verification.** Connect team-owned Free accounts without
-  payment information, securely provision free keys, run a small route sample and
+- **C: free-account verification.** Connect appropriately owned Free accounts without
+  payment information (HeiGIT keys have an individual owner), securely provision
+  free keys, run a small route sample and
   Free-runtime CPU checks. If signup requires billing, stop that candidate.
 - **D: product integration.** Implement HTTP client/retry/error states in Java;
   display attribution, static/unknown coverage and freshness; QA both missing and

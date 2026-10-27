@@ -48,7 +48,7 @@ Workers, change Android transport, approve schemas or satisfy NFR1.
 - [x] Run local runtime tests, build/import checks, dependency audit and existing
   backend regressions. Inspect bundle for unintended Admin/Functions/keys. Add
   reproducible commands and limitations to experiment README/evidence.
-- [ ] Independent review/fixes; update Aaron/research/AI log, credential scans,
+- [x] Independent review/fixes; update Aaron/research/AI log, credential scans,
   commit/push PR#2 and inspect exact latest CI handle.
 
 ## Ledger
@@ -79,3 +79,12 @@ Workers, change Android transport, approve schemas or satisfy NFR1.
 - The URL loopback check is a research safeguard, not proof of client origin.
   Real network isolation is provided by the local Miniflare listener and the
   synthetic outbound service in this harness. No public server or live keys tested.
+- Pushed `3e09d65`. [CI40427238562](https://github.com/abqaryne/jiran/actions/runs/40427238562)
+  passed all three jobs: Worker feasibility on Linux, backend emulator/tests and
+  Android lint/tests/build. PR#2 remains draft and Ary's final merge is open.
+- Follow-up current HeiGIT FAQ inspection confirmed40 calls per sliding60 seconds,
+  a24-hour daily reset anchored to the first request, and personal key ownership. Updated candidate research
+  to use this primary evidence rather than a staging-plan quota reference.
+- Official Durable Objects pricing identifies SQLite-backed Free storage as an
+  atomic quota candidate; documented Free caps and exhaustion behavior. No quota
+  implementation or adoption is claimed from that pricing evidence.
