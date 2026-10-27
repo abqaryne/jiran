@@ -39,5 +39,8 @@ effort", carry penalties up to a failing grade. This folder is that log. Ilham m
 | File | Who |
 |---|---|
 | [ary.md](ary.md) | Ary |
-| [../ai-usage-log.md](../ai-usage-log.md) | Aaron (earlier record) |
-| `<name>.md` | add yours here |
+| [aaron.md](aaron.md) | Aaron (his earlier record is [../ai-usage-log.md](../ai-usage-log.md)) |
+| [aly.md](aly.md) | Aly |
+| [dafi.md](dafi.md) | Dafi |
+| [gathan.md](gathan.md) | Gathan |
+| [ilham.md](ilham.md) | Ilham (also merges everything into Appendix 2(b) of the report) |
