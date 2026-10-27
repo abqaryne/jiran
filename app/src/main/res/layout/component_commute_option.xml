@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Figma: Commute option (Selected = False / True).
+  Call view.setSelected(true) on the root for the cheapest option that still reaches class on time.
+  If no option is on time, select none and say so in a banner. Cost line is always labelled an estimate somewhere on the screen.
+  Tapping the public transport option opens the "Public transport route" screen.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_commute_option"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_12"
+    android:paddingStart="@dimen/spacing_16"
+    android:paddingEnd="@dimen/spacing_16"
+    tools:selected="true">
+
+    <ImageView
+        android:id="@+id/mode_icon"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
+        android:background="@drawable/bg_icon_circle"
+        android:contentDescription="@null"
+        android:padding="9dp"
+        app:tint="@color/color_text_primary" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_12"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mode"
+            android:textAppearance="@style/TextAppearance.Jiran.Label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="LRT + UM shuttle" />
+
+        <TextView
+            android:id="@+id/note"
+            android:textAppearance="@style/TextAppearance.Jiran.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_brand_primary"
+            tools:text="Cheapest on time" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/time"
+            android:textAppearance="@style/TextAppearance.Jiran.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="34 min" />
+
+        <TextView
+            android:id="@+id/cost"
+            android:textAppearance="@style/TextAppearance.Jiran.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="RM 50/mo · 9 kg CO₂" />
+    </LinearLayout>
+</LinearLayout>

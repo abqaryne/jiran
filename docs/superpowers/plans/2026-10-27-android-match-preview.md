@@ -72,3 +72,16 @@ policy remain open. No AI service or new production schema is introduced.
   Existing backend regression: **277 Jest tests /11 suites and syntax checks pass**.
   Only the task-started headless AVD was shut down afterward; emulator services
   shut down through emulators:exec. All accounts/data were disposable demo data.
+- Pushed match handoff `77c6b51`. GitHub then reported PR#2 CONFLICTING/DIRTY with
+  no current-head checks. `git fetch origin main` found team changes through
+  `875eee6` (design resources/product shell and private-contract docs). Merging
+  main into the feature branch had one conflict: adjacent activity declarations.
+  Retained both non-exported previews and incoming non-exported themed ShellActivity,
+  with the same MainActivity launcher/application theme. No incoming team files
+  were discarded and main itself was not modified. Independent review confirmed
+  the resolution. This is branch integration, not claiming authorship of team work.
+- Merged Android lintDebug/lintLiveDebug, JVM tests, Checkstyle and debug/live/test
+  builds passed; incoming main's2 ResourceTest cases bring the total to **24 JVM
+  tests**, all passing. The merged APKs then passed all REST smoke and **6 real
+  Android checks**, including the extended missing/empty native assertions. Pulled
+  the merged render for comparison and shut down only the task-started AVD.

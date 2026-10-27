@@ -9,6 +9,7 @@ Commands, results and any checks that could not run:
 ## Review and evidence
 
 - [ ] No API keys or service account files
+- [ ] UI changes use only design system tokens and styles ([DESIGN.md](../DESIGN.md)) and match the Figma frame
 - [ ] Relevant lint, Checkstyle, Java/Jest and emulator checks pass
 - [ ] Aaron reviews Functions/Maps changes; Gathan reviews schema/rules changes
 - [ ] Another member reviewed; Ary performs the final check and merge

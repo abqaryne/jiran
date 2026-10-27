@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- App strings. Put every user-facing text here (never hard-code it in a layout or in Java). -->
+<resources>
+
+
+    <!-- Tabs -->
+    <string name="home_title">Home</string>
+    <string name="rooms_title">Rooms</string>
+    <string name="match_title">Match</string>
+    <string name="unit_title">Unit</string>
+
+    <!-- Placeholder copy for the empty feature screens -->
+    <string name="coming_soon">This screen is not built yet.</string>
+</resources>

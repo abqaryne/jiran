@@ -13,6 +13,11 @@
         <activity android:name=".ui.EmailPasswordActivity" android:exported="false" />
         <activity android:name=".ui.CommutePreviewActivity" android:exported="false" />
         <activity android:name=".ui.MatchPreviewActivity" android:exported="false" />
+        <!-- Product shell (tabs + navigation). Not launched yet: Ary wires it in after sign-in. -->
+        <activity
+            android:name=".ui.shell.ShellActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Jiran" />
         <activity android:name=".ui.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

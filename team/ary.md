@@ -13,7 +13,7 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 - [ ] Add everyone as collaborators on the GitHub repo (collect their usernames in the group chat)
 - [ ] Email the lecturer: ask for Appendix 1 of the brief and confirm native Android (Java) is fine
 - [ ] Figma: tokens from the Jiran design system canvas (brand `#065BC3`, Geist, Material Symbols Rounded), type scale, buttons, cards, inputs
-- [ ] Design the 4 tabs and the Post button: Home, Rooms (list, room details with the commute options card, AI search in the search bar), Match, Unit, plus the contract check and Evaluate unit (P1) screens
+- [ ] Design the 4 tabs and the Post button: Home, Rooms (list, room details with the commute options card, AI search in the search bar), Match, Unit, plus the private contract check (from a Connection chat or Profile) and Evaluate unit (P1) screens
 - [ ] Review the survey wording with Aly so questions match the screens
 
 ## Next

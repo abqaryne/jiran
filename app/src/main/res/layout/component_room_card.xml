@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Figma: Room card. One card per vacant Room. Two per row in search (use a GridLayoutManager with spanCount 2).
+  Shows ONLY: price, title, meta (age, travel time, area) and true monthly cost. CO2 never appears on this card.
+  Set the photo with Glide/Coil. Bind: price, title, meta, true cost.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_4">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/photo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_photo_placeholder"
+        android:contentDescription="@string/room_photo"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Jiran.Small" />
+
+    <TextView
+        android:id="@+id/price"
+        android:textAppearance="@style/TextAppearance.Jiran.Label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/photo"
+        tools:text="RM 450" />
+
+    <TextView
+        android:id="@+id/title"
+        android:textAppearance="@style/TextAppearance.Jiran.LabelSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/geist_regular"
+        android:maxLines="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/price"
+        tools:text="Small room · Residensi Pantai Dalam" />
+
+    <TextView
+        android:id="@+id/meta"
+        android:textAppearance="@style/TextAppearance.Jiran.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="2d · 18 min · Pantai Dalam" />
+
+    <TextView
+        android:id="@+id/true_cost"
+        android:textAppearance="@style/TextAppearance.Jiran.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_brand_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/meta"
+        tools:text="RM 712 true cost" />
+</androidx.constraintlayout.widget.ConstraintLayout>

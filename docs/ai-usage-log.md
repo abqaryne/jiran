@@ -22,6 +22,14 @@ no blockers and noted that safe private-field projection is inspection evidence,
 not a claimed serialization test. Ary still owns the final shared Match UI;
 survey weights, UM policy and production candidate permissions remain open.
 
+After pushing77c6b51, investigated missing current-head CI and found PR conflicts
+with newly advanced main. Fetched main through875eee6 and preserved its design
+system/shell/private-contract changes. The sole manifest conflict was resolved
+as the union of internal preview and product-shell declarations, preserving the
+launcher/themes/export flags; independently reviewed. Rechecked the merged Android
+build/static/unit/native scope; details are in the Android match plan. This is
+integration of existing team work, not newly authored product UI.
+
 ## Local Worker feasibility continuation
 
 Same persistent user objective and free-only research instruction. Created an

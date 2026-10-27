@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Main navigation graph. One destination per tab. Each feature adds its own screens under its tab. -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.jiran.app.ui.home.HomeFragment"
+        android:label="@string/home_title"
+        tools:layout="@layout/fragment_placeholder" />
+    <fragment
+        android:id="@+id/roomsFragment"
+        android:name="com.jiran.app.ui.rooms.RoomsFragment"
+        android:label="@string/rooms_title"
+        tools:layout="@layout/fragment_placeholder" />
+    <fragment
+        android:id="@+id/matchFragment"
+        android:name="com.jiran.app.ui.match.MatchFragment"
+        android:label="@string/match_title"
+        tools:layout="@layout/fragment_placeholder" />
+    <fragment
+        android:id="@+id/unitFragment"
+        android:name="com.jiran.app.ui.unit.UnitFragment"
+        android:label="@string/unit_title"
+        tools:layout="@layout/fragment_placeholder" />
+</navigation>

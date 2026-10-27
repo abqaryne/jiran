@@ -30,16 +30,16 @@ flowchart TD
     B --> C["Room details: Host, rooms in the Unit, commute options card"]
     C --> D["Switch Peak / Off-peak and open the route steps"]
     C --> S["Save the room"]
-    D --> E{"Want the contract checked first?"}
-    E -- "Yes" --> F["Contract check: upload agreement, clauses marked Red flag, Check or OK"]
-    F --> G["Send a Connection request to the Host with a short message"]
-    E -- "No" --> G
+    D --> G["Send a Connection request to the Host with a short message"]
     G --> H{"Host accepts?"}
     H -- "No" --> I["Request ends"]
     I --> A
     H -- "Yes" --> J["Connection: chat opens, Unit address shown, phone only if shared"]
     J --> K["Arrange a viewing"]
+    J --> CC["Host shares the agreement privately in the chat"]
+    CC --> CK["Optional: Contract check, only you can see it, clauses marked Red flag, Check or OK"]
     K --> L{"Take the room?"}
+    CK --> L
     L -- "No" --> A
     L -- "Yes" --> M["Sign the tenancy outside the app"]
     M --> N["Host marks the Room occupied"]

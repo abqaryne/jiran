@@ -35,7 +35,10 @@ android {
     sourceSets {
         liveDebug.java.srcDirs = ['src/release/java']
     }
-    buildFeatures { buildConfig = true }
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
+    }
     testBuildType = providers.gradleProperty('firebaseTestBuildType').getOrElse('debug')
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -78,6 +81,15 @@ tasks.register('checkstyleMain', Checkstyle) {
 tasks.named('check') { dependsOn 'checkstyleMain' }
 
 dependencies {
+    // Product UI: Material Components, navigation, MVVM (the design system in DESIGN.md is built on these)
+    implementation 'com.google.android.material:material:1.14.0'
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
+    implementation 'androidx.navigation:navigation-fragment:2.10.2'
+    implementation 'androidx.navigation:navigation-ui:2.10.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.11.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.11.0'
+
     implementation platform('com.google.firebase:firebase-bom:35.1.0')
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'

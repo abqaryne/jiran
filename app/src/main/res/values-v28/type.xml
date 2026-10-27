@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Line heights for Android 9 and up. The base styles are in values/type.xml. -->
+<resources>
+    <style name="TextAppearance.Jiran.Display" parent="TextAppearance.Jiran.Display.Base">
+        <item name="android:lineHeight">38sp</item>
+    </style>
+    <style name="TextAppearance.Jiran.Headline" parent="TextAppearance.Jiran.Headline.Base">
+        <item name="android:lineHeight">32sp</item>
+    </style>
+    <style name="TextAppearance.Jiran.Section" parent="TextAppearance.Jiran.Section.Base">
+        <item name="android:lineHeight">28sp</item>
+    </style>
+    <style name="TextAppearance.Jiran.Title" parent="TextAppearance.Jiran.Title.Base">
+        <item name="android:lineHeight">22sp</item>
+    </style>
+    <style name="TextAppearance.Jiran.Body" parent="TextAppearance.Jiran.Body.Base">
+        <item name="android:lineHeight">24sp</item>
+    </style>
+    <style name="TextAppearance.Jiran.Label" parent="TextAppearance.Jiran.Label.Base">
+        <item name="android:lineHeight">20sp</item>
+    </style>
+    <style name="TextAppearance.Jiran.LabelSmall" parent="TextAppearance.Jiran.LabelSmall.Base">
+        <item name="android:lineHeight">20sp</item>
+    </style>
+    <style name="TextAppearance.Jiran.Meta" parent="TextAppearance.Jiran.Meta.Base">
+        <item name="android:lineHeight">20sp</item>
+    </style>
+    <style name="TextAppearance.Jiran.Caption" parent="TextAppearance.Jiran.Caption.Base">
+        <item name="android:lineHeight">16sp</item>
+    </style>
+</resources>
