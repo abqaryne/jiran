@@ -7,7 +7,7 @@
 - The release checklist and the video editing
 
 ## Right now: Step 0 (26 Oct to 8 Nov)
-- [ ] Put [SURVEY.md](../SURVEY.md) into a Google Form, in **English and Malay**
+- [ ] Put [SURVEY.md](../product/SURVEY.md) into a Google Form, in **English and Malay**
 - [ ] **Pilot with 5 people** and time it (aim for 8 minutes or less); cut questions if needed
 - [ ] Launch and share. Target **100 or more** responses by 8 Nov, spread across faculties and areas (not only FSKTM). Ask Telegram channel admins for permission before posting.
 - [ ] Plan **5 to 8 interviews** (20 minutes each): 3 to 4 off-campus students, a UMSU representative, a Telegram admin. Prepare a consent form.
@@ -39,7 +39,7 @@
 - **Report:** section 2a User study findings (350 words), section 5 Testing and validation (300 words)
 - **Keep as evidence:** anonymised survey results and charts, interview notes and quotes (with consent), test results, SUS scores, screenshots
 
-## Numbers you find (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+## Numbers you find (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
 - **#1 Room price weights** from survey C5 to C7 (due 10 Nov)
 - **#7 Utilities estimate** from survey C9 (due 10 Nov)
 - **#2 Peak hours** from survey E5 and E6 (due 12 Nov)
@@ -55,4 +55,4 @@
 - Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
-Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).
+Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Jiran component styles. One style per Figma component or variant.
-  Figma name -> Android style is listed in DESIGN.md. Do not hard-code colours or sizes in layouts: use these.
+  Figma name -> Android style is listed in docs/design/DESIGN.md. Do not hard-code colours or sizes in layouts: use these.
 -->
 <resources>
 

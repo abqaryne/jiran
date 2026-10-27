@@ -1,14 +1,14 @@
 # Jiran: Design System
 
-How Jiran looks and behaves. This is the single guide for everyone who builds a screen: read it once, then use the components. The product rules are in [PRD.md](PRD.md); the words we use are in [GLOSSARY.md](GLOSSARY.md); the flows are in [USER-FLOW.md](USER-FLOW.md).
+How Jiran looks and behaves. This is the single guide for everyone who builds a screen: read it once, then use the components. The product rules are in [PRD.md](../product/PRD.md); the words we use are in [GLOSSARY.md](../product/GLOSSARY.md); the flows are in [USER-FLOW.md](../product/USER-FLOW.md).
 
 **Owner:** Ary (Lead UI/UX). Changes to the design system go through Ary. Everyone else uses it and asks for what is missing.
 
 | What | Where |
 |---|---|
 | Figma file (design system and all screens) | https://www.figma.com/design/kjYgovwDJBU9ArWSfMa3OD/Jiran |
-| Android tokens, styles and example layouts | [app/src/main/res/](app/src/main/res/) |
-| This guide | `DESIGN.md` |
+| Android tokens, styles and example layouts | [app/src/main/res/](../../app/src/main/res/) |
+| This guide | `docs/design/DESIGN.md` |
 
 Contents: [1 Principles](#1-principles) · [2 Using the Figma file](#2-using-the-figma-file) · [3 Foundations](#3-foundations) · [4 Components](#4-components) · [5 Patterns](#5-patterns) · [6 Content](#6-content-and-language) · [7 Accessibility](#7-accessibility) · [8 Android guide](#8-android-implementation) · [9 Screen inventory](#9-screen-inventory) · [10 Adding or changing things](#10-adding-or-changing-things) · [11 Known gaps](#11-known-gaps)
 
@@ -39,7 +39,7 @@ The file has three pages.
 - Build screens from **instances** of the master components (Assets panel, search the name). Never draw a button by hand.
 - Change a component with its **properties** (Label, Style, Size, Selected, State, Icon), not by detaching it.
 - Colours, spacing and radius are **Figma variables**; text uses **text styles**; shadows use **effect styles**. Pick them from the lists, never type a hex or a number.
-- In **Dev Mode** every variable shows its Android name (for example `@color/color_brand_primary`, `@dimen/spacing_16`). Those names exist in [app/src/main/res/values](app/src/main/res/values) exactly as shown.
+- In **Dev Mode** every variable shows its Android name (for example `@color/color_brand_primary`, `@dimen/spacing_16`). Those names exist in [app/src/main/res/values](../../app/src/main/res/values) exactly as shown.
 - A component's Figma name is its Android style name (table in [section 4](#4-components)).
 - Screens are 390 × 844. Long screens (Room details, Public transport route) are taller on purpose; they scroll.
 - The status bar and notch on mockups are **phone chrome for the picture**, not an app component. On Android the system draws the real one (see [section 8](#8-android-implementation)).
@@ -147,18 +147,18 @@ Master components live in Figma → 🎨 Design System. Each row: Figma componen
 | **Avatar** | Size: Small 32, Medium 40, Large 56 · Initial | circle | `Widget.Jiran.Avatar.Small / .Medium / .Large` | Initials on soft blue. Real photos only once people live together. |
 | **Field** | State: Default, Focused, Error · Label · Value | 60 dp high, 12 dp radius | `Widget.Jiran.TextInputLayout` | Any text input. Label sits inside the box. |
 | **Search bar** | Placeholder | 44 dp, pill | `Widget.Jiran.SearchBar` | Rooms search (also takes plain-language requests). |
-| **Tab item / Tab bar / Post button** | State: Active, Inactive | bar 60 dp, Post 60 dp | [`component_tab_bar.xml`](app/src/main/res/layout/component_tab_bar.xml), `Widget.Jiran.FloatingActionButton.Post` | Main navigation: Home, Rooms, Match, Unit + Post. |
-| **Room card** | Price · Title · Meta · True cost | 2 per row in search | [`component_room_card.xml`](app/src/main/res/layout/component_room_card.xml) | One card per vacant Room. Price, title, meta, true monthly cost. **No CO₂ here.** |
+| **Tab item / Tab bar / Post button** | State: Active, Inactive | bar 60 dp, Post 60 dp | [`component_tab_bar.xml`](../../app/src/main/res/layout/component_tab_bar.xml), `Widget.Jiran.FloatingActionButton.Post` | Main navigation: Home, Rooms, Match, Unit + Post. |
+| **Room card** | Price · Title · Meta · True cost | 2 per row in search | [`component_room_card.xml`](../../app/src/main/res/layout/component_room_card.xml) | One card per vacant Room. Price, title, meta, true monthly cost. **No CO₂ here.** |
 | **Section header** | Title · Action | 28 dp | `TextAppearance.Jiran.Section` + brand "See all" text | Heading of a list or carousel. |
-| **List row** | Icon · Title · Subtitle · Trailing | min 64 dp | [`component_list_row.xml`](app/src/main/res/layout/component_list_row.xml) | Settings, expenses, steps, requests. Divider under every row but the last. |
-| **Commute option** | Selected: False, True · Icon · Mode · Note · Time · Cost | 72 dp, 16 dp radius | [`component_commute_option.xml`](app/src/main/res/layout/component_commute_option.xml) with `setSelected(true)` | One travel mode. The cheapest one that is on time is Selected (blue border + blue note). |
+| **List row** | Icon · Title · Subtitle · Trailing | min 64 dp | [`component_list_row.xml`](../../app/src/main/res/layout/component_list_row.xml) | Settings, expenses, steps, requests. Divider under every row but the last. |
+| **Commute option** | Selected: False, True · Icon · Mode · Note · Time · Cost | 72 dp, 16 dp radius | [`component_commute_option.xml`](../../app/src/main/res/layout/component_commute_option.xml) with `setSelected(true)` | One travel mode. The cheapest one that is on time is Selected (blue border + blue note). |
 | **Status bar** (mockups only) | | 28 / 44 | none | Picture only. Do not build it. |
 
 Components made from several parts (use the same pieces, then compose):
 
 | Pattern | Built from | Notes |
 |---|---|---|
-| **Top bar** | Icon button + Title + Small Ink button or brand text | 60 dp, [`component_top_bar.xml`](app/src/main/res/layout/component_top_bar.xml). Back on the left, one action on the right. |
+| **Top bar** | Icon button + Title + Small Ink button or brand text | 60 dp, [`component_top_bar.xml`](../../app/src/main/res/layout/component_top_bar.xml). Back on the left, one action on the right. |
 | **Footer** | Top border `border/divider` + 1 to 2 Buttons (Large) | 16 dp padding, 24 dp at the bottom. Primary first, Soft second. |
 | **Info banner** | `Widget.Jiran.Card.Info` + icon + Meta text | Blue = info. Success, warning, danger use the status pairs. |
 | **Bottom sheet** | `Widget.Jiran.BottomSheet` (16 dp top radius, handle 40×4) | Title in Section style, close top right, one Primary button at the bottom. |
@@ -210,7 +210,7 @@ Components made from several parts (use the same pieces, then compose):
 
 ## 8. Android implementation
 
-Stack: Java, XML layouts, Material Components, MVVM. The design system is part of the app module: tokens, styles and component layouts live in [`app/src/main/res`](app/src/main/res). Open the project in Android Studio and use them; there is nothing to copy.
+Stack: Java, XML layouts, Material Components, MVVM. The design system is part of the app module: tokens, styles and component layouts live in [`app/src/main/res`](../../app/src/main/res). Open the project in Android Studio and use them; there is nothing to copy.
 
 ```
 app/src/main/res/
@@ -300,7 +300,7 @@ Because `Theme.Jiran` sets the default `materialButtonStyle`, `chipStyle`, `text
 
 ## 9. Screen inventory
 
-The Figma page 📱 UI Design is grouped by flow. P0/P1 comes from the [PRD](PRD.md).
+The Figma page 📱 UI Design is grouped by flow. P0/P1 comes from the [PRD](../product/PRD.md).
 
 | Flow | Starts from | Screens | FR |
 |---|---|---|---|
@@ -327,7 +327,7 @@ Public transport route (the page opened by the LRT + UM shuttle option): map on 
 3. **Design in Figma first** with instances and variables, then build. New components are built as a Figma component with properties, named in Title Case (`Room card`, not `roomCardV2`).
 4. **Name the Android style the same** as the Figma component (`Widget.Jiran.<Component>.<Variant>`), and add its row to the table in section 4.
 5. **Token changes:** change the Figma variable first, then the matching `@color/` or `@dimen/` value in the same PR. The names must stay identical in both places.
-6. **PR checklist for UI work:** uses only tokens and styles · 48 dp touch targets · text in sp · status has a word and an icon · estimate and AI labels present · matches the Figma frame at 390 dp wide · screenshot attached. Ary does the final check and merge, as in [TEAM_PLAN.md](TEAM_PLAN.md).
+6. **PR checklist for UI work:** uses only tokens and styles · 48 dp touch targets · text in sp · status has a word and an icon · estimate and AI labels present · matches the Figma frame at 390 dp wide · screenshot attached. Ary does the final check and merge, as in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 
 ## 11. Known gaps
 
@@ -337,4 +337,4 @@ Public transport route (the page opened by the LRT + UM shuttle option): map on 
 - **Illustrations and photos** are grey placeholders; empty-state drawings are still to do.
 - **Charts** (impact dashboard, P2) are not designed.
 - **Android files have not been compiled yet.** They are written against Material Components 1.4+; if Android Studio flags an attribute, fix it in `app/src/main/res` and tell Ary so DESIGN.md stays right.
-- Shuttle times, fares and CO₂ factors on the commute screens are example numbers until the owners in [ASSUMPTIONS.md](ASSUMPTIONS.md) confirm them.
+- Shuttle times, fares and CO₂ factors on the commute screens are example numbers until the owners in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md) confirm them.

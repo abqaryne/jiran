@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Jiran colour tokens. Names match the Figma variables 1:1 (see DESIGN.md).
+  Jiran colour tokens. Names match the Figma variables 1:1 (see docs/design/DESIGN.md).
   Primitives are raw values. Use ONLY the semantic color_* names in layouts and styles.
 -->
 <resources>

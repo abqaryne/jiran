@@ -30,7 +30,7 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, one short email to UM transport for the shuttle timetable, report assembly, peer-evaluation evidence |
 | **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
 
-**Personal task files:** [Ary](team/ary.md), [Dafi](team/dafi.md), [Aaron](team/aaron.md), [Gathan](team/gathan.md), [Ilham](team/ilham.md), [Aly](team/aly.md).
+**Personal task files:** [Ary](ary.md), [Dafi](dafi.md), [Aaron](aaron.md), [Gathan](gathan.md), [Ilham](ilham.md), [Aly](aly.md).
 
 Role titles to write in the report: Ary (project leader, frontend developer, UI/UX designer), Dafi (project manager, developer), Aaron (software architect, backend developer), Gathan (database developer), Ilham (AI developer), Aly (tester, researcher, developer).
 
@@ -212,5 +212,5 @@ Rule: report ownership is *in addition to* code, never instead of it.
 1. **Group registration:** done (the brief's date, "Sunday 21 October 2026", is a Wednesday, so it was probably a typo for 25 Oct).
 2. **Platform decided:** native Android in Java (the team knows Java; the brief talks about "activities"). Confirm with the lecturer when asking for Appendix 1. The SDG is also decided: SDG 11.
 3. **The PRD is the source of truth.** The original proposal PDF is not maintained and can be ignored.
-4. **Numbers and assumptions** (room price weights, peak hours, e-hailing fares, emission factors, retention periods and others) each have an owner and a deadline in [ASSUMPTIONS.md](ASSUMPTIONS.md). They are due before the requirements freeze on 15 Nov.
+4. **Numbers and assumptions** (room price weights, peak hours, e-hailing fares, emission factors, retention periods and others) each have an owner and a deadline in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md). They are due before the requirements freeze on 15 Nov.
 5. The brief's AI policy text refers to "parallel algorithms, thread synchronization" (copied from another course). The log requirement still applies to us in full.

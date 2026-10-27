@@ -37,7 +37,7 @@ Your schema and rules are the first thing others wait for, so they land first.
 - **Video:** the posting and search part of the demo, segment 5 NFR2 evidence (rules tests, all denied)
 - **Report:** section 2c Non-functional requirements (150 words), the database schema part of section 3, the rules tests in section 5
 
-## Numbers you find or use (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+## Numbers you find or use (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
 - **#1 Room price weights** and **#7 Utilities estimate:** Aly finds them, you put them in config and seed data (by 10 Nov)
 - **#8 Data retention periods:** you own the reasoning against the PDPA 2010 Retention Principle, with Dafi (due 13 Nov)
 
@@ -50,4 +50,4 @@ Your schema and rules are the first thing others wait for, so they land first.
 - Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
-Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).
+Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

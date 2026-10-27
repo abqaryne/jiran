@@ -81,7 +81,7 @@ tasks.register('checkstyleMain', Checkstyle) {
 tasks.named('check') { dependsOn 'checkstyleMain' }
 
 dependencies {
-    // Product UI: Material Components, navigation, MVVM (the design system in DESIGN.md is built on these)
+    // Product UI: Material Components, navigation, MVVM (the design system in docs/design/DESIGN.md is built on these)
     implementation 'com.google.android.material:material:1.14.0'
     implementation 'androidx.appcompat:appcompat:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.2'

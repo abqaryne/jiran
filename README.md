@@ -1,8 +1,9 @@
 # Jiran
 
 Native Android **Java** app with Firebase **JavaScript / Node 22** Cloud Functions.
-Read [Aaron's checklist and master prompt](team/aaron.md), [PRD](PRD.md) and
-[team ownership](TEAM_PLAN.md) before changing the foundation.
+Read [Aaron's checklist and master prompt](docs/team/aaron.md), [PRD](docs/product/PRD.md) and
+[team ownership](docs/team/TEAM_PLAN.md) before changing the foundation.
+All documents are indexed in [docs/](docs/README.md).
 
 ## Local setup
 
@@ -127,7 +128,7 @@ anonymous Firestore reads; it creates no live accounts or documents and sends no
 
 ## Code structure and design system
 
-Product UI follows [DESIGN.md](DESIGN.md): the tokens, styles and component layouts are in
+Product UI follows [DESIGN.md](docs/design/DESIGN.md): the tokens, styles and component layouts are in
 `app/src/main/res` (`values/colors.xml`, `dimens.xml`, `type.xml`, `themes.xml`,
 `styles_components.xml`, `layout/component_*.xml`, `font/`). Product screens use the
 `Theme.Jiran` theme (set per activity; the foundation screens keep their temporary theme).
