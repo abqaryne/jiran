@@ -20,6 +20,13 @@ Observed failing tests before implementation. Final checks exposed synchronous
 deadline gaps; regression tests drove monotonic and per-dispatch checks.
 Independent review caught the latter dispatch issue. Full backend277 tests and
 Android lint/Checkstyle/build/JVM checks passed; see service plan for scope.
+
+Follow-up research downloaded three public Prasarana GTFS ZIPs without credentials,
+within the government rate limit. Read-only Python standard-library CSV/ZIP joins
+checked stop/trip/route/service references; SHA256 hashes and precise boundaries
+are in docs/free-transit-evidence.md. No production Python dependency or database
+write was introduced. Found campus routes, missing fare files and service expiry
+before Wave A in the feeder snapshot; did not infer live journey availability.
 No actual human hours are inferred; record actual hours separately in Trello.
 
 Exact user prompts for this work:

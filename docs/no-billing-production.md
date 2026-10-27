@@ -92,6 +92,11 @@ simply be transferred to a new provider without checking its terms/attribution.
 
 ## Next batches and acceptance gates
 
+Initial public-feed inspection is now recorded in [free transit evidence](free-transit-evidence.md):
+campus stop/trip references exist, but fare files are absent and some service
+calendars expire before Wave A. These are specific feasibility findings, not a
+working timetable router or route-coverage completion.
+
 - **A: local feasibility.** Inspect current HeiGIT signup/terms and quota; download
   public GTFS for actual coverage analysis with source hashes; build an isolated
   Worker HTTP/auth bundling spike. No deployment or service replacement yet.

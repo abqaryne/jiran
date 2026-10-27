@@ -28,6 +28,10 @@ a no-billing production alternative, not Google billing activation. See
 [researched options and limits](docs/no-billing-production.md). Spark Auth/Firestore
 remain; Worker/alternative-routing feasibility, transit and NFR1 remain open.
 
+Official Prasarana GTFS ZIPs were inspected for assumption#5: [snapshot evidence](docs/free-transit-evidence.md)
+identifies campus stops/route references, absent fare files and calendar expiry.
+No timed origin-to-faculty route or actual fare is verified by these joins.
+
 27 October 2026: Aaron checked official Maps pricing, SKU triggers, transit limits
 and caching/display requirements. See [Maps readiness evidence](docs/maps-readiness.md).
 Assumption #11's documentation research is recorded; actual billing/quota/budget
