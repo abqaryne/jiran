@@ -15,6 +15,7 @@ docs/
 ├── team/           who does what and when
 │   ├── TEAM_PLAN.md      roles, timeline, workflow
 │   └── aaron.md ary.md aly.md dafi.md gathan.md ilham.md   personal task files
+├── ai-log/         AI Usage Log (mandatory appendix of the report): README with the template, one file per person
 ├── architecture.md, api-contracts.md, ai-usage-log.md, superpowers/   engineering notes (Aaron)
 └── licenses/       licences of bundled third-party assets (Geist font, Material Symbols)
 ```
@@ -29,7 +30,8 @@ docs/
 | [team/TEAM_PLAN.md](team/TEAM_PLAN.md) | Roles, timeline, workflow |
 | [architecture.md](architecture.md) | Firebase and backend architecture |
 | [api-contracts.md](api-contracts.md) | Draft request and response formats of the Functions |
-| [ai-usage-log.md](ai-usage-log.md) | AI Usage Log (mandatory appendix of the report) |
+| [ai-log/README.md](ai-log/README.md) | AI Usage Log: rules, template and one file per person (mandatory appendix) |
+| [ai-usage-log.md](ai-usage-log.md) | Aaron's earlier AI record |
 
 Rules for docs: one topic per file, keep the PRD as the single source of truth, link to it instead of copying
 it, and write relative links so they work on GitHub and in the editor. When you move a file, fix its links.
