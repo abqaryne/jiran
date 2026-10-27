@@ -36,6 +36,10 @@ public final class MainActivity extends Activity {
         password.setVisibility(BuildConfig.DEBUG ? View.VISIBLE : View.GONE);
         findViewById(R.id.open_auth_setup).setOnClickListener(view ->
                 startActivity(new Intent(this, EmailPasswordActivity.class)));
+        findViewById(R.id.open_commute_preview).setOnClickListener(view ->
+                startActivity(new Intent(this, CommutePreviewActivity.class)));
+        findViewById(R.id.open_match_preview).setOnClickListener(view ->
+                startActivity(new Intent(this, MatchPreviewActivity.class)));
         check.setOnClickListener(view -> {
             if (!LocalCredentials.isComplete(email.getText().toString(),
                     password.getText().toString())) {

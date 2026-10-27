@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- App strings. Put every user-facing text here (never hard-code it in a layout or in Java). -->
 <resources>
-    
+
 
     <!-- Tabs -->
     <string name="home_title">Home</string>

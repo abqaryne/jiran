@@ -1,4 +1,6 @@
-// k6 load test for NFR1: a page loads in under 3 s with 50 concurrent users (PRD section 5).
+// Production search starter only. Canonical PRD NFR1 requires p95<3s at100 users;
+// AGENTS also calls for50-user latency and100-user operation. Reconcile with Aly.
+// For executable local50/100 fixture scenarios, see commute-fixture.k6.js and README.md.
 // Starter for Aly. Point TARGET_URL at the endpoint to test (a callable function URL or an HTTPS API).
 // Run:  k6 run -e TARGET_URL=https://<endpoint> -e ID_TOKEN=<firebase id token> backend/tests/load/search.k6.js
 import http from 'k6/http';

@@ -31,6 +31,11 @@ docs/
 | [team/TEAM_PLAN.md](team/TEAM_PLAN.md) | Roles, timeline, workflow |
 | [architecture.md](architecture.md) | Firebase and backend architecture |
 | [api-contracts.md](api-contracts.md) | Draft request and response formats of the Functions |
+| [aaron-deliverable-drafts.md](aaron-deliverable-drafts.md) | Assisted350/400-word report drafts and90-second demo script; needs human review |
+| [aaron-handoff.md](aaron-handoff.md) | Open decisions, owners and P0 freeze gates |
+| [commute-input-evidence.md](commute-input-evidence.md) | Dated fare/fuel/parking research and five public-stop route probes; confirmed inputs and gaps |
+| [transit-processing.md](transit-processing.md) | Bounded JavaScript GTFS processor, actual snapshot probe results and supported/unsupported semantics |
+| [Local load preparation](../backend/tests/load/README.md) | Reproducible50/100-user Auth emulator scenarios, both measured results and production limits |
 | [ai-log/README.md](ai-log/README.md) | AI Usage Log: rules, template and one file per person (mandatory appendix) |
 | [ai-usage-log.md](ai-usage-log.md) | Aaron's earlier AI record |
 

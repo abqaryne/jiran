@@ -3,6 +3,8 @@ const {execFileSync} = require('node:child_process');
 const path = require('node:path');
 const androidDir = path.join(__dirname, '..', '..', 'android');
 const {checkConnectionRules} = require('./firestore-smoke.cjs');
+const {checkCommuteCallable} = require('./commute-smoke.cjs');
+const {checkMatchCallable} = require('./match-smoke.cjs');
 
 const project = 'demo-jiran';
 const authHost = process.env.FIREBASE_AUTH_EMULATOR_HOST;
@@ -49,6 +51,8 @@ async function main() {
   assert.deepEqual(success.body.result, {uid: signup.body.localId, status: 'ok'});
   await checkConnectionRules({token: login.body.idToken,
     unverifiedToken: signup.body.idToken, uid: signup.body.localId});
+  await checkCommuteCallable({token: login.body.idToken, unverifiedToken: signup.body.idToken});
+  await checkMatchCallable({token: login.body.idToken, unverifiedToken: signup.body.idToken});
 
   const docUrl = `http://${firestoreHost}/v1/projects/${project}/databases/(default)/documents/_diagnostics/${signup.body.localId}`;
   const stored = await fetch(docUrl, {headers: {Authorization: 'Bearer owner'}});
@@ -69,10 +73,10 @@ async function main() {
       runAdb(['shell', 'pm', 'grant', 'jiran.com', 'android.permission.ACCESS_LOCAL_NETWORK']);
     }
     const output = runAdb(['shell', 'am', 'instrument', '-w', '-e', 'class',
-      'com.jiran.app.FirebaseConnectionTest,com.jiran.app.EmailPasswordFlowTest', '-e', 'email', email,
-      '-e', 'password', password, 'jiran.com.test/androidx.test.runner.AndroidJUnitRunner']);
+      'com.jiran.app.FirebaseConnectionTest,com.jiran.app.EmailPasswordFlowTest,com.jiran.app.CommuteIntegrationTest,com.jiran.app.CommutePreviewTest,com.jiran.app.MatchIntegrationTest,com.jiran.app.MatchPreviewTest', '-e', 'email', email,
+      '-e', 'password', password, '-e', 'capturePreview', 'true', 'jiran.com.test/androidx.test.runner.AndroidJUnitRunner']);
     console.log(output);
-    assert.match(output, /OK \(2 tests\)/, 'Both Android integration tests must pass');
+    assert.match(output, /OK \(6 tests\)/, 'All six Android integration tests must pass');
   }
 }
 

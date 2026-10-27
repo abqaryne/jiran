@@ -170,19 +170,19 @@ Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 | FR4.3 | When the user opens a listing's details, the system shall show a commute options card comparing each travel mode by travel time, monthly cost and estimated CO₂, and highlight the cheapest option that still gets the user to class on time **(P0)**; with a **Peak / Off-peak** toggle and the step-by-step public transport route for the bus or LRT plus UM shuttle option **(P1)**. | P0 / P1 |
 
 **Acceptance criteria [DRAFT]**
-- CO₂ per trip = distance (maps service) × a published emission factor per mode; the source of each factor is named in the app.
+- CO₂ per trip = distance (openrouteservice for walking and road, stop-to-stop distance from the transit timetable for bus and rail) × a published emission factor per mode; the source of each factor is named in the app.
 - Figures are labelled as estimates.
 - The highlighted option must arrive before the user's class start time; if none do, the UI says so rather than highlighting a late option.
 - If no travel mode reaches class on time, the Room card says so instead of showing a cost figure.
 - Room cards in search results show only true monthly cost and travel time; CO₂ appears **only** in the commute options card on the detail page.
 - E-hailing cost is estimated from a published fare formula (base fare + per-km rate), not live Grab prices; the card labels it as an estimate and names the assumption.
 - **P0 behaviour:** the card shows a single column, with each mode's time worked out for the user's class start time (arrive by); there is no toggle and no route steps yet. UM shuttle times appear only if seed data exists.
-- **Peak vs off-peak (P1):** the card shows both columns for every mode. Road modes (driving alone, e-hailing, bus) use traffic-aware travel time from the Routes API for the given departure time; transit modes use scheduled times. The peak windows (e.g. weekday morning and evening) are a config value the team still has to define.
+- **Peak vs off-peak (P1):** the card shows both columns for every mode. Road modes (driving alone, e-hailing, bus) use the openrouteservice travel time, which has no live traffic on the free plan, so the peak column applies a peak factor the team measures **[DRAFT]**; transit modes use scheduled times. The peak windows (e.g. weekday morning and evening) are a config value the team still has to define.
 - **(P1)** E-hailing at peak adds an assumed surge multiplier on top of the fare formula; the multiplier is an assumption, shown as a range or estimate, never as a live price.
 - **(P1)** The "on time" check and the highlighted option use the user's actual departure time from their timetable (peak or off-peak), not an average.
 - Because each listing now needs two departure-time lookups per mode, results for the same area and faculty pair are cached in Firestore to protect NFR1 and the Maps quota.
 - **Public transport route (P1):** tapping the bus or LRT plus UM shuttle option opens the full route on its own page: walk to the first stop or station, each bus or LRT line with its boarding and alighting stops and any transfer, the UM shuttle leg, the final walk, and total time and fare. It shows the next departures that arrive before the user's class start, using the user's real class time.
-- **(P1)** Public transport steps come from the Routes API transit mode. UM shuttle routes and timetables may not be in Google's transit data, so the team adds them as seed data (`areas.nearestStations[]` plus a shuttle stops and timetable table) and the card labels shuttle times as scheduled, not live.
+- **(P1)** Public transport steps come from the official Prasarana GTFS timetables (bus, MRT feeder and rail), processed ahead of time by Aaron. The UM shuttle is not in that data, so the team adds it as seed data (`areas.nearestStations[]` plus a shuttle stops and timetable table) and the card labels shuttle times as scheduled, not live.
 - **(P1)** The route detail loads only when the user opens it, so listing search stays within NFR1.
 
 ### Module 5: Shared house tools
@@ -266,7 +266,7 @@ Additional constraints taken from the proposal:
 
 **Design rules**
 - The compatibility **score** and **CO₂** are computed by code, never by the AI.
-- All AI and Maps calls run in Cloud Functions; API keys never ship in the app.
+- All AI and routing calls run on the server (a Cloudflare Worker, see section 9); API keys never ship in the app.
 - AI output is advice; the user always confirms.
 - Failure of the AI service must degrade gracefully (manual filters, rule-based reasons, "try again" for the contract check).
 - Provider: Gemini API or Claude API (decision pending, see Open questions).
@@ -340,7 +340,7 @@ Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms` and 
 | `commuteMembers` (P2, Module 7) | memberId, groupId, memberUid, date, status, sharePaid, co2SavedKg, ratingsGiven{} | M7, impact |
 | `contractChecks` | checkId, uid, filePath, summary, flags[{level, clause, text}], createdAt, deleteAfter | M6 |
 
-Files (room photos, contract uploads) are stored in Firebase Storage and referenced by path.
+Room photos are stored outside Firebase and referenced by URL: Firebase Storage needs a paid plan, so the plan is Cloudinary Free with signed uploads **[DRAFT]**. Contract files are sent to the check and not kept; only the summary and flags are stored **[DRAFT, Gathan to confirm the schema]**.
 
 **Access rules (NFR2):** a user reads and writes only their own `users` and `contractChecks` records, and only members of a household read or write that household's `households`, `expenses` and `chores`. Contact fields on `users` are readable by another user only when a `matches` or `households` record links them with both sides accepted. `contractChecks` are deleted after 30 days.
 
@@ -352,25 +352,28 @@ Files (room photos, contract uploads) are stored in Firebase Storage and referen
 Android app (Java)
    ├─ Firebase Authentication
    ├─ Cloud Firestore
-   ├─ Firebase Storage
+   ├─ Map: MapLibre Native with free OpenStreetMap-based tiles (no key, no billing)
+   ├─ Room photos: Cloudinary Free (signed uploads)
    ├─ Firebase Cloud Messaging  (notifications → app)
-   └─ HTTPS callable functions ─► Cloud Functions (Node.js)
+   └─ HTTPS (Firebase ID token) ─► Cloudflare Worker (JavaScript, free plan)
                                     ├─ match scoring, cost split, CO₂
-                                    ├─► Google Maps Routes API
-                                    └─► AI API (Gemini or Claude)
+                                    ├─► openrouteservice (walking, road)
+                                    ├─► Prasarana GTFS timetables (bus, rail), prepared offline
+                                    └─► AI API (free tier)
 ```
 
 - The app reads and writes Firebase directly through the SDK and receives notifications from Cloud Messaging.
-- Anything needing a secret key or heavy logic goes through Cloud Functions, which call the maps and AI services and write results back to Firestore.
+- Anything needing a secret key or heavy logic goes through the Worker, which checks the user's Firebase sign-in token, calls the routing and AI services and returns the result. The whole stack is free: the team does not enable billing on any service.
 
 | Layer | Tool |
 |---|---|
 | Mobile app | Native Android: Java, Android Studio, XML layouts with Material Components, Activities and Fragments, MVVM (ViewModel, LiveData), RecyclerView, Navigation component |
 | Sign-in | Firebase Authentication |
 | Database | Cloud Firestore |
-| File storage | Firebase Storage |
-| Server logic | Cloud Functions (Node.js) |
-| Maps and routes | Google Maps Platform (Routes API, Places API, Maps SDK for Android) |
+| File storage | Cloudinary Free **[DRAFT]** (Firebase Storage needs a paid plan) |
+| Server logic | Cloudflare Workers Free, JavaScript (Firebase Cloud Functions need a paid plan) **[DRAFT until Aaron's spike passes]** |
+| Map in the app | MapLibre Native with free OpenStreetMap-based tiles |
+| Routes | openrouteservice (walking, road), Prasarana GTFS (bus, rail), UM shuttle seed data |
 | AI | Gemini API (or Claude API) |
 | Notifications | Firebase Cloud Messaging |
 | Design | Figma |
@@ -403,7 +406,7 @@ Product metrics are targets for the demo and pilot, not production KPIs. **[DRAF
 
 | Test type | Covers | Tool | Pass criterion |
 |---|---|---|---|
-| Unit | Expense split and balances, CO₂ calculation, match score formula | JUnit and Mockito (app), Jest (Cloud Functions) | All pass |
+| Unit | Expense split and balances, CO₂ calculation, match score formula | JUnit and Mockito (app), Jest (server code) | All pass |
 | Widget / integration | Sign-up, posting a listing, search, connect, create a household and add an expense | Espresso (UI tests) | Each FR's main flow completes |
 | Security rules (NFR2) | Unauthorised reads and writes on every collection | Firebase Emulator Suite | 100% denied |
 | Load (NFR1) | Search with commute estimates, 100 concurrent users | k6 or JMeter | 95% under 3 s |
@@ -452,9 +455,9 @@ Every FR has at least one test case; both NFRs have a measured test.
 4. Which published emission factor source for each travel mode?
 5. Firestore collections: the proposal says ten but lists nine; this PRD adds `rooms` and `unitEvaluations`, so it now lists fifteen (two of them only for the P2 commute groups). A store for chat (FR3.3) is still missing (candidate: `chats`), plus possibly `reports` and `notifications`.
 6. Evidence is from 2022 news; the 2026 survey must confirm the current situation before requirements freeze.
-7. Does Google's transit data cover the bus/LRT routes and UM shuttle that students actually use around UM? Check a few real routes (e.g. Pantai Dalam, Kerinchi) early; if the UM shuttle is missing, the team seeds shuttle stops and timetables from UM transport.
+7. Does the Prasarana GTFS data cover the bus/LRT routes students actually use around UM? Check a few real routes (e.g. Pantai Dalam, Kerinchi) early. The UM shuttle is not in it, so the team seeds shuttle stops and timetables from UM transport.
 
-8. ~~Cloud Functions language~~ **Decided:** keep Node.js for Cloud Functions, written small and simple by Aaron and Ilham (the rest of the app is Java).
+8. ~~Server language~~ **Decided:** keep JavaScript, written small and simple by Aaron and Ilham (the rest of the app is Java). Updated 27 Oct 2026: the server is a Cloudflare Worker, because the team uses free plans only and Firebase Cloud Functions need billing. **[DRAFT]** until Aaron's feasibility spike passes.
 ---
 
 ## 15. Future work
