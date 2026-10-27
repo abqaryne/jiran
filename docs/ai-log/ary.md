@@ -65,3 +65,17 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose branch names, asked for a PR instead of a direct push, and decided to merge #4 then #5. TODO (Ary): your own review of the code.
 - **What the human understands and can explain:** TODO (Ary): the MVVM split, how a component view reads its XML attributes, and how the design tokens map to Android resources.
 - **Limits:** components were verified on one emulator only; known differences from Figma are listed in `docs/design/DESIGN.md`.
+
+## 2026-10-27 · App logo and launcher icon · Frontend
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code with the Figma tool
+- **Task:** use the logo drawn in Figma as the app logo and launcher icon.
+- **Prompts (exact):**
+  > coba update logonya make logo yang di figma dong
+- **Output used:** `drawable/ic_logo.xml`, adaptive launcher icon (`mipmap-anydpi/ic_launcher*.xml`, foreground and monochrome vectors), manifest icon, DESIGN.md section 3.5. The vector paths come straight from the SVG exported from the Figma `logo` frame (Thumbnail page).
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed; debug APK installed on the Pixel_9 emulator; the logo in the component gallery and the launcher icons in the app drawer were compared with Figma by the assistant. Not checked: other launchers and icon shapes, Android 13 themed icon on a real device.
+- **What the human changed or rejected:** Ary drew the logo in Figma and chose which frame is the master. TODO (Ary): anything you changed.
+- **What the human understands and can explain:** TODO (Ary): how an adaptive icon uses a background layer, a foreground layer and a safe zone.
+- **Limits:** the foreground was scaled to fit the safe zone, so it is smaller than the Figma frame; the door runs off the bottom edge on purpose.
+
