@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Attributes of the design system views in com.jiran.app.ui.common. Names are prefixed so they never clash. -->
+<resources>
+    <declare-styleable name="BadgeView">
+        <attr name="badgeStatus" format="enum">
+            <enum name="success" value="0" />
+            <enum name="warning" value="1" />
+            <enum name="danger" value="2" />
+            <enum name="brand" value="3" />
+            <enum name="neutral" value="4" />
+        </attr>
+        <attr name="badgeIcon" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="AvatarView">
+        <attr name="avatarSize" format="enum">
+            <enum name="small" value="0" />
+            <enum name="medium" value="1" />
+            <enum name="large" value="2" />
+        </attr>
+        <attr name="avatarInitial" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="RoomCardView">
+        <attr name="roomPrice" format="string" />
+        <attr name="roomTitle" format="string" />
+        <attr name="roomMeta" format="string" />
+        <attr name="roomTrueCost" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="ListRowView">
+        <attr name="rowTitle" format="string" />
+        <attr name="rowSubtitle" format="string" />
+        <attr name="rowTrailing" format="string" />
+        <attr name="rowIcon" format="reference" />
+        <attr name="rowAvatarInitial" format="string" />
+        <attr name="rowShowChevron" format="boolean" />
+        <attr name="rowShowDivider" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="CommuteOptionView">
+        <attr name="commuteIcon" format="reference" />
+        <attr name="commuteMode" format="string" />
+        <attr name="commuteNote" format="string" />
+        <attr name="commuteTime" format="string" />
+        <attr name="commuteCost" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="InfoBannerView">
+        <attr name="bannerKind" format="enum">
+            <enum name="info" value="0" />
+            <enum name="success" value="1" />
+            <enum name="warning" value="2" />
+            <enum name="danger" value="3" />
+        </attr>
+        <attr name="bannerText" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SectionHeaderView">
+        <attr name="headerTitle" format="string" />
+        <attr name="headerAction" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SearchBarView">
+        <attr name="searchHint" format="string" />
+        <attr name="searchAi" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="EmptyStateView">
+        <attr name="emptyIcon" format="reference" />
+        <attr name="emptyTitle" format="string" />
+        <attr name="emptyMessage" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="StepProgressView">
+        <attr name="stepTotal" format="integer" />
+        <attr name="stepCurrent" format="integer" />
+    </declare-styleable>
+</resources>

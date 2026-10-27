@@ -1,13 +1,37 @@
 # Docs
 
-Product and team documents live in the repository root; engineering notes live here.
+Everything the team writes down lives here. Start with the PRD.
 
-| File | What it is |
+```
+docs/
+├── product/        what we build and why
+│   ├── PRD.md            requirements, modules, FRs (source of truth)
+│   ├── GLOSSARY.md       the words we use (Unit, Room, Host, Match, ...)
+│   ├── USER-FLOW.md      flowcharts of every journey
+│   ├── SURVEY.md         survey questions
+│   └── ASSUMPTIONS.md    numbers still to verify, with owners and due dates
+├── design/
+│   └── DESIGN.md         design system, components, Figma file, Android resources
+├── team/           who does what and when
+│   ├── TEAM_PLAN.md      roles, timeline, workflow
+│   └── aaron.md ary.md aly.md dafi.md gathan.md ilham.md   personal task files
+├── ai-log/         AI Usage Log (mandatory appendix of the report): README with the template, one file per person
+├── architecture.md, api-contracts.md, ai-usage-log.md, superpowers/   engineering notes (Aaron)
+└── licenses/       licences of bundled third-party assets (Geist font, Material Symbols)
+```
+
+| Read this | For |
 |---|---|
-| [../PRD.md](../PRD.md) | What we build (source of truth) |
-| [../DESIGN.md](../DESIGN.md) | Design system and the Android resources |
-| [../TEAM_PLAN.md](../TEAM_PLAN.md), [../team/](../team/) | Who does what and when |
-| [architecture.md](architecture.md) | Firebase and backend architecture (Aaron) |
+| [product/PRD.md](product/PRD.md) | What we build (source of truth) |
+| [product/GLOSSARY.md](product/GLOSSARY.md) | The words we use |
+| [product/USER-FLOW.md](product/USER-FLOW.md) | Flowcharts |
+| [product/ASSUMPTIONS.md](product/ASSUMPTIONS.md) | Numbers to verify |
+| [design/DESIGN.md](design/DESIGN.md) | Design system and components |
+| [team/TEAM_PLAN.md](team/TEAM_PLAN.md) | Roles, timeline, workflow |
+| [architecture.md](architecture.md) | Firebase and backend architecture |
 | [api-contracts.md](api-contracts.md) | Draft request and response formats of the Functions |
-| [ai-usage-log.md](ai-usage-log.md) | AI Usage Log (mandatory appendix of the report) |
-| [licenses/](licenses/) | Licences of bundled third-party assets (Geist font) |
+| [ai-log/README.md](ai-log/README.md) | AI Usage Log: rules, template and one file per person (mandatory appendix) |
+| [ai-usage-log.md](ai-usage-log.md) | Aaron's earlier AI record |
+
+Rules for docs: one topic per file, keep the PRD as the single source of truth, link to it instead of copying
+it, and write relative links so they work on GitHub and in the editor. When you move a file, fix its links.

@@ -1,5 +1,5 @@
-import commute from '../../../functions/src/commute-preview.js';
-import match from '../../../functions/src/match-preview.js';
+import commute from '../../../backend/functions/src/commute-preview.js';
+import match from '../../../backend/functions/src/match-preview.js';
 import {HttpError,verifyFirebaseToken} from './firebase-token.mjs';
 
 function json(value,status=200,headers={}) {

@@ -76,3 +76,25 @@ HTTP verifier status codes and all existing25 workerd tests.
   no reason to create another worktree or change the Android transport during
   research/hardening. User authorization covers reversible implementation and
   feature-branch publication, not paid activation or Ary's final merge.
+
+## Layout reconciliation (incoming main6c2c3f8)
+
+- Pushed cache batch5294228; PR2 had no checks because main's repository moves
+  introduced conflicts. Merged current main into the feature branch, retaining
+  android/backend/docs layout, current team rules and the free-only restriction.
+- Kept every feature addition at its new path, including Java parser tests,
+  Functions fixtures/config and the separate Worker experiment. Updated Worker
+  imports and role/README links. Independent review found one relative Worker
+  README link, now corrected; no executable path regressions or feature loss.
+- Fresh55 Worker and277 Jest tests plus Functions syntax checks pass after moves.
+  Android checks and the local emulator smoke test are still running.
+- Requirements discrepancy: incoming AGENTS says3s at50 concurrent users and
+  continued operation at100; canonical PRD NFR1 still says p95 under3s at100.
+  Preserve the stricter100-user performance scenario pending owner resolution;
+  do not silently reduce the existing Aaron/PRD target.
+
+Layout check update: Android lintDebug, testDebugUnitTest, checkstyleMain and
+assembleDebug passed after reconciliation. Local Firebase CLI is downloading its
+missing Firestore emulator JAR; the observed smoke process remains running.
+The existing ignored Android Firebase config was copied to its new ignored
+android/app location without logging or staging its contents.

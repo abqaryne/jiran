@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+    <application android:usesCleartextTraffic="true">
+        <!-- Debug-only component gallery: every design system component in one scroll. Launcher: "Jiran UI". -->
+        <activity
+            android:name="com.jiran.app.ui.gallery.ComponentGalleryActivity"
+            android:exported="true"
+            android:label="Jiran UI"
+            android:theme="@style/Theme.Jiran"
+            tools:ignore="HardcodedText">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <provider android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="${applicationId}.firebaseinitprovider"
+            tools:node="remove" />
+    </application>
+</manifest>

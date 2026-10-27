@@ -89,7 +89,7 @@ The preceding setup request included:
 The preceding request also supplied the GitHub/Figma links and a pasted setup
 note. Retain the full conversation/export with attachments for the exact complete
 request; the excerpt above is not a replacement for that record. The reusable
-master prompt is stored in `team/aaron.md`; do not claim it was manually submitted
+master prompt is stored in `docs/team/aaron.md`; do not claim it was manually submitted
 as a separate prompt in this session.
 
 Output used: preparation checklist, batch plan, Java developer shell, local
