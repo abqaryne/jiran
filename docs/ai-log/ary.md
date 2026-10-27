@@ -80,3 +80,17 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the assistant did not verify any site's terms; fictional listings still need realistic numbers from real reference prices.
 
+## 2026-10-27 · Dafi's shuttle task wording · Module 4
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** reword Dafi's task: find the UM shuttle timetable, email only if needed (no live tracking in the app).
+- **Prompts (exact):**
+  > gausah udh apus aja nanti aku suruh dafi cari tau jadwal dan mungkin baru kira kira commute nya berapa
+  > ya tulis ulang
+- **Output used:** `docs/team/dafi.md`, ASSUMPTIONS #5 and TEAM_PLAN wording. An earlier research note was deleted at Ary's request and never pushed.
+- **How it was tested or checked:** documents only. Not checked with UM.
+- **What the human changed or rejected:** Ary rejected the research note and chose to brief Dafi directly. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** none of the shuttle data was verified.
+

@@ -27,7 +27,7 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3) | Architecture, Cloud Functions structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
 | **Gathan** | Backend and Database Developer | **Module 2** Listings and area guide (FR2.1–2.3) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, seed data (30–50 listings), FCM notifications |
 | **Ilham** | AI Engineer | **Module 6** AI assistant and contract checker (FR6.1–6.3) | The match-reason text for Module 3 (FR3.2), AI evaluation, API key handling, **AI Usage Log** |
-| **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, one short email to UM transport for the shuttle timetable, report assembly, peer-evaluation evidence |
+| **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
 | **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
 
 **Personal task files:** [Ary](ary.md), [Dafi](dafi.md), [Aaron](aaron.md), [Gathan](gathan.md), [Ilham](ilham.md), [Aly](aly.md).
@@ -48,7 +48,7 @@ Module 5 is the lightest module (FR5.1 is P0, FR5.2 and FR5.3 are P1), so it fit
 
 The brief gives **additional credit** (not required marks) for engaging a UM unit or office. The stakeholder validation marks can be earned with the survey, interviews and user testing alone. So we skip formal meetings with BHEP and UMSDC. What we keep, because it is cheap or practically needed:
 - A UMSU representative among the 5 to 8 interviews (a student, easy to reach).
-- One short email to UM transport for the shuttle stops and timetable, which the commute card needs (Dafi).
+- The UM shuttle stops and timetable, which the commute card needs (Dafi). A timetable is enough: the shuttle is shown as scheduled, not live. Email UM transport only if it cannot be found.
 - Optional, only if there is spare time: one short email each to BHEP and UMSDC. Any reply is a bonus for the report.
 
 ### Who decides what
@@ -89,7 +89,7 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 | Who | Does |
 |---|---|
 | Aly | Puts the survey live, starts interviews, begins the test plan |
-| Dafi | Sets up the Trello board and sprint plan, emails UM transport for the shuttle timetable, keeps the PRD up to date |
+| Dafi | Sets up the Trello board and sprint plan, finds the UM shuttle timetable, keeps the PRD up to date |
 | Ary | Figma: tokens, colours, the five main screens |
 | Aaron | GitHub repo, branching rules, CI, Firebase project, Cloud Functions skeleton, Maps API key |
 | Gathan | Firestore schema draft and a first version of the Security Rules |

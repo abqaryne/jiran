@@ -11,7 +11,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - [ ] Trello board with columns: Backlog, Ready, In progress, In review, QA, Done
 - [ ] One card per FR (18 cards), labelled P0, P1 or P2, with an owner and an hours field
 - [ ] Sprint 1 plan (one-week sprints), plus a weekly sync time and a place for minutes
-- [ ] Send **one short email to UM transport** asking for the UM shuttle stops and timetable (the commute card needs it). No formal meetings with UMSU, BHEP or UMSDC: the brief only gives extra credit for them, so skip. Optional if you have spare time: one short email each to BHEP and UMSDC, and keep any reply for the report.
+- [ ] **Find the UM shuttle timetable** (routes, stops, departure times, which days it runs) for the commute card. The app shows the shuttle as *scheduled, not live*, so a timetable is enough: **no API or live tracking is needed**. Look for what UM already publishes first; send **one short email to UM transport only if you cannot find it** or need to confirm it is current. No formal meetings with UMSU, BHEP or UMSDC: the brief only gives extra credit for them, so skip. Optional if you have spare time: one short email each to BHEP and UMSDC, and keep any reply for the report.
 - [ ] Keep docs/product/PRD.md up to date as decisions change
 - [ ] Post a weekly hours summary in the group chat
 
@@ -39,7 +39,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - **Evidence:** weekly screenshot of Trello and the Git log per person
 
 ## Numbers you find (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
-- In your email to UM transport, also ask: shuttle stops and times, whether it is free, and the **parking fee** at UM (#4, #5; due 13 Nov)
+- Find the shuttle stops and times, whether the shuttle is free, and the **parking fee** at UM (#4, #5; due 13 Nov). If an email to UM transport is still needed, ask all of it in the same email
 - **#8 Data retention periods:** help Gathan, and ask the lecturer if still unsure (due 13 Nov)
 - Check every row in the file has an owner and is on track at each weekly sync
 
