@@ -10,7 +10,7 @@ Your schema and rules are the first thing others wait for, so they land first.
 ## Right now: Step 0 (26 Oct to 8 Nov)
 - [ ] Firestore schema from PRD section 8: `users`, `areas`, `listings`, `rooms`, `reviews`, `matchProfiles`, `matches`, `groups`, `unitEvaluations`, `households`, `expenses`, `chores`, `contractChecks`. A store for chat is still missing (PRD open question 5); propose `chats`.
 - [ ] First draft of Security Rules: a user reads and writes only their own `users` and `contractChecks`; household data only by household members; contact fields readable only after both sides accept
-- [ ] **Seed data:** collect 30 to 50 listings from Telegram rental channels (ask the poster for consent): building name, area, rooms with type (master, medium, small) and price, total rent, deposit. Keep them in a spreadsheet.
+- [ ] **Seed data:** note **reference prices by hand** (area, room type master, medium or small, price range, total rent and deposit for a typical unit) from public advertisements or consenting Telegram posters, with the source and date in a spreadsheet. **Do not copy listings, photos, descriptions, names or phone numbers** (see the listing rules in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md)). Then write **10 to 15 fictional but realistic listings** for the app to use as sample data.
 
 ## Next
 **Step 1 (by 15 Nov):** merge the schema and rules first. Send the field list to the group. Write rules unit tests with the emulator (every unauthorised read and write must be denied).
@@ -19,7 +19,7 @@ Your schema and rules are the first thing others wait for, so they land first.
 - Post a unit: photos (Storage), property or building name from Google Places autocomplete (fills address and coordinates), total rent, deposit, area, gender preference, amenities, and each vacant room with its own price
 - **Price rule:** the sum of all room prices in the unit must not exceed the unit's total rent. Default split by weights master 1.3, medium 1.0, small 0.7 (kept in config, to be checked against the survey)
 - Search vacant rooms with filters: budget, room type, area, gender, amenities, maximum travel time (calls Aaron's commute function). One card per vacant room.
-- Import the seed data
+- Import the fictional seed listings (labelled as sample data in the app)
 
 **Wave B (30 Nov to 13 Dec)**
 - **P1:** area page and moderated building reviews (FR2.3)

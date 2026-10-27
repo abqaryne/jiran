@@ -65,3 +65,18 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose branch names, asked for a PR instead of a direct push, and decided to merge #4 then #5. TODO (Ary): your own review of the code.
 - **What the human understands and can explain:** TODO (Ary): the MVVM split, how a component view reads its XML attributes, and how the design tokens map to Android resources.
 - **Limits:** components were verified on one emulator only; known differences from Figma are listed in `docs/design/DESIGN.md`.
+
+## 2026-10-27 · Rules for listing data and seed data · Module 2
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** decide whether listings may be collected from PropertyGuru or other sites for the course, and write the rule.
+- **Prompts (exact):**
+  > ini kan cuma buat cours aja ya klo kita kumpulin 30 sampai 50 listings dari property guru atau web di online gt boleh ga
+  > ya boleh deh
+- **Output used:** rule in `docs/product/ASSUMPTIONS.md`, Gathan's seed data task, PRD cold-start wording. The assistant said it is not legal advice and did not read the sites' current terms.
+- **How it was tested or checked:** documents only. TODO (Ary): check the terms of the sites you use, and ask the lecturer if unsure.
+- **What the human changed or rejected:** Ary accepted the "reference prices by hand plus fictional seed listings" approach in place of collecting 30 to 50 real listings.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the assistant did not verify any site's terms; fictional listings still need realistic numbers from real reference prices.
+

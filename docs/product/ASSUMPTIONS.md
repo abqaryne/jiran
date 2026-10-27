@@ -6,6 +6,11 @@ Rules for finding data:
 - Prefer **our own survey** ([SURVEY.md](SURVEY.md)) and **published sources we can cite in the report**.
 - Do not scrape sites or apps, and do not reverse-engineer an app's private API. It breaks terms of service and the data would break the demo.
 - Write estimates as estimates in the app and name the source.
+- **Listings and seed data.** Do not copy listings from PropertyGuru, iProperty or any other site, and do not copy anyone's photos, descriptions, names or phone numbers (site terms, copyright and PDPA 2010). What is allowed:
+  1. Note **price facts by hand, in small numbers**: area, room type (master, medium, small) and price range. Keep a sheet with the source (site or channel) and the date, and cite it in the report as "reference prices from public advertisements, October 2026".
+  2. Demo and seed listings are **fictional but realistic**: invented units in real areas (for example Pantai Dalam, Kerinchi) with prices modelled on those facts. About 10 to 15 are enough. The app labels them as sample data.
+  3. A consenting Telegram poster may be asked for facts about their unit. Never show their name or contact in the app.
+  4. The room price weights (#1) come from our own survey, not from advertisements.
 
 | # | What | Current value | Where it is used | Owner | How to find it | Due |
 |---|---|---|---|---|---|---|
