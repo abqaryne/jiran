@@ -132,7 +132,14 @@ The icons we use are already in the project as vector drawables, named `ic_<symb
 
 ### 3.5 Logo
 
-Direction: a **door** (Jiran means neighbour: your neighbour's door), white on `brand/600`, rounded square. Final mark is still being drawn. Use the placeholder in Figma until it is replaced, and check any icon licence before shipping (Iconify marks each set; MIT needs the notice kept, so list it in the app's About screen and the report).
+A **door with a smile** (Jiran means neighbour: your neighbour's door), white on `brand/600`, in a rounded square. The master is the frame named `logo` on the Thumbnail page of the Figma file.
+
+| Use | File |
+|---|---|
+| In screens (splash, welcome, about) | `drawable/ic_logo.xml` (vector, 96 dp, exported from Figma) |
+| Launcher icon | adaptive icon: `mipmap-anydpi/ic_launcher.xml` = blue background + `drawable/ic_launcher_foreground.xml` (door and smile in the 66 dp safe zone) + `drawable/ic_launcher_monochrome.xml` (themed icon) |
+
+Keep clear space of at least a quarter of the logo width around it, never stretch it, and never place it on a background that is not white or brand blue. To change the logo, re-export the `logo` frame from Figma as SVG and update the three vector files; do not redraw it by hand.
 
 ## 4. Components
 

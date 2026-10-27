@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Launcher icon foreground (adaptive icon, 108 dp canvas, safe zone 66 dp). The white door and smile of the Jiran logo,
+  scaled to sit in the safe zone; the door runs off the bottom edge like in the logo. The blue is the background layer.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.16"
+        android:scaleY="0.16"
+        android:translateX="17.68"
+        android:translateY="17.68">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M84.34,440H380.81V700H84.34Z" />
+        <group>
+            <clip-path android:pathData="M0,0H454V454H0Z" />
+            <path
+                android:fillColor="#FFFFFF"
+                android:pathData="M288.706 68.1C306.519 68.1 321.406 68.0685 333.175 69.767C344.763 71.4398 355.332 75.0336 363.91 83.6088H366.076V85.9057C374.257 95.0941 377.67 106.449 379.251 118.909C380.843 131.46 380.813 147.328 380.813 166.325V455.015H410.674C418.704 455.017 425.217 461.96 425.217 470.525C425.217 479.09 418.704 486.033 410.674 486.035H54.6786C46.6473 486.035 40.1368 479.09 40.1367 470.525C40.1368 461.959 46.6473 455.015 54.6786 455.015H84.3398V166.325C84.3398 147.328 84.3099 131.459 85.9023 118.909C87.4837 106.445 90.8942 95.0795 99.081 85.8891V83.6088H101.232C109.812 75.0297 120.388 71.4405 131.978 69.767C143.747 68.0685 158.634 68.1 176.447 68.1H288.706Z" />
+            <path
+                android:fillColor="@color/color_brand_primary"
+                android:pathData="M306.77 287.673C310.838 281.531 319.074 279.877 325.166 283.978C331.258 288.08 332.898 296.385 328.83 302.527L317.8 295.1L306.77 287.673ZM174.86 314.718C168.551 310.965 166.454 302.766 170.176 296.404C173.899 290.043 182.031 287.929 188.34 291.682L181.6 303.2L174.86 314.718ZM317.8 295.1L328.83 302.527C314.376 324.352 288.272 334.974 260.91 336.617C233.278 338.276 202.294 331.038 174.86 314.718L181.6 303.2L188.34 291.682C211.397 305.398 237.163 311.248 259.333 309.917C281.773 308.569 298.524 300.123 306.77 287.673L317.8 295.1Z" />
+        </group>
+    </group>
+</vector>

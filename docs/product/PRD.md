@@ -377,7 +377,7 @@ Android app (Java)
 | Code and tasks | GitHub, Trello |
 | Testing | JUnit and Mockito, Espresso, Firebase Emulator Suite, k6 |
 
-**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the module and FR (e.g. `M5 FR5.3: cost split`).
+**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the story (e.g. `[E7.1] Add balance calculation`); the story card holds the FR.
 
 ---
 
@@ -426,7 +426,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 | 28 Dec – 2 Jan 2027 | Record and edit demo video; **video due 12pm, 3 Jan 2027** |
 | 4 – 9 Jan | Final report; **report due 12pm, 10 Jan 2027** |
 
-**Cold-start plan:** seed listings from consenting Telegram posters; launch through UMSU, PEKOM and faculty channels.
+**Cold-start plan:** seed the app with fictional but realistic sample listings modelled on reference prices (never copied from other sites); launch through UMSU, PEKOM and faculty channels, where consenting Telegram posters can list their own rooms.
 
 ---
 
@@ -434,7 +434,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 
 | Risk | Mitigation |
 |---|---|
-| Few listings at launch (cold start) | Seed from consenting Telegram posters; launch via UMSU, PEKOM and faculty channels |
+| Few listings at launch (cold start) | Fictional sample listings from reference prices; launch via UMSU, PEKOM and faculty channels |
 | Inaccurate listings or scams | UM-verified posters only, report button, moderated reviews |
 | Safety when meeting housemates or commuting with strangers | Verified accounts, ratings, contact hidden until both accept (share-my-trip link if commute groups are built) |
 | CO₂ figures are estimates | Label as estimates and name the emission factors |

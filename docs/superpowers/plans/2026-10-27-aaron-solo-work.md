@@ -257,3 +257,20 @@ Needs human review: Aaron should read gtfs.js and gtfs-journey.js, run the focus
 tests, and explain service dates vs wall-clock dates, frequency estimates vs exact
 grids, transfer history, unknown fares and why snapshot forecasts are not observed
 commutes. Current AI-assisted drafts do not establish his personal understanding.
+
+Main reconciliation: upstream4af895a introduced story cards, the new launcher and
+removed the20-hour minimum. Preserved all incoming assets/story tables and Aaron's
+local implementation evidence. Combined the updated shuttle-source instructions
+with the existing verified CO2 catalogue; corrected its moved relative link.
+Removed the obsolete minimum-hours claim from the hours draft; reported hours
+remain6. No real hours or sessions were added. Incoming Ary AI log is byte-for-byte
+unchanged from main, including its pre-existing trailing blank line; owner-only
+log rules take precedence over cosmetic cleanup of another person's record.
+
+Ruling: retain the upstream story-label documentation, while this session's latest
+explicit user AGENTS instructions still require Mod/FR labels for our commits.
+No history rewrite, final merge or new approval request is needed for this
+feature-branch reconciliation. Backend336 tests and syntax checks pass after merge;
+Android validation is running against the incoming launcher assets.
+Android reconciliation validation completed successfully: lintDebug,
+testDebugUnitTest, checkstyleMain and assembleDebug passed with the new launcher.

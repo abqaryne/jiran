@@ -7,8 +7,8 @@ notes and a Trello destination; no Trello entry has been posted.
 |---|---:|---|---|---|
 | 26 October 2026 | 6 | Aaron to supply the activities covered | Board/card not supplied | User-reported total; draft |
 
-Recorded total: **6 hours**. The role requires at least20 hours; other work hours
-have not been supplied. Individual start/end times were not recorded here.
+Recorded total: **6 hours**. The team removed its earlier minimum-hours rule;
+other actual work hours have not been supplied. Individual start/end times were not recorded here.
 Do not turn this total into invented work dates or session timestamps. If Aaron
 supplies a task breakdown, keep its estimated durations labelled as estimates.
 

@@ -126,8 +126,8 @@ Verify changed behavior with relevant Java unit tests, Android lint/Checkstyle,
 Jest and emulator tests. Use the actual configured scripts; report checks that
 cannot run and why. Do not claim NFR1 without load evidence or NFR2 without
 authorization tests. Every change goes through a feature branch and PR;
-Ary performs the final merge. Use [ModN][FRN.N] commit messages for feature
-work; agree infrastructure labels with the team. Record hours on Trello and
+Ary performs the final merge. Use `[Story]` commit messages (for example `[E3.3] Add commute engine`)
+for feature work, and `[Infra]`, `[Docs]` or `[Design]` otherwise. Record hours on Trello and
 retain exact AI prompts and testing/modification evidence for the AI Usage Log.
 Do not send team messages, merge, or deploy unless the task authorizes it.
 
@@ -176,7 +176,57 @@ production UM verification, schema, commute/match formulas and full NFR tests ar
 not complete. The foundation branch was pushed and merged through PR #1;
 continuation commits remain on the feature branch until reviewed by PR.
 
-## Right now: Step 0 (26 Oct to 8 Nov)
+## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
+
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
+
+**Stories you lead** (7)
+
+| Story | FR, priority | Due | Waits for |
+|---|---|---|---|
+| **E0.1** Repo and CI are healthy | P0 | 2 Nov |  |
+| **E0.2** Firebase and Maps are ready | P0 | 8 Nov | team decision on billing |
+| **E0.6** Function contracts (stubs) | P0 | 15 Nov |  |
+| **E3.3** Commute per travel mode *(can start early)* | FR4.1, P0 | start now, due 29 Nov | Maps coverage and fares (#3, #4, #5), shuttle timetable (T1) |
+| **E3.4** True monthly cost and travel time on the Room card | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
+| **E4.4** Public transport route page, peak and off-peak | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
+| **E6.2** Match score function *(can start early)* | FR3.2, P0 | 10 Dec | match weights (#9), `matchProfiles` (E6.1) |
+
+
+**Stories where you do a subtask** (9): open the story card to see yours.
+
+| Story | Lead | Due |
+|---|---|---|
+| **E0.4** Project management and docs | Dafi | 30 Oct |
+| **E1.1** Sign up with a UM email and verify it | Ary | 19 Nov |
+| **E4.2** Commute options card | Ary | 7 Dec |
+| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
+| **T1.3** Verify the assumed numbers | Dafi | 13 Nov |
+| **T1.4** UM shuttle timetable and commute estimates | Dafi | 8 Nov (timetable), 13 Nov (estimates) |
+| **T3.1** Script and screen captures | Ary | 20 Dec |
+| **T4.1** Report sections | Dafi | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
+
+**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You also lead the P0 code freeze (Gate 3, 13 Dec).
+
+## Solo implementation progress
+
+The [six solo workstreams](../superpowers/plans/2026-10-27-aaron-solo-work.md)
+are in progress. The isolated Worker experiment now has bounded verification-key
+fetching, provider freshness handling, rotation coalescing and cooldown protection,
+with75 offline/runtime tests passing, including bounded body reading and atomic
+SQLite quota reservations. This does not adopt a production runtime; identity-bound
+quota integration, real routing evidence and production verification remain open.
+The [hours draft](../aaron-work-log.md) contains the reported6 hours on26 October.
+The [350/400-word report drafts and demo script](../aaron-deliverable-drafts.md)
+and [handoff/freeze checklist](../aaron-handoff.md) need Aaron's personal review.
+The [GTFS processor checkpoint](../transit-processing.md) adds calendar, frequency,
+transfer and stale-feed handling with59 focused tests and recorded snapshot probes.
+Its follow-up independent review and production coverage remain open.
+
+
+## Local implementation evidence (not story acceptance)
+
 ### Module 4 continuation — calculation batch
 
 The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
@@ -224,39 +274,6 @@ and [contract](../api-contracts.md). Production formula approval is still open.
 - [ ] Production authorized candidate reader/privacy projection with Gathan; final Match UI and explanation handoff with Ary/Ilham.
 - [ ] Production end-to-end and QA evidence; no matching completion claim from fixtures alone.
 
-**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you two write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
-
-## Next
-
-The [six solo workstreams](../superpowers/plans/2026-10-27-aaron-solo-work.md)
-are in progress. The isolated Worker experiment now has bounded verification-key
-fetching, provider freshness handling, rotation coalescing and cooldown protection,
-with75 offline/runtime tests passing, including bounded body reading and atomic
-SQLite quota reservations. This does not adopt a production runtime; identity-bound
-quota integration, real routing evidence and production verification remain open.
-The [hours draft](../aaron-work-log.md) contains the reported6 hours on26 October.
-The [350/400-word report drafts and demo script](../aaron-deliverable-drafts.md)
-and [handoff/freeze checklist](../aaron-handoff.md) need Aaron's personal review.
-The [GTFS processor checkpoint](../transit-processing.md) adds calendar, frequency,
-transfer and stale-feed handling with59 focused tests and recorded snapshot probes.
-Its follow-up independent review and production coverage remain open.
-
-**Step 1 (by 15 Nov):** write `docs/api-contracts.md` with the request and response JSON of each Cloud Function, so everyone can build against stubs:
-- `getCommuteOptions(listingId or unit, departTime)`
-- `getTransitRoute(...)`
-- `computeMatchScores(userId)`
-- `splitRoomPrices(totalRent, rooms)`
-- AI functions (agree the shape with Ilham)
-
-**Wave A (16 to 29 Nov): Module 4 basic**
-- Walking, bus or LRT plus UM shuttle, e-hailing estimate (fare formula), and driving alone
-- Travel time and monthly cost from a listing to the user's faculty; true monthly cost = rent plus utilities plus commute
-- CO2 per mode = distance times a published emission factor (pick and cite the source, PRD open question 4)
-- Meet NFR1 with provider-term-compliant request reuse/architecture. Persistent area/faculty Google route caching is not assumed permitted; see [Maps readiness evidence](../maps-readiness.md). Actual p95 ≤3s at 100 concurrent users still needs end-to-end load testing.
-
-**Wave B (30 Nov to 13 Dec)**
-- Match score Cloud Function: transparent weighted formula, deterministic, unit-tested
-- **P1:** peak and off-peak times (traffic-aware Routes API), peak surge assumption for e-hailing, step-by-step transit route
 
 ## Hand-offs
 | You wait for | From | Use meanwhile |
@@ -277,11 +294,11 @@ Its follow-up independent review and production coverage remain open.
 
 ## Rules for everyone
 
-- Minimum **20 hours** each, logged on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
-- Commit message format: `[Mod2][FR2.1] short description`.
+- Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
+- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the Trello card (the card shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

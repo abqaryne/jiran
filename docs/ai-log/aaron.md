@@ -163,3 +163,13 @@ its missing JAR. Human review remains TODO (owner).
 - **Limits:** Needs human review. Only UTC+08 zones and bounded supported semantics.
   No live route/fare/punctuality, physical transfer-path validation, deployment,
   NFR1 result or complete independent-review claim. Personal work hours unchanged.
+
+Repository reconciliation during the transit task: current main4af895a changed
+story ownership tables and launcher assets and removed the old20-hour minimum.
+Preserved incoming team-authored files and added no edits to another owner's AI
+log. Retained existing local implementation evidence and the CO2 catalogue when
+resolving documentation conflicts. Updated the hours draft without inventing
+hours. Backend336 tests and syntax checks pass after reconciliation; Android
+checks on the new launcher are running. Human review remains TODO (owner).
+Android reconciliation checks completed: lint, JVM tests, Checkstyle and debug
+build passed with the incoming launcher. No device or production completion claim.
