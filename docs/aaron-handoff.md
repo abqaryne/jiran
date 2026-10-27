@@ -8,7 +8,7 @@ The live budget is free-only. No team messages or Trello entries were sent.
 |---|---|---|
 | Reviewable work | [Draft PR2](https://github.com/abqaryne/jiran/pull/2); Java Android and JavaScript retained | Aaron reviews backend; Ary approves/merges |
 | Calculation contracts | [API contracts](api-contracts.md), versioned fixtures, typed Java parsers | Implemented local foundation; team contract acceptance pending |
-| Source values | [Emissions](emission-methodology.md), [transit snapshot](free-transit-evidence.md), [routing research](no-billing-production.md) | Aaron research; Aly confirms survey assumptions; Dafi confirms shuttle evidence |
+| Source values | [Commute inputs/five probes](commute-input-evidence.md), [emissions](emission-methodology.md), [transit snapshot](free-transit-evidence.md), [routing research](no-billing-production.md) | Aaron research; Aly confirms survey assumptions; Dafi confirms shuttle evidence |
 | Real data access | Listings, rooms, profiles, timetable, private candidates and Connection privacy | Gathan/Ary; agreed schemas and authorized readers pending |
 | Match weights | Versioned formula and missing-data behavior implemented | Aly/Ary approve survey mapping; Ilham reviews explanation input |
 | Free backend choice | Isolated Worker/token/quota experiments; existing Firebase Auth/Firestore | Team approval required; no runtime migration or billing activation |

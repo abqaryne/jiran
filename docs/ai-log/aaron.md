@@ -106,3 +106,28 @@ its missing JAR. Human review remains TODO (owner).
   request, cloud deployment or performance certification. Report drafts do not
   establish personal authorship/understanding; final team contributions, QA and
   video remain pending. Only6 hours were user-reported; nothing posted to Trello.
+
+## 2026-10-27 · Commute input research and five probes · FR4.1–FR4.3
+
+- **Human owner:** Aaron.
+- **AI tool and model:** Codex; exact deployed model version not recorded.
+- **Task:** Research published fare/fuel/parking inputs and define five route
+  cases with precise confirmed evidence and unresolved links.
+- **Prompts (exact):**
+  > implement those on the previous prompts
+- **Output used:** docs/commute-input-evidence.md and handoff/index links.
+- **How it was tested or checked:** Opened primary government, issuer, operator
+  and university pages. Downloaded official fuel CSV, selected series_type=level
+  for22 October2026 and recorded SHA256. Joined selected stops through stop_times
+  and trips in existing public GTFS archives, preserving their recorded hashes.
+  Found the non-T789 Universiti stop and the16 November feeder expiry boundary.
+  Official Rapid Pelajar pages/PDF returned403; PDF skill was consulted for a
+  read-only attempt, but no inaccessible PDF terms were claimed verified.
+- **What the human changed or rejected:** TODO (owner).
+- **What the human understands and can explain:** TODO (owner). Explain subsidy
+  eligibility, pass-versus-per-trip accounting, stale schedules, transfer paths,
+  and why an unknown parking/fare value cannot be zero.
+- **Limits:** Needs human review. These are defined probes, not working journeys.
+  No paid routing/booking, private scraping, survey numbers, production defaults
+  or verified student timetable. Parking tariff and current UM shuttle evidence
+  still need primary confirmation; no student discount adopted from snippets.

@@ -20,7 +20,7 @@ live coverage, performance, report outcomes or QA evidence.
   with provider cache expiry, single-flight and rotation/cooldown tests; atomic
   SQLite per-user/account quota reservations in workerd; timeout/error handling.
   Evidence: runtime tests and documented limits; no production adoption claim.
-- [ ] **Commute input research.** Record primary published fares/fuel/parking and
+- [x] **Commute input research.** Record primary published fares/fuel/parking and
   transit/shuttle sources, five sample route cases with precise known/unknown
   evidence and dates. No scraping private apps or pretending API coverage was
   measured without credentials. Keep factual research separate from approved
@@ -192,3 +192,16 @@ record remains6 user-reported hours on26 October with activities/card unspecifie
 Remaining solo implementation: transit normalization/journey logic, official
 commute input/five-route research and realistic load scenarios. Production
 adoption and actual-hours/Trello details remain explicitly unresolved.
+
+## Batch F: published commute inputs and probe definitions
+
+Completed the research artifact docs/commute-input-evidence.md with primary
+sources, dated fuel record/hash, conditional My50 eligibility and five concrete
+public-stop probes. No provider booking or paid call. Operator pages/PDF403 and
+missing parking tariffs remain explicit unknowns rather than invented defaults.
+UM's official page explicitly says30 December2019, so its route areas do not
+prove a2026 timetable. The five probes include the feeder calendar-expiry case
+and the similarly named Universiti stop that does not join T789. Joins were run
+on existing public GTFS ZIPs, not private listings. Research artifact completion
+is not completion of assumption#5, current shuttle/fare validation or real route
+coverage. No value entered production configuration.
