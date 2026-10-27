@@ -41,7 +41,7 @@ The brief requires **significant and original human contribution** and a real un
   in its video section; if the team's choice is questioned, flag it, do not silently change it.
 - The report needs **at least five modules with three functional requirements each**, up to two non-functional
   requirements, and every demonstrated feature is linked to its FR. Name each change after its requirement:
-  commit messages use `[ModN][FRN.N] short description`, branches use `feature/<short-name>`.
+  commit messages use `[Story] short description` (for example `[E7.1] Add balance calculation`; the story card holds the FR, see docs/team/TEAM_PLAN.md), branches use `feature/<short-name>`.
 - Non-functional targets that must be tested: a page loads within 3 seconds with 50 concurrent users, and the system keeps
   working with up to 100 (see `backend/tests/load`).
 - **AI features must earn their place**: AI is allowed in the product only where rules cannot do the job (plain-language

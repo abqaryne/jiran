@@ -377,7 +377,7 @@ Android app (Java)
 | Code and tasks | GitHub, Trello |
 | Testing | JUnit and Mockito, Espresso, Firebase Emulator Suite, k6 |
 
-**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the module and FR (e.g. `M5 FR5.3: cost split`).
+**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the story (e.g. `[E7.1] Add balance calculation`); the story card holds the FR.
 
 ---
 

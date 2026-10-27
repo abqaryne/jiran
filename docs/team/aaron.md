@@ -118,8 +118,8 @@ Verify changed behavior with relevant Java unit tests, Android lint/Checkstyle,
 Jest and emulator tests. Use the actual configured scripts; report checks that
 cannot run and why. Do not claim NFR1 without load evidence or NFR2 without
 authorization tests. Every change goes through a feature branch and PR;
-Ary performs the final merge. Use [ModN][FRN.N] commit messages for feature
-work; agree infrastructure labels with the team. Record hours on Trello and
+Ary performs the final merge. Use `[Story]` commit messages (for example `[E3.3] Add commute engine`)
+for feature work, and `[Infra]`, `[Docs]` or `[Design]` otherwise. Record hours on Trello and
 retain exact AI prompts and testing/modification evidence for the AI Usage Log.
 Do not send team messages, merge, or deploy unless the task authorizes it.
 
@@ -215,7 +215,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 ## Rules for everyone
 
 - Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
-- Commit message format: `[Mod2][FR2.1] short description`.
+- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the Trello card (the card shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
 - Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).

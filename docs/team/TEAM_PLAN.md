@@ -88,7 +88,7 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 - **PR check-in:** Ary does the final check and merge of every PR. Before that, Aaron reviews Cloud Functions and Maps PRs, Gathan reviews schema and rules PRs, and one other member reviews each PR so everyone has review evidence.
 - **Tests:** every module owner writes unit tests for their module; Aly writes the integration tests and load test.
 - **Sprints:** one-week sprints planned by Dafi, short sync twice a week, 30-minute demo and retro on weekends.
-- **Commit messages and Trello story cards** name the module and FR (or the story ID), e.g. `[Mod5][FR5.3] expense split`, so each person's contribution is traceable.
+- **Commit messages** start with the story ID from its Trello card: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. No story: `[Docs]`, `[Infra]` or `[Design]`. The card holds the FR, so each commit traces to a card and a requirement.
 - **Frontend:** Ary builds the shared components first; every module owner builds their own module's screens with them, and Ary reviews the UI.
 
 ### Honest risks of this split

@@ -76,7 +76,7 @@ If PRs queue for more than a day, let Aaron merge backend-only PRs.
 ## Rules for everyone
 
 - Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
-- Commit message format: `[Mod2][FR2.1] short description`.
+- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the Trello card (the card shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
 - Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
