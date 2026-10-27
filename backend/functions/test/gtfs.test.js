@@ -94,4 +94,3 @@ test('unsupported time zone, duplicate stop IDs, missing calendars and invalid p
   expect(()=>normalizeGtfs(tables(),{...source,fetchedAt:'2026-02-30T00:00:00Z'})).toThrow();
   expect(()=>normalizeGtfs(tables(),{...source,url:'https://'})).toThrow();
 });
-
