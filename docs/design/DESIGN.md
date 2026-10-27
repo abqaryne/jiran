@@ -7,7 +7,7 @@ How Jiran looks and behaves. This is the single guide for everyone who builds a 
 | What | Where |
 |---|---|
 | Figma file (design system and all screens) | https://www.figma.com/design/kjYgovwDJBU9ArWSfMa3OD/Jiran |
-| Android tokens, styles and example layouts | [app/src/main/res/](../../app/src/main/res/) |
+| Android tokens, styles and example layouts | [android/app/src/main/res/](../../android/app/src/main/res/) |
 | This guide | `docs/design/DESIGN.md` |
 
 Contents: [1 Principles](#1-principles) · [2 Using the Figma file](#2-using-the-figma-file) · [3 Foundations](#3-foundations) · [4 Components](#4-components) · [5 Patterns](#5-patterns) · [6 Content](#6-content-and-language) · [7 Accessibility](#7-accessibility) · [8 Android guide](#8-android-implementation) · [9 Screen inventory](#9-screen-inventory) · [10 Adding or changing things](#10-adding-or-changing-things) · [11 Known gaps](#11-known-gaps)
@@ -39,7 +39,7 @@ The file has three pages.
 - Build screens from **instances** of the master components (Assets panel, search the name). Never draw a button by hand.
 - Change a component with its **properties** (Label, Style, Size, Selected, State, Icon), not by detaching it.
 - Colours, spacing and radius are **Figma variables**; text uses **text styles**; shadows use **effect styles**. Pick them from the lists, never type a hex or a number.
-- In **Dev Mode** every variable shows its Android name (for example `@color/color_brand_primary`, `@dimen/spacing_16`). Those names exist in [app/src/main/res/values](../../app/src/main/res/values) exactly as shown.
+- In **Dev Mode** every variable shows its Android name (for example `@color/color_brand_primary`, `@dimen/spacing_16`). Those names exist in [android/app/src/main/res/values](../../android/app/src/main/res/values) exactly as shown.
 - A component's Figma name is its Android style name (table in [section 4](#4-components)).
 - Screens are 390 × 844. Long screens (Room details, Public transport route) are taller on purpose; they scroll.
 - The status bar and notch on mockups are **phone chrome for the picture**, not an app component. On Android the system draws the real one (see [section 8](#8-android-implementation)).
@@ -79,7 +79,7 @@ Status pairs (text on background), used only in badges, banners and toasts:
 | Warning | `color_status_warning_text` #8A5A00 | `color_status_warning_bg` #FFF1D6 | Check, Pending, Needs changes |
 | Danger | `color_status_danger_text` #B42318 | `color_status_danger_bg` #FDE7E5 | Red flag, Declined, error |
 
-The brand scale (`brand/50` to `brand/900`) is in `app/src/main/res/values/colors.xml`. Use `brand/300` and `brand/100` only for the allocation bar and chart-like fills.
+The brand scale (`brand/50` to `brand/900`) is in `android/app/src/main/res/values/colors.xml`. Use `brand/300` and `brand/100` only for the allocation bar and chart-like fills.
 
 **Rules**
 
@@ -120,7 +120,7 @@ Layout: 16 dp side margin, 24 dp between sections, 12 dp inside a card between l
 
 **Material Symbols Rounded**, weight 400, optical size 24, **outlined** by default. Filled only for the selected or active state (for example the active tab). Sizes: 24 dp standard, 18 dp inside badges and banners, 22 dp inside circles.
 
-The icons we use are already in the project as vector drawables, named `ic_<symbol>` (for example `ic_home`, `ic_bed`, `ic_arrow_back`) in `app/src/main/res/drawable`. The four tab icons also have `_filled` versions and a selector (`ic_tab_home`, ...). Tint them in the layout (`app:tint`), never by editing the file. Need another icon? Add the Material Symbols Rounded vector from [google/material-design-icons](https://github.com/google/material-design-icons/tree/master/symbols/android) (weight 400, 24 dp) with the same `ic_<symbol>` name. Licence: Apache 2.0 (see `docs/licenses`). The names we use:
+The icons we use are already in the project as vector drawables, named `ic_<symbol>` (for example `ic_home`, `ic_bed`, `ic_arrow_back`) in `android/app/src/main/res/drawable`. The four tab icons also have `_filled` versions and a selector (`ic_tab_home`, ...). Tint them in the layout (`app:tint`), never by editing the file. Need another icon? Add the Material Symbols Rounded vector from [google/material-design-icons](https://github.com/google/material-design-icons/tree/master/symbols/android) (weight 400, 24 dp) with the same `ic_<symbol>` name. Licence: Apache 2.0 (see `docs/licenses`). The names we use:
 
 | Where | Symbols |
 |---|---|
@@ -158,7 +158,7 @@ Components made from several parts (use the same pieces, then compose):
 
 | Pattern | Built from | Notes |
 |---|---|---|
-| **Top bar** | Icon button + Title + Small Ink button or brand text | 60 dp, [`component_top_bar.xml`](../../app/src/main/res/layout/component_top_bar.xml). Back on the left, one action on the right. |
+| **Top bar** | Icon button + Title + Small Ink button or brand text | 60 dp, [`component_top_bar.xml`](../../android/app/src/main/res/layout/component_top_bar.xml). Back on the left, one action on the right. |
 | **Footer** | Top border `border/divider` + 1 to 2 Buttons (Large) | 16 dp padding, 24 dp at the bottom. Primary first, Soft second. |
 | **Info banner** | `InfoBannerView` (`app:bannerKind`, `app:bannerText`) | Blue = info. Success, warning, danger use the status pairs. |
 | **Bottom sheet** | `Widget.Jiran.BottomSheet` (16 dp top radius, handle 40×4) | Title in Section style, close top right, one Primary button at the bottom. |
@@ -210,10 +210,10 @@ Components made from several parts (use the same pieces, then compose):
 
 ## 8. Android implementation
 
-Stack: Java, XML layouts, Material Components, MVVM. The design system is part of the app module: tokens, styles and component layouts live in [`app/src/main/res`](../../app/src/main/res). Open the project in Android Studio and use them; there is nothing to copy.
+Stack: Java, XML layouts, Material Components, MVVM. The design system is part of the app module: tokens, styles and component layouts live in [`android/app/src/main/res`](../../android/app/src/main/res). Open the project in Android Studio and use them; there is nothing to copy.
 
 ```
-app/src/main/res/
+android/app/src/main/res/
   values/colors.xml            colour tokens (primitives + semantic)
   values/dimens.xml            spacing, radius, component sizes, elevation
   values/type.xml              TextAppearance.Jiran.*
@@ -338,5 +338,5 @@ Public transport route (the page opened by the LRT + UM shuttle option): map on 
 - **Logo** is a placeholder until the door mark is finished.
 - **Illustrations and photos** are grey placeholders; empty-state drawings are still to do.
 - **Charts** (impact dashboard, P2) are not designed.
-- **Android files have not been compiled yet.** They are written against Material Components 1.4+; if Android Studio flags an attribute, fix it in `app/src/main/res` and tell Ary so DESIGN.md stays right.
+- **Android files have not been compiled yet.** They are written against Material Components 1.4+; if Android Studio flags an attribute, fix it in `android/app/src/main/res` and tell Ary so DESIGN.md stays right.
 - Shuttle times, fares and CO₂ factors on the commute screens are example numbers until the owners in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md) confirm them.

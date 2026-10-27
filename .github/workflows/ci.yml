@@ -20,7 +20,10 @@ jobs:
       - uses: android-actions/setup-android@v3
       - run: sdkmanager 'platforms;android-37.0' 'build-tools;36.0.0'
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: android
       - run: bash ./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug --console=plain
+        working-directory: android
   backend:
     runs-on: ubuntu-latest
     env:
@@ -31,13 +34,14 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-          cache-dependency-path: functions/package-lock.json
+          cache-dependency-path: backend/functions/package-lock.json
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '25'
-      - run: npm ci --prefix functions
-      - run: npm test --prefix functions
-      - run: npm run check --prefix functions
+      - run: npm ci --prefix backend/functions
+      - run: npm test --prefix backend/functions
+      - run: npm run check --prefix backend/functions
       - run: npm install --global firebase-tools@15.34.1
       - run: firebase emulators:exec --project demo-jiran --only auth,firestore,functions,storage 'node scripts/emulator-smoke.cjs'
+        working-directory: backend

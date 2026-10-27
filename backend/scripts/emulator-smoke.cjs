@@ -1,6 +1,7 @@
 const assert = require('node:assert/strict');
 const {execFileSync} = require('node:child_process');
 const path = require('node:path');
+const androidDir = path.join(__dirname, '..', '..', 'android');
 const {checkConnectionRules} = require('./firestore-smoke.cjs');
 
 const project = 'demo-jiran';
@@ -61,8 +62,8 @@ async function main() {
     assert.ok(sdk, 'Set ANDROID_HOME before the Android smoke test');
     const adb = path.join(sdk, 'platform-tools', process.platform === 'win32' ? 'adb.exe' : 'adb');
     const runAdb = (args) => execFileSync(adb, args, {encoding: 'utf8', timeout: 120000});
-    runAdb(['install', '-r', 'app/build/outputs/apk/debug/app-debug.apk']);
-    runAdb(['install', '-r', '-t', 'app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk']);
+    runAdb(['install', '-r', path.join(androidDir, 'app/build/outputs/apk/debug/app-debug.apk')]);
+    runAdb(['install', '-r', '-t', path.join(androidDir, 'app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk')]);
     const deviceSdk = Number(runAdb(['shell', 'getprop', 'ro.build.version.sdk']).trim());
     if (deviceSdk >= 37) {
       runAdb(['shell', 'pm', 'grant', 'jiran.com', 'android.permission.ACCESS_LOCAL_NETWORK']);

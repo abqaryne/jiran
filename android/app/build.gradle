@@ -50,7 +50,7 @@ android {
 def verifyLiveFirebase = tasks.register('verifyLiveFirebase') {
     doLast {
         if (!file('google-services.json').exists()) {
-            throw new GradleException('Live builds require app/google-services.json for jiran-mad.')
+            throw new GradleException('Live builds require android/app/google-services.json for jiran-mad.')
         }
         def config = new groovy.json.JsonSlurper().parse(file('google-services.json'))
         def projectId = config.project_info?.project_id
