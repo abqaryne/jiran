@@ -38,7 +38,7 @@ require explicit allocation; passenger-km factors already contain passenger allo
 | uk-metro | 15.22 | passenger-km | 5474 / J5474 | Business travel- land!E90 |
 
 Values, original kg strings, factor IDs, units, source cells, file URLs and SHA256
-hashes are in [the catalogue](../functions/config/emission-factors.json). UK light
+hashes are in [the catalogue](../backend/functions/config/emission-factors.json). UK light
 rail/tram and Underground are explicit proxies for a proposed LRT/MRT comparison,
 not measurements of those Malaysian services. Motorbike is retained for source
 research; it does not add a fifth mode to the four-mode product.
@@ -66,7 +66,7 @@ an occupancy override so they cannot be divided twice.
 ## Calculation and incomplete routes
 
 `calculateTripEmissions({distanceMetres,legs,allowUkProxy})` in
-[emissions.js](../functions/src/emissions.js) consumes normalized leg distances and
+[emissions.js](../backend/functions/src/emissions.js) consumes normalized leg distances and
 factor IDs. It does not infer a bus/rail split from a whole-route distance or assign
 bus emissions to a walking leg. The caller must establish that leg IDs match the
 real modes and actual distances; this function is not provider-route verification.
