@@ -1,7 +1,7 @@
 # Jiran: Work Division (from the WIA2007 brief)
 
-Source: `MAD Group Project.docx` + `Jiran — WIA2007 Group Project Proposal.pdf`.
-Work is divided **by module**, with one owner per module and specialists helping (see Section 2).
+Source: the course brief (`MAD Group Project.docx`) and the [PRD](../product/PRD.md).
+Work is divided **by module**, with one owner per module and specialists helping (see Section 2). Day-to-day work is tracked as Initiative, Epics, Stories and Subtasks in [trello-cards.md](trello-cards.md).
 
 ## 1. What the brief requires (and what it is marked on)
 
@@ -23,14 +23,33 @@ Work is divided **by module**: each module has one owner who builds it end to en
 
 | Person | Role | Owns | Also responsible for |
 |---|---|---|---|
-| **Ary** | Group leader, Frontend Lead, Lead UI/UX | **Module 1** Auth and verified profile (FR1.1–1.3) and **Module 3** Roommate matching screens (FR3.1–3.3) | Figma and design system; Android app shell, theme and shared components; final check-in (approve and merge) of every PR; main contact with the lecturer |
-| **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3) | Architecture, Cloud Functions structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
-| **Gathan** | Backend and Database Developer | **Module 2** Listings and area guide (FR2.1–2.3) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, seed data (30–50 listings), FCM notifications |
-| **Ilham** | AI Engineer | **Module 6** AI assistant and contract checker (FR6.1–6.3) | The match-reason text for Module 3 (FR3.2), AI evaluation, API key handling, **AI Usage Log** |
-| **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
-| **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
+| **Ary** | Group leader, Frontend Lead, Lead UI/UX | **Module 1** Auth and verified profile (FR1.1–1.3, epic E1) and **Module 3** Roommate matching screens (FR3.1–3.3, epic E3) | Figma and design system; Android app shell, theme and shared components; final check-in (approve and merge) of every PR; main contact with the lecturer |
+| **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3, epic E4) | Architecture, Cloud Functions structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
+| **Gathan** | Backend and Database Developer | **Module 2** Listings and area guide (FR2.1–2.4, epic E2) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, 10 to 15 fictional seed listings from reference prices (never copied from other sites), FCM notifications |
+| **Ilham** | AI Engineer | **Module 6** AI assistant and private contract checker (FR6.1–6.3, epic E6) | The match-reason text for Module 3 (FR3.2), AI evaluation, API key handling, **AI Usage Log** |
+| **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances (E5.1) | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
+| **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (E5.2, E5.3, with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
 
-**Personal task files:** [Ary](ary.md), [Dafi](dafi.md), [Aaron](aaron.md), [Gathan](gathan.md), [Ilham](ilham.md), [Aly](aly.md).
+**Personal task files** (each lists that person's stories with priority, due date and what they wait for): [Ary](ary.md), [Dafi](dafi.md), [Aaron](aaron.md), [Gathan](gathan.md), [Ilham](ilham.md), [Aly](aly.md).
+
+### How the work is tracked
+
+The full breakdown is in [trello-cards.md](trello-cards.md): the **initiative** (Jiran, delivered by 3 and 10 January 2027), 12 **epics** (E0 foundations, E1 to E6 the six modules, E7 research, E8 testing, E9 video, E10 report, E11 optional), 43 **stories** (one card each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and in the step tables below.
+
+| Epic | Area | Lead |
+|---|---|---|
+| E0 | Foundations and setup (repo and CI, Firebase and Maps, design system and shell, project management, schema and rules, function contracts) | Aaron, Ary, Dafi, Gathan |
+| E1 | Auth and profile (Module 1) | Ary |
+| E2 | Listings and area guide (Module 2) | Gathan |
+| E3 | Roommate matching (Module 3) | Ary (score: Aaron, reasons: Ilham, chat data: Gathan) |
+| E4 | Commute and true monthly cost (Module 4) | Aaron (shuttle timetable: Dafi) |
+| E5 | Shared house tools (Module 5) | Dafi, Aly |
+| E6 | AI assistant and private contract check (Module 6) | Ilham |
+| E7 | Research and validation (survey, numbers, requirements freeze) | Aly, Dafi |
+| E8 | Testing and quality (test plan, NFR1, NFR2, usability, release) | Aly |
+| E9 | Video | Aly, Ary |
+| E10 | Report and AI Usage Log | Dafi, Ilham |
+| E11 | Optional P2 | only if P0 and P1 are on track |
 
 Role titles to write in the report: Ary (project leader, frontend developer, UI/UX designer), Dafi (project manager, developer), Aaron (software architect, backend developer), Gathan (database developer), Ilham (AI developer), Aly (tester, researcher, developer).
 
@@ -66,11 +85,11 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 ### Working agreements
 
 - **Cloud Functions are Node.js** (Firebase does not support Java); the rest of the app is Java. Aaron and Ilham write them, kept small and simple: one function per job, no framework, unit tests with Jest.
-- **Definition of Done:** merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, FR card in Trello moved with hours logged, and checked by QA.
+- **Definition of Done:** merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card on the board moved with hours logged, and checked by QA.
 - **PR check-in:** Ary does the final check and merge of every PR. Before that, Aaron reviews Cloud Functions and Maps PRs, Gathan reviews schema and rules PRs, and one other member reviews each PR so everyone has review evidence.
 - **Tests:** every module owner writes unit tests for their module; Aly writes the integration tests and load test.
 - **Sprints:** one-week sprints planned by Dafi, short sync twice a week, 30-minute demo and retro on weekends.
-- **Commit messages and Trello cards** name the module and FR, e.g. `[Mod5][FR5.3] expense split`, so each person's contribution is traceable.
+- **Commit messages and Trello story cards** name the module and FR (or the story ID), e.g. `[Mod5][FR5.3] expense split`, so each person's contribution is traceable.
 - **Frontend:** Ary builds the shared components first; every module owner builds their own module's screens with them, and Ary reviews the UI.
 
 ### Honest risks of this split
@@ -88,12 +107,12 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 
 | Who | Does |
 |---|---|
-| Aly | Puts the survey live, starts interviews, begins the test plan |
-| Dafi | Sets up the Trello board and sprint plan, finds the UM shuttle timetable, keeps the PRD up to date |
-| Ary | Figma: tokens, colours, the five main screens |
-| Aaron | GitHub repo, branching rules, CI, Firebase project, Cloud Functions skeleton, Maps API key |
-| Gathan | Firestore schema draft and a first version of the Security Rules |
-| Ilham | Collects 10 sample tenancy agreements and tries prompts for the contract checker (needs nothing from anyone) |
+| Aly | Puts the survey live, starts interviews, begins the test plan (E7.1, E8.1) |
+| Dafi | Sets up the Trello board and sprint plan, finds the UM shuttle timetable, keeps the PRD up to date (E0.4, E4.5) |
+| Ary | Figma, design system and app shell are done; adds collaborators, emails the lecturer, announces the components (E0.1, E0.3) |
+| Aaron | GitHub repo, branching rules, CI, Firebase project, Cloud Functions skeleton, Maps API key (E0.1, E0.2) |
+| Gathan | Firestore schema draft, a first version of the Security Rules, fictional seed listings (E0.5) |
+| Ilham | Collects 10 sample tenancy agreements, tries prompts for the contract checker and picks the AI provider (E6.1, E6.3) |
 | Everyone | Share the survey link in their circles |
 
 **Gate 1 (8 Nov):** survey has 100+ responses, the repo runs, and the Firebase project exists.
@@ -112,23 +131,23 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 
 | Who | Builds |
 |---|---|
-| Ary | Module 1: sign-up, login, profile and timetable |
-| Gathan | Module 2: post a unit with rooms, listings, search and filters, seed data |
-| Aaron | Module 4: basic commute calculation (walking, public transport, driving, e-hailing estimate) using stub listings |
-| Dafi | Module 5 FR5.1: the expense and balance logic in plain Java with JUnit tests (needs no one) |
-| Ilham | Module 6: contract checker and plain-language search against mock filters |
-| Aly | Integration test scaffolding, survey analysis, room-price weights from the survey, test plan |
+| Ary | Module 1: sign-up, login, profile and timetable (E1.1 to E1.3) |
+| Gathan | Module 2: post a unit with rooms, listings, search and filters, seed data (E2.1, E2.2) |
+| Aaron | Module 4: basic commute calculation (walking, public transport, driving, e-hailing estimate) using stub listings (E4.1) |
+| Dafi | Module 5 FR5.1: the expense and balance logic in plain Java with JUnit tests (needs no one) (E5.1) |
+| Ilham | Module 6: contract checker and plain-language search against mock filters (E6.2, E6.3) |
+| Aly | Integration test scaffolding, survey analysis, room-price weights from the survey, test plan (E8.1, E7.2, E7.3) |
 
 **Wave B (30 Nov – 13 Dec), depends on Wave A (marked WAIT):**
 
 | Who | Builds | WAIT for |
 |---|---|---|
-| Ary | Room details with the commute card; Module 3 screens | Aaron's commute API (use the stub until it lands); Module 1 profile data |
-| Aaron | Match score Cloud Function; P1 peak and off-peak, transit route detail | Gathan's profile and match fields |
-| Ilham | Match-reason text; connect plain-language search to the real filters | Aaron's score function; Gathan's listing search |
-| Dafi | Unit tab screens and rent split by room price | Gathan's rooms data; Ary's shared components |
-| Aly | FR5.2 chores, FR5.3 house rules | Dafi's household data, Ary's components |
-| Gathan | Reviews and area page (P1), FCM notifications, rules tests | none |
+| Ary | Room details with the commute card; Module 3 screens (E4.3, E3.1 to E3.4) | Aaron's commute API (use the stub until it lands); Module 1 profile data |
+| Aaron | Match score Cloud Function; true cost; P1 peak and off-peak, transit route detail (E3.2, E4.2 to E4.4) | Gathan's profile and match fields |
+| Ilham | Match-reason text; connect plain-language search to the real filters (E3.2, E6.2) | Aaron's score function; Gathan's listing search |
+| Dafi | Unit tab screens and rent split by room price (E5.1) | Gathan's rooms data; Ary's shared components |
+| Aly | FR5.2 chores, FR5.3 house rules (E5.2, E5.3) | Dafi's household data, Ary's components |
+| Gathan | Reviews and area page (P1), chats, FCM notifications, rules tests (E2.3, E2.4, E3.3, E8.3) | none |
 
 **Gate 3 (13 Dec):** every P0 feature works on a real device with real data; **P0 code freeze**, led by Aaron.
 
@@ -179,7 +198,7 @@ Editing and final cut: Aly records and edits; Ary reviews against the rubric. Ev
 |---|---|---|---|
 | 1. Introduction and problem context (10) | Ary | all: add evidence | 300 |
 | 2a. User study findings (10) | Aly | all distribute survey | 350 |
-| 2b. Functional requirements (15): 6 modules × 3 FRs + SDG link | Dafi compiles | each module owner writes the justification for their FRs | tables + 250 |
+| 2b. Functional requirements (15): 19 FRs in 6 modules (Module 2 has four) + SDG link | Dafi compiles | each module owner writes the justification for their FRs | tables + 250 |
 | 2c. Non-functional requirements (5) | Gathan | Aly (NFR1) | 150 |
 | 3. Architecture and design (10) | Aaron (architecture, AI flow with Ilham) | Ary (UI and colours), Gathan (database schema) | 350 |
 | 4. System implementation (20) | Aaron | each member supplies 1 code segment and screenshots from their work; Ilham writes the AI usage statement | 400 |

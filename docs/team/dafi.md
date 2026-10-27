@@ -7,34 +7,22 @@
 
 You must also write real code (the brief says nobody does only documentation): the balance logic and the expense screens.
 
-## Right now: Step 0 (26 Oct to 8 Nov)
+## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-**Team admin (do first)**
-- [ ] Trello board with columns: Backlog, Ready, In progress, In review, QA, Done
-- [ ] Build the board from [trello-cards.md](trello-cards.md): Initiative (the board), Epics (colour labels), Stories (cards, one per deliverable, labelled P0, P1 or P2, with an owner and an hours field) and Subtasks (checklist items on each card)
-- [ ] Sprint 1 plan (one-week sprints), a weekly sync time, and a place for minutes
-- [ ] Post a weekly hours summary in the group chat
+Epics E0.4, E4.5, E5.1 and E10 are yours; E7.4 and a few numbers too.
 
-**UM shuttle timetable (for the commute card)**
-- [ ] Find the UM shuttle timetable: routes, stops, departure times and which days it runs. The app shows the shuttle as *scheduled, not live*, so a timetable is enough. **No API and no live tracking are needed.**
-- [ ] Look for what UM already publishes first. Send **one short email to UM transport only if you cannot find it** or need to confirm it is current. If you do email, also ask whether the shuttle is free and what the **parking fee** at UM is, in the same email.
-- [ ] Give the timetable to Aaron. Together, work out roughly how long and how much the commute is for a few example routes (for example Pantai Dalam and Kerinchi to a faculty). Write the numbers as estimates and name the source.
-- No formal meetings with UMSU, BHEP or UMSDC: the brief only gives extra credit for them, so skip. Optional if you have spare time: one short email each to BHEP and UMSDC, and keep any reply for the report.
+| Story | Priority | Due | Waits for |
+|---|---|---|---|
+| **E0.4** Project management: build the board (initiative, epics, story cards, subtask checklists), sprint 1 plan, weekly sync, PRD upkeep, hours summary, start `docs/ai-log/dafi.md` | P0 | 30 Oct | none |
+| **E4.5** UM shuttle timetable and commute estimates: find the timetable (a timetable is enough, no API or live tracking), email UM transport only if it cannot be found, then estimate commute time and cost with Aaron | P0 | 8 Nov (timetable), 13 Nov (estimates) | none |
+| **E7.3** (part) Numbers #4 parking and #5 shuttle: the shuttle times and whether it is free, and the parking fee | P0 | 13 Nov | E4.5 |
+| **E7.3** (part) #8 Data retention periods against PDPA 2010, with Gathan | P0 | 13 Nov | none |
+| **E7.4** Requirements freeze: confirm P0 and P1 with Ary and freeze the PRD | P0 | 15 Nov | Aly's survey analysis (E7.2) |
+| **E5.1** Expenses and balances (FR5.1): the balance and settle-up logic in plain Java with JUnit first, then the Unit tab screens | P0 | logic 29 Nov, screens 13 Dec | Gathan's household data; Ary's components |
+| **E10** Report: assemble all sections, requirements table (19 FRs), team roles, references, final style pass | P0 | draft during the build; 4 to 9 Jan assembly | each owner's section |
+| **E9.1** (part) Team contributions (0:30) and closing summary (0:45) for the video | P0 | 20 Dec | Trello hours, commit summary |
 
-**Requirements and AI log**
-- [ ] Keep [PRD.md](../product/PRD.md) up to date as decisions change
-- [ ] Start your own AI Usage Log in [docs/ai-log/dafi.md](../ai-log/dafi.md) today (the course requires it; rules in [AGENTS.md](../../AGENTS.md))
-
-## Next
-**Step 1 (2 to 15 Nov):** run the requirements freeze. Combine the survey findings with the PRD and make a table "finding, FR it shaped". Confirm P0 and P1 with Ary.
-
-**Wave A (16 to 29 Nov): needs nobody**
-- Write the balance logic in plain Java: `Expense`, `Household`, `computeBalances()`, a settle-up that minimises the number of transfers
-- Rent is split by each room's price; utilities and other expenses equally unless a custom split is chosen
-- Unit tests: balances sum to zero, rounding, 2 and 4 members, a member who paid nothing
-
-**Wave B (30 Nov to 13 Dec)**
-- Unit tab screens: add expense, balances, mark as settled (waits for Gathan's `households` and `expenses` data, and Ary's shared components)
+You must also write real code (the brief says nobody does only documentation): the balance logic and the expense screens in E5.1.
 
 ## Your PM routine
 - Daily: check Trello for blocked cards
@@ -59,7 +47,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

@@ -108,3 +108,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** estimates (hours) are left empty on purpose; owners of mixed UI and backend cards are suggestions.
 
+## 2026-10-27 · Align TEAM_PLAN and personal task files with the work breakdown · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** update TEAM_PLAN and the six personal task files so they use the same epics and stories as `docs/team/trello-cards.md`.
+- **Prompts (exact):**
+  > dan coba update juga secara keselurhan di docs docs yang lain related pembagian task ini di TEAM_PLAN dan .md personal masing masing
+- **Output used:** `docs/team/TEAM_PLAN.md` (epic map, story IDs in the step tables), the task sections of `ary.md`, `dafi.md`, `aaron.md`, `gathan.md`, `ilham.md`, `aly.md`; two stories added to the breakdown (E0.5 data schema and rules, E0.6 function contracts); each module owner now builds their own screens with Ary's components.
+- **How it was tested or checked:** documents only; story IDs and links cross-checked by script. Owners and due dates are the assistant's proposal from the existing plan. TODO (Ary, Dafi): confirm them with each person before the board is filled in.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** Aaron's file is also edited on his own branch, so a small merge conflict is likely when he merges `main`.
+

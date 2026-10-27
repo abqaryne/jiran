@@ -163,34 +163,25 @@ Team invitations, billing for later paid features, restricted Maps credentials, 
 production UM verification, schema, commute/match formulas and full NFR tests are
 not complete. No push or merge has been performed.
 
-## Right now: Step 0 (26 Oct to 8 Nov)
-- [x] Create the Android Studio project (Java, Gradle) in the repo and the package structure (ui, data, util), with a Firebase connection (existing `jiran-mad`, package `jiran.com`; debug remains local)
-- [ ] Branching rules: feature branches, PR required, Ary approves and merges. Turn on branch protection
-- [ ] GitHub Actions CI: `./gradlew lint test` on every PR
-- [ ] Finish service setup and team invitations in existing `jiran-mad` (Auth Email/Password and Singapore Standard Firestore are ready; Storage, Functions, Messaging and membership still need review)
-- [x] Cloud Functions skeleton (Node.js) and Firebase emulator setup (local `demo-jiran`, real Android integration verified; production features pending)
-- [ ] Google Maps Platform key: restrict it, set a billing alert, never commit it
-- [ ] **Check early (PRD open question 7):** does Google's transit data cover the bus, LRT and UM shuttle routes from Pantai Dalam and Kerinchi to UM? If the shuttle is missing, we seed shuttle stops and timetables from UM transport.
+## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you two write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
+Epics E4 and E0.1, E0.2, E0.6 are yours, plus the match score in E3.2 and the P0 code freeze.
 
-## Next
-**Step 1 (by 15 Nov):** write `docs/api-contracts.md` with the request and response JSON of each Cloud Function, so everyone can build against stubs:
-- `getCommuteOptions(listingId or unit, departTime)`
-- `getTransitRoute(...)`
-- `computeMatchScores(userId)`
-- `splitRoomPrices(totalRent, rooms)`
-- AI functions (agree the shape with Ilham)
+| Story | Priority | Due | Waits for |
+|---|---|---|---|
+| **E0.1** Repo and CI healthy: fix the CI Android SDK step, merge `main` into the commute branch, fix the paths after the folder change | P0 | 2 Nov | none |
+| **E0.2** Firebase and Maps ready: Functions region and billing plan decided, restricted Maps key with a billing alert (#11), emulator smoke test in CI. The service setup in `jiran-mad` is partly done (see the status above). | P0 | 8 Nov | team decision on billing |
+| **E7.3** (part) #5 transit coverage and #11 Maps cost and quota. Check early (PRD open question 7): does Google's transit data cover bus, LRT and the UM shuttle from Pantai Dalam and Kerinchi to UM? If the shuttle is missing, Dafi supplies the timetable (E4.5). | P0 | 8 Nov | none |
+| **E0.6** Function contracts (stubs): `docs/api-contracts.md` with `getCommuteOptions`, `getTransitRoute`, `computeMatchScores`, `splitRoomPrices`, and the AI functions agreed with Ilham | P0 | 15 Nov (Gate 2) | none |
+| **E4.1** Commute per travel mode (FR4.1): walking, bus or LRT plus the UM shuttle, e-hailing estimate, driving | P0 | 29 Nov | #3, #4, #5; shuttle timetable (E4.5) |
+| **E7.3** (part) #2 peak hours (with Aly), #3 e-hailing fares, #4 car cost, #6 CO₂ factors, #9 match weights | P0 | 12 to 13 Nov | Aly's survey |
+| **E4.2** True monthly cost (FR4.2): room price plus utilities plus the cheapest mode that is on time; cache per area and faculty (NFR1) | P0 | 13 Dec | Gathan's listings (E2.1) |
+| **E4.3** Commute options card data (FR4.3): time, cost and CO₂ per mode, cheapest on-time option | P0 | 13 Dec | E4.1 |
+| **E3.2** (part) Match score Cloud Function: transparent weighted formula, deterministic, unit-tested | P0 | 13 Dec | Gathan's match fields, weights (#9) |
+| **E4.4** Peak and off-peak (traffic-aware Routes API), e-hailing surge assumption, step-by-step transit route | P1 | 13 Dec | E4.3 |
+| **Gate 3** Lead the P0 code freeze | P0 | 13 Dec | all P0 stories |
 
-**Wave A (16 to 29 Nov): Module 4 basic**
-- Walking, bus or LRT plus UM shuttle, e-hailing estimate (fare formula), and driving alone
-- Travel time and monthly cost from a listing to the user's faculty; true monthly cost = rent plus utilities plus commute
-- CO2 per mode = distance times a published emission factor (pick and cite the source, PRD open question 4)
-- Cache results per area and faculty pair so search stays under 3 seconds (NFR1)
-
-**Wave B (30 Nov to 13 Dec)**
-- Match score Cloud Function: transparent weighted formula, deterministic, unit-tested
-- **P1:** peak and off-peak times (traffic-aware Routes API), peak surge assumption for e-hailing, step-by-step transit route
+**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
 
 ## Hand-offs
 | You wait for | From | Use meanwhile |
@@ -215,7 +206,7 @@ not complete. No push or merge has been performed.
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

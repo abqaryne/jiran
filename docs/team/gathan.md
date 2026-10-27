@@ -1,31 +1,29 @@
 # Gathan: Backend and Database Developer
 
 ## You own
-- **Module 2** Housing listings and area guide (FR2.1, FR2.2, FR2.3)
+- **Module 2** Housing listings and area guide (FR2.1, FR2.2, FR2.3, FR2.4)
 - The Firestore schema and **Security Rules (NFR2)** for all modules
 - Storage rules, seed data, and FCM notifications
 
 Your schema and rules are the first thing others wait for, so they land first.
 
-## Right now: Step 0 (26 Oct to 8 Nov)
-- [ ] Firestore schema from PRD section 8: `users`, `areas`, `listings`, `rooms`, `reviews`, `matchProfiles`, `matches`, `groups`, `unitEvaluations`, `households`, `expenses`, `chores`, `contractChecks`. A store for chat is still missing (PRD open question 5); propose `chats`.
-- [ ] First draft of Security Rules: a user reads and writes only their own `users` and `contractChecks`; household data only by household members; contact fields readable only after both sides accept
-- [ ] **Seed data:** note **reference prices by hand** (area, room type master, medium or small, price range, total rent and deposit for a typical unit) from public advertisements or consenting Telegram posters, with the source and date in a spreadsheet. **Do not copy listings, photos, descriptions, names or phone numbers** (see the listing rules in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md)). Then write **10 to 15 fictional but realistic listings** for the app to use as sample data.
+## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-## Next
-**Step 1 (by 15 Nov):** merge the schema and rules first. Send the field list to the group. Write rules unit tests with the emulator (every unauthorised read and write must be denied).
+Epic E2 is yours, plus the data and rules for every module. Your schema and rules land first because the others wait for the field names.
 
-**Wave A (16 to 29 Nov): Module 2**
-- Post a unit: photos (Storage), property or building name from Google Places autocomplete (fills address and coordinates), total rent, deposit, area, gender preference, amenities, and each vacant room with its own price
-- **Price rule:** the sum of all room prices in the unit must not exceed the unit's total rent. Default split by weights master 1.3, medium 1.0, small 0.7 (kept in config, to be checked against the survey)
-- Search vacant rooms with filters: budget, room type, area, gender, amenities, maximum travel time (calls Aaron's commute function). One card per vacant room.
-- Import the fictional seed listings (labelled as sample data in the app)
-
-**Wave B (30 Nov to 13 Dec)**
-- **P1:** area page and moderated building reviews (FR2.3)
-- FCM notifications (match requests, chore reminders)
-- `chats` for connect (FR3.3), scheduled function to delete `contractChecks` after 30 days
-- **P1:** `unitEvaluations` for Evaluate unit
+| Story | Priority | Due | Waits for |
+|---|---|---|---|
+| **E0.5** Data schema and Security Rules: schema from PRD section 8 plus `chats`, first rules draft, rules tests, reference prices and 10 to 15 fictional seed listings (do not copy listings, see the rule in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md)), send the field list to the group | P0 | draft 8 Nov, merged 15 Nov | none |
+| **E7.3** (part) #1 room price weights and #7 utilities (Aly finds them, you put them in config and seed data), #8 retention periods with Dafi | P0 | 10 to 13 Nov | Aly's survey |
+| **E2.1** Post a unit with priced rooms (FR2.1): data, photos, building picker, the room price rule with JUnit, My listing, the post screens | P0 | 29 Nov | E0.5 |
+| **E2.2** Search and filter rooms (FR2.2): query, Rooms screen with Room cards and the filters sheet, travel-time filter, import the seed listings | P0 | 13 Dec | E2.1; Aaron's commute function (E4.2) |
+| **E3.3** (part) `chats` data and rules for what each stage may see; the contract file shared in a chat is private to the two people | P0 | 13 Dec | E0.5 |
+| **E2.3** Area page and moderated building reviews | P1 | 13 Dec | E2.1, E2.2 |
+| **E2.4** Evaluate any unit: `unitEvaluations`, room price split, screens, delete after 90 days | P1 | 13 Dec | E2.1, E4.2 |
+| **E3.4** (part) `groups` data and rules | P1 | 13 Dec | E3.3 |
+| **E5.1** (part) `households` and `expenses` data and rules, members only; FCM notifications | P0 | 13 Dec | E0.5 |
+| **E8.3** NFR2 evidence: rules tests where every unauthorised access is denied, privacy checklist with screenshots | P0 | 27 Dec | all rules |
+| **E6.3** (part) Private contract file rules and deletion after 30 days | P0 | 20 Dec | Ilham |
 
 ## Privacy checklist (NFR2 and PDPA 2010)
 - Only verified UM accounts can read anything
@@ -47,7 +45,7 @@ Your schema and rules are the first thing others wait for, so they land first.
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

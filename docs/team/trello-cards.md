@@ -59,6 +59,8 @@ Android app, a 10 to 15 minute video (12:00, 3 Jan 2027) and a report (12:00, 10
 
 ## 3. Epics and their stories
 
+**Who builds screens:** each module owner builds their own module's screens using Ary's components. Ary builds the screens of Modules 1 and 3, the Room details and commute card, and reviews the rest.
+
 Legend: **P0** must work for the graded demo · **P1** should have · **P2** if time allows. `(Name)` is the person who does the
 subtask. UI means Android screens, backend means Cloud Functions and rules.
 
@@ -72,6 +74,7 @@ Goal: the repo, CI, Firebase and the app shell are ready so everyone can build. 
 - (Aaron) Fix the CI Android SDK step so the `android` job is green
 - (Aaron) Merge `main` into the commute branch and fix paths after the folder change
 - (Ary) Turn on branch protection: PR required, final check by Ary
+- (Ary) Email the lecturer: Appendix 1, native Java OK, SDG 11 OK, what the AI policy counts as your own code, is a GitHub link needed
 
 **E0.2 Firebase and Maps are ready** · Aaron · due 8 Nov
 - (Aaron) Decide the Functions region and the billing plan with the team
@@ -84,6 +87,18 @@ Goal: the repo, CI, Firebase and the app shell are ready so everyone can build. 
 - (Ary) Announce the component list to the team and how to use it
 - (Ary) Make the shell the first screen after sign-in
 - (Ary) Empty and error states as components
+
+**E0.5 Data schema and Security Rules** · Gathan · draft 8 Nov, merged 15 Nov (everyone waits for the field names)
+- (Gathan) Firestore schema from PRD section 8, plus `chats` for connect
+- (Gathan) First draft of Security Rules: a user reads and writes only their own `users` and private files; household data only by members; contact details only after both sides accept
+- (Gathan) Rules tests with the emulator: every unauthorised read and write is denied
+- (Gathan) Reference prices by hand and 10 to 15 fictional seed listings (rule in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
+- (Gathan) Send the field list to the group by 15 Nov
+
+**E0.6 Function contracts (stubs)** · Aaron · due 15 Nov
+- (Aaron) Write `docs/api-contracts.md`: request and response JSON for `getCommuteOptions`, `getTransitRoute`, `computeMatchScores`, `splitRoomPrices`
+- (Aaron, Ilham) Agree the shape of each AI function
+- (Aaron) Post the contracts to the group so everyone can build against stubs
 
 **E0.4 Project management** · Dafi · due 30 Oct
 - (Dafi) Create this board: labels, columns, epics, story cards with subtasks
@@ -122,23 +137,23 @@ Goal: the repo, CI, Firebase and the app shell are ready so everyone can build. 
 - (Gathan) `listings` and `rooms` data, photo upload to Storage, rules
 - (Gathan) Building picker with place search
 - (Gathan) Room price rule: the rooms never add up to more than the rent; default split 1.3 / 1.0 / 0.7 from config, with JUnit tests
-- (Gathan, Ary) Post screens: building, photos, rent and deposit, rooms and prices
+- (Gathan) Post screens (using Ary's components): building, photos, rent and deposit, rooms and prices
 - (Gathan) My listing: renew after 30 days, mark a room occupied
 - (Gathan) Rules tests: only the owner can write
 
 **E2.2 Search and filter rooms (FR2.2, P0)** · due 13 Dec · WAIT E4.2 for the travel-time filter
 - (Gathan) Query vacant rooms with filters (budget, type, area, gender, amenities)
-- (Ary) Rooms screen with Room cards and the filters sheet
+- (Gathan) Rooms screen with Room cards and the filters sheet (Ary's components)
 - (Gathan) Travel-time filter that calls the commute function
 - (Gathan) Import 10 to 15 fictional seed listings (labelled sample data)
 
 **E2.3 Area page and building reviews (FR2.3, P1)** · due 13 Dec
 - (Gathan) Area rent ranges and moderated reviews, only from residents
-- (Gathan, Ary) Area page and review screens
+- (Gathan) Area page and review screens
 
 **E2.4 Evaluate any unit (FR2.4, P1)** · due 13 Dec · WAIT E4.2
 - (Gathan) `unitEvaluations` data and the room price split
-- (Ary) Evaluate form and result screens
+- (Gathan) Evaluate form and result screens
 - (Gathan) Delete an unattached evaluation after 90 days
 
 ---
@@ -176,7 +191,7 @@ Goal: the repo, CI, Firebase and the app shell are ready so everyone can build. 
 
 **E4.2 True monthly cost on the Room card (FR4.2, P0)** · due 13 Dec · WAIT E2.1
 - (Aaron) True cost = room price + utilities share + cheapest mode that is on time
-- (Ary) Room card shows cost and travel time; "no mode reaches class on time" message
+- (Gathan) Room card shows cost and travel time; "no mode reaches class on time" message (data from Aaron)
 - (Aaron) Cache results for the same area and faculty
 
 **E4.3 Commute options card and route page (FR4.3, P0)** · due 13 Dec
@@ -200,7 +215,7 @@ Goal: the repo, CI, Firebase and the app shell are ready so everyone can build. 
 **E5.1 Expenses and balances (FR5.1, P0)** · Dafi · logic 29 Nov, screens 13 Dec · WAIT Gathan's household data, Ary's components
 - (Dafi) Balance and settle-up logic in plain Java with JUnit (sums to zero, rounding, 2 and 4 members, a member who paid nothing)
 - (Gathan) `households` and `expenses` data and rules (members only)
-- (Dafi, Ary) Unit tab: add expense (equal, by amount, by percent), balances, mark as settled
+- (Dafi) Unit tab screens (Ary's components): add expense (equal, by amount, by percent), balances, mark as settled
 - (Dafi) Household is created from the Group or by invite code; move out keeps balances
 
 **E5.2 Recurring chores (FR5.2, P1)** · Aly · due 13 Dec · WAIT E5.1
@@ -222,17 +237,17 @@ Goal: the repo, CI, Firebase and the app shell are ready so everyone can build. 
 
 **E6.2 Plain-language search (FR6.1, P0)** · due 13 Dec · WAIT E2.2
 - (Ilham) Function that turns a request into filters (mock filters first)
-- (Ary, Ilham) Editable filters shown before results load; manual filters when the AI is down
+- (Ilham) Editable filters shown before results load (in the Rooms search bar); manual filters when the AI is down
 - (Ilham) 50 test requests written by surveyed students
 
 **E6.3 Private contract check (FR6.2, P0)** · due 20 Dec
 - (Ilham) Collect 10 sample agreements and their risky clauses
 - (Ilham) Function that marks each clause Red flag, Check or OK
-- (Ary) Contract upload and result screens; entry from a chat attachment or Profile only
+- (Ilham) Contract upload and result screens (Ary's components); entry from a chat attachment or Profile only
 - (Gathan) Private file rules and deletion after 30 days
 
 **E6.4 AI labels and reporting a wrong result (FR6.3, P0)** · due 20 Dec
-- (Ilham, Ary) "AI-generated" label on every AI output, "not legal advice", report a wrong result
+- (Ilham) "AI-generated" label on every AI output, "not legal advice", report a wrong result
 
 **E6.5 AI evaluation for the report** · due 20 Dec
 - (Ilham) Accuracy on the 50 requests (target 90%), flags found and false alarms on the 10 contracts, mean rating of reasons
@@ -243,6 +258,7 @@ Goal: the repo, CI, Firebase and the app shell are ready so everyone can build. 
 
 **E7.1 Survey and interviews** · due 8 Nov
 - (Aly) Survey in Google Form, English and Malay; pilot with 5 people; launch
+- (Ary, Aly) Review the survey wording so the questions match the screens
 - (everyone) Share the survey link in your circles
 - (Aly) 100+ responses across faculties and areas
 - (Aly) Plan 5 to 8 interviews and a consent form

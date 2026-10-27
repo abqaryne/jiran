@@ -5,27 +5,24 @@
 - The **match reason text** for Module 3 (FR3.2)
 - AI evaluation, API key handling, and the **AI Usage Log** (mandatory appendix)
 
-## Right now: Step 0 (26 Oct to 8 Nov)
-- [ ] **Start the AI Usage Log today.** Use the Appendix 2(b) template from the brief: which tool, the exact prompt, how the output was used, tested and changed. Everyone logs their AI use; you merge it.
-- [ ] Collect **10 sample tenancy agreements** (anonymised) and write the list of known risky clauses for each (for example three months' rent in advance). This is the ground truth for evaluation.
-- [ ] Try contract-checker prompts with Gemini and Claude on those agreements. Compare cost, quota, and Malay and English quality, then propose one provider (PRD open question 3)
-- [ ] Keep keys out of the app: Cloud Functions secrets only
+## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
 
-**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you two write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java.
+Epic E6 is yours, plus the match reasons in E3.2, the AI evaluation and the AI Usage Log appendix.
 
-## Next
-**Step 1 (by 15 Nov):** agree with Aaron the request and response shape for each AI function. After the survey, build the **50 test requests** written by surveyed students for plain-language search.
+**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Aaron write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You build your own AI screens in Android with Ary's components.
 
-**Wave A (16 to 29 Nov): needs nobody**
-- **FR6.2 contract checker:** upload a PDF or photo, a Cloud Function returns a plain-language summary with each clause marked **Red flag, Check or OK** (words, not only colours)
-- **FR6.1 plain-language search** (English or Malay): turns text into filters that the user can see and edit before results load. Use mock filters first.
-- **FR6.3:** every AI output labelled AI-generated; the contract result states it is not legal advice; a button to report a wrong result
-- The AI screens in Android, using Ary's components: the plain-language search lives in the Rooms search bar (no separate Ask tab), and the contract check is private: it opens only from the agreement shared in a Connection chat or from Profile, never from a listing or room page
-
-**Wave B (30 Nov to 13 Dec)**
-- Connect FR6.1 to the real listing filters (waits for Gathan's search)
-- Match reasons: the prompt uses the score breakdown from Aaron's formula. If the AI fails, show rule-generated reasons.
-- **P2:** listing reader that pre-fills Evaluate unit from pasted text or a screenshot
+| Story | Priority | Due | Waits for |
+|---|---|---|---|
+| **E6.1** Choose and set up the AI provider (#10): compare Gemini and Claude on cost, quota, speed, Malay and English quality, keys in Cloud Functions secrets only, **start the AI Usage Log today** (Appendix 2(b): tool, exact prompt, how the output was used, tested and changed) | P0 | 8 Nov | none |
+| **E6.3** (part) Collect **10 sample tenancy agreements** (anonymised) and write the known risky clauses of each; this is the ground truth for evaluation | P0 | 8 Nov | none |
+| **E0.6** (part) Agree with Aaron the request and response shape of each AI function | P0 | 15 Nov | none |
+| **E6.2** Plain-language search (FR6.1): turns English or Malay text into filters the user can see and edit before results load, in the Rooms search bar (no separate Ask tab); mock filters first; the 50 test requests written by surveyed students | P0 | 13 Dec | E2.2 for the real filters |
+| **E6.3** Private contract check (FR6.2): upload a PDF or photo, a function marks each clause Red flag, Check or OK; the screens open only from a chat attachment or Profile, never from a listing | P0 | 20 Dec | Gathan's private file rules |
+| **E6.4** AI labels and reporting a wrong result (FR6.3): every AI output labelled AI-generated, "not legal advice" on the contract result, a button to report a wrong result | P0 | 20 Dec | E6.2, E6.3 |
+| **E3.2** (part) Match reasons from the score breakdown of Aaron's formula; rule-generated reasons if the AI fails | P0 | 13 Dec | Aaron's score function |
+| **E6.5** AI evaluation for the report: 50 requests, 10 contracts, user ratings of the reasons | P0 | 20 Dec | E6.2, E6.3 |
+| **E10.2** AI Usage Log appendix: merge everyone's logs, check nothing is invented | P0 | 4 to 9 Jan | everyone's logs |
+| **P2** Listing reader that pre-fills Evaluate unit from pasted text or a screenshot | P2 | only if time | E2.4 |
 
 ## Design rules
 - The compatibility score and CO2 are computed by code, never by the AI
@@ -53,7 +50,7 @@
 - Commit message format: `[Mod2][FR2.1] short description`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).
