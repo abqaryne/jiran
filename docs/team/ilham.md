@@ -44,7 +44,7 @@
 - **Video:** the AI features in the demo, 20 s on the AI data flow in segment 4
 - **Report:** section 6 Impact, limitations and future work (150 words), the AI usage statement in section 4, **Appendix: AI Usage Log**
 
-## Numbers you find (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+## Numbers you find (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
 - **#10 AI provider, cost and quota:** compare Gemini and Claude on the sample contracts and requests, and recommend one (due 8 Nov)
 
 ## Rules for everyone
@@ -56,4 +56,4 @@
 - Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
-Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).
+Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

@@ -12,7 +12,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - [ ] One card per FR (18 cards), labelled P0, P1 or P2, with an owner and an hours field
 - [ ] Sprint 1 plan (one-week sprints), plus a weekly sync time and a place for minutes
 - [ ] Send **one short email to UM transport** asking for the UM shuttle stops and timetable (the commute card needs it). No formal meetings with UMSU, BHEP or UMSDC: the brief only gives extra credit for them, so skip. Optional if you have spare time: one short email each to BHEP and UMSDC, and keep any reply for the report.
-- [ ] Keep PRD.md up to date as decisions change
+- [ ] Keep docs/product/PRD.md up to date as decisions change
 - [ ] Post a weekly hours summary in the group chat
 
 ## Next
@@ -38,7 +38,7 @@ You must also write real code (the brief says nobody does only documentation): t
 - **Report:** section 2b Functional requirements (compile all 18), section 7 Team roles and contributions, section 8 References and the final style pass. Watch the **2,500 word** limit: put the FRs in tables.
 - **Evidence:** weekly screenshot of Trello and the Git log per person
 
-## Numbers you find (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+## Numbers you find (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
 - In your email to UM transport, also ask: shuttle stops and times, whether it is free, and the **parking fee** at UM (#4, #5; due 13 Nov)
 - **#8 Data retention periods:** help Gathan, and ask the lecturer if still unsure (due 13 Nov)
 - Check every row in the file has an owner and is on track at each weekly sync
@@ -52,4 +52,4 @@ You must also write real code (the brief says nobody does only documentation): t
 - Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
-Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).
+Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

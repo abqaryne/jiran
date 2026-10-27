@@ -95,7 +95,7 @@ Priority: **P0** = required for the graded demo, **P1** = should have, **P2** = 
 | Group decision aids: split options, member status, pre-signing checklist, compare Units (FR3.3) | AI trade-off summary and commute-adjusted split for a Group |
 | Chores and house rules (FR5.2, FR5.3) | |
 
-Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
+Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 
 ### Module 1: Authentication and verified profile
 | ID | Requirement | Priority |
@@ -298,7 +298,7 @@ There is no Ask tab. The AI features sit where they are used: plain-language sea
 4. **Privacy by default:** initials instead of photos; address and phone hidden until a Connection exists.
 
 ### Colour scheme and type
-Full tokens, components and rules are in [DESIGN.md](DESIGN.md) (style reference: Nextdoor; font: Geist, semibold at most).
+Full tokens, components and rules are in [DESIGN.md](../design/DESIGN.md) (style reference: Nextdoor; font: Geist, semibold at most).
 
 | Colour | Hex | Use |
 |---|---|---|

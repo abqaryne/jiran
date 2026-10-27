@@ -6,7 +6,7 @@ Prepared on **27 October 2026**. The original preparation update created documen
 
 ### Confirm the stack before downloading anything
 
-The [PRD](../PRD.md) and [team plan](../TEAM_PLAN.md) specify **native Android in Java with Gradle**, and **Firebase Cloud Functions in Node.js/JavaScript**. The pasted Flutter setup advice was based on an unverified role file and does not apply to this repository. Flutter, Dart and FlutterFire CLI are not prerequisites. VS Code is optional; Android Studio is the main Android IDE. Cloud Functions use JavaScript by team decision; the Java runtime used by Firebase emulators does not change the Functions language.
+The [PRD](../product/PRD.md) and [team plan](TEAM_PLAN.md) specify **native Android in Java with Gradle**, and **Firebase Cloud Functions in Node.js/JavaScript**. The pasted Flutter setup advice was based on an unverified role file and does not apply to this repository. Flutter, Dart and FlutterFire CLI are not prerequisites. VS Code is optional; Android Studio is the main Android IDE. Cloud Functions use JavaScript by team decision; the Java runtime used by Firebase emulators does not change the Functions language.
 
 ### Downloads and local readiness
 
@@ -35,7 +35,7 @@ firebase.cmd --version
 & "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe" devices
 ```
 
-In Android Studio, confirm SDK packages/licences, select the build JDK and boot an AVD or connect a phone. Optionally add the SDK's `platform-tools` folder to your user PATH. After choosing the team's Google account, run `firebase.cmd login` and `firebase.cmd projects:list`; verify the intended project ID before initialization. The initial repository contained planning Markdown only. Local Android/Functions build and emulator files now exist; see [README.md](../README.md) for current commands and the [batch plan](../docs/superpowers/plans/2026-10-27-aaron-foundations.md) for verification evidence.
+In Android Studio, confirm SDK packages/licences, select the build JDK and boot an AVD or connect a phone. Optionally add the SDK's `platform-tools` folder to your user PATH. After choosing the team's Google account, run `firebase.cmd login` and `firebase.cmd projects:list`; verify the intended project ID before initialization. The initial repository contained planning Markdown only. Local Android/Functions build and emulator files now exist; see [README.md](../../README.md) for current commands and the [batch plan](../superpowers/plans/2026-10-27-aaron-foundations.md) for verification evidence.
 
 ### Access and team decisions needed first
 
@@ -57,7 +57,7 @@ Do not run `firebase init` over existing configuration or create duplicate cloud
 4. **Wave A, 16–29 November:** Module 4 P0, including all four modes, class-time arrival checks, per-room true monthly cost and sourced CO₂ estimates. Monthly total is room price + equal utilities share + cheapest commute that arrives on time. Deposit is separate. If no mode arrives on time, show that state rather than a fabricated monthly figure. Decide monthly trip/day counts, return trips, rounding and missing-data behavior explicitly.
 5. **Wave B, 30 November–13 December:** deterministic weighted match score with Jest tests, coordinated with Ary/Ilham. Add P1 peak/off-peak and transit steps after P0 works. Lead the P0 integration freeze on 13 December.
 
-Use [ASSUMPTIONS.md](../ASSUMPTIONS.md) as the canonical numbered list: #2 peak windows with Aly due 12 November; #3 e-hailing, #4 car cost, #5 transit fares, #6 CO₂ and #9 match weights due 13 November.
+Use [ASSUMPTIONS.md](../product/ASSUMPTIONS.md) as the canonical numbered list: #2 peak windows with Aly due 12 November; #3 e-hailing, #4 car cost, #5 transit fares, #6 CO₂ and #9 match weights due 13 November.
 
 **First technical readiness milestone:** the Java app runs on an Android device/emulator, connects to local Auth/Firestore/Functions, and successfully calls one small local Function; relevant Android and Jest checks pass. Verify the Android emulator's host connection (normally `10.0.2.2`) and use debug-only emulator routing. Never mark cloud setup, security or NFR performance complete from tool installation alone. NFR1 ultimately requires p95 ≤3 seconds at 100 concurrent users; NFR2 requires unauthorized-access denial tests with Gathan/Aly.
 
@@ -66,14 +66,14 @@ Use [ASSUMPTIONS.md](../ASSUMPTIONS.md) as the canonical numbered list: #2 peak 
 ```text
 You are helping me act as Aaron, Jiran's Software Architect and Backend Lead.
 
-Read AGENTS.md if present, team/aaron.md, PRD.md, TEAM_PLAN.md,
-ASSUMPTIONS.md, GLOSSARY.md and USER-FLOW.md before changing anything.
+Read AGENTS.md if present, docs/team/aaron.md, docs/product/PRD.md, docs/team/TEAM_PLAN.md,
+docs/product/ASSUMPTIONS.md, docs/product/GLOSSARY.md and docs/product/USER-FLOW.md before changing anything.
 Read existing architecture/API/schema/build documentation and relevant code
 when present. Inspect git status and preserve others' uncommitted work.
 For Firebase tasks, always find and use the relevant official Firebase agent
 skills as described in AGENTS.md. The existing live project is jiran-mad and
 its registered Android application ID is jiran.com; never create duplicates.
-Treat team/aaron.md as my role checklist; report conflicts with project
+Treat docs/team/aaron.md as my role checklist; report conflicts with project
 requirements instead of silently choosing a new stack or inventing decisions.
 
 Fixed stack: native Android Java + Gradle; Firebase Auth, Firestore, Storage,
@@ -107,7 +107,7 @@ Use a transparent deterministic formula for match scores; AI only explains.
 
 Keep fares, peak windows, monthly trip counts, emission factors and score
 weights configurable and sourced. Mark unverified values as assumptions and
-record findings in ASSUMPTIONS.md. Check current Maps pricing, coverage,
+record findings in docs/product/ASSUMPTIONS.md. Check current Maps pricing, coverage,
 runtime support and API limitations using official sources. Design caching
 around NFR1 and provider storage/caching terms; never cache private user data
 in shared results. Enforce authorization inside Admin SDK functions too:
@@ -144,7 +144,7 @@ Acceptance criteria: <insert what must be demonstrably true>
 
 ## Foundation batch status — 27 October 2026
 
-Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](../docs/superpowers/plans/2026-10-27-aaron-foundations.md).
+Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](../superpowers/plans/2026-10-27-aaron-foundations.md).
 
 | Batch | Implemented locally | Verification / remaining boundary |
 |---|---|---|
@@ -157,8 +157,8 @@ live project **jiran-mad** now has Email/Password Auth enabled, its existing And
 registration connected, and Standard Firestore `(default)` in Singapore
 (`asia-southeast1`, approved by the user). Auth settings and tested prototype
 Firestore rules were deployed explicitly; Functions and Storage were not deployed.
-See [live setup instructions](../README.md#use-the-existing-live-firebase-backend)
-and the [live setup plan](../docs/superpowers/plans/2026-10-27-firebase-live-setup.md).
+See [live setup instructions](../../README.md#use-the-existing-live-firebase-backend)
+and the [live setup plan](../superpowers/plans/2026-10-27-firebase-live-setup.md).
 Team invitations, billing for later paid features, restricted Maps credentials, transit coverage,
 production UM verification, schema, commute/match formulas and full NFR tests are
 not complete. No push or merge has been performed.
@@ -204,7 +204,7 @@ not complete. No push or merge has been performed.
 - **Report:** section 3 Architecture and design (350 words), section 4 System implementation (400 words, you collect everyone's code segment)
 - **You also lead** the P0 code freeze on 13 Dec and review all Cloud Functions and Maps PRs
 
-## Numbers you find (see [ASSUMPTIONS.md](../ASSUMPTIONS.md))
+## Numbers you find (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
 - **#11 Maps cost and quota** and **#5 transit coverage** (due 8 Nov)
 - **#2 Peak hours** with Aly (due 12 Nov)
 - **#3 E-hailing fare formula**, **#4 car cost**, **#5 public transport fares**, **#6 CO₂ emission factors**, **#9 Match score weights** (due 13 Nov)
@@ -218,4 +218,4 @@ not complete. No push or merge has been performed.
 - Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, Trello card moved with hours, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
-Full context: [PRD.md](../PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../SURVEY.md).
+Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).
