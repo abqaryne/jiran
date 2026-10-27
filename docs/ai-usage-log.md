@@ -2,6 +2,27 @@
 
 Date: 27 October 2026. Tool: Codex in the shared repository. Human owner: Aaron.
 
+## Local Worker feasibility continuation
+
+Same persistent user objective and free-only research instruction. Created an
+isolated JavaScript experiment using official Firebase Auth skills, Firebase's
+third-party token verification guidance, Google public-key format documentation
+and Cloudflare/JOSE tooling docs. Existing Android/Functions code is reused without
+changing its runtime. Initial workerd stub had22 failing tests out of23; after
+implementation those passed. Additional key-URL/kid and reviewer regression tests
+bring the local runtime suite to25. RSA keys are generated only in memory and all
+outbound HTTP is synthetic/blocked; no cloud account, deploy or live writes.
+
+Dependency audit identified three high package entries in the stable Miniflare4
+tooling. Inspected current Wrangler's dependency and migrated the experiment to
+its pinned Miniflare5 beta/workerd release; updated the removed fetchMock API to
+an exported compatibility converter and a strict test outbound service. Fresh
+locked audit reports zero known findings. This is a prerelease development tool,
+not production adoption. Independent review caught an unsupported JWT critical
+header returning503; a failing regression drove its correct401 classification.
+Current25 runtime tests,277 existing Jest tests and syntax/build scans pass.
+See the Worker plan and experiment README for evidence and unresolved gates.
+
 ## Authorized commute service and free-only research continuation
 
 User steering: "free only", followed by "Research a no-billing production alternative".

@@ -97,6 +97,12 @@ campus stop/trip references exist, but fare files are absent and some service
 calendars expire before Wave A. These are specific feasibility findings, not a
 working timetable router or route-coverage completion.
 
+An isolated [local Worker experiment](../experiments/worker-feasibility/README.md)
+now verifies generated RSA-signed tokens and runs the existing commute/match
+fixtures in workerd. Its 25 tests and bundle checks support code compatibility;
+the live-key/cache/revocation, database/quota, Free CPU and deployment gates below
+remain open. No Android transport or production runtime has been replaced.
+
 - **A: local feasibility.** Inspect current HeiGIT signup/terms and quota; download
   public GTFS for actual coverage analysis with source hashes; build an isolated
   Worker HTTP/auth bundling spike. No deployment or service replacement yet.

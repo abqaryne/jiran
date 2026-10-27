@@ -196,6 +196,7 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [ ] Ary's final Room card/details integration and NFR1 load evidence.
 - [x] Internal authorized commute orchestration with mandatory context/config/quota adapters, bounded shared deadline, cancellation, private projection and mode-specific emissions mapping; [service plan](../docs/superpowers/plans/2026-10-27-commute-service.md). No production reader, quota store or endpoint is wired.
 - [x] Free-only policy recorded and default live Google transport disabled; [alternative research](../docs/no-billing-production.md) identifies Worker/free-routing candidate and transit/NFR gaps. Deployment feasibility remains open.
+- [x] Isolated [local Worker feasibility experiment](../experiments/worker-feasibility/README.md): generated-key signature/claim checks and existing commute/match fixtures run in workerd;25 tests pass. No live Firebase token, database/quota, production migration or Free CPU claim.
 
 Sample fixture values are not verified assumptions or production estimates. The
 UI says so, and the endpoint is not exported in a live environment. This advances

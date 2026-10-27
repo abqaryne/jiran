@@ -9,6 +9,17 @@ concurrency:
   group: checks-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  worker-feasibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: experiments/worker-feasibility/package-lock.json
+      - run: npm ci --prefix experiments/worker-feasibility
+      - run: npm test --prefix experiments/worker-feasibility
   android:
     runs-on: ubuntu-latest
     steps:
