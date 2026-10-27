@@ -80,3 +80,6 @@ The existing live project is `jiran-mad`; its Android app is named Jiran with
 application ID `jiran.com`. Do not create duplicate apps/projects. Use explicit
 `--project jiran-mad` for authorized live operations. Default local development
 uses `demo-jiran`. Never commit Firebase configuration keys or service accounts.
+
+Repository layout: `android/` is the Gradle project (run `./gradlew` there), `backend/` holds Firebase config,
+`backend/functions` and the emulator scripts (run `firebase` and `node scripts/...` there), `docs/` holds all documents.

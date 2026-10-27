@@ -1,6 +1,6 @@
 // k6 load test for NFR1: a page loads in under 3 s with 50 concurrent users (PRD section 5).
 // Starter for Aly. Point TARGET_URL at the endpoint to test (a callable function URL or an HTTPS API).
-// Run:  k6 run -e TARGET_URL=https://<endpoint> -e ID_TOKEN=<firebase id token> tests/load/search.k6.js
+// Run:  k6 run -e TARGET_URL=https://<endpoint> -e ID_TOKEN=<firebase id token> backend/tests/load/search.k6.js
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 

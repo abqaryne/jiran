@@ -5,27 +5,53 @@ Read [Aaron's checklist and master prompt](docs/team/aaron.md), [PRD](docs/produ
 [team ownership](docs/team/TEAM_PLAN.md) before changing the foundation.
 All documents are indexed in [docs/](docs/README.md).
 
+## Repository layout
+
+The repository has **three main parts**. Everything else is configuration.
+
+```
+jiran/
+├── android/    The Android app (Java). Open THIS folder in Android Studio.
+│   ├── app/             source code and resources (src/main, src/debug, src/test, src/androidTest)
+│   ├── gradle/ gradlew  build tooling (Gradle wrapper)
+│   └── config/          code style rules (Checkstyle)
+├── backend/    Firebase and Cloud Functions (Node.js). Run Firebase commands here.
+│   ├── functions/       the Cloud Functions and their Jest tests
+│   ├── firebase.json, firestore.rules, storage.rules, firestore.indexes.json, .firebaserc
+│   ├── scripts/         emulator smoke tests
+│   └── tests/load/      k6 load test
+├── docs/       Product, design and team documents. Start with docs/README.md.
+├── .github/    CI workflows and the pull request template
+└── README.md, AGENTS.md, .gitignore, .editorconfig
+```
+
+Working on screens, components or app logic: `android/`. Working on data, rules or AI and Maps calls: `backend/`.
+Writing or reading requirements, design or the plan: `docs/`.
+
 ## Local setup
 
 Use Android Studio with API 37, Build Tools 36.0.0, Platform Tools, and an Android
 emulator. Build runtime: JDK 25; source compatibility: Java 17. The pinned wrapper
 uses Gradle 9.6.0 / AGP 9.4.1. Install Node 22; Firebase commands below use its official CLI.
-Open the repository in Android Studio; it generates ignored `local.properties`.
+Open the **`android/` folder** in Android Studio; it generates ignored `android/local.properties`.
+The repository has three parts: `android/` (the app), `backend/` (Firebase and Cloud Functions) and `docs/`.
 For terminal builds set `ANDROID_HOME` to your SDK folder if not already set.
 
-PowerShell, from the repository root:
+PowerShell, from the repository root (Android commands run in `android/`, Firebase commands in `backend/`):
 
 ```powershell
 $env:ANDROID_HOME = "$env:LOCALAPPDATA\Android\Sdk"
-npm.cmd ci --prefix functions
-npm.cmd test --prefix functions
-npm.cmd run check --prefix functions
+npm.cmd ci --prefix backend/functions
+npm.cmd test --prefix backend/functions
+npm.cmd run check --prefix backend/functions
+cd android
 ./gradlew.bat lintDebug testDebugUnitTest checkstyleMain assembleDebug --console=plain
+cd ../backend
 $env:FUNCTIONS_DISCOVERY_TIMEOUT = '30'
 npx.cmd -y firebase-tools@latest emulators:exec --project demo-jiran --only auth,firestore,functions,storage 'node scripts/emulator-smoke.cjs'
 ```
 
-On macOS/Linux use `npm`, `npx` and `bash ./gradlew`; configure the SDK path
+On macOS/Linux use `npm`, `npx` and `bash ./gradlew` (from `android/`; run `firebase` and `node scripts/...` from `backend/`, where `firebase.json` lives); configure the SDK path
 for your machine. The first emulator run downloads Java runtimes and may take time.
 The emulators listen on loopback and require Java. No Firebase login or paid
 project is needed for `demo-jiran`.
@@ -64,7 +90,7 @@ npx.cmd -y firebase-tools@latest emulators:exec --project demo-jiran --only auth
 
 Debug always uses `demo-jiran` and Android emulator host `10.0.2.2`. Physical
 phones need an explicitly configured development connection; this initial setup
-targets the AVD. Release requires the real team's ignored `app/google-services.json`;
+targets the AVD. Release requires the real team's ignored `android/app/google-services.json`;
 it has no emulator routing. The registered application ID is `jiran.com`; the
 Java namespace remains `com.jiran.app`. The Functions region remains provisional.
 The developer callable is exported only under the Functions emulator.
@@ -77,12 +103,12 @@ Email/Password Auth is enabled. Firestore `(default)` is Standard edition in
 Singapore (`asia-southeast1`), using the user-approved location. No duplicate app
 was created and no billing upgrade or Functions/Storage deployment was performed.
 
-The ignored `app/google-services.json` has been downloaded on this machine.
+The ignored `android/app/google-services.json` has been downloaded on this machine.
 Other teammates with project access can retrieve it using:
 
 ```powershell
 npx.cmd -y firebase-tools@latest login
-npx.cmd -y firebase-tools@latest apps:sdkconfig ANDROID 1:157082520904:android:cc25cf096fa7c07391b77d --project jiran-mad --out app/google-services.json
+npx.cmd -y firebase-tools@latest apps:sdkconfig ANDROID 1:157082520904:android:cc25cf096fa7c07391b77d --project jiran-mad --out android/app/google-services.json
 ```
 
 In Android Studio select **app → liveDebug** in Build Variants, start an AVD or
@@ -129,12 +155,12 @@ anonymous Firestore reads; it creates no live accounts or documents and sends no
 ## Code structure and design system
 
 Product UI follows [DESIGN.md](docs/design/DESIGN.md): the tokens, styles and component layouts are in
-`app/src/main/res` (`values/colors.xml`, `dimens.xml`, `type.xml`, `themes.xml`,
+`android/app/src/main/res` (`values/colors.xml`, `dimens.xml`, `type.xml`, `themes.xml`,
 `styles_components.xml`, `layout/component_*.xml`, `font/`). Product screens use the
 `Theme.Jiran` theme (set per activity; the foundation screens keep their temporary theme).
 
 ```
-app/src/main/java/com/jiran/app/
+android/app/src/main/java/com/jiran/app/
   JiranApplication.java
   data/            Firebase and data access: FirebaseSetup, repositories (data/repository), remote, local, model
   domain/          pure Java rules with no Android imports: pricing, balance, match, commute (JVM unit tests)
