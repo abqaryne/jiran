@@ -98,7 +98,7 @@ Android app, a 10 to 15 minute video (12:00, 3 Jan 2027) and a report (12:00, 10
 | **T4** Report and AI Usage Log | runs in parallel | draft during the build, assemble 4 to 9 Jan | Dafi, Ilham |
 
 Legend: **P0** must work for the graded demo · **P1** should have · **P2** if time allows. `(Name)` is the person who does the
-subtask. UI means Android screens, backend means Cloud Functions and rules.
+subtask. UI means Android screens, backend means server code (Worker) and rules.
 
 ## 5. Flow epics, in build order
 
@@ -113,10 +113,10 @@ Everything the flows need to start: repo and CI, Firebase and Maps, the design s
 - (Ary) Turn on branch protection: PR required, final check by Ary
 - (Ary) Email the lecturer: Appendix 1, native Java OK, SDG 11 OK, what the AI policy counts as your own code, is a GitHub link needed
 
-**E0.2 Firebase and Maps are ready** (P0) · Aaron · due 8 Nov · WAIT team decision on billing
-- (Aaron) Decide the Functions region and the billing plan with the team
-- (Aaron) Maps API key restricted, billing alert and quota check (#11)
-- (Aaron) Cloud Functions skeleton and emulator smoke test pass in CI
+**E0.2 Firebase and the free server are ready** (P0) · Aaron · due 8 Nov
+- (Aaron) Confirm the free-only stack with the team (Worker, openrouteservice, map tiles) and record it in the PRD
+- (Aaron) openrouteservice key kept on the server, and the daily limits written down (#11)
+- (Aaron) Worker skeleton with Firebase token check, and the smoke test passes in CI
 - (Aaron) Check transit coverage for Pantai Dalam and Kerinchi to UM (#5)
 
 **E0.3 Design system and app shell** (P0) · Ary · due 15 Nov
@@ -208,8 +208,8 @@ A student searches rooms, sees the true monthly cost and travel time on each car
 - (Gathan) Filters sheet: budget, room type, area, gender, amenities
 - (Gathan) Travel-time filter that calls the commute function (E3.3)
 
-**E3.3 Commute per travel mode** (FR4.1, P0) · Aaron · due start now, due 29 Nov · *can start early* · WAIT Maps coverage and fares (#3, #4, #5), shuttle timetable (T1)
-- (Aaron) Routes adapter, pricing config and the e-hailing fare formula
+**E3.3 Commute per travel mode** (FR4.1, P0) · Aaron · due start now, due 29 Nov · *can start early* · WAIT transit coverage and fares (#3, #4, #5), shuttle timetable (T1)
+- (Aaron) openrouteservice adapter, GTFS transit data, pricing config and the e-hailing fare formula
 - (Aaron) Shuttle timetable as scheduled data (from T1)
 - (Aaron) Label every figure as an estimate and name its source
 - (Aaron) Unit tests with fixed inputs
@@ -244,7 +244,7 @@ A student opens a room, sees the Host, the rooms in the unit and how to get to c
 
 **E4.4 Public transport route page, peak and off-peak** (FR4.1, FR4.3, P1) · Aaron · due 14 Dec · WAIT E4.2
 - (Aaron) Peak windows (#2), surge range for e-hailing, step-by-step transit route
-- (Ary) Public transport route page and the Peak / Off-peak toggle
+- (Ary) Public transport route page with the MapLibre map, and the Peak / Off-peak toggle
 
 ---
 
@@ -327,7 +327,7 @@ A student checks a tenancy agreement the Host shared in the chat, privately, and
 
 **E8.1 Choose and set up the AI provider** (P0) · Ilham · due 8 Nov · *can start early*
 - (Ilham) Compare Gemini and Claude on cost, quota, speed, Malay and English quality (#10)
-- (Ilham) Keys in Cloud Functions secrets only
+- (Ilham) Keys in Worker secrets only
 - (Ilham) Start the AI Usage Log and keep it up to date
 
 **E8.2 Sample agreements and the contract function** (FR6.2, P0) · Ilham · due 13 Dec · *can start early* · WAIT E8.1

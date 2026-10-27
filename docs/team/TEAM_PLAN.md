@@ -24,7 +24,7 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | Person | Role | Owns | Also responsible for |
 |---|---|---|---|
 | **Ary** | Group leader, Frontend Lead, Lead UI/UX | **Module 1** Auth and verified profile (FR1.1–1.3) and **Module 3** Roommate matching screens (FR3.1–3.3) | Figma and design system; Android app shell, theme and shared components; final check-in (approve and merge) of every PR; main contact with the lecturer |
-| **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3) | Architecture, Cloud Functions structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
+| **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3) | Architecture, server (Worker) structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
 | **Gathan** | Backend and Database Developer | **Module 2** Listings and area guide (FR2.1–2.4) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, 10 to 15 fictional seed listings from reference prices (never copied from other sites), FCM notifications |
 | **Ilham** | AI Engineer | **Module 6** AI assistant and private contract checker (FR6.1–6.3) | The match-reason text for Module 3 (FR3.2), AI evaluation, API key handling, **AI Usage Log** |
 | **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
@@ -75,7 +75,7 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 |---|---|---|
 | Scope and priorities (P0/P1/P2) | Ary | Dafi, everyone |
 | Schedule, task assignment, meetings | Dafi | Ary |
-| Architecture, APIs, Cloud Functions, branching, integration | Aaron | Ary, Gathan |
+| Architecture, APIs, server code, branching, integration | Aaron | Ary, Gathan |
 | UI/UX, design system, screen flow | Ary | Aly (user feedback) |
 | Data model and security rules | Gathan | Aaron |
 | AI prompts, model and evaluation | Ilham | Aaron |
@@ -83,9 +83,9 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 
 ### Working agreements
 
-- **Cloud Functions are Node.js** (Firebase does not support Java); the rest of the app is Java. Aaron and Ilham write them, kept small and simple: one function per job, no framework, unit tests with Jest.
+- **The server is JavaScript** on a Cloudflare Worker (free plan; Firebase Cloud Functions need billing); the rest of the app is Java. Aaron and Ilham write it, kept small and simple: one function per job, no framework, unit tests with Jest. Free plans only, no billing on any service.
 - **Definition of Done:** merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card on the board moved with hours logged, and checked by QA.
-- **PR check-in:** Ary does the final check and merge of every PR. Before that, Aaron reviews Cloud Functions and Maps PRs, Gathan reviews schema and rules PRs, and one other member reviews each PR so everyone has review evidence.
+- **PR check-in:** Ary does the final check and merge of every PR. Before that, Aaron reviews server and routing PRs, Gathan reviews schema and rules PRs, and one other member reviews each PR so everyone has review evidence.
 - **Tests:** every module owner writes unit tests for their module; Aly writes the integration tests and load test.
 - **Sprints:** one-week sprints planned by Dafi, short sync twice a week, 30-minute demo and retro on weekends.
 - **Commit messages** start with the story ID from its Trello card: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. No story: `[Docs]`, `[Infra]` or `[Design]`. The card holds the FR, so each commit traces to a card and a requirement.
@@ -109,7 +109,7 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 | Aly | Puts the survey live, starts interviews, begins the test plan (T1.1, T2.1) |
 | Dafi | Sets up the Trello board and sprint plan, finds the UM shuttle timetable, keeps the PRD up to date (E0.4, T1.4) |
 | Ary | Figma, design system and app shell are done; adds collaborators, emails the lecturer, announces the components (E0.1, E0.3) |
-| Aaron | GitHub repo, branching rules, CI, Firebase project, Cloud Functions skeleton, Maps API key (E0.1, E0.2) |
+| Aaron | GitHub repo, branching rules, CI, Firebase project, Worker skeleton, openrouteservice key (E0.1, E0.2) |
 | Gathan | Firestore schema draft, a first version of the Security Rules, fictional seed listings (E0.5) |
 | Ilham | Picks the AI provider, collects 10 sample tenancy agreements and tries prompts for the contract checker (E8.1, E8.2) |
 | Everyone | Share the survey link in their circles |
@@ -118,7 +118,7 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 
 #### Step 1: Foundations (2 – 15 Nov): short chain, then parallel
 
-1. **Gathan first:** schema and rules merged. **WAIT:** Ary (profile and listing screens), Aaron (Cloud Functions that read data) and Dafi (household data) need the field names.
+1. **Gathan first:** schema and rules merged. **WAIT:** Ary (profile and listing screens), Aaron (server code that reads data) and Dafi (household data) need the field names.
 2. **In parallel with Gathan:** Aaron finishes CI and the emulator; Ary builds the app shell, theme and shared components; Dafi freezes the requirements after the survey.
 3. **Handoff contract:** by 15 Nov Aaron posts the request and response format of each Cloud Function, and Gathan posts the collection fields. After that everyone can build against mock data.
 
@@ -178,7 +178,7 @@ The epics E1 to E7 are the P0 flows. Each one is built end to end by the team to
 | 1 | Project overview (10): SDG 11 (target 11.1, supporting 11.2), the UM housing and commute problem | Ary | 1:30 |
 | 2 | System demo (30): scenario "Mei Ling" from sign-up to setting up her household. **Each member presents the part they built and names its FRs:** Ary (sign-up, profile, roommate matching), Gathan (posting a unit with rooms, search), Aaron (commute card, peak vs off-peak), Ilham (plain-language search, contract checker), Dafi (expenses), Aly (chores and house rules) | all six | 6:30 (≈1 min each) |
 | 3 | Design and usability (10): colours, 48 dp touch targets, EN and BM, privacy by default | Ary | 1:00 |
-| 4 | Technical implementation (10): Android (Java), Firebase and Cloud Functions diagram, AI data flow | Aaron (AI flow: Ilham, 20 s) | 1:30 |
+| 4 | Technical implementation (10): Android (Java), Firebase and server (Worker) diagram, AI data flow | Aaron (AI flow: Ilham, 20 s) | 1:30 |
 | 5 | NFR verification (10): NFR1 k6 results; NFR2 rules tests all denied | Aly (NFR1), Gathan (NFR2) | 1:30 |
 | 6 | Stakeholder validation (10): survey charts, interview quotes, user testing results and what changed | Aly | 1:00 |
 | 7 | Team contributions (10) | Built into segment 2; Dafi adds 30 s with the Trello hours and commit summary | 0:30 |

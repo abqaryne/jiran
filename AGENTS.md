@@ -47,8 +47,8 @@ The brief requires **significant and original human contribution** and a real un
 - **AI features must earn their place**: AI is allowed in the product only where rules cannot do the job (plain-language
   search, contract reading, match explanations). Each one needs a justification, a label **AI-generated**, graceful
   fallback when it fails, and an evaluation on sample data (50 search requests, 10 contracts, user ratings for reasons).
-  The match score and CO₂ are computed by code, never by the AI. All AI and Maps calls run in Cloud Functions; keys never
-  ship in the app.
+  The match score and CO₂ are computed by code, never by the AI. All AI and routing calls run on the server (a Cloudflare Worker, free
+  plan only); keys never ship in the app.
 - Use the terms in [docs/product/GLOSSARY.md](docs/product/GLOSSARY.md). UI follows
   [docs/design/DESIGN.md](docs/design/DESIGN.md): only design system tokens and styles, 48 dp touch targets, status with a
   word and an icon, estimates labelled as estimates.

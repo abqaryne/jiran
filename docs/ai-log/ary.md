@@ -160,3 +160,45 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the brief's expectation still applies to the team.
 
+
+## 2026-10-27 · Commit message format uses the story ID · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** change the commit message format in the team documents from module and FR tags to the story ID.
+- **Prompts (exact):**
+  > commit message formatnya coba disesuain deh di folder team
+  > tanpa tag fr aja deh kepanjangan klo ada fr nya
+- **Output used:** `docs/team/TEAM_PLAN.md`, the six personal files, `AGENTS.md`, `README.md`, `docs/product/PRD.md`. The format is `[Story] short description`, for example `[E7.1] Add balance calculation`. Already on `main`.
+- **How it was tested or checked:** text search shows no remaining `[ModN][FRN.N]` format in the docs.
+- **What the human changed or rejected:** Ary dropped the FR tag because the line was too long. The FR stays on the story card.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** older commits keep the old format.
+
+## 2026-10-27 · Review of Aaron's branch `feature/aaron-commute-core` · Quality assurance
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** check Aaron's branch: run his tests and checks and read the config changes.
+- **Prompts (exact):**
+  > coba cek kerjaan aaron di branch deh
+- **Output used:** a review summary in chat only. Checks run in a temporary worktree: backend `npm test`, `npm run check`, `npm run test:load`; Android `lintDebug testDebugUnitTest checkstyleMain assembleDebug`. All passed. Three broken relative links were found in `docs/product/ASSUMPTIONS.md` and `docs/emission-methodology.md`; a fix commit was made locally and not pushed.
+- **How it was tested or checked:** the commands above. The code itself was not read line by line. not verified: the Worker experiment, the GTFS processing logic and the emission values.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** this is not the code review that Aaron's PR needs from a teammate.
+
+## 2026-10-27 · Switch the documented stack to free plans only · Architecture documents
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** update the documents to the free-only stack: Cloudflare Worker for server code, openrouteservice and Prasarana GTFS for routes, MapLibre map in the app, Cloudinary for room photos. No "open in Google Maps" button.
+- **Prompts (exact):**
+  > ya perbaiki sama buat API ya kita ini kan cuma tugas kuliah, jadi pasti yang gratis aja ya
+  > masa gabisa peta dalam app sih>
+  > ya tolong update dan gausah pake buka link google maps kali kan kita udh nampilin?
+- **Output used:** `docs/product/PRD.md` (sections 4, 8, 9 and open questions), `docs/product/ASSUMPTIONS.md` (rows 2 to 5 and 11), `AGENTS.md`, `docs/team/TEAM_PLAN.md`, `docs/team/trello-cards.md`. Based on Aaron's research in `docs/no-billing-production.md`. Changes that depend on an unproven choice are marked **[DRAFT]**.
+- **How it was tested or checked:** documents only; a text search shows no remaining Google Maps Platform, Routes API or Cloud Functions mentions in the product documents. not verified: free limits and the Worker spike (Aaron's work), the MapLibre tile terms, and the Cloudinary plan.
+- **What the human changed or rejected:** Ary chose free-only and an in-app map without a Google Maps link.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the peak factor for road travel time is a placeholder idea, since openrouteservice has no live traffic. Aaron and Gathan must confirm the server, photo storage and contract-file handling. The aaron.md master prompt still mentions Cloud Functions (his file).
