@@ -173,3 +173,52 @@ hours. Backend336 tests and syntax checks pass after reconciliation; Android
 checks on the new launcher are running. Human review remains TODO (owner).
 Android reconciliation checks completed: lint, JVM tests, Checkstyle and debug
 build passed with the incoming launcher. No device or production completion claim.
+
+## 2026-10-27 · Authenticated load preparation and final solo review · FR4.1 / NFR1
+
+- **Human owner:** Aaron.
+- **AI tool and model:** Codex; exact deployed model version not recorded.
+- **Task:** Complete the six solo preparation workstreams, measured local load
+  scenarios, transit follow-up fixes and reviewable handoff evidence.
+- **Prompts (exact):**
+  > implement those on the previous prompts
+  > keep as draft
+- **Output used:** backend/tests/load/commute-fixture.k6.js, fixture-contract.mjs
+  and tests, scripts/run-fixture-load.cjs, CI/package scripts, load README,
+  bounded frequency expansion in gtfs.js and updated source/handoff/hour records.
+  Official Firebase Authentication skill used for local synthetic account setup.
+- **How it was tested or checked:** Four initial helper tests failed against stubs;
+  later lifetime and token-cleanup regressions failed before their fixes. Seven
+  helper/guard/fault tests now pass, including isolated fake Auth and missing k6.
+  Official k6.2.3.0 ZIP checksum matched. Two60s local50/100VU runs were observed:
+  first100-user p95=3495.26072ms with33failed positive requests among5812total;
+  second passed50/100participation,8914checks and5negative contracts with p95
+  22.18493ms/16.19116ms. The failed run is retained. Tokens were removed after each
+  run. Backend fixture source matched recorded head7b007f6. Cleanup/evidence-only
+  runner changes postdate the measured second run; no third measurement claimed.
+- **Independent reviews:** Load reviewer independently passed6initial tests, found
+  token creation outside cleanup, then independently passed7after the failing
+  regression/fix. Manifest dependency omissions were also corrected. Transit
+  follow-up confirmed transfer/feed-validity fixes, found frequency expansion
+  beyond72h, and independently passed62tests after two failing regressions and
+  the bound fix. No remaining actionable findings in that review. Final fresh
+  whole-plan review found no blocking integration defect; stale artifact links
+  and source-evaluation wording were refreshed. Final checks/CI recorded below.
+- **Delegated load review prompt (exact):**
+  > Independent review of load preparation in C:/Users/kikee_07xsqul/Downloads/Year Two/Jiran/jiran. Read AGENTS.md and Batch H docs/superpowers/plans/2026-10-27-aaron-solo-work.md. New files backend/tests/load/fixture-contract.mjs/.test.mjs, commute-fixture.k6.js, backend/scripts/run-fixture-load.cjs; CI/package scripts modified. Require fixed local demo endpoint,100 distinct verified synthetic Auth users+one unverified,tokenfile ignored/no token output, separate50/100 VU60s phases,semantic response checks/auth negativecases,proper thresholds and participation. Main purpose realistic preparation; not production NFR claim. First fullrun failed100user p95˜3495ms/33positive request failures out5812; all5negativecontracts passed. That run loaded script before newly added completed_users instrumentation; second unchanged60s run now live session25447 includes participation counters+source manifest. Do not edit files while run active. Identify actionable defects/security/measurement flaws, don't weaken thresholds or invent workingproduction backend. Six purehelper/guard tests pass. Reviewer needed by requesting-code-review skill; focused tests okay.
+- **What the human changed or rejected:** TODO (owner).
+- **What the human understands and can explain:** TODO (owner). Run the helper
+  checks and read the workload/runner. Explain simulation versus production,
+  expected rejections, participation, token cleanup, p95 and why both runs remain
+  visible. Explain the frequency expansion boundary before using transit output.
+- **Limits:** Needs human review. No real listing search, Firestore/routing load,
+  deployed Free CPU/capacity, production429gateway or NFR1completion. Prototype
+  quota overload is separately tested. No live Firebase/project/provider change,
+  billable activation, booking, private scraping or production deployment. The
+  user chose to keep the6reported hours as draft; no Trello posting or invented
+  activity/session allocation. Human understanding and final approval unverified.
+
+Final local checks:339Jest tests/13suites,7load tests, syntax checks and75Worker
+tests pass. Artifact links resolve; report body counts remain350/400words.
+Measured workload/helper hashes match; token file absent. Final exact-head CI
+will be reported separately; no unobserved result or human review is claimed.

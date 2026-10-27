@@ -23,6 +23,8 @@ defines calendars, service-day times, stop sequences and frequency semantics.
   Service times may exceed24h, up to the explicit72h bound. Missing intermediate
   times, nonchronological trips, overlapping frequency windows and unsupported
   trip data are quarantined and reported; no interpolation or timetable fallback.
+  Shifted frequency runs are also checked against72h; exact grids use their last
+  actual start, while non-exact windows use the latest possible start.
 - Exact frequency windows generate a grid of first-stop departures before the
   exclusive end time. Downstream stops retain their offsets. Non-exact headways
   use a conservative sample with one headway of waiting, labelled estimated;

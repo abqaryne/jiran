@@ -54,6 +54,7 @@ jobs:
           java-version: '25'
       - run: npm ci --prefix backend/functions
       - run: npm test --prefix backend/functions
+      - run: npm run test:load --prefix backend/functions
       - run: npm run check --prefix backend/functions
       - run: npm install --global firebase-tools@15.34.1
       - run: firebase emulators:exec --project demo-jiran --only auth,firestore,functions,storage 'node scripts/emulator-smoke.cjs'

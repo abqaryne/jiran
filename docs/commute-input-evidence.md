@@ -77,8 +77,9 @@ public ZIPs whose hashes and source URLs are recorded in
 similarly named institutions outside the UM area. Generated join notes remain
 ignored in `.gradle/commute-inputs/route-evidence.json`.
 
-Next, run bounded schedule evaluation on these feed references, refresh feeds for
-the intended travel date, confirm physical transfer paths and current fares, and
+The [bounded schedule evaluation](transit-processing.md) now records these snapshot
+probes and their limits. Next, refresh feeds for the intended travel date,
+confirm physical transfer paths and current fares, and
 collect real observed outcomes. Keep route availability, source freshness, fare
 knowledge and arrival eligibility as separate fields. Assumption#5 remains open
 until the relevant complete journeys and university shuttle evidence are verified.

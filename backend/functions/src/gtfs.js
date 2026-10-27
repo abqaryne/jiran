@@ -169,6 +169,11 @@ function normalizeGtfs(tables,source) {
         return {start,end,headway,exact:window.exact_times==='1'};
       }).sort((a,b)=>a.start-b.start);
       if(windows.some((window,index)=>index && window.start<windows[index-1].end)) invalid();
+      for(const window of windows) {
+        const lastStart=window.exact?window.start+Math.floor((window.end-1-window.start)/window.headway)*window.headway
+          :window.end-1;
+        if(lastStart+sequence.at(-1).departure-sequence[0].departure>=72*3600) invalid();
+      }
       trips.push({id:qualify(key),routeId,serviceId,stops:sequence,frequencies:windows,
         estimated:sequence.some(stop=>stop.estimated)});
     } catch {issues.push({tripId:qualify(key),code:'invalid-trip'});}

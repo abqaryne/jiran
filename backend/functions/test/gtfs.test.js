@@ -64,6 +64,17 @@ test('headway windows default to estimated and may touch but not overlap',()=>{
   expect(normalize(data).trips).toHaveLength(0);
   expect(normalize(data).issues[0].code).toBe('invalid-trip');
 });
+test.each(['0','1'])('frequency expansion cannot exceed72 service hours, exact_times=%s',exact=>{
+  const data=tables();
+  data['stop_times.txt']=data['stop_times.txt'].replaceAll('08:20:00','10:00:00');
+  data['frequencies.txt']=`trip_id,start_time,end_time,headway_secs,exact_times\nt,71:00:00,71:30:00,600,${exact}`;
+  expect(normalize(data).trips).toHaveLength(0);
+});
+test('an exact grid is bounded by its last actual start, not the exclusive window end',()=>{
+  const data=tables();data['stop_times.txt']=data['stop_times.txt'].replaceAll('08:20:00','08:30:00');
+  data['frequencies.txt']='trip_id,start_time,end_time,headway_secs,exact_times\nt,71:00:00,71:59:59,3600,1';
+  expect(normalize(data).trips).toHaveLength(1);
+});
 test.each([
   text=>text.replace('08:20:00,08:20:00','07:59:00,07:59:00'),
   text=>text.replace('b,2','b,1'),

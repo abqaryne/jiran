@@ -16,7 +16,7 @@ live coverage, performance, report outcomes or QA evidence.
 
 ## Workstreams and completion evidence
 
-- [ ] **Free-backend prototype hardening.** Implement bounded Firebase key fetching
+- [x] **Free-backend prototype hardening.** Implement bounded Firebase key fetching
   with provider cache expiry, single-flight and rotation/cooldown tests; atomic
   SQLite per-user/account quota reservations in workerd; timeout/error handling.
   Evidence: runtime tests and documented limits; no production adoption claim.
@@ -25,11 +25,11 @@ live coverage, performance, report outcomes or QA evidence.
   evidence and dates. No scraping private apps or pretending API coverage was
   measured without credentials. Keep factual research separate from approved
   production configuration; survey/eligibility gaps remain explicit.
-- [ ] **Transit processing.** Implement reusable JavaScript feed normalization and
+- [x] **Transit processing.** Implement reusable JavaScript feed normalization and
   bounded scheduled-journey evaluation: service dates/exceptions, >24h times,
   headways, stop sequence/transfers, unknown fares/expired feed behavior. Test
   synthetic edge cases and inspect real public-feed samples with provenance.
-- [ ] **CI/performance preparation.** Update deprecated Actions against official
+- [x] **CI/performance preparation.** Update deprecated Actions against official
   releases, preserve app Node/JDK versions and check names; extend realistic
   load scenarios with authenticated failure/overload cases and reproducible
   commands. Local/fixture loads never certify NFR1 for the production system.
@@ -274,3 +274,67 @@ feature-branch reconciliation. Backend336 tests and syntax checks pass after mer
 Android validation is running against the incoming launcher assets.
 Android reconciliation validation completed successfully: lintDebug,
 testDebugUnitTest, checkstyleMain and assembleDebug passed with the new launcher.
+
+## Batch H: authenticated load scenarios
+
+Ruling: preserve the original search starter as a production placeholder and add
+an executable local fixture workload for real Firebase Auth emulator users.
+Separate50-user and100-user constant-VU plateaus, vary on-time/late/missing-data
+responses and validate result semantics, not merely HTTP200. Serial negative
+contracts cover anonymous, unverified, invalid-token, invalid-scenario and UID
+spoofing responses. Default plateaus last60 seconds; shorter smoke settings are
+explicitly labelled. Endpoint is fixed to loopback demo-jiran; no live billing or
+provider request. Generate100 distinct verified synthetic accounts and one
+unverified account, save short-lived tokens only in ignored .firebase storage,
+never pass tokens as shell arguments or print them. Use official k6 locally with
+verified release checksum; no Grafana cloud signup.
+
+The SQLite runtime suite separately covers concurrent quota admission and429
+rejections; the existing Functions fixture has no production quota endpoint.
+Do not invent one or interpret success under fixture load as production capacity.
+Document that overload boundary and commands/results separately. Production
+search+Firestore+routing load still requires the agreed endpoint/data/adoption.
+
+CI40473215162 at7b007f6 was running when this batch began; observe that exact run.
+
+Batch H results: official k6.2.3.0 Windows ZIP checksum verified; portable tool
+remains ignored. Seven load-helper/guard/fault tests pass. First full60s run failed
+100-user p95(3495.26072ms) and33/5812positive requests;50-user p95=16.96846ms,
+all5negative contracts passed. Preserve that failure. Added explicit participation
+counters and source manifest; the second full60s run passed50/100participants,
+all8914checks and5negative contracts, with p95=22.18493ms/16.19116ms. No threshold
+or cohort reduction. Both measurements are co-located local fixtures, not NFR1.
+
+Independent load review verified preparation scope and found token cleanup did
+not encompass preflight failures. An isolated fake-Auth/missing-binary test failed
+before moving token creation into the cleanup scope. All7tests now pass; reviewer
+independently confirmed that fix. Expanded future manifests to include actual
+backend fixture dependencies, emissions catalogue, lockfile and Firebase config.
+These cleanup/evidence-only runner changes postdate the measured second run;
+workload/helper hashes remain unchanged. No additional measured run is invented.
+
+Transit follow-up review independently passed59cases but found expanded frequency
+runs could escape the72h bound. Two regressions failed before checking the last
+actual exact-grid start or latest possible non-exact start against shifted stop
+times. The positive last-grid test preserves valid service near the boundary.
+All62focused tests pass; independent re-review found no remaining actionable
+findings. This closes the research-code review, not live transit acceptance.
+
+All six requested solo artifact workstreams are implemented and locally checked.
+Completion still awaits final verification/publication audit for this batch.
+Production/runtime adoption, real routing/eligibility, performance, schema, QA and
+Ary's merge remain team-dependent and are not relabelled complete.
+
+Hours decision: user explicitly answered "keep as draft". Retain only the reported
+6hours on26October; no Trello posting, invented activity allocation or sessions.
+
+Fresh whole-plan review: all six requested artifact scopes present; no blocking
+integration defects found. Refreshed stale work-log artifact links and the input
+research's next-step wording. Human review and team production gates remain open.
+The final fresh local checks and exact-head CI audit follow before goal completion.
+
+Final local verification:339backend tests/13suites,7load helper/guard/fault tests,
+all syntax checks and75Worker tests passed. All primary artifact local links
+resolve; marked report bodies remain350/400words. Measured workload/helper hashes
+match current files; generated token file is absent. Publication/exact-head CI is
+still pending; no production or whole-role completion is claimed.

@@ -1,7 +1,8 @@
 # Aaron actual-hours draft
 
-This records the hours Aaron supplied in this conversation. It is ready for task
-notes and a Trello destination; no Trello entry has been posted.
+This records the hours Aaron supplied in this conversation. Aaron selected
+**keep as draft** on27 October2026; no Trello entry will be posted for this task.
+Activity notes remain for Aaron to fill in from his actual work.
 
 | Work date | Hours | Activity notes | Trello destination | Status |
 |---|---:|---|---|---|
@@ -18,5 +19,8 @@ Copy-ready entry:
 > Task details: [add the actual activities].
 > Evidence links: [add the relevant commits/review/testing notes].
 
-The code/testing evidence index and report drafts will be linked here as those
-workstreams are completed. AI execution duration is not a personal-hours entry.
+See the [handoff/evidence index](aaron-handoff.md),
+[report and demo drafts](aaron-deliverable-drafts.md), and
+[implementation ledger](superpowers/plans/2026-10-27-aaron-solo-work.md).
+These artifacts do not establish the activities covered by the reported hours.
+AI execution duration is not a personal-hours entry.

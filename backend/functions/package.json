@@ -6,7 +6,8 @@
   "engines": { "node": "22" },
   "scripts": {
     "test": "jest --runInBand",
-    "check": "node --check index.js && node --check src/session.js && node --check src/commute.js && node --check src/commute-preview.js && node --check src/match.js && node --check src/match-preview.js && node --check src/routes-client.js && node --check src/commute-pricing.js && node --check src/emissions.js && node --check src/commute-service.js && node --check src/gtfs.js && node --check src/gtfs-journey.js && node --check ../scripts/gtfs-inspect.cjs"
+    "test:load": "node --test ../tests/load/fixture-contract.test.mjs",
+    "check": "node --check index.js && node --check src/session.js && node --check src/commute.js && node --check src/commute-preview.js && node --check src/match.js && node --check src/match-preview.js && node --check src/routes-client.js && node --check src/commute-pricing.js && node --check src/emissions.js && node --check src/commute-service.js && node --check src/gtfs.js && node --check src/gtfs-journey.js && node --check ../scripts/gtfs-inspect.cjs && node --check ../scripts/run-fixture-load.cjs"
   },
   "dependencies": {
     "firebase-admin": "14.5.0",

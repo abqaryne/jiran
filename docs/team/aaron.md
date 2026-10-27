@@ -221,8 +221,10 @@ The [hours draft](../aaron-work-log.md) contains the reported6 hours on26 Octobe
 The [350/400-word report drafts and demo script](../aaron-deliverable-drafts.md)
 and [handoff/freeze checklist](../aaron-handoff.md) need Aaron's personal review.
 The [GTFS processor checkpoint](../transit-processing.md) adds calendar, frequency,
-transfer and stale-feed handling with59 focused tests and recorded snapshot probes.
-Its follow-up independent review and production coverage remain open.
+transfer and stale-feed handling with62 focused tests and recorded snapshot probes.
+Independent follow-up review found no remaining actionable defect; production
+coverage remains open. [Local50/100-user load preparation](../../backend/tests/load/README.md)
+records both a failed run and a passing run, without claiming production NFR1.
 
 
 ## Local implementation evidence (not story acceptance)
