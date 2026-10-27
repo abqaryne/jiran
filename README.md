@@ -125,6 +125,36 @@ live Android SDK probe is available with an AVD running:
 It checks the configured project, rejection of a nonexistent login, and denial of
 anonymous Firestore reads; it creates no live accounts or documents and sends no email.
 
+## Code structure and design system
+
+Product UI follows [DESIGN.md](DESIGN.md): the tokens, styles and component layouts are in
+`app/src/main/res` (`values/colors.xml`, `dimens.xml`, `type.xml`, `themes.xml`,
+`styles_components.xml`, `layout/component_*.xml`, `font/`). Product screens use the
+`Theme.Jiran` theme (set per activity; the foundation screens keep their temporary theme).
+
+```
+app/src/main/java/com/jiran/app/
+  JiranApplication.java
+  data/            Firebase and data access: FirebaseSetup, repositories (data/repository), remote, local, model
+  domain/          pure Java rules with no Android imports: pricing, balance, match, commute (JVM unit tests)
+  util/            small helpers (Resource, input checks)
+  ui/
+    shell/         ShellActivity: product shell with the floating tab bar (Home, Rooms, Match, Unit)
+    home/ rooms/ match/ unit/             the four tabs (placeholders)
+    auth/ onboarding/ profile/            Module 1
+    roomdetails/ listing/                 Module 2 (with rooms/)
+    group/ chat/                          Module 3 (with match/)
+    commute/                              Module 4
+    contract/                             Module 6 (private contract check)
+    notifications/ common/                shared
+```
+
+MVVM: Fragment draws, ViewModel holds LiveData state (no Views or Context), a Repository is the only door to
+Firebase and Functions. `ShellActivity` is registered but not launched yet; the temporary developer screens stay
+the launcher until Ary wires the shell in after sign-in. To add a feature: create `ui/<feature>/` with its
+Fragment and ViewModel, add the destination to `res/navigation/nav_main.xml`, put every user-facing string in
+`strings*.xml`, and use only design system styles.
+
 ## Workflow
 
 Use feature branches and PRs. Ary approves and merges; Aaron reviews backend/Maps,
