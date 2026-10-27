@@ -59,6 +59,38 @@ Retained key IDs enforce that cooldown even when key TTL is zero or very short.
 A failed rotation lookup preserves still-fresh known keys without extending their
 expiry. These caches and cooldowns are per isolate, not global abuse controls.
 
+## Atomic reservation experiment
+
+`src/quota.mjs` implements an isolated SQLite reservation primitive. The test-only
+Durable Object harness exercises it against real workerd SQLite; the normal
+Worker does not expose it as an HTTP endpoint or dispatch live provider calls.
+It is not an identity, Firestore authorization or production gateway adapter.
+
+One account object must own all its users. A synchronous transaction checks a
+sliding minute account limit, rolling24-hour account limit and rolling24-hour
+user limit before recording the entire reservation. The rolling daily policy is
+stricter than the candidate ORS anchored reset. Explicit server configuration is
+bounded by the researched40/minute and2000/day ceiling; no production limits or
+per-user allowance are defaulted. Inputs use a64-character lowercase hex user
+hash. A future adapter must derive it from verified identity, not request data,
+use one fixed account object, and reserve before every actual provider attempt.
+
+There are no automatic retries or refunds: after an uncertain dispatch or lost
+reservation response, the conservative charge remains. Storage errors and clock
+regression fail closed. Denied batches do not partly consume allowances. SQL is
+parameterized; expired events are removed on accepted writes. The account day
+cap bounds retained active reservations, but storage reads/writes still consume
+the Free account's separate allowances. Namespace sharding or another holder
+using the same provider key would bypass this primitive's account-wide guarantee.
+
+Tests cover concurrent user/account limits, exact rolling boundaries, transaction
+rollback and persistence across runtime disposal/restart. Synthetic time and
+storage faults exist only in `test/quota-worker.mjs`, bundled separately. They
+are absent from the main Worker bundle. Local SQLite results do not prove cloud
+capacity, provider quota enforcement, Free signup eligibility or NFR1.
+The [official transaction API](https://developers.cloudflare.com/durable-objects/api/sqlite-storage-api/#transactionsync)
+requires synchronous callbacks and rolls back exceptions.
+
 ## Toolchain finding
 
 The initial Miniflare 4 stable tag passed tests but its dependency audit reported
@@ -76,8 +108,9 @@ the locked experiment dependencies; that is not a security-completion claim.
   Offline tests cover cache policy and synthetic rotation only.
   Verify revocation/disabled accounts, tenancy
   and approved UM affiliation policy rather than treating verified email as UM.
-- Firestore authorization, private matching projection and per-user/global atomic
-  quota persistence. No service-account/Admin SDK workaround is included.
+- Firestore authorization, private matching projection and integration of the
+  tested reservation primitive with verified identity and actual dispatch.
+  No service-account/Admin SDK workaround is included.
 - Approved fares, trips/weights, real routing, GTFS journey logic/freshness and
   UM shuttle evidence. Fixtures prove module compatibility only.
 - Overall request deadlines, global abuse controls and Android transport

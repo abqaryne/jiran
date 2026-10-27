@@ -33,11 +33,11 @@ live coverage, performance, report outcomes or QA evidence.
   releases, preserve app Node/JDK versions and check names; extend realistic
   load scenarios with authenticated failure/overload cases and reproducible
   commands. Local/fixture loads never certify NFR1 for the production system.
-- [ ] **Graded deliverable drafts.** Prepare the350-word architecture draft and
+- [x] **Graded deliverable drafts.** Prepare the350-word architecture draft and
   Aaron's400-word implementation contribution based on actual code/evidence;
   prepare technical demo narration/timing. Explicitly label incomplete features
   and dependencies; no invented team implementation or user study results.
-- [ ] **Handoff and actual-hours record.** Review PR/evidence, document unresolved
+- [x] **Handoff and actual-hours record.** Review PR/evidence, document unresolved
   decisions and owners, prepare freeze checklist and actual-hours template.
   Trello writes require real user-supplied hours and an accessible board/card;
   do not count AI runtime as the user's personal work hours or send team messages.
@@ -142,3 +142,53 @@ Sources inspected27 October2026:
 
 CI40450523624 at317fc9c completed successfully across all three jobs. New workflow
 YAML parses successfully; current versioned action changes await exact-head CI.
+
+## Batch D: atomic SQLite quota reservations
+
+Ruling: implement a synchronous reservation primitive using the documented
+Durable Object SQLite transactionSync API, tested against real local workerd
+SQLite. One account object must own all its user reservations; account sliding
+minute, account rolling24h and user rolling24h checks share one transaction.
+Rolling24h is deliberately stricter than ORS's anchored daily reset, avoiding
+unverified reset alignment. Limits are explicit server-owned configuration, not
+request input; no production defaults or provider calls. Units count provider
+requests, including failed dispatches; reservations are never automatically
+refunded or retried after uncertain outcomes. A failed transaction cannot partly
+consume a user's allowance. Persist a last accepted timestamp to fail closed on
+clock regression. Parameterize SQL and prune expired rows on accepted writes.
+Test concurrent account/user limits, exact window boundaries, invalid inputs,
+rollback and storage failure. This primitive does not authenticate a public
+request or prove deployment quotas; its future caller must use verified identity
+and one fixed account object before each provider call.
+
+Official API evidence:
+https://developers.cloudflare.com/durable-objects/api/sqlite-storage-api/#transactionsync
+
+Batch D verification:11 real SQLite quota tests pass, including30 concurrent
+callers, atomic user/account limits, exact window boundaries, failed-commit
+rollback, sanitized failure, backwards-clock rejection and runtime restart.
+Nine initial tests failed against the stub. Restart initially failed because
+Miniflare5 normalizes isolatedResourcePersistencePath to resourcePersistencePath
+when shared storage is off; inspected that normalization and used the correct
+persistent root. Full experiment suite now passes75 tests. Independent review
+found no actionable defects and independently passed all11 quota cases.
+The normal Worker still has no quota endpoint or live provider integration;
+verified identity and fixed-account dispatch binding remain adoption gates.
+
+CI40451044115 at a5b7d85 passed all three jobs with the updated action releases.
+
+## Batch E: report, demonstration and handoff drafts
+
+Prepared docs/aaron-deliverable-drafts.md with exactly350 architecture words and
+400 implementation words (whitespace count within marked body sections). The
+report describes verified local code and pending production gates, and includes
+a90-second technical-demo script with Ilham's20 seconds reserved but not invented.
+Aaron's final report wording, understanding and personal revisions remain TODO.
+Prepared docs/aaron-handoff.md with named unresolved decisions, evidence links
+and the13 December freeze gates. These complete the requested draft/checklist
+artifacts, not the team's final report, freeze, Trello posting or QA. The hours
+record remains6 user-reported hours on26 October with activities/card unspecified.
+
+Remaining solo implementation: transit normalization/journey logic, official
+commute input/five-route research and realistic load scenarios. Production
+adoption and actual-hours/Trello details remain explicitly unresolved.

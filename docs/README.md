@@ -30,6 +30,8 @@ docs/
 | [team/TEAM_PLAN.md](team/TEAM_PLAN.md) | Roles, timeline, workflow |
 | [architecture.md](architecture.md) | Firebase and backend architecture |
 | [api-contracts.md](api-contracts.md) | Draft request and response formats of the Functions |
+| [aaron-deliverable-drafts.md](aaron-deliverable-drafts.md) | Assisted350/400-word report drafts and90-second demo script; needs human review |
+| [aaron-handoff.md](aaron-handoff.md) | Open decisions, owners and P0 freeze gates |
 | [ai-log/README.md](ai-log/README.md) | AI Usage Log: rules, template and one file per person (mandatory appendix) |
 | [ai-usage-log.md](ai-usage-log.md) | Aaron's earlier AI record |
 

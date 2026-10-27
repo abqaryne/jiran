@@ -78,3 +78,31 @@ its missing JAR. Human review remains TODO (owner).
   explain why basic caching was selected for the free-only requirement.
 - **Limits:** Needs human review; no claim updated actions passed until CI finishes.
   No billing, dependency submission or new deployment/provider was activated.
+
+## 2026-10-27 · Atomic quota primitive and deliverable drafts · Backend / report
+
+- **Human owner:** Aaron.
+- **AI tool and model:** Codex; exact deployed model version not recorded.
+- **Task:** Continue the six solo workstreams: persisted reservations, report/demo
+  drafts and handoff checklist.
+- **Prompts (exact):**
+  > implement those on the previous prompts
+- **Output used:** src/quota.mjs with a separate test-only SQLite harness; README
+  boundaries; docs/aaron-deliverable-drafts.md and docs/aaron-handoff.md.
+- **How it was tested or checked:** Nine initial quota tests failed against the
+  stub. Eleven SQLite tests now pass, including concurrent limits, rollback,
+  window boundaries and runtime restart. Restart first failed due a Miniflare
+  persistence option, diagnosed against its normalization code and corrected.
+  Full75 experiment tests pass. Independent AI review found no actionable defects
+  and passed all11 quota tests. Report body counts are350/400 words by whitespace;
+  prose checked against implemented modules and recorded validation. Prior exact
+  head a5b7d85 passed all three CI jobs; new quota work awaits its own CI run.
+- **What the human changed or rejected:** TODO (owner).
+- **What the human understands and can explain:** TODO (owner). Read quota.mjs and
+  explain why all account/user checks share a transaction, why rolling24h is more
+  conservative, why failures remain charged, and why an identity-bound fixed
+  account adapter is still necessary. Revise/rehearse report and demo passages.
+- **Limits:** Needs human review. No production quota integration, real provider
+  request, cloud deployment or performance certification. Report drafts do not
+  establish personal authorship/understanding; final team contributions, QA and
+  video remain pending. Only6 hours were user-reported; nothing posted to Trello.
