@@ -181,9 +181,9 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 - **(P1)** E-hailing at peak adds an assumed surge multiplier on top of the fare formula; the multiplier is an assumption, shown as a range or estimate, never as a live price.
 - **(P1)** The "on time" check and the highlighted option use the user's actual departure time from their timetable (peak or off-peak), not an average.
 - Because each listing now needs two departure-time lookups per mode, results for the same area and faculty pair are cached in Firestore to protect NFR1 and the Maps quota.
-- **Public transport route (P1):** tapping the bus or LRT plus UM shuttle option expands the full route: walk to the first stop or station, each bus or LRT line with its boarding and alighting stops and any transfer, the UM shuttle leg, the final walk, and total time and fare. It shows the next departures that arrive before the user's class start, using the user's real class time.
+- **Public transport route (P1):** tapping the bus or LRT plus UM shuttle option opens the full route on its own page: walk to the first stop or station, each bus or LRT line with its boarding and alighting stops and any transfer, the UM shuttle leg, the final walk, and total time and fare. It shows the next departures that arrive before the user's class start, using the user's real class time.
 - **(P1)** Public transport steps come from the Routes API transit mode. UM shuttle routes and timetables may not be in Google's transit data, so the team adds them as seed data (`areas.nearestStations[]` plus a shuttle stops and timetable table) and the card labels shuttle times as scheduled, not live.
-- **(P1)** The route detail loads only when the user expands it, so listing search stays within NFR1.
+- **(P1)** The route detail loads only when the user opens it, so listing search stays within NFR1.
 
 ### Module 5: Shared house tools
 | ID | Requirement | Priority |
@@ -216,7 +216,8 @@ Who owns and builds each module is in [TEAM_PLAN.md](TEAM_PLAN.md).
 **Acceptance criteria [DRAFT]**
 - Filters are always displayed for editing before the search runs.
 - Status is shown with words (Red flag, Check, OK) as well as colour.
-- Uploaded contracts are visible only to their uploader and auto-deleted after 30 days.
+- Uploaded contracts are visible only to their uploader and auto-deleted after 30 days; the user can delete the file and its result earlier.
+- The contract check is never shown on a Listing, Room card or room details page. A tenancy agreement is confidential, so it reaches the student privately: the Host shares it in the Connection chat (a chat attachment visible only to the two people), and the student can run the check from there or upload their own copy from Profile.
 
 ### Optional modules (P2)
 - **Module 7: Shared commute groups (P2).** Students from the same area with overlapping timetables form a recurring commute group (shared car or train + UM shuttle). There are no fixed driver or passenger roles: every member is equal and pays an equal share.
@@ -277,7 +278,7 @@ Additional constraints taken from the proposal:
 ### Navigation
 A floating bottom bar with four tabs, **Home, Rooms, Match, Unit**, plus a separate blue **Post** button for listing a room. "Home" and "Unit" use different icons (house vs. door) so they are not confused.
 
-There is no Ask tab. The AI features sit where they are used: plain-language search (FR6.1) is the Rooms search bar, and the contract check (FR6.2) opens from a room's details page.
+There is no Ask tab. The AI features sit where they are used: plain-language search (FR6.1) is the Rooms search bar, and the contract check (FR6.2) is **private**: it opens only from the agreement the Host shares in a Connection chat, or from the Contract check row in Profile. It never appears on a listing, a Room card or the room details page.
 
 | Screen | Purpose | Modules |
 |---|---|---|
@@ -285,8 +286,8 @@ There is no Ask tab. The AI features sit where they are used: plain-language sea
 | Rooms | Room grid with filters; the search bar takes plain-language requests (AI) | 2, 6 |
 | Post | List a room: photos, building, room type, price | 2 |
 | Evaluate unit | Short form for any unit's name, rent and rooms (optional "Paste listing" AI shortcut, P2), see the default room price split (master, medium, small), each member's monthly cost and commute card | 2, 3, 4 |
-| Room details | Listing, true monthly cost, and a **commute options card** (walk, bus/LRT + shuttle, e-hailing, drive alone) with time, monthly cost and CO₂ per mode, and an expandable step-by-step public transport route; entry to the contract check | 2, 4, 6 |
-| Contract check | Upload a tenancy agreement and see clauses marked Red flag, Check or OK (opened from Room details) | 6 |
+| Room details | Listing, true monthly cost, and a **commute options card** (walk, bus/LRT + shuttle, e-hailing, drive alone) with time, monthly cost and CO₂ per mode, and a step-by-step public transport route that opens on its own page | 2, 4, 6 |
+| Contract check | Upload a tenancy agreement and see clauses marked Red flag, Check or OK. Private: opened from a Connection chat or from Profile, never from a listing | 6 |
 | Match | Match score, reasons, things to discuss, group rental | 3 |
 | Unit | Shared expenses and who owes whom, chore rotation, house rules | 5 |
 
@@ -297,7 +298,7 @@ There is no Ask tab. The AI features sit where they are used: plain-language sea
 4. **Privacy by default:** initials instead of photos; address and phone hidden until a Connection exists.
 
 ### Colour scheme and type
-Full tokens are in the Jiran design system canvas (style reference: Nextdoor; font: Geist, semibold at most).
+Full tokens, components and rules are in [DESIGN.md](DESIGN.md) (style reference: Nextdoor; font: Geist, semibold at most).
 
 | Colour | Hex | Use |
 |---|---|---|
