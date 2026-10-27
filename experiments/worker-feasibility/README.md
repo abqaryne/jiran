@@ -26,7 +26,12 @@ health is labelled fixture data. Authenticated POST paths `/commute-fixture` and
 `/match-fixture` accept only the existing scenario selector; no caller-supplied
 UID, arbitrary coordinates, monetary inputs or candidate profiles are accepted.
 Responses remain labelled fixture/research-only, use `Cache-Control: no-store`,
-and omit verified token/email context. Bodies are capped at 2048 bytes.
+and omit verified token/email context. Bodies are capped at 2048 bytes and a
+one-second read deadline. A stalled upload or client abort returns sanitized408
+`request-timeout`; timers/listeners/readers are cleaned up and cancellation is
+requested without waiting for the sender. Elapsed time is checked after reads,
+including the final chunk. Workerd tests exercise an authenticated partial upload
+that never ends. This body deadline does not certify overall request latency.
 
 The verifier uses JOSE/WebCrypto RS256, exact demo project issuer/audience,
 required exp/iat/auth_time/sub and recognized kid, verified email and no
@@ -75,8 +80,8 @@ the locked experiment dependencies; that is not a security-completion claim.
   quota persistence. No service-account/Admin SDK workaround is included.
 - Approved fares, trips/weights, real routing, GTFS journey logic/freshness and
   UM shuttle evidence. Fixtures prove module compatibility only.
-- HTTP deadlines/abuse controls and Android transport integration; this local
-  fixture reader is byte-bounded but has no slow-request deadline.
+- Overall request deadlines, global abuse controls and Android transport
+  integration; the local body reader has its own bounded read deadline.
 - Actual Free-account signup/quotas, deployed CPU limits and NFR1 p95 at100
   concurrent users. Local test elapsed time is not billed CPU or a cloud benchmark.
 - Team agreement on the proposed runtime/provider change and the broader

@@ -37,3 +37,23 @@ lint/unit tests/Checkstyle/debug build pass after relocation. Independent AI mer
 review found a relative documentation link, corrected; no feature loss or runtime
 path defect found. Local Firebase emulator smoke is still in progress downloading
 its missing JAR. Human review remains TODO (owner).
+
+## 2026-10-27 · Request-body deadline · Backend infrastructure
+
+- **Human owner:** Aaron.
+- **AI tool and model:** Codex; exact deployed model version not recorded.
+- **Task:** Continue the solo plan's HTTP hardening in the isolated Worker prototype.
+- **Prompts (exact):**
+  > implement those on the previous prompts
+- **Output used:** src/read-json.mjs and focused tests; Worker calls the new
+  reader. One-second timeout/client-abort408 and2KiB limit documented in README.
+- **How it was tested or checked:** Eight tests failed before implementation and
+  passed afterward. All64 experiment tests pass, including an authenticated
+  incomplete-upload timeout through actual workerd. Preceding layout smoke
+  exited0; all Firebase auth/rules/commute/match smoke checks passed. No new live
+  operation was performed. Android checks passed on unchanged application code.
+- **What the human changed or rejected:** TODO (owner).
+- **What the human understands and can explain:** TODO (owner). Read read-json.mjs
+  and its tests; explain byte limits, elapsed-time checks, cancellation and cleanup.
+- **Limits:** Needs human review. This does not prove production overall latency,
+  persisted quotas or global abuse protection. Personal review/hours not verified.

@@ -1,37 +1,10 @@
 import commute from '../../../backend/functions/src/commute-preview.js';
 import match from '../../../backend/functions/src/match-preview.js';
 import {HttpError,verifyFirebaseToken} from './firebase-token.mjs';
+import {readJsonBody} from './read-json.mjs';
 
 function json(value,status=200,headers={}) {
   return Response.json(value,{status,headers:{'cache-control':'no-store',...headers}});
-}
-async function readBody(request) {
-  if (!/^application\/json(?:\s*;.*)?$/i.test(request.headers.get('content-type')??'')) {
-    throw new HttpError(415,'json-required');
-  }
-  if (!request.body) throw new HttpError(400,'invalid-request');
-  const reader=request.body.getReader();
-  let size=0;
-  const chunks=[];
-  try {
-    while(true) {
-      const {done,value}=await reader.read();
-      if(done) break;
-      size+=value.byteLength;
-      if(size>2048) {
-        await reader.cancel().catch(()=>{});
-        throw new HttpError(413,'request-too-large');
-      }
-      chunks.push(value);
-    }
-    const bytes=new Uint8Array(size);
-    let offset=0;
-    for(const chunk of chunks) { bytes.set(chunk,offset); offset+=chunk.byteLength; }
-    return JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
-  } catch(error) {
-    if(error instanceof HttpError) throw error;
-    throw new HttpError(400,'invalid-request');
-  } finally { reader.releaseLock(); }
 }
 
 export default {
@@ -50,7 +23,7 @@ export default {
       if(!handler) throw new HttpError(404,'not-found');
       if(request.method!=='POST') return json({error:'method-not-allowed'},405,{allow:'POST'});
       const auth=await verifyFirebaseToken(request);
-      const data=await readBody(request);
+      const data=await readJsonBody(request);
       try { return json({result:handler({auth,data}),researchOnly:true}); }
       catch { throw new HttpError(400,'invalid-request'); }
     } catch(error) {

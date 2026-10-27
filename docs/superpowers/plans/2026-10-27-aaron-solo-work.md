@@ -98,3 +98,26 @@ assembleDebug passed after reconciliation. Local Firebase CLI is downloading its
 missing Firestore emulator JAR; the observed smoke process remains running.
 The existing ignored Android Firebase config was copied to its new ignored
 android/app location without logging or staging its contents.
+
+## Batch B: bounded request JSON reading
+
+Ruling: extract the existing2KiB JSON reader into a small shared module, adding a
+one-second wall-time deadline and client-abort handling. Keep fixture routes,
+authentication ordering and response contracts unchanged except the explicit408
+request-timeout response. Cancel stalled/oversized bodies without awaiting an
+uncooperative stream's cancellation promise; clear timers/listeners and release
+the reader. Check elapsed time after reads as well as a timer so a blocked event
+loop cannot turn a late body into success. This is a request-body deadline, not a
+production end-to-end latency/CPU guarantee. No Firebase settings or live calls.
+
+Previous turn was progress: committed/pushed cache and layout reconciliation.
+Fresh local emulator smoke exited0 with all auth, rules, commute and match checks
+passing. CI40450523624 backend/Worker jobs passed; Android remains under observation.
+
+Batch B verification: eight body-reader tests failed against the unimplemented
+reader before implementation; all eight now pass. Full64 experiment tests pass,
+including the real workerd authenticated partial-upload408 regression. No live
+Firebase calls/settings, shared calculation behavior or Android changes.
+Needs human review: read src/read-json.mjs and explain why byte limits alone do
+not stop slow uploads, why cancellation is not awaited, and why the body deadline
+is not a production p95 guarantee.

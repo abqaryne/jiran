@@ -51,6 +51,20 @@ test('local workerd health is explicitly a fixture experiment',async()=>{
   assert.deepEqual(await response.json(),{status:'local-feasibility',dataSource:'fixture'});
   assert.equal(response.headers.get('cache-control'),'no-store');
 });
+
+test('workerd returns a sanitized408 for an authenticated partial upload that never ends',async()=>{
+  const controller=new AbortController();
+  const guard=setTimeout(()=>controller.abort(),10000);
+  const body=new ReadableStream({start(c){c.enqueue(new TextEncoder().encode('{}'));}});
+  try {
+    const response=await mf.dispatchFetch('http://localhost/commute-fixture',{method:'POST',
+      headers:{'content-type':'application/json',authorization:`Bearer ${await token()}`},
+      body,duplex:'half',signal:controller.signal});
+    assert.equal(response.status,408);
+    assert.equal(response.headers.get('cache-control'),'no-store');
+    assert.deepEqual(await response.json(),{error:'request-timeout'});
+  } finally { clearTimeout(guard); controller.abort(); }
+});
 test('RS256-verified auth runs the existing commute calculator in workerd',async()=>{
   const response=await call({jwt:await token()});
   assert.equal(response.status,200);
