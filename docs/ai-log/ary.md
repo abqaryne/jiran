@@ -244,3 +244,32 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose ClickUp and asked for the change on this branch. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the statuses are a proposal, not agreed with Dafi yet.
+
+## 2026-10-29 · Review of Gathan's schema PR (#8) · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** read `docs/schema.md` from PR #8 against the PRD, ASSUMPTIONS, `docs/api-contracts.md`, `match.js` and `firestore.rules`, and draft review comments.
+- **Prompts (exact):**
+  > dna coba cek pr gathan
+  > yaudh deh tulis comment di pr review biar nanti gathan yang benerin
+  > ok apus aja deh comment an aku yang review itu dan kirim ke chat sini biar nanti aku private chat si gathan
+- **Output used:** a review comment posted on PR #8 under Ary's account, then hidden as "outdated" (GitHub does not allow deleting a submitted review); the same text was given to Ary to send to Gathan in a private chat. No repository file changed.
+- **How it was tested or checked:** each finding was compared with the named file (field names against `match.js` and `api-contracts.md`, access rules against `firestore.rules`, retention periods against ASSUMPTIONS #8). not verified: the findings were not independently re-checked by a human; whether Aaron agrees with the sen proposal.
+- **What the human changed or rejected:** Ary chose to hide the posted comment and send it privately. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain finding 5 (money in sen) and finding 6 (Rules apply per document, so contact data must be split).
+- **Limits:** the review is an AI draft and may miss issues; the sen proposal is a team decision, not agreed.
+
+## 2026-10-29 · Shared run configuration for LauncherActivity · Tooling (E1.2)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** make Run in Android Studio open `LauncherActivity` for everyone, because the debug build has three launcher activities and the default picks the design system gallery.
+- **Prompts (exact):**
+  > pas aku buka Jiran kok malah kayak design system ya di android studio aku
+  > ok yaudh tambahin aja configurationnya biar semua orang otomatis run LauncherActivity
+- **Output used:** `android/.run/app.xml`, copied from the run configuration Ary already set by hand in Android Studio (`specific_activity`, `com.jiran.app.ui.auth.LauncherActivity`).
+- **How it was tested or checked:** the file is valid XML and is not git-ignored. not verified: that Android Studio loads the shared file on another machine, and that it replaces the automatically created `app` configuration instead of adding a second one.
+- **What the human changed or rejected:** Ary set the Specified Activity in Android Studio first and asked for it to be shared. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Know why the default picks the gallery (the first launcher activity in the merged debug manifest).
+- **Limits:** the gallery ("Jiran UI") and developer ("Jiran dev") icons still exist in debug builds by design.
