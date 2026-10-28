@@ -377,10 +377,10 @@ Android app (Java)
 | AI | Gemini API (or Claude API) |
 | Notifications | Firebase Cloud Messaging |
 | Design | Figma |
-| Code and tasks | GitHub, Trello |
+| Code and tasks | GitHub, ClickUp |
 | Testing | JUnit and Mockito, Espresso, Firebase Emulator Suite, k6 |
 
-**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the story (e.g. `[E7.1] Add balance calculation`); the story card holds the FR.
+**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the story (e.g. `[E7.1] Add balance calculation`); the story task holds the FR.
 
 ---
 

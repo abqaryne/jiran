@@ -230,3 +230,17 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary asked to remove the "Examples only" label. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Read first: `FirebaseAccountService.sendPasswordReset` (why an unknown address counts as success), `StartRoute` (who may reach which screen), and the sign-in error mapping.
 - **Limits:** the "link works for 1 hour" text from Figma was left out because it is not verified. Log out sits on the Home placeholder until Profile and settings (E10.1). The product shell opens after verification as a stand-in for profile setup (E1.3). Aaron's earlier string `auth_reset_sent` existed, so the new text is named `auth_reset_link_sent`.
+
+## 2026-10-28 · Move the work breakdown from Trello to ClickUp · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** change the team documents from Trello to ClickUp, and write the status list and the ClickUp setup (Space, Lists, tasks, subtasks).
+- **Prompts (exact):**
+  > oke aku mau nanya berarti di clickup itu status di boardnya apa aj ya?
+  > pakai clikcup dan update ya di branch yang sekarang aja ya biar barengan
+- **Output used:** `docs/team/work-breakdown.md` (renamed from `trello-cards.md`; new section 2 with the statuses Backlog, This week, In progress, Blocked, In review, QA, Done), and the Trello wording changed to ClickUp in `TEAM_PLAN.md`, the personal files, `AGENTS.md`, `README.md`, `docs/README.md`, `docs/product/PRD.md` and the pull request template. Not changed: the history in `docs/ai-log/` and Aaron's own records (`docs/aaron-*.md`, `docs/ai-usage-log.md`).
+- **How it was tested or checked:** text search shows no Trello mention left outside the records above; all relative links in `docs/` resolve. not verified: the ClickUp Space itself, which Dafi has to create; the status types and field names were written from general knowledge of ClickUp and should be checked in the real workspace.
+- **What the human changed or rejected:** Ary chose ClickUp and asked for the change on this branch. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the statuses are a proposal, not agreed with Dafi yet.

@@ -198,7 +198,7 @@ Gathan reviews schema/rules, and another member reviews each PR. Ask the reposit
 administrator to protect `main` with reviews and required CI jobs `android` and
 `backend`. The workflow file alone does **not** enable remote branch protection.
 Commits use `[Story] short description`, e.g. `[E7.1] Add balance calculation`
-(`[Docs]`, `[Infra]` or `[Design]` when there is no story). Log actual Trello hours and AI use.
+(`[Docs]`, `[Infra]` or `[Design]` when there is no story). Log actual ClickUp hours and AI use.
 
 See [architecture](docs/architecture.md), [draft API contracts](docs/api-contracts.md),
 [AI log](docs/ai-usage-log.md), and [batch plan/evidence](docs/superpowers/plans/2026-10-27-aaron-foundations.md).

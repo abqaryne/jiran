@@ -7,9 +7,9 @@
 
 Your schema and rules are the first thing others wait for, so they land first.
 
-## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
+## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [work-breakdown.md](work-breakdown.md).
 
 **Stories you lead** (12)
 
@@ -28,7 +28,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 | **E9.4** Area page and building reviews | FR2.3, P1 | 20 Dec | E2, E3 |
 | **T2.3** NFR2: privacy and security evidence | P0 | 27 Dec | all rules |
 
-**Stories where you do a subtask** (14): open the story card to see yours.
+**Stories where you do a subtask** (14): open the story task to see yours.
 
 | Story | Lead | Due |
 |---|---|---|
@@ -65,11 +65,11 @@ Your schema and rules (E0.5) land first because everyone waits for the field nam
 
 ## Rules for everyone
 
-- Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
-- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the Trello card (the card shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
+- Log your actual hours on your ClickUp tasks. Commits and ClickUp are the evidence for the report and the peer evaluation.
+- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the ClickUp task (the task shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story task moved with hours logged in ClickUp, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).
