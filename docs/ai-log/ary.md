@@ -273,3 +273,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary set the Specified Activity in Android Studio first and asked for it to be shared. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Know why the default picks the gallery (the first launcher activity in the merged debug manifest).
 - **Limits:** the gallery ("Jiran UI") and developer ("Jiran dev") icons still exist in debug builds by design.
+
+## 2026-10-29 · Shared master prompt for team members · Project tooling
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** write one general prompt every member can paste into their AI assistant, so each session follows the AI policy, product rules and workflow of the repository.
+- **Prompts (exact):**
+  > tolong buatin general master prompt untuk setiap member biar bisa langsung enak ngepromptnya dan ngerjain tugasnya
+- **Output used:** `docs/team/master-prompt.md` (the prompt, a one-task block, a pre-PR checklist); a link to it in `docs/team/TEAM_PLAN.md`; in `docs/ai-log/README.md` the old "Trello card" wording changed to "ClickUp task". The prompt follows `AGENTS.md`; Aaron's own prompt in `docs/team/aaron.md` is untouched.
+- **How it was tested or checked:** the files it names exist and the links resolve. not verified: that Claude Code, Codex, ChatGPT and Gemini each follow every rule; nobody on the team has used the prompt yet.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why the prompt asks the assistant to teach and to leave the human fields in the AI log empty.
+- **Limits:** the prompt repeats rules from `AGENTS.md`; if `AGENTS.md` changes, update both.
