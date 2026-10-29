@@ -156,12 +156,12 @@ Everything the flows need to start: repo and CI, Firebase and Maps, the design s
 
 ### E1 · Starting and Profile Setup flows
 Flow: Starting Flow, Profile Setup Flow, Core Tabs · window: 16 to 22 Nov · lead: Ary.
-A student signs up with a UM email, verifies it, logs in, sets up a profile and lands on Home with the four tabs.
+A student signs up with an email, verifies it, logs in, sets up a profile and lands on Home with the four tabs.
 
-**E1.1 Sign up with a UM email and verify it** (FR1.1, P0) · Ary · due 19 Nov · WAIT UM email policy decision
-- (Dafi, Ary) Decide the UM email policy (student and staff domains); ask the lecturer if unsure
+**E1.1 Sign up with an email and verify it** (FR1.1, P0) · Ary · due 19 Nov
+- (Dafi, Ary) Decided 29 Oct 2026: any email may register; a UM email earns the UM verified badge. Still to confirm with UM: which domains count (student, staff, postgraduate)
 - (Ary) Welcome, Sign up and Verify email screens
-- (Ary) Connect to the existing email and password repository; reject non-UM emails with a clear message
+- (Ary) Connect to the existing email and password repository; reject malformed emails with a clear message and mark UM emails as UM verified
 - (Ary, Aaron) An unverified account can only reach the verify screen
 - (Ary) Unit tests for the email check and the sign-up flow
 
@@ -190,6 +190,7 @@ A host posts a unit with priced rooms and manages the listing.
 - (Gathan) `listings` data, photo upload to Storage and rules
 - (Gathan) Building picker with place search
 - (Gathan) Post screens, step 1 (Ary's components): photos, building, rent and deposit
+- (Gathan, Ary) Only UM verified users can post: the screen explains the badge, and Security Rules check the email domain
 
 **E2.2 Rooms and prices with the price rule** (FR2.1, P0) · Gathan · due 27 Nov · WAIT E2.1
 - (Gathan) Room price rule in plain Java: the rooms never add up to more than the rent; default split 1.3 / 1.0 / 0.7 from config; JUnit tests

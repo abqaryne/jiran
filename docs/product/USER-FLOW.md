@@ -9,7 +9,7 @@ Legend: rounded boxes are start or end points, diamonds are decisions, plain box
 ```mermaid
 flowchart TD
     A(["Open app"]) --> B{"Has an account?"}
-    B -- "No" --> C["Sign up with a UM student email"]
+    B -- "No" --> C["Sign up with an email (a UM email earns the UM verified badge)"]
     C --> D["Open the verification link in the email"]
     D --> E["Build profile: faculty, class timetable, budget, lifestyle tags, owns a car"]
     E --> F["Choose what stays hidden until a Connection"]

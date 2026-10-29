@@ -3,7 +3,8 @@ package com.jiran.app.domain.auth;
 /**
  * Checks the sign-up form before anything is sent to Firebase. Each field gets its own {@link Problem}, so the
  * screen can show the message under the right field. Firebase stays the authority for accounts; this only saves
- * a round trip and gives clear messages.
+ * a round trip and gives clear messages. Any well-formed email may register (team decision, 29 Oct 2026, so first-year
+ * students without a UM email can join); a UM email only earns the UM verified badge, see {@link UmEmailPolicy}.
  */
 public final class SignUpCheck {
 
@@ -11,7 +12,7 @@ public final class SignUpCheck {
     public static final int MIN_PASSWORD_LENGTH = 8;
 
     /** What is wrong with one field. */
-    public enum Problem { NONE, REQUIRED, NOT_AN_EMAIL, NOT_UM_EMAIL, TOO_SHORT }
+    public enum Problem { NONE, REQUIRED, NOT_AN_EMAIL, TOO_SHORT }
 
     private final Problem name;
     private final Problem email;
@@ -36,10 +37,7 @@ public final class SignUpCheck {
         if (email == null || email.trim().isEmpty()) {
             return Problem.REQUIRED;
         }
-        if (!UmEmailPolicy.isWellFormed(email)) {
-            return Problem.NOT_AN_EMAIL;
-        }
-        return UmEmailPolicy.isUmEmail(email) ? Problem.NONE : Problem.NOT_UM_EMAIL;
+        return UmEmailPolicy.isWellFormed(email) ? Problem.NONE : Problem.NOT_AN_EMAIL;
     }
 
     private static Problem checkPassword(String password) {

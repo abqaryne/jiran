@@ -69,8 +69,7 @@ public class SignUpFragment extends Fragment {
         }
         setError(binding.nameLayout, check.name(), R.string.auth_error_name_required, 0);
         setError(binding.emailLayout, check.email(), R.string.auth_error_email_required,
-                check.email() == Problem.NOT_UM_EMAIL ? R.string.auth_error_email_not_um
-                        : R.string.auth_error_email_invalid);
+                R.string.auth_error_email_invalid);
         setError(binding.passwordLayout, check.password(), R.string.auth_error_password_required,
                 R.string.auth_error_password_short);
     }

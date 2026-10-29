@@ -75,7 +75,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_12"
-                android:hint="@string/auth_field_email">
+                android:hint="@string/auth_field_email"
+                app:helperText="@string/auth_email_helper"
+                app:helperTextEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"

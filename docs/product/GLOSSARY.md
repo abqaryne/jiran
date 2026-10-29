@@ -35,8 +35,12 @@ The search-result tile for one vacant Room, showing its price, travel time and t
 _Avoid_: Listing card
 
 **Host**:
-The verified UM student who holds, or is about to hold, the tenancy of a Unit and posts its Listing. There is at most one active Host per Unit. When a Household forms from a Group, the member who signs the tenancy becomes Host. Landlords are not Hosts and have no account.
+The student with the **UM verified** badge who holds, or is about to hold, the tenancy of a Unit and posts its Listing. There is at most one active Host per Unit. When a Household forms from a Group, the member who signs the tenancy becomes Host. Landlords are not Hosts and have no account.
 _Avoid_: Landlord, owner, poster, agent
+
+**UM verified**:
+The badge a user earns by confirming an email on a UM domain. Without it a user can search, match and connect but cannot post a Listing.
+_Avoid_: verified student, UM-only
 
 **Evaluation**:
 A private what-if for a Unit found on another site, entered by a Group or a student to see room prices, monthly cost and commute. It is never shown to others and never becomes a Listing.

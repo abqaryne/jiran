@@ -50,7 +50,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 Your schema and rules (E0.5) land first because everyone waits for the field names.
 
 ## Privacy checklist (NFR2 and PDPA 2010)
-- Only verified UM accounts can read anything
+- Only accounts with a confirmed email can read anything; only UM verified accounts (email on a UM domain) can create a Listing
 - Exact address, phone number and contract uploads visible only to the owner
 - Contact details only after both sides accept
 - Collect only what each feature needs; consent at sign-up

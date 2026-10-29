@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Decides which email addresses may register (FR1.1). The list of allowed domains is the single place to change
- * when the team settles the UM email policy (student domain only, or staff too).
+ * Recognises UM email addresses (FR1.1). Anyone with a verified email may register, but only a UM address earns the
+ * UM verified badge, which a user needs to post a Listing. The list of UM domains is the single place to change when
+ * the team settles which domains count (student domain only, or staff too).
  *
  * <p>A domain must match exactly. "evil-um.edu.my" and "siswa.um.edu.my.example.com" are rejected.
  */
 public final class UmEmailPolicy {
 
-    /** Domains allowed to register. Draft policy from the Figma design: UM student and UM staff mail. */
+    /** Domains that count as UM mail. Draft policy from the Figma design: UM student and UM staff mail. */
     public static final List<String> ALLOWED_DOMAINS =
             Collections.unmodifiableList(Arrays.asList("siswa.um.edu.my", "um.edu.my"));
 
@@ -36,7 +37,7 @@ public final class UmEmailPolicy {
         return domain.contains(".") && !domain.startsWith(".") && !domain.endsWith(".");
     }
 
-    /** True when the address is well formed and its domain is exactly one of {@link #ALLOWED_DOMAINS}. */
+    /** True when the address is well formed and its domain is exactly one of {@link #ALLOWED_DOMAINS} (UM verified). */
     public static boolean isUmEmail(String email) {
         if (!isWellFormed(email)) {
             return false;

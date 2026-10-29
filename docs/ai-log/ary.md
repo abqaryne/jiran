@@ -286,3 +286,19 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary). Be able to say why the prompt asks the assistant to teach and to leave the human fields in the AI log empty.
 - **Limits:** the prompt repeats rules from `AGENTS.md`; if `AGENTS.md` changes, update both.
+
+## 2026-10-29 · Open sign-up to any email, UM verified badge for posting · Module 1 (FR1.1)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** change the sign-up rule from "UM email only" to "any email may register; a UM email earns the UM verified badge, needed to post a Listing", in code, tests and documents, in the same pull request as E1.1 and E1.2.
+- **Prompts (exact):**
+  > kebijakan domain email um ini maksudnya gimana
+  > kayaknya email apa aja boleh deh biar semua orang bisa daftar
+  > kan bisa aja anak tahun pertama itu belum punya um mail jadi kayaknya mending dibuka buat semua nya dh
+  > oke deh setuju ketika mau masang listing harus ada badge gitu tapi disatuin aja di PR #9 ya
+- **Output used:** `SignUpCheck` no longer rejects non-UM domains (the `NOT_UM_EMAIL` problem was removed); `UmEmailPolicy.isUmEmail` stays and is the check for the badge; sign-up, log-in and reset texts no longer say "UM email", and the sign-up email field has a helper line about the badge; tests changed (`SignUpCheckTest`, `SignUpViewModelTest`, one new test). Documents: PRD (FR1.1 and its criteria, goals, Host rules, NFR2, risks, open question 9), `GLOSSARY.md` (new term UM verified), `USER-FLOW.md`, `docs/team/` (E1.1 title and wait removed, E2.1 gets a subtask for the badge check, Gathan's privacy checklist).
+- **How it was tested or checked:** `lintDebug testDebugUnitTest checkstyleMain assembleDebug` pass (64 unit tests, 0 failures). not verified: the new sign-up text and helper line on a device or emulator; nothing yet shows the badge in the app (no profile screen exists) and nothing yet blocks posting (E2.1 is Gathan's); Security Rules for the badge are not written.
+- **What the human changed or rejected:** Ary decided to open sign-up so first-year students without a UM email can join, and chose to require the badge only for posting a Listing. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why the badge is checked in Security Rules and not only on the screen, and what risk opening sign-up adds (people outside UM can search and connect).
+- **Limits:** which UM domains count is still a draft; Gathan must change his rule text (his `schema.md` says Rules verify the UM domain for identity) and Dafi must hear about the policy change.

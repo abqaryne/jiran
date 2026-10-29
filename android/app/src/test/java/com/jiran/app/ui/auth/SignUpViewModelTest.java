@@ -33,9 +33,9 @@ public final class SignUpViewModelTest {
 
     @Test
     public void anInvalidFormNeverReachesTheBackend() {
-        viewModel.submit("Mei Ling", "meiling@gmail.com", "12345678");
+        viewModel.submit("Mei Ling", "meiling-at-gmail.com", "12345678");
         assertEquals(0, accounts.signUpCalls);
-        assertEquals(Problem.NOT_UM_EMAIL, viewModel.fieldProblems().getValue().email());
+        assertEquals(Problem.NOT_AN_EMAIL, viewModel.fieldProblems().getValue().email());
         assertEquals(State.IDLE, viewModel.state().getValue());
     }
 
@@ -46,6 +46,13 @@ public final class SignUpViewModelTest {
         assertTrue(viewModel.fieldProblems().getValue().isValid());
         accounts.pendingSignUp.onSuccess();
         assertEquals(State.SUCCESS, viewModel.state().getValue());
+    }
+
+    @Test
+    public void anyWellFormedEmailMaySignUp() {
+        viewModel.submit("Mei Ling", "meiling@gmail.com", "12345678");
+        assertEquals(1, accounts.signUpCalls);
+        assertEquals(State.LOADING, viewModel.state().getValue());
     }
 
     @Test
