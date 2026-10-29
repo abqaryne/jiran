@@ -202,3 +202,17 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose free-only and an in-app map without a Google Maps link.
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the peak factor for road travel time is a placeholder idea, since openrouteservice has no live traffic. Aaron and Gathan must confirm the server, photo storage and contract-file handling. The aaron.md master prompt still mentions Cloud Functions (his file).
+
+## 2026-10-29 · PRD data model update for the new Firestore collections · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** bring PRD section 8 and open question 5 in line with Gathan's revised schema (PR #8) and Ary's decisions, so Gathan can refer to the PRD.
+- **Prompts (exact):**
+  > yang koleksi baru itu gimana coba
+  > oke coba update PRD dan push ke branch gathan biar dia refer ke situ
+- **Output used:** `docs/product/PRD.md` section 8 (new rows for the `private` documents, `listingRequests`, `chats`, `config`; money in sen; `filePath` removed from `contractChecks`) and open question 5 marked decided. The decision to accept `listingRequests`, to merge `identity` and `preferences` into one owner-only `profile` document, and to make `membership` owner-only is Ary's, taken from the AI's recommendation.
+- **How it was tested or checked:** the link to `docs/schema.md` resolves; a search finds no old field names (`photoPaths`, `filePath`, `totalRent`, `budgetMin`) left in the PRD. not verified: that `docs/schema.md` and the PRD now agree (schema.md still lists `identity` and `preferences` separately, which Gathan has to merge); no Security Rules were written or tested.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why each stage of sharing needs its own document (Security Rules judge a whole document) and why `listingRequests` exists (`matches` only links two students, not a student and a Host).
+- **Limits:** the PRD lists key fields only; field-level detail stays in `docs/schema.md`. `reports` and `notifications` are left out of section 8.
