@@ -36,6 +36,8 @@ public final class MainActivity extends Activity {
         password.setVisibility(BuildConfig.DEBUG ? View.VISIBLE : View.GONE);
         findViewById(R.id.open_auth_setup).setOnClickListener(view ->
                 startActivity(new Intent(this, EmailPasswordActivity.class)));
+        findViewById(R.id.open_sign_up_flow).setOnClickListener(view ->
+                startActivity(new Intent(this, com.jiran.app.ui.auth.AuthActivity.class)));
         findViewById(R.id.open_commute_preview).setOnClickListener(view ->
                 startActivity(new Intent(this, CommutePreviewActivity.class)));
         findViewById(R.id.open_match_preview).setOnClickListener(view ->

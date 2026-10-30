@@ -15,6 +15,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Debug-only launcher for the developer screen (backend checks, commute and match previews). -->
+        <activity-alias
+            android:name=".DevLauncher"
+            android:exported="true"
+            android:label="Jiran dev"
+            android:targetActivity="com.jiran.app.ui.MainActivity"
+            tools:ignore="HardcodedText">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
         <provider android:name="com.google.firebase.provider.FirebaseInitProvider"
             android:authorities="${applicationId}.firebaseinitprovider"
             tools:node="remove" />

@@ -1,12 +1,12 @@
 # Work breakdown: Initiative, Epics, Stories, Subtasks
 
-How the work is organised on the project board (Trello or any tool). Four levels, from big to small:
+How the work is organised in ClickUp. Four levels, from big to small:
 
 ```
 Initiative     Jiran: a working app, a video and a report, submitted by 3 and 10 January 2027
  └─ Epic       one FLOW of the app (E0 is the foundation, E1 to E10 follow the flows in build order)
-     └─ Story  one deliverable someone can finish and demo (this is the card)
-         └─ Subtask   one small step with one person (this is a checklist item on the card)
+     └─ Story  one deliverable someone can finish and demo (this is a ClickUp task)
+         └─ Subtask   one small step with one person (this is a subtask of the task)
 ```
 
 Sources: [PRD.md](../product/PRD.md) (FRs), [USER-FLOW.md](../product/USER-FLOW.md) and the Figma flows (what each epic builds),
@@ -28,31 +28,41 @@ rules and tests, with the whole team working on that flow. When an epic is merge
 - **Tracks T1 to T4 run in parallel, by date, not by order:** research and numbers, testing, video, report. They are not flows.
 - A story marked **WAIT** is not started until the thing it waits for exists. Use a stub or mock data meanwhile.
 
-## 2. How to set it up on the board
+## 2. How to set it up in ClickUp
 
-| Level | On the board |
+| Level | In ClickUp |
 |---|---|
-| **Initiative** | the board itself (name it "Jiran") |
-| **Epic** | a **colour label** (`E1 Starting and Profile` ... `E10 Polish`, `T1` to `T4`) and one card in a list called **Epics** that holds the epic's goal and its stories as a checklist. Keep the epics list in order. |
-| **Story** | a **card** with the epic label. Title format `E1.2 Log in, log out and reset password` |
-| **Subtask** | an item in the card's **checklist** `Subtasks`, written as `(Owner) what` |
+| **Initiative** | one **Space** named "Jiran" |
+| **Epic** | one **List** per epic, in build order: `E0 Foundations`, `E1 Starting and Profile` ... `E10 Polish`. Put the flows in a Folder `Flows` and the tracks `T1` to `T4` in a Folder `Tracks`. The epic's goal goes in the List description. |
+| **Story** | a **task** in its epic's List. Title format `E1.2 Log in, log out and reset password` |
+| **Subtask** | a **subtask** of the story task, written `(Owner) what` |
 
-**Columns for stories:** Backlog · Ready · In progress · In review · QA · Done. A story is **Done** only when all its subtasks are
-ticked, the PR is merged by Ary, CI is green, QA (Aly) passed and the hours are logged. Only stories of the **current epic**, plus
-the *can start early* ones, belong in Ready.
+**Statuses** (set them once for the whole Space so every List shares them; use Board view to see them as columns):
 
-**Labels:** priority `P0` `P1` `P2` · `Blocked` · `WAIT`. **Fields or description lines:** Owner · FR · Estimate (h) · Actual (h) · Due ·
-PR link · AI log link.
+| Status | ClickUp type | Meaning |
+|---|---|---|
+| **Backlog** | Not started | not scheduled yet; stories of later epics wait here |
+| **This week** | Not started | picked at sprint planning, not started |
+| **In progress** | Active | one person is working on it |
+| **Blocked** | Active | waits for a person or data (a story marked WAIT). Write who in a comment. |
+| **In review** | Active | PR open; Aaron reviews backend, Gathan schema and rules, then Ary |
+| **QA** | Active | Aly checks it on the emulator or a device |
+| **Done** | Closed | all subtasks ticked, PR merged by Ary, CI green, QA passed, hours logged |
+
+Only stories of the **current epic**, plus the *can start early* ones, belong in This week.
+
+**Tags:** priority `P0` `P1` `P2` · `WAIT`. **Fields:** Assignee, Due date and Time estimate are built in; add Custom Fields
+for FR (text), PR link (URL) and AI log link (URL).
 
 **Rules**
-- Log your **actual hours on the story card** (this is the evidence for the peer evaluation).
+- Log your **actual hours on the story task** with ClickUp time tracking (this is the evidence for the peer evaluation).
 - Max two stories In progress per person.
-- If AI helped, add the entry to `docs/ai-log/<name>.md` and link it on the card.
-- Screenshot the board every week (evidence for the report).
+- If AI helped, add the entry to `docs/ai-log/<name>.md` and link it on the task.
+- Screenshot the Board view every week (evidence for the report).
 - **Who builds screens:** each module owner builds their own screens using Ary's components. Ary builds the screens of Modules 1 and 3,
   the Room details and commute card, and reviews the rest.
 
-**Story card template** (paste into the description)
+**Story task template** (paste into the description)
 
 ```
 Epic: E_   FR: FRn.n   Priority: P_   Owner: @name   Reviewer: @name   Due: date   Estimate: h
@@ -104,7 +114,7 @@ subtask. UI means Android screens, backend means server code (Worker) and rules.
 
 ### E0 · Foundations and setup
 Flow: Core Tabs, repo, Firebase, schema, contracts · window: now to 15 Nov (Gate 2) · lead: Aaron, Ary, Dafi, Gathan.
-Everything the flows need to start: repo and CI, Firebase and Maps, the design system and app shell, the data schema and Security Rules, the function contracts, and the board.
+Everything the flows need to start: repo and CI, Firebase and Maps, the design system and app shell, the data schema and Security Rules, the function contracts, and the ClickUp Space.
 
 **E0.1 Repo and CI are healthy** (P0) · Aaron · due 2 Nov
 - (Ary) Add everyone as collaborators on GitHub
@@ -122,11 +132,11 @@ Everything the flows need to start: repo and CI, Firebase and Maps, the design s
 **E0.3 Design system and app shell** (P0) · Ary · due 15 Nov
 - (Ary) Figma tokens, components and all screens (done)
 - (Ary) Components, shell and component gallery in code (done)
-- (Ary) Announce the component list to the team and how to use it
-- (Ary) Empty and error states as components
+- (Ary) Announce the component list to the team and how to use it (done)
+- (Ary) Empty and error states as components (done)
 
 **E0.4 Project management and docs** (P0) · Dafi · due 30 Oct
-- (Dafi) Create this board: labels, columns, epics, story cards with subtasks
+- (Dafi) Create the ClickUp Space: statuses, a List per epic, a task per story with subtasks
 - (Dafi) Sprint 1 plan, weekly sync time, a place for minutes
 - (Dafi) Keep the PRD up to date as decisions change
 - (everyone) Create your own file in `docs/ai-log/` and start the AI Usage Log
@@ -148,17 +158,17 @@ Everything the flows need to start: repo and CI, Firebase and Maps, the design s
 Flow: Starting Flow, Profile Setup Flow, Core Tabs · window: 16 to 22 Nov · lead: Ary.
 A student signs up with a UM email, verifies it, logs in, sets up a profile and lands on Home with the four tabs.
 
-**E1.1 Sign up with a UM email and verify it** (FR1.1, P0) · Ary · due 19 Nov · WAIT UM email policy decision
-- (Dafi, Ary) Decide the UM email policy (student and staff domains); ask the lecturer if unsure
-- (Ary) Welcome, Sign up and Verify email screens
-- (Ary) Connect to the existing email and password repository; reject non-UM emails with a clear message
-- (Ary, Aaron) An unverified account can only reach the verify screen
-- (Ary) Unit tests for the email check and the sign-up flow
+**E1.1 Sign up with a UM email and verify it** (FR1.1, P0) · Ary · due 19 Nov · WAIT UM domain list
+- (Dafi, Ary) Decided 30 Oct 2026: UM email only. Only `siswa.um.edu.my` counts (students only, no staff mail). Still to confirm with UM or the lecturer: whether postgraduate students have another domain, and what first-year students without a UM email can do
+- (Ary) Welcome, Sign up and Verify email screens (done)
+- (Ary) Connect to the existing email and password repository; reject non-UM emails with a clear message (done)
+- (Ary, Aaron) An unverified account can only reach the verify screen (done in the app by `StartRoute`; Aaron still to review)
+- (Ary) Unit tests for the email check and the sign-up flow (done)
 
 **E1.2 Log in, log out and reset password** (FR1.2, P0) · Ary · due 20 Nov · WAIT E1.1
-- (Ary) Log in and Reset password screens
-- (Ary) Session handling and log out
-- (Ary) Tests for wrong password, unverified email and reset
+- (Ary) Log in and Reset password screens (done)
+- (Ary) Session handling and log out (done)
+- (Ary) Tests for wrong password, unverified email and reset (done)
 
 **E1.3 Profile setup and privacy** (FR1.3, P0) · Ary · due 22 Nov · WAIT `users` fields (E0.5)
 - (Ary) Four profile steps: faculty and year, timetable, budget and lifestyle, privacy
@@ -167,8 +177,8 @@ A student signs up with a UM email, verifies it, logs in, sets up a profile and 
 - (Ary) Tests for saving and loading a profile
 
 **E1.4 Home and the four tabs after sign-in** (P0) · Ary · due 22 Nov · WAIT E1.2
-- (Ary) Make the shell the first screen after sign-in
-- (Ary) Home, Rooms, Match and Unit tabs with placeholders and the Post button
+- (Ary) Make the shell the first screen after sign-in (done)
+- (Ary) Home, Rooms, Match and Unit tabs with placeholders and the Post button (done; the Post button does nothing until E2)
 
 ---
 
@@ -484,4 +494,4 @@ The report, written section by section as each part is built, and an accurate AI
 ## 7. Weekly routine (Dafi)
 - Daily: look for `Blocked` and `WAIT` stories, and check that the current epic is moving.
 - Twice a week: a short sync.
-- Weekend: demo, retro, update risks, post the hours summary and a screenshot of the board.
+- Weekend: demo, retro, update risks, post the hours summary and a screenshot of the Board view.

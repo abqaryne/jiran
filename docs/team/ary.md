@@ -9,16 +9,16 @@
 
 You do not write the match score (Aaron) or the match reason text (Ilham). You build the screens that show them.
 
-## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
+## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [work-breakdown.md](work-breakdown.md).
 
 **Stories you lead** (18)
 
 | Story | FR, priority | Due | Waits for |
 |---|---|---|---|
 | **E0.3** Design system and app shell | P0 | 15 Nov |  |
-| **E1.1** Sign up with a UM email and verify it | FR1.1, P0 | 19 Nov | UM email policy decision |
+| **E1.1** Sign up with a UM email and verify it | FR1.1, P0 | 19 Nov | UM domain list |
 | **E1.2** Log in, log out and reset password | FR1.2, P0 | 20 Nov | E1.1 |
 | **E1.3** Profile setup and privacy | FR1.3, P0 | 22 Nov | `users` fields (E0.5) |
 | **E1.4** Home and the four tabs after sign-in | P0 | 22 Nov | E1.2 |
@@ -36,7 +36,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 | **E10.2** Polish: empty states, errors, accessibility | P1 | 20 Dec | all P0 flows |
 | **T3.1** Script and screen captures | P0 | 20 Dec |  |
 
-**Stories where you do a subtask** (10): open the story card to see yours.
+**Stories where you do a subtask** (10): open the story task to see yours.
 
 | Story | Lead | Due |
 |---|---|---|
@@ -61,7 +61,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 | Match score and reasons | Aaron and Ilham | Fake scores |
 
 ## Your PR check-in routine
-1. CI is green and the PR links a Trello card.
+1. CI is green and the PR links a ClickUp task.
 2. Backend or rules PRs already have Aaron's or Gathan's review.
 3. UI follows the design system: contrast 4.5:1, touch targets at least 48 dp, status shown with words.
 4. Merge, and tell the owner so QA can pick it up.
@@ -75,11 +75,11 @@ If PRs queue for more than a day, let Aaron merge backend-only PRs.
 
 ## Rules for everyone
 
-- Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
-- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the Trello card (the card shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
+- Log your actual hours on your ClickUp tasks. Commits and ClickUp are the evidence for the report and the peer evaluation.
+- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the ClickUp task (the task shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story task moved with hours logged in ClickUp, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

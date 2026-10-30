@@ -203,6 +203,132 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the peak factor for road travel time is a placeholder idea, since openrouteservice has no live traffic. Aaron and Gathan must confirm the server, photo storage and contract-file handling. The aaron.md master prompt still mentions Cloud Functions (his file).
 
+## 2026-10-27 · E1.1 Sign up with a UM email: Welcome, Sign up, Verify email · Module 1 (FR1.1)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** build the first part of story E1.1: the UM email rule and form check in plain Java with unit tests, the two view models, and the three screens (Welcome, Sign up, Verify email) from the Figma Starting Flow, connected to the existing Firebase email and password repository.
+- **Prompts (exact):**
+  > yang bisa aku lakuin sekarang E1 ya?
+  > lanjut task kita aja yang E1
+- **Output used:** `domain/auth/UmEmailPolicy.java` and `SignUpCheck.java` (the rules); `data/AccountService.java` and `FirebaseAccountService.java`; `ui/auth/` (`AuthActivity`, `WelcomeFragment`, `SignUpFragment`, `VerifyEmailFragment`, `SignUpViewModel`, `VerifyEmailViewModel`, `AuthViewModelFactory`); layouts, `nav_auth.xml`, `strings_auth.xml`; a debug button "Sign up screens (Module 1)" on the developer screen. Tests: 11 for the rules, 12 for the view models.
+- **How it was tested or checked:** `lintDebug testDebugUnitTest checkstyleMain assembleDebug` pass (47 unit tests). Run on the Pixel_9 emulator against the local Firebase Auth emulator: empty and wrong-domain forms show errors under the fields, a valid sign-up reaches Verify email with the resend countdown, opening the emulator's verification link and returning to the app opens the product shell, and signing up with the same email again shows the "already has an account" message. not verified: a real device, a real email inbox, the live `jiran-mad` project, screen rotation, TalkBack.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Read these first: `UmEmailPolicy` (why the domain must match exactly and why two `@` signs are rejected), `SignUpCheck` (one problem per field), and how `SignUpViewModel` decides when to call Firebase.
+- **Limits:** the allowed domains (`siswa.um.edu.my` and `um.edu.my`) follow the Figma design and are still a team decision (story E1.1, with Dafi). The Figma tip said the link works for 24 hours; that was removed because it is not verified. Log in is a placeholder message until E1.2. After verification the product shell opens as a stand-in until profile setup (E1.3) exists. "Change email" signs the unverified account out but does not delete it from Firebase. The full name is stored as the Firebase display name only; the `users` profile document waits for Gathan's schema.
+
+## 2026-10-27 · E1.2 Log in, reset password, session routing, Log out · Module 1 (FR1.2)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** build story E1.2 (Log in and Reset password screens, session handling, log out), make Welcome the first screen through a launcher that reads the saved session, and remove the "Examples only" label from Welcome.
+- **Prompts (exact):**
+  > ini ui nya emg belum diupdate ya buat login?
+  > sekaligus dan apus label examples only di welcome
+- **Output used:** `domain/auth/LogInCheck.java`; `data/AccountService` and `FirebaseAccountService` (sign in, password reset, session state); `ui/auth/` (`LogInFragment`, `ResetPasswordFragment`, `LogInViewModel`, `ResetPasswordViewModel`, `StartRoute`, `LauncherActivity`); layouts, `nav_auth.xml` and strings; a temporary Log out button on the Home tab; a debug-only "Jiran dev" launcher icon for the developer screen. Tests: 16 new (63 in total).
+- **How it was tested or checked:** `lintDebug testDebugUnitTest checkstyleMain assembleDebug` pass. On the Pixel_9 emulator with the local Firebase Auth emulator: a wrong login shows one message for both a wrong email and a wrong password; Reset password shows the same "if this email has an account" message for an unknown address; sign up, opening the verification link and returning opens the product; Log out returns to Welcome; logging in again with the verified account opens the product; after killing the app, an unverified account reopens on Verify email; logging in with an unverified account goes to Verify email. not verified: a real device, a real inbox, the live project, rotation, TalkBack, and the "too many attempts" message from Firebase.
+- **What the human changed or rejected:** Ary asked to remove the "Examples only" label. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Read first: `FirebaseAccountService.sendPasswordReset` (why an unknown address counts as success), `StartRoute` (who may reach which screen), and the sign-in error mapping.
+- **Limits:** the "link works for 1 hour" text from Figma was left out because it is not verified. Log out sits on the Home placeholder until Profile and settings (E10.1). The product shell opens after verification as a stand-in for profile setup (E1.3). Aaron's earlier string `auth_reset_sent` existed, so the new text is named `auth_reset_link_sent`.
+
+## 2026-10-28 · Move the work breakdown from Trello to ClickUp · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** change the team documents from Trello to ClickUp, and write the status list and the ClickUp setup (Space, Lists, tasks, subtasks).
+- **Prompts (exact):**
+  > oke aku mau nanya berarti di clickup itu status di boardnya apa aj ya?
+  > pakai clikcup dan update ya di branch yang sekarang aja ya biar barengan
+- **Output used:** `docs/team/work-breakdown.md` (renamed from `trello-cards.md`; new section 2 with the statuses Backlog, This week, In progress, Blocked, In review, QA, Done), and the Trello wording changed to ClickUp in `TEAM_PLAN.md`, the personal files, `AGENTS.md`, `README.md`, `docs/README.md`, `docs/product/PRD.md` and the pull request template. Not changed: the history in `docs/ai-log/` and Aaron's own records (`docs/aaron-*.md`, `docs/ai-usage-log.md`).
+- **How it was tested or checked:** text search shows no Trello mention left outside the records above; all relative links in `docs/` resolve. not verified: the ClickUp Space itself, which Dafi has to create; the status types and field names were written from general knowledge of ClickUp and should be checked in the real workspace.
+- **What the human changed or rejected:** Ary chose ClickUp and asked for the change on this branch. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the statuses are a proposal, not agreed with Dafi yet.
+
+## 2026-10-29 · Review of Gathan's schema PR (#8) · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** read `docs/schema.md` from PR #8 against the PRD, ASSUMPTIONS, `docs/api-contracts.md`, `match.js` and `firestore.rules`, and draft review comments.
+- **Prompts (exact):**
+  > dna coba cek pr gathan
+  > yaudh deh tulis comment di pr review biar nanti gathan yang benerin
+  > ok apus aja deh comment an aku yang review itu dan kirim ke chat sini biar nanti aku private chat si gathan
+- **Output used:** a review comment posted on PR #8 under Ary's account, then hidden as "outdated" (GitHub does not allow deleting a submitted review); the same text was given to Ary to send to Gathan in a private chat. No repository file changed.
+- **How it was tested or checked:** each finding was compared with the named file (field names against `match.js` and `api-contracts.md`, access rules against `firestore.rules`, retention periods against ASSUMPTIONS #8). not verified: the findings were not independently re-checked by a human; whether Aaron agrees with the sen proposal.
+- **What the human changed or rejected:** Ary chose to hide the posted comment and send it privately. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain finding 5 (money in sen) and finding 6 (Rules apply per document, so contact data must be split).
+- **Limits:** the review is an AI draft and may miss issues; the sen proposal is a team decision, not agreed.
+
+## 2026-10-29 · Shared run configuration for LauncherActivity · Tooling (E1.2)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** make Run in Android Studio open `LauncherActivity` for everyone, because the debug build has three launcher activities and the default picks the design system gallery.
+- **Prompts (exact):**
+  > pas aku buka Jiran kok malah kayak design system ya di android studio aku
+  > ok yaudh tambahin aja configurationnya biar semua orang otomatis run LauncherActivity
+- **Output used:** `android/.run/app.xml`, copied from the run configuration Ary already set by hand in Android Studio (`specific_activity`, `com.jiran.app.ui.auth.LauncherActivity`).
+- **How it was tested or checked:** the file is valid XML and is not git-ignored. not verified: that Android Studio loads the shared file on another machine, and that it replaces the automatically created `app` configuration instead of adding a second one.
+- **What the human changed or rejected:** Ary set the Specified Activity in Android Studio first and asked for it to be shared. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Know why the default picks the gallery (the first launcher activity in the merged debug manifest).
+- **Limits:** the gallery ("Jiran UI") and developer ("Jiran dev") icons still exist in debug builds by design.
+
+## 2026-10-29 · Shared master prompt for team members · Project tooling
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** write one general prompt every member can paste into their AI assistant, so each session follows the AI policy, product rules and workflow of the repository.
+- **Prompts (exact):**
+  > tolong buatin general master prompt untuk setiap member biar bisa langsung enak ngepromptnya dan ngerjain tugasnya
+- **Output used:** `docs/team/master-prompt.md` (the prompt, a one-task block, a pre-PR checklist); a link to it in `docs/team/TEAM_PLAN.md`; in `docs/ai-log/README.md` the old "Trello card" wording changed to "ClickUp task". The prompt follows `AGENTS.md`; Aaron's own prompt in `docs/team/aaron.md` is untouched.
+- **How it was tested or checked:** the files it names exist and the links resolve. not verified: that Claude Code, Codex, ChatGPT and Gemini each follow every rule; nobody on the team has used the prompt yet.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why the prompt asks the assistant to teach and to leave the human fields in the AI log empty.
+- **Limits:** the prompt repeats rules from `AGENTS.md`; if `AGENTS.md` changes, update both.
+
+## 2026-10-29 · Open sign-up to any email, UM verified badge for posting · Module 1 (FR1.1)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** change the sign-up rule from "UM email only" to "any email may register; a UM email earns the UM verified badge, needed to post a Listing", in code, tests and documents, in the same pull request as E1.1 and E1.2.
+- **Prompts (exact):**
+  > kebijakan domain email um ini maksudnya gimana
+  > kayaknya email apa aja boleh deh biar semua orang bisa daftar
+  > kan bisa aja anak tahun pertama itu belum punya um mail jadi kayaknya mending dibuka buat semua nya dh
+  > oke deh setuju ketika mau masang listing harus ada badge gitu tapi disatuin aja di PR #9 ya
+- **Output used:** `SignUpCheck` no longer rejects non-UM domains (the `NOT_UM_EMAIL` problem was removed); `UmEmailPolicy.isUmEmail` stays and is the check for the badge; sign-up, log-in and reset texts no longer say "UM email", and the sign-up email field has a helper line about the badge; tests changed (`SignUpCheckTest`, `SignUpViewModelTest`, one new test). Documents: PRD (FR1.1 and its criteria, goals, Host rules, NFR2, risks, open question 9), `GLOSSARY.md` (new term UM verified), `USER-FLOW.md`, `docs/team/` (E1.1 title and wait removed, E2.1 gets a subtask for the badge check, Gathan's privacy checklist).
+- **How it was tested or checked:** `lintDebug testDebugUnitTest checkstyleMain assembleDebug` pass (64 unit tests, 0 failures). not verified: the new sign-up text and helper line on a device or emulator; nothing yet shows the badge in the app (no profile screen exists) and nothing yet blocks posting (E2.1 is Gathan's); Security Rules for the badge are not written.
+- **What the human changed or rejected:** Ary decided to open sign-up so first-year students without a UM email can join, and chose to require the badge only for posting a Listing. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why the badge is checked in Security Rules and not only on the screen, and what risk opening sign-up adds (people outside UM can search and connect).
+- **Limits:** which UM domains count is still a draft; Gathan must change his rule text (his `schema.md` says Rules verify the UM domain for identity) and Dafi must hear about the policy change.
+
+## 2026-10-30 · Back to UM-only sign-up · Module 1 (FR1.1)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** undo the "any email may register" change of the previous entry, because Ary decided that only UM emails should sign up, so that every account is a verified UM student and scams are harder.
+- **Prompts (exact):**
+  > tapi kayaknya better UM only ya biar terpercaya bahwa ini khusus pelajar UM doang, kan takut ada penipu atau apa klo semuanya boleh
+- **Output used:** a revert of the previous commit (code, strings, tests, PRD, glossary, user flow, team files), keeping the earlier AI log entry as the record of what happened; PRD open question 9 now records the UM-only decision; `work-breakdown.md` and `ary.md` mark E1.1 as waiting for the UM domain list.
+- **How it was tested or checked:** see the checks run before the push (listed in the pull request). not verified: the sign-up screen on an emulator after the revert.
+- **What the human changed or rejected:** Ary reversed the earlier decision for trust and scam reasons. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say what each rule gives up: UM-only keeps accounts trusted but first-year students without a UM email cannot join yet.
+- **Limits:** the first-year problem is not solved, only recorded as an open question. The two entries on 2026-10-29 and 2026-10-30 describe a decision made and then undone; both stay in the log because both happened.
+
+## 2026-10-30 · Write up finished work on Ary's tasks · Module 1 (E1.1, E1.2)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** record which subtasks of E1.1 and E1.2 are finished, in `work-breakdown.md`, and draft the text Ary pastes into the ClickUp tasks.
+- **Prompts (exact):**
+  > oke coba tulis task yang udh kita kerjain buat task aku
+- **Output used:** `(done)` marks on the finished subtasks of E1.1 and E1.2 in `docs/team/work-breakdown.md`; the ClickUp text was given in the chat and is not stored in the repository. Later in the same session, through the ClickUp connector and with Ary's request ("ya tolong update semua task saya (cuma task saya)"), Claude set E1.1 and E1.2 to *in review*, set the finished subtasks of E1.1, E1.2 and E0.3 to *done* (the subtask "unverified account can only reach the verify screen" to *in review*, waiting for Aaron), and wrote one comment on each of the three stories. Tasks that were not Ary's, and Ary's other tasks, were not changed. After Ary asked whether E0 and E1 were all done, Claude read the code again and also set both subtasks of E1.4 to *done* and E1.4 to *in review* (shell opens after sign-in, four placeholder tabs and a Post button stub exist); E1.3 (the `ui/profile` package is empty) and two E0.3 subtasks were left open. Claude's earlier statement that E1.4 was not started was wrong. Ary then said the last two E0.3 subtasks were done; Claude set them to *done* and E0.3 to *qa* on Ary's word (not verified in the repository: that the component list was announced, and that an error-state component exists). Last, at Ary's request ("ubah di pr ini dan push semua commit ya"), Claude changed `UmEmailPolicy.ALLOWED_DOMAINS` to `siswa.um.edu.my` only (staff mail `um.edu.my` is no longer accepted, because Jiran is for students), updated `UmEmailPolicyTest`, `SignUpCheckTest`, the two sign-up texts, PRD open question 9 and the E1.1 note in `work-breakdown.md`. The schema note on Gathan's branch (PR #8) still has to follow.
+- **How it was tested or checked:** the marks were compared with the code in `android/app/src/main/java/com/jiran/app/ui/auth` and `domain/auth` and with the test classes beside them. not verified: the screens on an emulator after the UM-only revert; QA by Aly has not happened.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** "done" here means code and unit tests exist; the stories are not Done by the Definition of Done until Ary merges the PR, Aly passes QA and hours are logged in ClickUp.
+
 ## 2026-10-29 · PRD data model update for the new Firestore collections · Module 2 (E0.5)
 
 - **Human owner:** Ary

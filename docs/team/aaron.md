@@ -127,7 +127,7 @@ Jest and emulator tests. Use the actual configured scripts; report checks that
 cannot run and why. Do not claim NFR1 without load evidence or NFR2 without
 authorization tests. Every change goes through a feature branch and PR;
 Ary performs the final merge. Use `[Story]` commit messages (for example `[E3.3] Add commute engine`)
-for feature work, and `[Infra]`, `[Docs]` or `[Design]` otherwise. Record hours on Trello and
+for feature work, and `[Infra]`, `[Docs]` or `[Design]` otherwise. Record hours on ClickUp and
 retain exact AI prompts and testing/modification evidence for the AI Usage Log.
 Do not send team messages, merge, or deploy unless the task authorizes it.
 
@@ -162,7 +162,7 @@ Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](
 |---|---|---|
 | 1: Functions and emulators | Node 22/Jest skeleton, emulator-only verified-auth diagnostic, demo Auth/Firestore/Functions/Storage configuration, deny-all baseline rules | 9 Jest tests pass; real emulator smoke verifies auth rejection, UID integrity, Function-to-Firestore write and denied client reads. Gathan's application rules remain pending. |
 | 2: Android foundation | Java Views developer shell; `ui`, `data`, `util`; pinned Gradle wrapper; debug-only Firebase setup and Android 17 local-network permission | Initial foundation tests passed; live setup now adds Email/Password flow and `liveDebug`. Registered application ID confirmed as `jiran.com`; Java namespace stays `com.jiran.app`. Ary's final product UI remains pending. |
-| 3: CI and handoff | GitHub Actions, PR template, setup/architecture documentation, draft API contracts and AI-use record | Retired SDK package failure repaired. Both jobs passed on [PR #2 run 40406767308](https://github.com/abqaryne/jiran/actions/runs/40406767308) at 5c5ba1f. Branch protection, final review/merge and Trello/QA evidence remain pending. Draft contracts require team agreement. |
+| 3: CI and handoff | GitHub Actions, PR template, setup/architecture documentation, draft API contracts and AI-use record | Retired SDK package failure repaired. Both jobs passed on [PR #2 run 40406767308](https://github.com/abqaryne/jiran/actions/runs/40406767308) at 5c5ba1f. Branch protection, final review/merge and ClickUp/QA evidence remain pending. Draft contracts require team agreement. |
 
 The first **local** readiness milestone is verified on the API 37 AVD. The existing
 live project **jiran-mad** now has Email/Password Auth enabled, its existing Android
@@ -176,9 +176,9 @@ production UM verification, schema, commute/match formulas and full NFR tests ar
 not complete. The foundation branch was pushed and merged through PR #1;
 continuation commits remain on the feature branch until reviewed by PR.
 
-## Your stories (subtasks for each are in [trello-cards.md](trello-cards.md))
+## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [trello-cards.md](trello-cards.md).
+Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [work-breakdown.md](work-breakdown.md).
 
 **Stories you lead** (7)
 
@@ -193,7 +193,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 | **E6.2** Match score function *(can start early)* | FR3.2, P0 | 10 Dec | match weights (#9), `matchProfiles` (E6.1) |
 
 
-**Stories where you do a subtask** (9): open the story card to see yours.
+**Stories where you do a subtask** (9): open the story task to see yours.
 
 | Story | Lead | Due |
 |---|---|---|
@@ -296,11 +296,11 @@ and [contract](../api-contracts.md). Production formula approval is still open.
 
 ## Rules for everyone
 
-- Log your actual hours on your Trello cards. Commits and Trello are the evidence for the report and the peer evaluation.
-- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the Trello card (the card shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
+- Log your actual hours on your ClickUp tasks. Commits and ClickUp are the evidence for the report and the peer evaluation.
+- Commit message format: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. Use the story ID from the ClickUp task (the task shows the FR). Work with no story uses `[Docs]`, `[Infra]` or `[Design]`.
 - Every change goes through a PR. **Ary does the final check and merges.** Backend PRs are reviewed by Aaron first, schema and rules PRs by Gathan first.
 - Never commit API keys or service account files.
-- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card moved with hours on the board, checked by QA (Aly).
+- Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story task moved with hours logged in ClickUp, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
 Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).

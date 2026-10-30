@@ -13,5 +13,5 @@ Commands, results and any checks that could not run:
 - [ ] Relevant lint, Checkstyle, Java/Jest and emulator checks pass
 - [ ] Aaron reviews Functions/Maps changes; Gathan reviews schema/rules changes
 - [ ] Another member reviewed; Ary performs the final check and merge
-- [ ] Trello card and actual hours recorded; AI Usage Log updated
+- [ ] ClickUp task and actual hours recorded; AI Usage Log updated
 - [ ] Aly's QA check completed where applicable

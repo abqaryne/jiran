@@ -12,7 +12,7 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 
 ### Access baseline (UM only)
 
-Only UM students may use Jiran (PRD FR1.1 and NFR2, decided 30 Oct 2026). Every read and write in every collection needs `request.auth.token.email_verified == true` and a `request.auth.token.email` on a UM domain, matched exactly (`siswa.um.edu.my` or `um.edu.my`; the list is `[DRAFT]` until confirmed with UM). The rules below are checked on top of this baseline.
+Only UM students may use Jiran (PRD FR1.1 and NFR2, decided 30 Oct 2026). Every read and write in every collection needs `request.auth.token.email_verified == true` and a `request.auth.token.email` on a UM domain, matched exactly (`siswa.um.edu.my` only: students, no staff mail, decided 30 Oct 2026; a postgraduate domain, if one exists, is still to confirm with UM). The rules below are checked on top of this baseline.
 
 ### Stage Visibility Matrix
 
