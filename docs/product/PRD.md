@@ -450,7 +450,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 ## 14. Open questions
 
 1. ~~SDG choice~~ **Decided:** SDG 11 (main target 11.1, supporting 11.2); the team has confirmed the brief allows any SDG, not only 6 or 13.
-2. ~~Platform~~ **Decided:** native Android in Java, because the team learned Java in earlier semesters and the brief itself talks about "activities". Confirm with the lecturer together with the Appendix 1 request.
+2. ~~Platform~~ **Decided:** native Android in Java, because the team learned Java in earlier semesters and the brief itself talks about "activities". 
 3. Which AI provider: Gemini or Claude? (Cost, quota, Malay language quality.)
 4. Which published emission factor source for each travel mode?
 5. Firestore collections: the proposal says ten but lists nine; this PRD adds `rooms` and `unitEvaluations`, so it now lists fifteen (two of them only for the P2 commute groups). A store for chat (FR3.3) is still missing (candidate: `chats`), plus possibly `reports` and `notifications`.
