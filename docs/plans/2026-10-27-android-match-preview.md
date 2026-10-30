@@ -6,7 +6,7 @@
 **Goal:** Verify the existing FR3.2 score backend through the Java Firebase SDK,
 immutable typed parsing and a labelled local developer preview of scores/reasons.
 
-**Spec:** team/aaron.md, PRD FR3.2, docs/engineering/api-contracts.md implemented fixture contract.
+**Spec:** team/aaron/README.md, PRD FR3.2, docs/engineering/api-contracts.md implemented fixture contract.
 Keep Java Android/JavaScript Functions and free-only policy. Ary owns the final
 Match product screen; survey weights, authorized production candidates and UM
 policy remain open. No AI service or new production schema is introduced.

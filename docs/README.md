@@ -26,8 +26,9 @@ docs/
 ├── team/           who does what and when
 │   ├── TEAM_PLAN.md      roles, timeline, workflow
 │   ├── work-breakdown.md work breakdown: initiative, epics, stories and subtasks in ClickUp
-│   ├── aaron.md ary.md aly.md dafi.md gathan.md ilham.md   personal task files
-│   └── aaron/            Aaron's working notes: handoff.md, work-log.md, report-drafts.md
+│   ├── master-prompt.md  prompt to start an AI assistant on your story
+│   └── <name>/           one folder per person (aaron, ary, aly, dafi, gathan, ilham)
+│       └── README.md     personal task file; put your own notes in your own folder
 ├── ai-log/         AI Usage Log (mandatory appendix of the report): README with the template, one file per person
 └── licenses/       licences of bundled third-party assets (Geist font, Material Symbols)
 ```
@@ -48,7 +49,7 @@ docs/
 | [team/aaron/handoff.md](team/aaron/handoff.md) | Open decisions, owners and P0 freeze gates |
 | [Local load preparation](../backend/tests/load/README.md) | Reproducible 50/100-user Auth emulator scenarios, both measured results and production limits |
 | [ai-log/README.md](ai-log/README.md) | AI Usage Log: rules, template and one file per person (mandatory appendix) |
-| [ai-log/aaron-earlier-record.md](ai-log/aaron-earlier-record.md) | Aaron's earlier AI record |
+| [ai-log/aaron-earlier-record.md](ai-log/aaron.md) | Aaron's earlier AI record |
 
-Rules for docs: one topic per file, keep the PRD as the single source of truth, link to it instead of copying
+Rules for docs: shared documents go in the topic folders above; your own notes go in `team/<your name>/`, never in the root of `team/` or `docs/`. One topic per file, keep the PRD as the single source of truth, link to it instead of copying
 it, and write relative links so they work on GitHub and in the editor. When you move a file, fix its links.

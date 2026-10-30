@@ -4,7 +4,7 @@
 
 **Goal:** Fulfil Aaron's source selection/extraction work for assumption #6 and enable FR4.3 CO2 estimates without mixing gases, distance bases or transit legs.
 
-**Spec:** PRD FR4.3, ASSUMPTIONS #6, team/aaron.md. UK proxies are explicitly enabled by the caller, never silently presented as Malaysian measurements.
+**Spec:** PRD FR4.3, ASSUMPTIONS #6, team/aaron/README.md. UK proxies are explicitly enabled by the caller, never silently presented as Malaysian measurements.
 
 ## Source decision and evidence
 

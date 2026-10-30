@@ -4,7 +4,7 @@
 
 **Goal:** Implement and prove FR4.1–4.3 calculation behavior with explicit inputs, plus an authenticated emulator callable and Android preview. Real routing/pricing and product schemas remain separate integrations.
 
-**Spec:** `PRD.md` Module 4; `team/aaron.md`; `docs/engineering/api-contracts.md`; `ASSUMPTIONS.md`.
+**Spec:** `PRD.md` Module 4; `team/aaron/README.md`; `docs/engineering/api-contracts.md`; `ASSUMPTIONS.md`.
 
 **Architecture:** Pure Node domain calculation consumes already-normalized route/cost inputs. An emulator-only `getCommuteOptions` adapter loads a named server-owned fixture after verified authentication. A Java repository/parser and developer preview consume the same response. Live endpoints, Maps keys, schema writes and guessed attendance/fare defaults are excluded.
 

@@ -10,8 +10,7 @@ The brief puts this course under UM's **Level 2 AI policy (limited usage, specif
 Log** is a required appendix of the report. Missing or inaccurate logs, or work that is "predominantly AI-generated with
 minimal or no human effort", can lose marks, lower the grade or fail the course.
 
-- **Before you finish a task, add or update the entry** in `docs/ai-log/<owner>.md` (one file per person; Aaron's earlier
-  record is `docs/ai-log/aaron-earlier-record.md`). Do it in the same PR as the work. Do not wait to be asked.
+- **Before you finish a task, add or update the entry** in `docs/ai-log/<owner>.md` (one file per person). Do it in the same PR as the work. Do not wait to be asked.
 - Use the template in [docs/ai-log/README.md](docs/ai-log/README.md): date, human owner, tool and model, task, **exact
   prompts**, output used (files, PR), how it was tested or checked, what the human changed, what the human can explain,
   limits.
@@ -83,7 +82,7 @@ for app registration/configuration, `firebase-auth-basics` for authentication,
 `firebase-firestore` for database/SDK work, and `firestore-rules-creation` before
 authoring rules. Use Firebase MCP tools where available and the official CLI.
 
-Read `docs/team/aaron.md` and preserve the Java Android / JavaScript Functions stack.
+Read `docs/team/aaron/README.md` and preserve the Java Android / JavaScript Functions stack.
 The existing live project is `jiran-mad`; its Android app is named Jiran with
 application ID `jiran.com`. Do not create duplicate apps/projects. Use explicit
 `--project jiran-mad` for authorized live operations. Default local development

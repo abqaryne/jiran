@@ -18,7 +18,7 @@ The live budget is free-only. No team messages or Trello entries were sent.
 | NFR2 | Local connection-rule checks pass; UM affiliation and production collections remain open | Gathan defines rules; Aly verifies denied accesses |
 | Reports/video | [350/400-word drafts and90-second script](report-drafts.md) | Aaron revises/explains; other owners supply their reviewed segments |
 | Personal work record | [Reported6 hours on26 October](work-log.md) | Draft retained at Aaron's request; actual activity notes remain TODO; no invented sessions or posting |
-| AI disclosure | [Aaron AI log](../../ai-log/aaron.md), earlier [usage record](../../ai-log/aaron-earlier-record.md) | Aaron completes human-change and understanding fields |
+| AI disclosure | [Aaron AI log](../../ai-log/aaron.md), earlier [usage record](../../ai-log/aaron.md) | Aaron completes human-change and understanding fields |
 
 Before freezing P0, check every gate against the final commit, not an older green
 run. A local fixture demonstration does not satisfy a production acceptance gate.

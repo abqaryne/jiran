@@ -1,7 +1,7 @@
 # Jiran
 
 Native Android **Java** app with Firebase **JavaScript / Node 22** Cloud Functions.
-Read [Aaron's checklist and master prompt](docs/team/aaron.md), [PRD](docs/product/PRD.md) and
+Read [Aaron's checklist and master prompt](docs/team/aaron/README.md), [PRD](docs/product/PRD.md) and
 [team ownership](docs/team/TEAM_PLAN.md) before changing the foundation.
 All documents are indexed in [docs/](docs/README.md).
 
@@ -201,7 +201,7 @@ Commits use `[Story] short description`, e.g. `[E7.1] Add balance calculation`
 (`[Docs]`, `[Infra]` or `[Design]` when there is no story). Log actual ClickUp hours and AI use.
 
 See [architecture](docs/engineering/architecture.md), [draft API contracts](docs/engineering/api-contracts.md),
-[AI log](docs/ai-log/aaron-earlier-record.md), and [batch plan/evidence](docs/plans/2026-10-27-aaron-foundations.md).
+[AI log](docs/ai-log/aaron.md), and [batch plan/evidence](docs/plans/2026-10-27-aaron-foundations.md).
 The [live setup plan](docs/plans/2026-10-27-firebase-live-setup.md) records
 current setup evidence. Team invitations, Maps/billing/coverage, product schema,
 scoring weights and remaining feature work still require their team inputs.

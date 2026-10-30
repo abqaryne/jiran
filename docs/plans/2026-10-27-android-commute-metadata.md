@@ -4,7 +4,7 @@
 
 **Goal:** Complete the Android half of the existing FR4 backend metadata pipeline: cost/route sources, provider warnings and traffic fallback remain visible with commute estimates.
 
-**Spec:** team/aaron.md, PRD FR4.1–4.3, docs/engineering/api-contracts.md. This extends the existing developer preview; Ary still owns the shared Room/detail screens. No live routing or schema decisions are introduced.
+**Spec:** team/aaron/README.md, PRD FR4.1–4.3, docs/engineering/api-contracts.md. This extends the existing developer preview; Ary still owns the shared Room/detail screens. No live routing or schema decisions are introduced.
 
 **Design:** CommuteSummary.Option gets nullable bounded costSource/routeSource, immutable copied warnings and nullable Boolean trafficFallback (absence stays unknown, not false). Present null/wrong types/oversized values fail parsing. Absent fields retain backwards compatibility. Render sources and every warning as plain text in the available-mode row, with explicit fallback caveat only when true. Do not interpret provider strings as HTML or hyperlinks.
 

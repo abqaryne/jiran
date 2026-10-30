@@ -8,7 +8,7 @@
 
 **Tech Stack:** Android Java, AGP 9.4.1, Gradle 9.6.0, Java 25 build runtime / Java 17 source, Android API 37, Firebase, Node 22, Jest.
 
-**Spec:** `team/aaron.md`, `PRD.md`, `TEAM_PLAN.md`, `ASSUMPTIONS.md`.
+**Spec:** `team/aaron/README.md`, `PRD.md`, `TEAM_PLAN.md`, `ASSUMPTIONS.md`.
 
 ## Global constraints
 
@@ -50,7 +50,7 @@ Interface: debug initializes demo Firebase options and routes Auth/Firestore/Fun
 
 ## Batch 3: CI, handoff and contracts
 
-Files: `.github/workflows/ci.yml`, `.github/pull_request_template.md`, `README.md`, `docs/engineering/architecture.md`, `docs/engineering/api-contracts.md`, `docs/ai-log/aaron-earlier-record.md`, `team/aaron.md`.
+Files: `.github/workflows/ci.yml`, `.github/pull_request_template.md`, `README.md`, `docs/engineering/architecture.md`, `docs/engineering/api-contracts.md`, `docs/ai-log/aaron.md`, `team/aaron/README.md`.
 
 - [x] CI: Android lint/tests/Checkstyle/debug build; locked Node install/Jest; emulator smoke on demo project.
 - [x] Document commands, branching and required checks for Ary; do not claim remote protection is configured.
@@ -66,7 +66,7 @@ Files: `.github/workflows/ci.yml`, `.github/pull_request_template.md`, `README.m
 
 ## Execution ledger
 
-- Preflight: only planning Markdown; no baseline build/test suite. Existing `team/aaron.md` edit preserved. Installed AGP 9.4.1 / Gradle 9.6 / SDK 37 / JDK 25 inspected; official compatibility checked. No project credentials inferred.
+- Preflight: only planning Markdown; no baseline build/test suite. Existing `team/aaron/README.md` edit preserved. Installed AGP 9.4.1 / Gradle 9.6 / SDK 37 / JDK 25 inspected; official compatibility checked. No project credentials inferred.
 - Batch 1: complete locally. Initial authorization assertions failed against an empty implementation, then passed; final Jest suite: 9/9. Real emulator smoke passed caller rejection, spoof resistance, Admin SDK write and denied client read. Emulator startup emitted upstream Java Unsafe deprecation warnings; the smoke exited 0.
 - Ruling: keep authorization independent from Firebase SDK imports because Jest/Node 22 exposed the SDK's transitive ESM loader boundary; callable adapter maps domain errors to HttpsError. No test mocks hide the SDK integration.
 - Batch 2: complete locally. `gradlew.bat lint test checkstyleMain assembleDebug assembleDebugAndroidTest --rerun-tasks --console=plain` passed all 81 tasks; Java tests 2/2. Lint: 0 errors, 1 version-update advisory for the deliberately pinned Gradle version. Checkstyle passed. Debug APK and Android test APK built.

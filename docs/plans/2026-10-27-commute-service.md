@@ -4,7 +4,7 @@
 
 **Goal:** Connect the existing provider, pricing, emissions and monthly calculation behind an authorization/quota/deadline boundary for FR4.1–FR4.3. This is internal service code, not a deployed endpoint or invented Firestore schema.
 
-**Spec:** team/aaron.md, PRD FR4.1–FR4.3/NFR1/NFR2, docs/engineering/api-contracts.md. Retain existing emulator fixture callable; production schemas, verified UM policy, credentials/billing and approved rates remain required adapters/configuration.
+**Spec:** team/aaron/README.md, PRD FR4.1–FR4.3/NFR1/NFR2, docs/engineering/api-contracts.md. Retain existing emulator fixture callable; production schemas, verified UM policy, credentials/billing and approved rates remain required adapters/configuration.
 
 ## Interface and choices
 

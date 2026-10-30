@@ -6,7 +6,7 @@
 
 **Architecture:** Pure JavaScript scoring consumes explicit normalized questionnaire records and a versioned weight configuration. The callable selects server-owned synthetic fixtures only, under the existing emulator export guard. No AI, Firestore writes, private timetable or contact projection.
 
-**Spec:** PRD FR3.1/FR3.2, team/aaron.md, ASSUMPTIONS #9, docs/engineering/api-contracts.md.
+**Spec:** PRD FR3.1/FR3.2, team/aaron/README.md, ASSUMPTIONS #9, docs/engineering/api-contracts.md.
 
 ## Proposed normalization (implementation choices, not survey approval)
 

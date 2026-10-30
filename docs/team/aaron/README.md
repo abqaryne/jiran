@@ -9,12 +9,12 @@ into a no-billing production alternative retaining Firebase Auth and Firestore.
 Do not enable billing, upgrade plans or activate Google Routes/production
 Functions/Storage. Earlier billing/key setup items below are historical plan
 dependencies, not current activation instructions. See the [candidate architecture,
-limits and staged feasibility plan](../research/no-billing-production.md). Java and
+limits and staged feasibility plan](../../research/no-billing-production.md). Java and
 JavaScript code remain; no runtime migration or NFR completion is claimed.
 
 ### Confirm the stack before downloading anything
 
-The [PRD](../product/PRD.md) and [team plan](TEAM_PLAN.md) specify **native Android in Java with Gradle**, and **Firebase Cloud Functions in Node.js/JavaScript**. The pasted Flutter setup advice was based on an unverified role file and does not apply to this repository. Flutter, Dart and FlutterFire CLI are not prerequisites. VS Code is optional; Android Studio is the main Android IDE. Cloud Functions use JavaScript by team decision; the Java runtime used by Firebase emulators does not change the Functions language.
+The [PRD](../../product/PRD.md) and [team plan](../TEAM_PLAN.md) specify **native Android in Java with Gradle**, and **Firebase Cloud Functions in Node.js/JavaScript**. The pasted Flutter setup advice was based on an unverified role file and does not apply to this repository. Flutter, Dart and FlutterFire CLI are not prerequisites. VS Code is optional; Android Studio is the main Android IDE. Cloud Functions use JavaScript by team decision; the Java runtime used by Firebase emulators does not change the Functions language.
 
 ### Downloads and local readiness
 
@@ -43,7 +43,7 @@ firebase.cmd --version
 & "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe" devices
 ```
 
-In Android Studio, confirm SDK packages/licences, select the build JDK and boot an AVD or connect a phone. Optionally add the SDK's `platform-tools` folder to your user PATH. After choosing the team's Google account, run `firebase.cmd login` and `firebase.cmd projects:list`; verify the intended project ID before initialization. The initial repository contained planning Markdown only. Local Android/Functions build and emulator files now exist; see [README.md](../../README.md) for current commands and the [batch plan](../plans/2026-10-27-aaron-foundations.md) for verification evidence.
+In Android Studio, confirm SDK packages/licences, select the build JDK and boot an AVD or connect a phone. Optionally add the SDK's `platform-tools` folder to your user PATH. After choosing the team's Google account, run `firebase.cmd login` and `firebase.cmd projects:list`; verify the intended project ID before initialization. The initial repository contained planning Markdown only. Local Android/Functions build and emulator files now exist; see [README.md](../../../README.md) for current commands and the [batch plan](../../plans/2026-10-27-aaron-foundations.md) for verification evidence.
 
 ### Access and team decisions needed first
 
@@ -65,7 +65,7 @@ Do not run `firebase init` over existing configuration or create duplicate cloud
 4. **Wave A, 16–29 November:** Module 4 P0, including all four modes, class-time arrival checks, per-room true monthly cost and sourced CO₂ estimates. Monthly total is room price + equal utilities share + cheapest commute that arrives on time. Deposit is separate. If no mode arrives on time, show that state rather than a fabricated monthly figure. Decide monthly trip/day counts, return trips, rounding and missing-data behavior explicitly.
 5. **Wave B, 30 November–13 December:** deterministic weighted match score with Jest tests, coordinated with Ary/Ilham. Add P1 peak/off-peak and transit steps after P0 works. Lead the P0 integration freeze on 13 December.
 
-Use [ASSUMPTIONS.md](../product/ASSUMPTIONS.md) as the canonical numbered list: #2 peak windows with Aly due 12 November; #3 e-hailing, #4 car cost, #5 transit fares, #6 CO₂ and #9 match weights due 13 November.
+Use [ASSUMPTIONS.md](../../product/ASSUMPTIONS.md) as the canonical numbered list: #2 peak windows with Aly due 12 November; #3 e-hailing, #4 car cost, #5 transit fares, #6 CO₂ and #9 match weights due 13 November.
 
 **First technical readiness milestone:** the Java app runs on an Android device/emulator, connects to local Auth/Firestore/Functions, and successfully calls one small local Function; relevant Android and Jest checks pass. Verify the Android emulator's host connection (normally `10.0.2.2`) and use debug-only emulator routing. Never mark cloud setup, security or NFR performance complete from tool installation alone. NFR1 ultimately requires p95 ≤3 seconds at 100 concurrent users; NFR2 requires unauthorized-access denial tests with Gathan/Aly.
 
@@ -74,14 +74,14 @@ Use [ASSUMPTIONS.md](../product/ASSUMPTIONS.md) as the canonical numbered list: 
 ```text
 You are helping me act as Aaron, Jiran's Software Architect and Backend Lead.
 
-Read AGENTS.md if present, docs/team/aaron.md, docs/product/PRD.md, docs/team/TEAM_PLAN.md,
+Read AGENTS.md if present, docs/team/aaron/README.md, docs/product/PRD.md, docs/team/TEAM_PLAN.md,
 docs/product/ASSUMPTIONS.md, docs/product/GLOSSARY.md and docs/product/USER-FLOW.md before changing anything.
 Read existing architecture/API/schema/build documentation and relevant code
 when present. Inspect git status and preserve others' uncommitted work.
 For Firebase tasks, always find and use the relevant official Firebase agent
 skills as described in AGENTS.md. The existing live project is jiran-mad and
 its registered Android application ID is jiran.com; never create duplicates.
-Treat docs/team/aaron.md as my role checklist; report conflicts with project
+Treat docs/team/aaron/README.md as my role checklist; report conflicts with project
 requirements instead of silently choosing a new stack or inventing decisions.
 
 Fixed stack: native Android Java + Gradle; Firebase Auth, Firestore, Storage,
@@ -156,7 +156,7 @@ Acceptance criteria: <insert what must be demonstrably true>
 
 ## Foundation batch status — 27 October 2026
 
-Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](../plans/2026-10-27-aaron-foundations.md).
+Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](../../plans/2026-10-27-aaron-foundations.md).
 
 | Batch | Implemented locally | Verification / remaining boundary |
 |---|---|---|
@@ -169,76 +169,76 @@ live project **jiran-mad** now has Email/Password Auth enabled, its existing And
 registration connected, and Standard Firestore `(default)` in Singapore
 (`asia-southeast1`, approved by the user). Auth settings and tested prototype
 Firestore rules were deployed explicitly; Functions and Storage were not deployed.
-See [live setup instructions](../../README.md#use-the-existing-live-firebase-backend)
-and the [live setup plan](../plans/2026-10-27-firebase-live-setup.md).
+See [live setup instructions](../../../README.md#use-the-existing-live-firebase-backend)
+and the [live setup plan](../../plans/2026-10-27-firebase-live-setup.md).
 Team invitations, billing for later paid features, restricted Maps credentials, transit coverage,
 production UM verification, schema, commute/match formulas and full NFR tests are
 not complete. The foundation branch was pushed and merged through PR #1;
 continuation commits remain on the feature branch until reviewed by PR.
 
-## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
+## Your stories (subtasks for each are in [work-breakdown.md](../work-breakdown.md))
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); the subtasks are in [work-breakdown.md](../work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
 
 ### Do in this order (stories you lead: 7)
 
 | # | Story | Task file | FR, priority | Due | Waits for |
 |---|---|---|---|---|---|
-| 1 | **E0.1** Repo and CI are healthy | [E0.1.md](../../TASKS/E0/E0.1.md) | P0 | 2 Nov | - |
-| 2 | **E0.2** Firebase and the free server are ready | [E0.2.md](../../TASKS/E0/E0.2.md) | P0 | 8 Nov | - |
-| 3 | **E0.6** Function contracts (stubs) | [E0.6.md](../../TASKS/E0/E0.6.md) | P0 | 15 Nov | - |
-| 4 | **E3.3** Commute per travel mode | [E3.3.md](../../TASKS/E3/E3.3.md) | FR4.1, P0 | start now, due 29 Nov | may start early · transit coverage and fares (#3, #4, #5), shuttle timetable (T1) |
-| 5 | **E3.4** True monthly cost and travel time on the Room card | [E3.4.md](../../TASKS/E3/E3.4.md) | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
-| 6 | **E6.2** Match score function | [E6.2.md](../../TASKS/E6/E6.2.md) | FR3.2, P0 | 10 Dec | may start early · match weights (#9), `matchProfiles` (E6.1) |
-| 7 | **E4.4** Public transport route page, peak and off-peak | [E4.4.md](../../TASKS/E4/E4.4.md) | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
+| 1 | **E0.1** Repo and CI are healthy | [E0.1.md](../../../TASKS/E0/E0.1.md) | P0 | 2 Nov | - |
+| 2 | **E0.2** Firebase and the free server are ready | [E0.2.md](../../../TASKS/E0/E0.2.md) | P0 | 8 Nov | - |
+| 3 | **E0.6** Function contracts (stubs) | [E0.6.md](../../../TASKS/E0/E0.6.md) | P0 | 15 Nov | - |
+| 4 | **E3.3** Commute per travel mode | [E3.3.md](../../../TASKS/E3/E3.3.md) | FR4.1, P0 | start now, due 29 Nov | may start early · transit coverage and fares (#3, #4, #5), shuttle timetable (T1) |
+| 5 | **E3.4** True monthly cost and travel time on the Room card | [E3.4.md](../../../TASKS/E3/E3.4.md) | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
+| 6 | **E6.2** Match score function | [E6.2.md](../../../TASKS/E6/E6.2.md) | FR3.2, P0 | 10 Dec | may start early · match weights (#9), `matchProfiles` (E6.1) |
+| 7 | **E4.4** Public transport route page, peak and off-peak | [E4.4.md](../../../TASKS/E4/E4.4.md) | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
 
 ### Stories where you do a subtask (9)
 
 | Story | Lead | Your subtask | Task file | Due |
 |---|---|---|---|---|
-| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../TASKS/E0/E0.4.md) | 30 Oct |
-| **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
-| **T1.4** UM shuttle timetable and commute estimates | Dafi | Estimate commute time and cost for a few example routes; write them as estimates with sources | [T1.4.md](../../TASKS/T1/T1.4.md) | 8 Nov (timetable), 13 Nov (estimates) |
-| **T1.3** Verify the assumed numbers | Dafi | #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov; #4 Car cost, #5 Public transport (coverage 8 Nov, data 13 Nov); #6 CO₂ factors · 13 Nov, #11 Maps cost and quota · 8 Nov | [T1.3.md](../../TASKS/T1/T1.3.md) | 13 Nov |
-| **E1.1** Sign up with a UM email and verify it | Ary | An unverified account can only reach the verify screen (done in the app by `StartRoute`; Aaron still to review) | [E1.1.md](../../TASKS/E1/E1.1.md) | 19 Nov |
-| **E4.2** Commute options card | Ary | Response with time, cost and CO₂ per mode and the cheapest on-time option; CO₂ factors from a published source (#6) | [E4.2.md](../../TASKS/E4/E4.2.md) | 7 Dec |
-| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Technical implementation and AI data flow (1:30) | [T3.1.md](../../TASKS/T3/T3.1.md) | 20 Dec |
-| **T4.1** Report sections | Dafi | 3 Architecture (350), 4 System implementation (400) | [T4.1.md](../../TASKS/T4/T4.1.md) | 9 Jan |
-| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) | 9 Jan |
+| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../../TASKS/E0/E0.4.md) | 30 Oct |
+| **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
+| **T1.4** UM shuttle timetable and commute estimates | Dafi | Estimate commute time and cost for a few example routes; write them as estimates with sources | [T1.4.md](../../../TASKS/T1/T1.4.md) | 8 Nov (timetable), 13 Nov (estimates) |
+| **T1.3** Verify the assumed numbers | Dafi | #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov; #4 Car cost, #5 Public transport (coverage 8 Nov, data 13 Nov); #6 CO₂ factors · 13 Nov, #11 Maps cost and quota · 8 Nov | [T1.3.md](../../../TASKS/T1/T1.3.md) | 13 Nov |
+| **E1.1** Sign up with a UM email and verify it | Ary | An unverified account can only reach the verify screen (done in the app by `StartRoute`; Aaron still to review) | [E1.1.md](../../../TASKS/E1/E1.1.md) | 19 Nov |
+| **E4.2** Commute options card | Ary | Response with time, cost and CO₂ per mode and the cheapest on-time option; CO₂ factors from a published source (#6) | [E4.2.md](../../../TASKS/E4/E4.2.md) | 7 Dec |
+| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Technical implementation and AI data flow (1:30) | [T3.1.md](../../../TASKS/T3/T3.1.md) | 20 Dec |
+| **T4.1** Report sections | Dafi | 3 Architecture (350), 4 System implementation (400) | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
 
 ### Open questions waiting for you (11)
 
 These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
 
-- [E0.2](../../TASKS/E0/E0.2.md): Aaron: is a Worker deployed under the free plan, and what is its URL pattern? Blocks: the Android calls in E3.4 and E4.2.
-- [E0.5](../../TASKS/E0/E0.5.md): Aaron: does the Worker or the app create `connections`? Blocks: the Rules for it.
-- [E0.5](../../TASKS/E0/E0.5.md): A second reviewer for PR #8 (Aaron). Blocks: merge.
-- [E0.6](../../TASKS/E0/E0.6.md): Aaron and Ilham: agree the three AI function shapes. Blocks: E3.5, E6.3, E8.2.
-- [E1.1](../../TASKS/E1/E1.1.md): Aaron: review "unverified account can only reach the verify screen". Blocks: closing the subtask.
-- [E2.1](../../TASKS/E2/E2.1.md): Gathan and Aaron: Places autocomplete cost and quota on the free plan (#11).
-- [E3.3](../../TASKS/E3/E3.3.md): Aaron: confirm which fare and transit checks (#3, #4, #5) are still open.
-- [E4.2](../../TASKS/E4/E4.2.md): Aaron: CO₂ factor sources (#6). Blocks: the CO₂ numbers.
-- [E4.4](../../TASKS/E4/E4.4.md): Aly and Aaron: the peak hours and factor (T1.3 #2). Blocks: the peak column.
-- [E5.1](../../TASKS/E5/E5.1.md): Aaron and Gathan: who writes `connections`, the Worker or the app? Blocks: the accept action.
-- [E6.2](../../TASKS/E6/E6.2.md): Aaron and Aly: the final weights from the survey. Blocks: claiming the score as validated.
+- [E0.2](../../../TASKS/E0/E0.2.md): Aaron: is a Worker deployed under the free plan, and what is its URL pattern? Blocks: the Android calls in E3.4 and E4.2.
+- [E0.5](../../../TASKS/E0/E0.5.md): Aaron: does the Worker or the app create `connections`? Blocks: the Rules for it.
+- [E0.5](../../../TASKS/E0/E0.5.md): A second reviewer for PR #8 (Aaron). Blocks: merge.
+- [E0.6](../../../TASKS/E0/E0.6.md): Aaron and Ilham: agree the three AI function shapes. Blocks: E3.5, E6.3, E8.2.
+- [E1.1](../../../TASKS/E1/E1.1.md): Aaron: review "unverified account can only reach the verify screen". Blocks: closing the subtask.
+- [E2.1](../../../TASKS/E2/E2.1.md): Gathan and Aaron: Places autocomplete cost and quota on the free plan (#11).
+- [E3.3](../../../TASKS/E3/E3.3.md): Aaron: confirm which fare and transit checks (#3, #4, #5) are still open.
+- [E4.2](../../../TASKS/E4/E4.2.md): Aaron: CO₂ factor sources (#6). Blocks: the CO₂ numbers.
+- [E4.4](../../../TASKS/E4/E4.4.md): Aly and Aaron: the peak hours and factor (T1.3 #2). Blocks: the peak column.
+- [E5.1](../../../TASKS/E5/E5.1.md): Aaron and Gathan: who writes `connections`, the Worker or the app? Blocks: the accept action.
+- [E6.2](../../../TASKS/E6/E6.2.md): Aaron and Aly: the final weights from the survey. Blocks: claiming the score as validated.
 
 **Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You also lead the P0 code freeze (Gate 3, 13 Dec).
 
 ## Solo implementation progress
 
-The [six solo workstreams](../plans/2026-10-27-aaron-solo-work.md)
+The [six solo workstreams](../../plans/2026-10-27-aaron-solo-work.md)
 are in progress. The isolated Worker experiment now has bounded verification-key
 fetching, provider freshness handling, rotation coalescing and cooldown protection,
 with75 offline/runtime tests passing, including bounded body reading and atomic
 SQLite quota reservations. This does not adopt a production runtime; identity-bound
 quota integration, real routing evidence and production verification remain open.
-The [hours draft](aaron/work-log.md) contains the reported6 hours on26 October.
-The [350/400-word report drafts and demo script](aaron/report-drafts.md)
-and [handoff/freeze checklist](aaron/handoff.md) need Aaron's personal review.
-The [GTFS processor checkpoint](../engineering/transit-processing.md) adds calendar, frequency,
+The [hours draft](work-log.md) contains the reported6 hours on26 October.
+The [350/400-word report drafts and demo script](report-drafts.md)
+and [handoff/freeze checklist](handoff.md) need Aaron's personal review.
+The [GTFS processor checkpoint](../../engineering/transit-processing.md) adds calendar, frequency,
 transfer and stale-feed handling with62 focused tests and recorded snapshot probes.
 Independent follow-up review found no remaining actionable defect; production
-coverage remains open. [Local50/100-user load preparation](../../backend/tests/load/README.md)
+coverage remains open. [Local50/100-user load preparation](../../../backend/tests/load/README.md)
 records both a failed run and a passing run, without claiming production NFR1.
 
 
@@ -247,7 +247,7 @@ records both a failed run and a passing run, without claiming production NFR1.
 ### Module 4 continuation — calculation batch
 
 The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
-`feature/aaron-commute-core`; see the [calculation plan](../plans/2026-10-27-commute-core.md).
+`feature/aaron-commute-core`; see the [calculation plan](../../plans/2026-10-27-commute-core.md).
 
 - [x] Pure commute calculation with explicit units/trips and cheapest-before-class selection.
 - [x] Missing-route/fare and no-on-time states; deposit exclusion; optional explicitly sourced CO₂.
@@ -256,14 +256,14 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [x] Android validates and displays optional route/cost provenance, warnings and fallback notices; verified with labelled local metadata and native row checks. Final shared UI/provider attribution requirements remain with production integration.
 - [x] Real Android commute SDK integration verification: all three fixture scenarios pass through Firebase SDK → callable → typed parser.
 - [ ] Real Maps routing/coverage and verified fares/emission factors; production schema/timetable integration.
-- [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../research/maps-readiness.md); live quota/budget setup and coverage probes remain open.
-- [x] Server Routes provider adapter: strict request validation, bounded deadline/body, MYR fare parsing, warnings/fallback and sanitized errors; transport contract tests only. See [adapter plan](../plans/2026-10-27-routes-adapter.md). Live activation and production calculation integration remain open.
-- [x] Configurable e-hailing/driving/transit pricing with exact sen arithmetic, explicit pickup/cost inputs, and preserved cost/provider metadata; [pricing evidence](../plans/2026-10-27-commute-pricing.md). Real rates, monthly attendance/return-trip policy and production wiring remain open.
-- [x] Published CO₂-only source catalogue and exact mixed-leg emissions calculation with explicit occupancy/UK proxy selection; [method and values](../research/emission-methodology.md). Source extraction/arithmetic verified; Malaysian calibration, real leg mapping and production activation remain open.
+- [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../../research/maps-readiness.md); live quota/budget setup and coverage probes remain open.
+- [x] Server Routes provider adapter: strict request validation, bounded deadline/body, MYR fare parsing, warnings/fallback and sanitized errors; transport contract tests only. See [adapter plan](../../plans/2026-10-27-routes-adapter.md). Live activation and production calculation integration remain open.
+- [x] Configurable e-hailing/driving/transit pricing with exact sen arithmetic, explicit pickup/cost inputs, and preserved cost/provider metadata; [pricing evidence](../../plans/2026-10-27-commute-pricing.md). Real rates, monthly attendance/return-trip policy and production wiring remain open.
+- [x] Published CO₂-only source catalogue and exact mixed-leg emissions calculation with explicit occupancy/UK proxy selection; [method and values](../../research/emission-methodology.md). Source extraction/arithmetic verified; Malaysian calibration, real leg mapping and production activation remain open.
 - [ ] Ary's final Room card/details integration and NFR1 load evidence.
-- [x] Internal authorized commute orchestration with mandatory context/config/quota adapters, bounded shared deadline, cancellation, private projection and mode-specific emissions mapping; [service plan](../plans/2026-10-27-commute-service.md). No production reader, quota store or endpoint is wired.
-- [x] Free-only policy recorded and default live Google transport disabled; [alternative research](../research/no-billing-production.md) identifies Worker/free-routing candidate and transit/NFR gaps. Deployment feasibility remains open.
-- [x] Isolated [local Worker feasibility experiment](../../experiments/worker-feasibility/README.md): generated-key signature/claim checks and existing commute/match fixtures run in workerd;25 tests pass. No live Firebase token, database/quota, production migration or Free CPU claim.
+- [x] Internal authorized commute orchestration with mandatory context/config/quota adapters, bounded shared deadline, cancellation, private projection and mode-specific emissions mapping; [service plan](../../plans/2026-10-27-commute-service.md). No production reader, quota store or endpoint is wired.
+- [x] Free-only policy recorded and default live Google transport disabled; [alternative research](../../research/no-billing-production.md) identifies Worker/free-routing candidate and transit/NFR gaps. Deployment feasibility remains open.
+- [x] Isolated [local Worker feasibility experiment](../../../experiments/worker-feasibility/README.md): generated-key signature/claim checks and existing commute/match fixtures run in workerd;25 tests pass. No live Firebase token, database/quota, production migration or Free CPU claim.
 
 Sample fixture values are not verified assumptions or production estimates. The
 UI says so, and the endpoint is not exported in a live environment. This advances
@@ -280,13 +280,13 @@ the FR4.1–4.3 calculation foundation; the complete production module stays ope
 
 ### Module 3 continuation — deterministic scoring batch
 
-See the [match backend plan](../plans/2026-10-27-match-core.md)
-and [contract](../engineering/api-contracts.md). Production formula approval is still open.
+See the [match backend plan](../../plans/2026-10-27-match-core.md)
+and [contract](../../engineering/api-contracts.md). Production formula approval is still open.
 
 - [x] Pure deterministic seven-factor match scoring with explicit versioned weights and transparent basis-point breakdown.
 - [x] Missing-answer state, stable ranking, self exclusion, bounded candidate count and rule reason codes.
 - [x] Authenticated emulator-only `computeMatchScores` with synthetic ranked, incomplete and empty scenarios.
-- [x] Typed Java match response/repository and guarded developer preview with score, rule reasons, missing/empty states, overlap days and factor breakdown; real local SDK/native checks. See [Android handoff evidence](../plans/2026-10-27-android-match-preview.md). Ary's final product UI and production candidates remain open.
+- [x] Typed Java match response/repository and guarded developer preview with score, rule reasons, missing/empty states, overlap days and factor breakdown; real local SDK/native checks. See [Android handoff evidence](../../plans/2026-10-27-android-match-preview.md). Ary's final product UI and production candidates remain open.
 - [ ] Survey-derived weight approval and agreed questionnaire mapping with Aly/Ary.
 - [ ] Production authorized candidate reader/privacy projection with Gathan; final Match UI and explanation handoff with Ary/Ilham.
 - [ ] Production end-to-end and QA evidence; no matching completion claim from fixtures alone.
@@ -304,7 +304,7 @@ and [contract](../engineering/api-contracts.md). Production formula approval is 
 - **Report:** section 3 Architecture and design (350 words), section 4 System implementation (400 words, you collect everyone's code segment)
 - **You also lead** the P0 code freeze on 13 Dec and review all Cloud Functions and Maps PRs
 
-## Numbers you find (see [ASSUMPTIONS.md](../product/ASSUMPTIONS.md))
+## Numbers you find (see [ASSUMPTIONS.md](../../product/ASSUMPTIONS.md))
 - **#11 Maps cost and quota** and **#5 transit coverage** (due 8 Nov)
 - **#2 Peak hours** with Aly (due 12 Nov)
 - **#3 E-hailing fare formula**, **#4 car cost**, **#5 public transport fares**, **#6 CO₂ emission factors**, **#9 Match score weights** (due 13 Nov)
@@ -318,4 +318,4 @@ and [contract](../engineering/api-contracts.md). Production formula approval is 
 - Definition of Done: merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story task moved with hours logged in ClickUp, checked by QA (Aly).
 - Anything marked **[DRAFT]** in the PRD is a team decision still to confirm.
 
-Full context: [PRD.md](../product/PRD.md) (what we build), [TEAM_PLAN.md](TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../product/SURVEY.md).
+Full context: [PRD.md](../../product/PRD.md) (what we build), [TEAM_PLAN.md](../TEAM_PLAN.md) (who does what, timeline), [SURVEY.md](../../product/SURVEY.md).
