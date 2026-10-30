@@ -178,34 +178,49 @@ continuation commits remain on the feature branch until reviewed by PR.
 
 ## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [work-breakdown.md](work-breakdown.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`docs/tasks/<epic>/<ID>.md`) and read *Why*, *What to build*, *Acceptance*, *Not in scope* and *Open questions*. The subtasks are in [work-breakdown.md](work-breakdown.md); status is only in ClickUp. A task file marked *(draft)* was written for the owner by Ary's assistant: correct it first and tell Ary what was wrong. The index of every task file is [docs/tasks/README.md](../tasks/README.md).
 
-**Stories you lead** (7)
+### Do in this order (stories you lead: 7)
 
-| Story | FR, priority | Due | Waits for |
-|---|---|---|---|
-| **E0.1** Repo and CI are healthy | P0 | 2 Nov |  |
-| **E0.2** Firebase and Maps are ready | P0 | 8 Nov | team decision on billing |
-| **E0.6** Function contracts (stubs) | P0 | 15 Nov |  |
-| **E3.3** Commute per travel mode *(can start early)* | FR4.1, P0 | start now, due 29 Nov | Maps coverage and fares (#3, #4, #5), shuttle timetable (T1) |
-| **E3.4** True monthly cost and travel time on the Room card | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
-| **E4.4** Public transport route page, peak and off-peak | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
-| **E6.2** Match score function *(can start early)* | FR3.2, P0 | 10 Dec | match weights (#9), `matchProfiles` (E6.1) |
+| # | Story | Task file | FR, priority | Due | Waits for |
+|---|---|---|---|---|---|
+| 1 | **E0.1** Repo and CI are healthy | [E0.1.md](../tasks/E0/E0.1.md) (draft) | P0 | 2 Nov | - |
+| 2 | **E0.2** Firebase and the free server are ready | [E0.2.md](../tasks/E0/E0.2.md) (draft) | P0 | 8 Nov | - |
+| 3 | **E0.6** Function contracts (stubs) | [E0.6.md](../tasks/E0/E0.6.md) (draft) | P0 | 15 Nov | - |
+| 4 | **E3.3** Commute per travel mode | [E3.3.md](../tasks/E3/E3.3.md) (draft) | FR4.1, P0 | start now, due 29 Nov | may start early · transit coverage and fares (#3, #4, #5), shuttle timetable (T1) |
+| 5 | **E3.4** True monthly cost and travel time on the Room card | [E3.4.md](../tasks/E3/E3.4.md) (draft) | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
+| 6 | **E6.2** Match score function | [E6.2.md](../tasks/E6/E6.2.md) (draft) | FR3.2, P0 | 10 Dec | may start early · match weights (#9), `matchProfiles` (E6.1) |
+| 7 | **E4.4** Public transport route page, peak and off-peak | [E4.4.md](../tasks/E4/E4.4.md) (draft) | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
 
+### Stories where you do a subtask (9)
 
-**Stories where you do a subtask** (9): open the story task to see yours.
+| Story | Lead | Your subtask | Task file | Due |
+|---|---|---|---|---|
+| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../tasks/E0/E0.4.md) (draft) | 30 Oct |
+| **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../tasks/T1/T1.1.md) (draft) | 8 Nov (launch 31 Oct) |
+| **T1.4** UM shuttle timetable and commute estimates | Dafi | Estimate commute time and cost for a few example routes; write them as estimates with sources | [T1.4.md](../tasks/T1/T1.4.md) (draft) | 8 Nov (timetable), 13 Nov (estimates) |
+| **T1.3** Verify the assumed numbers | Dafi | #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov; #4 Car cost, #5 Public transport (coverage 8 Nov, data 13 Nov); #6 CO₂ factors · 13 Nov, #11 Maps cost and quota · 8 Nov | [T1.3.md](../tasks/T1/T1.3.md) (draft) | 13 Nov |
+| **E1.1** Sign up with a UM email and verify it | Ary | An unverified account can only reach the verify screen (done in the app by `StartRoute`; Aaron still to review) | [E1.1.md](../tasks/E1/E1.1.md) | 19 Nov |
+| **E4.2** Commute options card | Ary | Response with time, cost and CO₂ per mode and the cheapest on-time option; CO₂ factors from a published source (#6) | [E4.2.md](../tasks/E4/E4.2.md) (draft) | 7 Dec |
+| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Technical implementation and AI data flow (1:30) | [T3.1.md](../tasks/T3/T3.1.md) (draft) | 20 Dec |
+| **T4.1** Report sections | Dafi | 3 Architecture (350), 4 System implementation (400) | [T4.1.md](../tasks/T4/T4.1.md) (draft) | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../tasks/T4/T4.2.md) (draft) | 9 Jan |
 
-| Story | Lead | Due |
-|---|---|---|
-| **E0.4** Project management and docs | Dafi | 30 Oct |
-| **E1.1** Sign up with a UM email and verify it | Ary | 19 Nov |
-| **E4.2** Commute options card | Ary | 7 Dec |
-| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
-| **T1.3** Verify the assumed numbers | Dafi | 13 Nov |
-| **T1.4** UM shuttle timetable and commute estimates | Dafi | 8 Nov (timetable), 13 Nov (estimates) |
-| **T3.1** Script and screen captures | Ary | 20 Dec |
-| **T4.1** Report sections | Dafi | 9 Jan |
-| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
+### Open questions waiting for you (11)
+
+These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
+
+- [E0.2](../tasks/E0/E0.2.md): Aaron: is a Worker deployed under the free plan, and what is its URL pattern? Blocks: the Android calls in E3.4 and E4.2.
+- [E0.5](../tasks/E0/E0.5.md): Aaron: does the Worker or the app create `connections`? Blocks: the Rules for it.
+- [E0.5](../tasks/E0/E0.5.md): A second reviewer for PR #8 (Aaron). Blocks: merge.
+- [E0.6](../tasks/E0/E0.6.md): Aaron and Ilham: agree the three AI function shapes. Blocks: E3.5, E6.3, E8.2.
+- [E1.1](../tasks/E1/E1.1.md): Aaron: review "unverified account can only reach the verify screen". Blocks: closing the subtask.
+- [E2.1](../tasks/E2/E2.1.md): Gathan and Aaron: Places autocomplete cost and quota on the free plan (#11).
+- [E3.3](../tasks/E3/E3.3.md): Aaron: confirm which fare and transit checks (#3, #4, #5) are still open.
+- [E4.2](../tasks/E4/E4.2.md): Aaron: CO₂ factor sources (#6). Blocks: the CO₂ numbers.
+- [E4.4](../tasks/E4/E4.4.md): Aly and Aaron: the peak hours and factor (T1.3 #2). Blocks: the peak column.
+- [E5.1](../tasks/E5/E5.1.md): Aaron and Gathan: who writes `connections`, the Worker or the app? Blocks: the accept action.
+- [E6.2](../tasks/E6/E6.2.md): Aaron and Aly: the final weights from the survey. Blocks: claiming the score as validated.
 
 **Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You also lead the P0 code freeze (Gate 3, 13 Dec).
 

@@ -16,6 +16,7 @@ docs/
 │   ├── TEAM_PLAN.md      roles, timeline, workflow
 │   ├── work-breakdown.md   work breakdown: initiative, epics, stories and subtasks in ClickUp
 │   └── aaron.md ary.md aly.md dafi.md gathan.md ilham.md   personal task files
+├── tasks/          one detailed task file per story, grouped by epic (E1/E1.1.md); README.md is the index
 ├── ai-log/         AI Usage Log (mandatory appendix of the report): README with the template, one file per person
 ├── architecture.md, api-contracts.md, ai-usage-log.md, superpowers/   engineering notes (Aaron)
 └── licenses/       licences of bundled third-party assets (Geist font, Material Symbols)

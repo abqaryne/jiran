@@ -9,32 +9,52 @@ You must also write real code (the brief says nobody does only documentation): t
 
 ## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks (T1 to T4). Full list with every subtask: [work-breakdown.md](work-breakdown.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`docs/tasks/<epic>/<ID>.md`) and read *Why*, *What to build*, *Acceptance*, *Not in scope* and *Open questions*. The subtasks are in [work-breakdown.md](work-breakdown.md); status is only in ClickUp. A task file marked *(draft)* was written for the owner by Ary's assistant: correct it first and tell Ary what was wrong. The index of every task file is [docs/tasks/README.md](../tasks/README.md).
 
-**Stories you lead** (8)
+### Do in this order (stories you lead: 8)
 
-| Story | FR, priority | Due | Waits for |
-|---|---|---|---|
-| **E0.4** Project management and docs | P0 | 30 Oct |  |
-| **E7.1** Balance and settle-up logic *(can start early)* | FR5.1, P0 | start now, due 29 Nov |  |
-| **E7.3** Expenses and balances screens | FR5.1, P0 | 12 Dec | E7.1, E7.2 |
-| **E7.4** Move out | FR5.1, P0 | 13 Dec | E7.3 |
-| **T1.3** Verify the assumed numbers | P0 | 13 Nov | T1.1 |
-| **T1.4** UM shuttle timetable and commute estimates | P0 | 8 Nov (timetable), 13 Nov (estimates) |  |
-| **T1.5** Requirements freeze | P0 | 15 Nov | T1.2 |
-| **T4.1** Report sections | P0 | 9 Jan | each owner's part |
+| # | Story | Task file | FR, priority | Due | Waits for |
+|---|---|---|---|---|---|
+| 1 | **E0.4** Project management and docs | [E0.4.md](../tasks/E0/E0.4.md) (draft) | P0 | 30 Oct | - |
+| 2 | **T1.4** UM shuttle timetable and commute estimates | [T1.4.md](../tasks/T1/T1.4.md) (draft) | P0 | 8 Nov (timetable), 13 Nov (estimates) | - |
+| 3 | **T1.3** Verify the assumed numbers | [T1.3.md](../tasks/T1/T1.3.md) (draft) | P0 | 13 Nov | T1.1 |
+| 4 | **T1.5** Requirements freeze | [T1.5.md](../tasks/T1/T1.5.md) (draft) | P0 | 15 Nov | T1.2 |
+| 5 | **E7.1** Balance and settle-up logic | [E7.1.md](../tasks/E7/E7.1.md) (draft) | FR5.1, P0 | start now, due 29 Nov | may start early |
+| 6 | **E7.3** Expenses and balances screens | [E7.3.md](../tasks/E7/E7.3.md) (draft) | FR5.1, P0 | 12 Dec | E7.1, E7.2 |
+| 7 | **E7.4** Move out | [E7.4.md](../tasks/E7/E7.4.md) (draft) | FR5.1, P0 | 13 Dec | E7.3 |
+| 8 | **T4.1** Report sections | [T4.1.md](../tasks/T4/T4.1.md) (draft) | P0 | 9 Jan | each owner's part |
 
-**Stories where you do a subtask** (7): open the story task to see yours.
+### Stories where you do a subtask (7)
 
-| Story | Lead | Due |
-|---|---|---|
-| **E1.1** Sign up with a UM email and verify it | Ary | 19 Nov |
-| **E5.3** Move-in confirmation | Ary | 9 Dec |
-| **E7.2** Household data and rules | Gathan | 8 Dec |
-| **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
-| **T1.2** Survey analysis | Aly | 15 Nov |
-| **T3.1** Script and screen captures | Ary | 20 Dec |
-| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | 9 Jan |
+| Story | Lead | Your subtask | Task file | Due |
+|---|---|---|---|---|
+| **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../tasks/T1/T1.1.md) (draft) | 8 Nov (launch 31 Oct) |
+| **T1.2** Survey analysis | Aly | Table "finding, FR it shaped" | [T1.2.md](../tasks/T1/T1.2.md) (draft) | 15 Nov |
+| **E1.1** Sign up with a UM email and verify it | Ary | Decided 30 Oct 2026: UM email only. Only `siswa.um.edu.my` counts (students only, no staff mail). Still to confirm with UM or the lecturer: whether postgraduate students have another domain, and what first-year students without a UM email can do | [E1.1.md](../tasks/E1/E1.1.md) | 19 Nov |
+| **E7.2** Household data and rules | Gathan | Household created from a Group or by invite code (with E5.3) | [E7.2.md](../tasks/E7/E7.2.md) (draft) | 8 Dec |
+| **E5.3** Move-in confirmation | Ary | The Household is created with the same members (E7.2) | [E5.3.md](../tasks/E5/E5.3.md) (draft) | 9 Dec |
+| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Team contributions (0:30) and closing summary (0:45) | [T3.1.md](../tasks/T3/T3.1.md) (draft) | 20 Dec |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../tasks/T4/T4.2.md) (draft) | 9 Jan |
+
+### Open questions waiting for you (15)
+
+These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
+
+- [E0.4](../tasks/E0/E0.4.md): Dafi: where do the minutes live? Blocks: the report's team section (T4.1).
+- [E1.1](../tasks/E1/E1.1.md): Dafi: does UM give postgraduate students a different domain, and when do new students receive Siswa Mail?
+- [E1.4](../tasks/E1/E1.4.md): Ary and Dafi: what Home should show for a student who has no Household yet. The PRD does not say; decide before E1.3 closes so the Home tab is not empty in the video.
+- [E3.3](../tasks/E3/E3.3.md): Dafi: the shuttle timetable (T1.4). Blocks: the shuttle leg.
+- [E4.2](../tasks/E4/E4.2.md): Dafi: shuttle timetable (T1.4). Blocks: the shuttle row.
+- [E5.3](../tasks/E5/E5.3.md): Dafi and Gathan: the invite code alternative for joining a Household (E7.2). Blocks: the move-in screens.
+- [E6.4](../tasks/E6/E6.4.md): Ary and Dafi: how many matches to show at most (the function takes up to 100 candidates). Blocks: paging.
+- [E7.1](../tasks/E7/E7.1.md): Dafi: how a remainder in sen is assigned. Blocks: the rounding test.
+- [E7.3](../tasks/E7/E7.3.md): Dafi and Ary: what the Unit tab shows with no Household yet. Blocks: the empty state.
+- [E7.4](../tasks/E7/E7.4.md): Dafi: the exact wording shown to the leaver. Blocks: the screen.
+- [E10.1](../tasks/E10/E10.1.md): Dafi: the PDPA wording for data retention (T1.3 #8). Blocks: the privacy text.
+- [T1.3](../tasks/T1/T1.3.md): Dafi: collect the results on 13 Nov. Blocks: freeze (T1.5).
+- [T1.4](../tasks/T1/T1.4.md): Dafi: email UM transport only if the timetable cannot be found.
+- [T1.5](../tasks/T1/T1.5.md): Dafi and Ary: gender and the first-year student rule must be decided before the freeze.
+- [T4.1](../tasks/T4/T4.1.md): Dafi: the final style pass date.
 
 You must also write real code (the brief says nobody does only documentation): the balance logic and the expense screens in E7.
 
