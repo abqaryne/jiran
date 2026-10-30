@@ -368,3 +368,18 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the sections are a snapshot of 30 Oct 2026. When a story changes owner or a task file changes, update the personal file by hand.
+
+## 2026-10-30 · Manage tasks like a reference project: TASK.md, TASKS/, ADR.md · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** restructure the task management in the style of `a reference project` (a master `TASK.md` with a Milestones table and a Tasks table with status and category, one `TASKS/<ID>.md` per task with Description, Work needed, Constraints, Resolution and Notes, and an append-only `ADR.md`), and give every task more detail and context.
+- **Prompts (exact):**
+  > Ulang deh restruktur samain management tasknya kayak project itu ya dan tasknya juga kurang detail dan context buat dipahami coba di benerin
+  
+  Ary answered two questions: keep the IDs `E1.1`/`T3.1` (epics and tracks become the Milestone column), and put `TASK.md` at the root with the task files still grouped by epic folder.
+- **Output used:** root `TASK.md` (14 milestones, 62 tasks with status and category), `TASKS/<epic>/<ID>.md` for all 62 tasks (moved from `docs/tasks/`, rewritten with Description, Work needed, Constraints, Acceptance, Not in scope, Resolution or Where it stands, Notes), root `ADR.md` with eight entries, a "Task tracking" rule in `AGENTS.md`, and updated links in `docs/team/`, `docs/README.md` and the personal files. The extra detail comes from `docs/schema.md` (PR #8), `docs/api-contracts.md`, the PRD, `ASSUMPTIONS.md`, `USER-FLOW.md` and Aaron's merged backend code; for the 57 tasks owned by others it is a draft marked "owner to confirm". Statuses are the ClickUp statuses read earlier on 30 Oct 2026.
+- **How it was tested or checked:** a script checked 75 markdown files and found no broken relative link. not verified: the statuses in `TASK.md` against the live board today; the ClickUp descriptions still point to the old `docs/tasks/` path (the connector's daily limit was reached); every ADR date and "decided by" except the ones Ary stated in this conversation (UM-only, free-only, UM domain) comes from commit messages and documents, so Ary should confirm them.
+- **What the human changed or rejected:** Ary chose the ID scheme and the layout. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why status is kept in both `TASK.md` and ClickUp and what makes an ADR different from a task.
+- **Limits:** the draft task files may contain wrong guesses about other members' work; ADR-0007 is only proposed.

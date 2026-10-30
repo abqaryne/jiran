@@ -34,7 +34,7 @@ Work is divided **by module**: each module has one owner who builds it end to en
 
 ### How the work is tracked
 
-The full breakdown is in [work-breakdown.md](work-breakdown.md): the **initiative** (Jiran, delivered by 3 and 10 January 2027), the **epics**, the **stories** (one task each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and below. Each story also has a detailed task file in [docs/tasks/](../tasks/README.md) (why, what to build, acceptance, what is left out, open questions); the personal files link to them.
+The full breakdown is in [work-breakdown.md](work-breakdown.md): the **initiative** (Jiran, delivered by 3 and 10 January 2027), the **epics**, the **stories** (one task each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and below. Each story also has a task file in `TASKS/<epic>/<ID>.md`, listed in the master [TASK.md](../../TASK.md) (description, work needed, constraints, acceptance, resolution, notes); the personal files link to them.
 
 **An epic is one flow of the app, and the epics are done in order: E0 first, then E1, E2 and so on.** Each flow is built end to end (screens, data, rules, tests) by the whole team together, then merged and tested before the next one starts. Stories marked *can start early* need nobody and may run ahead. Tracks T1 to T4 (research, testing, video, report) run in parallel by date.
 
