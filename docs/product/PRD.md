@@ -320,29 +320,40 @@ Full tokens, components and rules are in [DESIGN.md](../design/DESIGN.md) (style
 
 ## 8. Data model
 
-Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms` and `unitEvaluations`; see Open questions):
+Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms`, `unitEvaluations`, `listingRequests`, `chats` and `config`). Field-level detail, who may write each field and the retention schedule are in [schema.md](../schema.md); this table keeps only the key fields. **Money is stored as whole sen** (45000 = RM 450.00), in fields ending in `Sen`, so splits add up exactly.
 
 | Collection | Key fields | Used by (module) |
 |---|---|---|
-| `users` | uid, umEmail, name, gender, faculty, year, homeAreaId, budgetMin, budgetMax, lifestyleTags[], hasCar, timetable[{day, start, end, building}], privacy{} | M1, all |
-| `areas` | areaId, name, lat, lng, rentLow, rentHigh, nearestStations[] | M2, M4 |
-| `listings` | listingId, ownerUid, areaId, buildingName, placeId, totalRent, deposit, genderPref, amenities[], photoPaths[], status, createdAt | M2, M4 |
-| `rooms` | roomId, listingId, type (master/medium/small), price, status (vacant/occupied) | M2, M4 |
-| `reviews` | reviewId, listingId or buildingName, authorUid, water, internet, security, noise (1–5), text, moderated | M2 |
-| `matchProfiles` | uid, answers{sleep, clean, noise, cook, smoke, pets}, updatedAt | M3 |
-| `matches` | matchId, uidA, uidB, score, reasons[], statusA, statusB, createdAt | M3 |
-| `groups` | groupId, memberUids[], targetListingId, spots, roomSplit[{memberUid, roomType, price}], splitOption, memberStatus[{uid, status, note}], checklist{}, acceptedBy[], status | M3 |
-| `unitEvaluations` | evalId, groupId, buildingName, areaId or lat/lng, referenceUrl (optional, a note typed by the user, never fetched), totalRent, deposit, rooms[{type, price, assignedUid}], createdAt | M2, M3 |
+| `users` | uid, initials, gender (male/female, required, decided 31 Oct 2026), faculty, year, lifestyleTags[], createdAt, updatedAt (public profile; the UM email is read from the sign-in token and not copied here) | M1, all |
+| `users/{uid}/private/profile` | fullName, budgetMinSen, budgetMaxSen, hasCar, homeAreaId, privacy{} (owner only) | M1 |
+| `users/{uid}/private/contact` | firstName (readable after a Connection and inside a Household) | M1, M3 |
+| `users/{uid}/private/phone` | phoneNumber (readable after a Connection only if the owner opted in, and inside a Household) | M1, M3 |
+| `users/{uid}/private/photo` | photoUrl (owner and Household only) | M1, M5 |
+| `users/{uid}/private/timetable` | entries[{day, start, end, building}] (owner and Household only) | M1, M3 |
+| `users/{uid}/private/membership` | householdId (owner only; Security Rules read it with `get()` to check Household membership) | M5 |
+| `areas` | areaId, name, lat, lng, rentLowSen, rentHighSen, nearestStations[] | M2, M4 |
+| `listings` | listingId, ownerUid, areaId, buildingName, placeId, totalRentSen, depositSen, genderPref, amenities[], photoUrls[], isSample, status, createdAt, expiresAt | M2, M4 |
+| `listings/{listingId}/private/location` | exactAddress, residentUids[] (Host, residents and accepted requesters only) | M2 |
+| `listingRequests` | requestId (`{listingId}_{requesterUid}`), listingId, hostUid, requesterUid, message, status (pending/accepted/rejected/cancelled), createdAt | M3 |
+| `connections` | pairId (the two UIDs sorted), uidA, uidB, source (listingRequest/match), listingId, hostUid, status (active/ended), createdAt, endedAt (proof of a Connection; opens contact, phone and chat) | M3 |
+| `rooms` | roomId, listingId, type (master/medium/small), priceSen, status (vacant/occupied) | M2, M4 |
+| `reviews` | reviewId, buildingName (listingId optional), authorUid, water, internet, security, noise (1–5), text, moderated | M2 |
+| `matchProfiles` | uid, answers{sleep, cleanliness, noise, cooking, smoking, pets, budget}, updatedAt | M3 |
+| `matches` | matchId, uidA, uidB, scoreBasisPoints, formulaVersion, weightVersion, factors[], reasons[], aiGenerated, overlappingClassDays[], statusA, statusB, createdAt | M3 |
+| `groups` | groupId, memberUids[], targetListingId, spots, roomSplit[{memberUid, roomType, priceSen}], splitOption, memberStatus[{uid, status, note}], checklist{}, acceptedBy[], status | M3 |
+| `unitEvaluations` | evalId, createdByUid, groupId (optional), buildingName, areaId or lat/lng, referenceUrl (optional, a note typed by the user, never fetched), totalRentSen, depositSen, rooms[{type, priceSen, assignedUid}], createdAt | M2, M3 |
 | `households` | householdId, memberUids[], listingId, rules[{text, acceptedBy[]}], createdAt | M5 |
-| `expenses` | expenseId, householdId, description, amount, paidByUid, splitAmong[{uid, share}], date, settled | M5 |
+| `expenses` | expenseId, householdId, description, amountSen, paidByUid, splitAmong[{uid, shareSen}], date, settled | M5 |
 | `chores` | choreId, householdId, task, frequency, rotation[uid], currentUid, dueDate, done | M5 |
-| `commuteGroups` (P2, Module 7) | groupId, createdByUid, startAreaId, departTime, days[], maxMembers, mode, costPerTrip | M7 |
-| `commuteMembers` (P2, Module 7) | memberId, groupId, memberUid, date, status, sharePaid, co2SavedKg, ratingsGiven{} | M7, impact |
-| `contractChecks` | checkId, uid, filePath, summary, flags[{level, clause, text}], createdAt, deleteAfter | M6 |
+| `chats` (+ `messages`) | chatId, participantUids[], listingId or matchId, lastMessageAt; messages: senderUid, text, sentAt | M3 |
+| `config` | roomPriceWeights, utilitiesEstimateSen (read-only, seeded) | M2, M4 |
+| `commuteGroups` (P2, Module 7, not in the P0/P1 schema yet) | groupId, createdByUid, startAreaId, departTime, days[], maxMembers, mode, costPerTrip | M7 |
+| `commuteMembers` (P2, Module 7, not in the P0/P1 schema yet) | memberId, groupId, memberUid, date, status, sharePaid, co2SavedKg, ratingsGiven{} | M7, impact |
+| `contractChecks` | checkId, uid, summary, flags[{level, clause, text}], aiGenerated, createdAt, deleteAfter | M6 |
 
 Room photos are stored outside Firebase and referenced by URL: Firebase Storage needs a paid plan, so the plan is Cloudinary Free with signed uploads **[DRAFT]**. Contract files are sent to the check and not kept; only the summary and flags are stored **[DRAFT, Gathan to confirm the schema]**.
 
-**Access rules (NFR2):** a user reads and writes only their own `users` and `contractChecks` records, and only members of a household read or write that household's `households`, `expenses` and `chores`. Contact fields on `users` are readable by another user only when a `matches` or `households` record links them with both sides accepted. `contractChecks` are deleted after 30 days.
+**Access rules (NFR2):** Security Rules judge a whole document, so each stage of sharing has its own document (the `private` ones above). A user reads and writes only their own `users` documents and `contractChecks`. Another user reads `contact` and `phone` only after a Connection: an active `connections` record exists for the two users (created when both sides accepted in `matches`, or when the Host accepted a `listingRequests` request). A listing's exact address follows the same rule for the Host and the accepted requester. Only members of a Household read or write that household's `households`, `expenses` and `chores`. `contractChecks` are deleted after 30 days.
 
 ---
 
@@ -453,7 +464,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 2. ~~Platform~~ **Decided:** native Android in Java, because the team learned Java in earlier semesters and the brief itself talks about "activities". Confirm with the lecturer together with the Appendix 1 request.
 3. Which AI provider: Gemini or Claude? (Cost, quota, Malay language quality.)
 4. Which published emission factor source for each travel mode?
-5. Firestore collections: the proposal says ten but lists nine; this PRD adds `rooms` and `unitEvaluations`, so it now lists fifteen (two of them only for the P2 commute groups). A store for chat (FR3.3) is still missing (candidate: `chats`), plus possibly `reports` and `notifications`.
+5. ~~Firestore collections~~ **Decided 29 Oct 2026:** the list in section 8 stands, including `listingRequests` (the proof of a Connection between a student and a Host), `chats` and `config`. `reports` and `notifications` stay optional (P2) and are not in section 8 yet. Gathan keeps `schema.md` in line with this table.
 6. Evidence is from 2022 news; the 2026 survey must confirm the current situation before requirements freeze.
 7. Does the Prasarana GTFS data cover the bus/LRT routes students actually use around UM? Check a few real routes (e.g. Pantai Dalam, Kerinchi) early. The UM shuttle is not in it, so the team seeds shuttle stops and timetables from UM transport.
 

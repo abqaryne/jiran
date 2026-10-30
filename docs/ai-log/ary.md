@@ -425,6 +425,73 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary). Be able to say where a member puts their own notes and why the AI log has one file per person.
 - **Limits:** `docs/ai-log/aaron.md` is Aaron's record and was edited without him: besides the merge, it was converted to UTF-8 (it mixed Windows-1252 and UTF-8, which showed as "Â·" in two entries), so Aaron should read it once. The character `˜` in one entry is kept as it was stored. Paths written as text in his older entries still show the old locations on purpose. Open PR #8 edits `docs/ai-log/ary.md`, so it may need a sync with `main`.
 
+## 2026-10-29 · PRD data model update for the new Firestore collections · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** bring PRD section 8 and open question 5 in line with Gathan's revised schema (PR #8) and Ary's decisions, so Gathan can refer to the PRD.
+- **Prompts (exact):**
+  > yang koleksi baru itu gimana coba
+  > oke coba update PRD dan push ke branch gathan biar dia refer ke situ
+- **Output used:** `docs/product/PRD.md` section 8 (new rows for the `private` documents, `listingRequests`, `chats`, `config`; money in sen; `filePath` removed from `contractChecks`) and open question 5 marked decided. The decision to accept `listingRequests`, to merge `identity` and `preferences` into one owner-only `profile` document, and to make `membership` owner-only is Ary's, taken from the AI's recommendation.
+- **How it was tested or checked:** the link to `docs/schema.md` resolves; a search finds no old field names (`photoPaths`, `filePath`, `totalRent`, `budgetMin`) left in the PRD. not verified: that `docs/schema.md` and the PRD now agree (schema.md still lists `identity` and `preferences` separately, which Gathan has to merge); no Security Rules were written or tested.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why each stage of sharing needs its own document (Security Rules judge a whole document) and why `listingRequests` exists (`matches` only links two students, not a student and a Host).
+- **Limits:** the PRD lists key fields only; field-level detail stays in `docs/schema.md`. `reports` and `notifications` are left out of section 8.
+
+## 2026-10-30 · Fix the Connection proof and the UM posting rule in the schema · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** correct two problems in `docs/schema.md` (PR #8) that Gathan's last revision left: the Rules lookup for `contact` and `phone` could not be written as described, and the sign-up policy changed (any email may register, UM email earns the UM verified badge).
+- **Prompts (exact):**
+  > oke now coba check update-an terbaru gathan
+  > langsung benerin aja deh
+- **Output used:** `docs/schema.md`: new collection `connections/{pairId}` (the two UIDs sorted) as the one proof of a Connection, the Rules lookup rows for `contact` and `phone` rewritten to use it, a posting rule for `listings` that needs a verified email on a UM domain, the chat retention counted from `connections.endedAt`, and a server task marked as an open question for Aaron. `docs/product/PRD.md` section 8: a `connections` row and the access rule sentence.
+- **How it was tested or checked:** read against the previous diff and the PRD only. not verified: no Security Rules or emulator test exists, so it is not proven that Rules can read `connections/{pairId}` the way the document says; whether the app or the Worker creates the document is open.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why Rules cannot find the listing from a user's contact document and why one document per pair of people solves it.
+- **Limits:** this edits Gathan's document; Gathan has to read it, agree with it and be able to explain it. His own AI log entry for his last revision is still to be written by him. `connections` is marked `[PROPOSED]` until Ary confirms it.
+
+## 2026-10-30 · Schema back to UM-only access · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** change `docs/schema.md` (PR #8) back to UM-only access after Ary reversed the "any email may register" decision.
+- **Prompts (exact):**
+  > tapi kayaknya better UM only ya biar terpercaya bahwa ini khusus pelajar UM doang, kan takut ada penipu atau apa klo semuanya boleh
+- **Output used:** `docs/schema.md`: the "posting rule (UM verified)" under `listings` is replaced by one access baseline in section 1 (every read and write needs a verified email on a UM domain); the `profile` text says Rules check the UM domain from the token.
+- **How it was tested or checked:** read only; no Security Rules or emulator test exists yet. not verified: that the baseline can be written as one Rules function and tested.
+- **What the human changed or rejected:** Ary reversed the earlier decision. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the domain list is a draft; first-year students without a UM email cannot join yet (PRD open question 9).
+
+## 2026-10-30 · Resolve the merge conflict of PR #8 with main · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** PR #8 conflicted with `main` after PR #9 was merged; bring `main` into Gathan's branch and keep both sets of AI log entries.
+- **Prompts (exact):**
+  > there's a conflict on PR#8 fix that
+- **Output used:** a merge commit on `gathan/schema-draft` (no force-push). The only conflict was `docs/ai-log/ary.md` (both sides appended entries); both were kept. `docs/schema.md` access baseline now says `siswa.um.edu.my` only, to match PR #9.
+- **How it was tested or checked:** no conflict markers remain; GitHub's mergeable state was `UNKNOWN` right after the push. not verified: that CI is green on the merge commit; Gathan has not read the merge.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** this branch is Gathan's. He should pull before his next push, and tell Aaron or Ary about the schema file change.
+
+## 2026-10-31 · Resolve the second merge conflict of PR #8 with main · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** PR #8 (Gathan's schema draft) conflicted again with `main` after PRs #10 and #11 were merged, so that Gathan can continue the story.
+- **Prompts (exact):**
+  > oke coba benerin conflict di PR#8 dan nanti aku tinggal ngomong ke gathan buat lanjutin task nya
+- **Output used:** merge of `main` into `gathan/schema-draft`. The only conflict was this file: both sides had appended entries at the end, so both were kept (the entries from `main` first, then the four PR #8 entries). One path in `docs/schema.md` changed from `docs/api-contracts.md` to `docs/engineering/api-contracts.md`.
+- **How it was tested or checked:** a script found no broken relative markdown link after the merge; the entry count is 33 = 29 (main) + 4 (PR #8). not verified: CI on the merge commit at the time of writing.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say why both sides of an append-only log are kept in a conflict.
+- **Limits:** `docs/schema.md` stays in the root of `docs/` as Gathan placed it, many task files link to that path; whether it moves to `docs/engineering/` is a decision for Ary and Gathan. Task files still say "PR #8, not merged" until it merges. Paths written as text in `docs/ai-log/gathan.md` are kept as written.
+
 ## 2026-10-31 · Decide who creates the connections document (ADR-0007) · Module 2 (E0.5)
 
 - **Human owner:** Ary
@@ -496,6 +563,21 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary). Be able to say why Google Places was dropped (it needs billing).
 - **Limits:** other places that may still name Google Places or Firebase Storage outside `TASKS/` and the PRD (for example the research notes and `TEAM_PLAN.md` "Storage rules") were not changed.
 
+## 2026-10-31 · Merge PR #12 and sync PR #8 with main · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** merge PR #12 (open questions, ADR-0007, removal of `work-breakdown.md`) at Ary's request, then bring `main` into Gathan's branch for PR #8.
+- **Prompts (exact):**
+  > ok push dan sync pr#8
+
+  > Merge lalu sync
+- **Output used:** PR #12 merged with a merge commit. Merge of `main` into `gathan/schema-draft` with two conflicts: `docs/ai-log/ary.md` (both sides appended entries; all kept, 29 shared + 5 + 5 = 39) and the data model table in `docs/product/PRD.md`, where PR #8's detailed table is kept and `gender` is added to the public `users` row, as decided on 31 Oct 2026.
+- **How it was tested or checked:** a script found no broken relative link; the entry count matches both sides. not verified: CI on the merge commit at the time of writing.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** `docs/schema.md` itself does not have the `gender` field or the ISO weekday `day` yet; that is Gathan's work in E0.5.
+
 ## 2026-10-31 · Mark E0.4 done after Ary's check · Project management
 
 - **Human owner:** Ary
@@ -523,3 +605,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose to keep shared stories and to rebuild ClickUp later. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say why Security Rules stay with one person.
 - **Limits:** ClickUp subtasks still have no assignee; deleting and recreating the ClickUp tasks would also delete logged hours and comments, which was pointed out to Ary.
+
+## 2026-10-31 · Merge PR #13 and sync PR #8 again · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** merge PR #13 (E0.4 done, Who does what) at Ary's request, then bring `main` into Gathan's branch for PR #8.
+- **Prompts (exact):**
+  > ok mrge #13 aja dlu kemudian sync #8
+- **Output used:** PR #13 merged with a merge commit after its three CI checks passed. Merge of `main` into `gathan/schema-draft`; the only conflict was this file, where both sides had appended entries, and all were kept.
+- **How it was tested or checked:** entry count matches both sides; a script found no broken relative link. not verified: CI on the merge commit at the time of writing.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** none beyond the earlier entries.
