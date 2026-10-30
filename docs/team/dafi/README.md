@@ -50,7 +50,7 @@ These come from the task files. Answer them in the task file (or in the PR) so t
 
 ### Decided on 31 Oct 2026 for your stories (10)
 
-Read these before you start; the full text is under *Open questions* in each task file.
+Read these before you start; the full text is under *Decisions taken* in each task file.
 
 - [E0.4](../../../TASKS/E0/E0.4.md): Minutes live in `docs/team/meetings/YYYY-MM-DD.md`, one file per meeting: who attended, decisions, actions with owner and date. Dafi writes them.
 - [E1.1](../../../TASKS/E1/E1.1.md): First-year students without a UM email wait until they receive it. The sign-up screen says so, and the report lists it as a limitation (PRD open question 9).

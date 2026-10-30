@@ -51,7 +51,7 @@ These come from the task files. Answer them in the task file (or in the PR) so t
 
 ### Decided on 31 Oct 2026 for your stories (10)
 
-Read these before you start; the full text is under *Open questions* in each task file.
+Read these before you start; the full text is under *Decisions taken* in each task file.
 
 - [E0.3](../../../TASKS/E0/E0.3.md): Contrast computed with the WCAG formula from `colors.xml`: every text pair is at least 4.5:1 (lowest: success text on success background 4.75:1; secondary text on fill 5.53:1; white on brand 6.38:1), and the strong border is 3.42:1 against white (non-text needs 3:1). Computed from the hex values, not measured on a device screen.
 - [E2.4](../../../TASKS/E2/E2.4.md): Reference prices: hand-noted price facts from public advertisements (area, room type, price range, source and date), as the rules in `ASSUMPTIONS.md` allow, checked against the survey (T1.2). Gathan notes them, Aly checks.

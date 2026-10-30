@@ -482,3 +482,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary proposed the delete. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say where subtasks and the ClickUp rules now live.
 - **Limits:** the epic table still appears in both `TEAM_PLAN.md` and the Milestones table of `TASK.md`.
+
+## 2026-10-31 · Move the answers into Decisions taken · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** the previous entry put the 52 answers under *Open questions*, where a reader would take them for open items. Move them to *Decisions taken*, which every task file already has.
+- **Prompts (exact):**
+  > Ya, pindahkan
+- **Output used:** in every task file the decided and answered items now sit under *Decisions taken* as `31 Oct 2026, Ary: ...`, `31 Oct 2026, Ary on Claude's recommendation: ...` or `31 Oct 2026, checked by Claude: ...`; *Open questions* keeps only the 27 open items, labelled **Action.**, **Needs data.** or **Needs confirmation.**, or says "None.". Two contradictions found while moving were fixed: the old E2.1 decision "Google Places autocomplete" is struck through and points to its replacement, and PRD section 4 (building picker) and E1.3 (photo host) now match the 31 Oct decisions. The personal files point to *Decisions taken*.
+- **How it was tested or checked:** a text search finds no "Decided", "Answered" or "Still open" label left in `TASKS/`; a script found no broken relative link.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say why Google Places was dropped (it needs billing).
+- **Limits:** other places that may still name Google Places or Firebase Storage outside `TASKS/` and the PRD (for example the research notes and `TEAM_PLAN.md` "Storage rules") were not changed.

@@ -43,7 +43,7 @@ These come from the task files. Answer them in the task file (or in the PR) so t
 
 ### Decided on 31 Oct 2026 for your stories (8)
 
-Read these before you start; the full text is under *Open questions* in each task file.
+Read these before you start; the full text is under *Decisions taken* in each task file.
 
 - [E0.6](../../../TASKS/E0/E0.6.md): Starting shapes for the three AI functions: `parseSearch` (plain text in, the FR2.2 filter fields out), `explainMatch` (the score breakdown from `match.js` in, at most three reason sentences out; never the score itself) and `checkContract` (file in, summary and flags out). Each answers `{ok, data, aiGenerated: true}` or `{ok: false}` so the app can fall back.
 - [E3.5](../../../TASKS/E3/E3.5.md): Provider: the Claude API has no free plan, so it is out under free-only. If Ilham has no comparison by 8 Nov, the default is the Gemini API free tier, called only from the Worker. Before contract text is sent, check the free-tier terms on data use (the contract check is private, ADR-0005). Ilham's comparison on the samples (assumption #10) is still required.

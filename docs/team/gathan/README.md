@@ -57,7 +57,7 @@ These come from the task files. Answer them in the task file (or in the PR) so t
 
 ### Decided on 31 Oct 2026 for your stories (25)
 
-Read these before you start; the full text is under *Open questions* in each task file.
+Read these before you start; the full text is under *Decisions taken* in each task file.
 
 - [E0.5](../../../TASKS/E0/E0.5.md): Gender field: public `users/{uid}.gender`, string `"male"` or `"female"`, required when the profile is created (E1.3). Gathan adds it to the schema and the Rules.
 - [E0.5](../../../TASKS/E0/E0.5.md): Timetable `day` is stored as the ISO weekday number 1 to 7 (Monday = 1), the same as `classDays` in `match.js`; the app shows Mon to Sun. `start` and `end` stay `"HH:mm"` in Malaysia time. Needs review by Gathan and Aaron.
