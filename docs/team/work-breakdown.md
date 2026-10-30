@@ -200,7 +200,7 @@ A host posts a unit with priced rooms and manages the listing.
 
 **E2.1 Pick the building and enter rent and deposit** (FR2.1, P0) · Gathan · due 25 Nov · WAIT E0.5, E1.3
 Detail (task file): [TASKS/E2/E2.1.md](../../TASKS/E2/E2.1.md)
-- (Gathan) `listings` data, photo upload to Storage and rules
+- (Gathan) `listings` data, photo upload to Cloudinary through the Worker and rules
 - (Gathan) Building picker with place search
 - (Gathan) Post screens, step 1 (Ary's components): photos, building, rent and deposit
 

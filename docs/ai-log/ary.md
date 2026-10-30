@@ -454,3 +454,18 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary asked for the change to go in PR #8. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say how a member's assistant finds its work.
 - **Limits:** whether other tools (Codex, Gemini, Copilot) read `AGENTS.md` first is not verified.
+
+## 2026-10-31 · Answer the open questions in the task files · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** answer the 74 open questions in `TASKS/` so the team can move, and say which ones really need a human.
+- **Prompts (exact):**
+  > jawab semua open question itu deh biar semuanya bisa langsung gerak tapi emang itu butuh jawaban dari kita banget?
+
+  Ary answered two questions: gender is "Filter saja tapi saat register isi gender wajib biar keliatan dia laki laki atau perempuan", and first-year students "Tunggu Siswa Mail (Recommended)".
+- **Output used:** every *Open questions* section in `TASKS/` rewritten: 7 items decided by Ary (gender, first-year rule), 42 decided by Ary on Claude's recommendation (labelled so), 3 answered from a check, 27 left open and labelled (18 actions, 8 needing data such as the 13 Nov survey results or the shuttle timetable, 1 confirmation from Aaron). PRD FR1.3, the timetable line, the `users` row and open question 9 updated for gender and the first-year rule. The E2.1 subtask "photo upload to Storage" now says Cloudinary through the Worker (also in `work-breakdown.md`). The personal files list the still-open questions and the decisions for each person.
+- **How it was tested or checked:** collaborators read from the GitHub API (six people); colour contrast computed with the WCAG formula from `colors.xml` (all text pairs at least 4.75:1), not measured on a device; a script found no broken relative link. not verified: the postgraduate email domain (the web search failed, left open for Dafi); that the Cloudflare free plan includes the Cron Trigger the cleanup job needs; the Gemini free-tier data terms.
+- **What the human changed or rejected:** Ary chose the gender rule and the first-year rule. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain each decision in your own stories, and why the remainder rule in E7.1 keeps the total exact.
+- **Limits:** the 42 recommended decisions were not discussed with their owners; numbers such as the 300-character message, 14-day request expiry, 2 MB chat photo and 5 MB contract file are product choices, not measured limits. E7.1 (balances), E7.5 and the Rules cases in T2.3 are core logic: needs human review. The ClickUp descriptions do not have these answers yet (the connector's daily limit was reached).

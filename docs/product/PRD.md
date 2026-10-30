@@ -102,11 +102,11 @@ Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 |---|---|---|
 | FR1.1 | The user shall be able to register only with a UM student email address, confirmed through an email verification link. | P0 |
 | FR1.2 | The user shall be able to log in, log out and reset their password. | P0 |
-| FR1.3 | The user shall be able to create a profile with faculty, class timetable, monthly budget, lifestyle tags and whether they own a car, and choose which details stay hidden until a Connection. | P0 |
+| FR1.3 | The user shall be able to create a profile with gender (male or female, required, shown on the profile), faculty, class timetable, monthly budget, lifestyle tags and whether they own a car, and choose which details stay hidden until a Connection. | P0 |
 
 **Acceptance criteria [DRAFT]**
 - Registration with a non-UM domain is rejected with a clear message; an unverified account cannot reach any screen except "verify your email".
-- Timetable entries store day, start, end and building; profile shows initials, not a photo, by default.
+- Timetable entries store day (ISO weekday 1 to 7, Monday = 1), start, end and building; profile shows initials, not a photo, by default.
 - Each hidden-field toggle takes effect immediately and is enforced by Security Rules, not just the UI.
 
 ### Module 2: Housing listings and area guide
@@ -324,7 +324,7 @@ Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms` and 
 
 | Collection | Key fields | Used by (module) |
 |---|---|---|
-| `users` | uid, umEmail, name, faculty, year, homeAreaId, budgetMin, budgetMax, lifestyleTags[], hasCar, timetable[{day, start, end, building}], privacy{} | M1, all |
+| `users` | uid, umEmail, name, gender, faculty, year, homeAreaId, budgetMin, budgetMax, lifestyleTags[], hasCar, timetable[{day, start, end, building}], privacy{} | M1, all |
 | `areas` | areaId, name, lat, lng, rentLow, rentHigh, nearestStations[] | M2, M4 |
 | `listings` | listingId, ownerUid, areaId, buildingName, placeId, totalRent, deposit, genderPref, amenities[], photoPaths[], status, createdAt | M2, M4 |
 | `rooms` | roomId, listingId, type (master/medium/small), price, status (vacant/occupied) | M2, M4 |
@@ -459,7 +459,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 
 8. ~~Server language~~ **Decided:** keep JavaScript, written small and simple by Aaron and Ilham (the rest of the app is Java). Updated 27 Oct 2026: the server is a Cloudflare Worker, because the team uses free plans only and Firebase Cloud Functions need billing. **[DRAFT]** until Aaron's feasibility spike passes.
 
-9. ~~Who may register~~ **Decided 30 Oct 2026 (Ary): UM email only**, so that every account is a verified UM student and scams are harder. Domain: only `siswa.um.edu.my` (students only; staff mail is not accepted, decided 30 Oct 2026). Open: whether postgraduate students have another domain, and what first-year students without a UM email yet can do until they get one (Dafi asks UM when new students receive their address).
+9. ~~Who may register~~ **Decided 30 Oct 2026 (Ary): UM email only**, so that every account is a verified UM student and scams are harder. Domain: only `siswa.um.edu.my` (students only; staff mail is not accepted, decided 30 Oct 2026). Open: whether postgraduate students have another domain, and what first-year students without a UM email yet can do until they get one (Dafi asks UM when new students receive their address). **Decided 31 Oct 2026 (Ary):** first-year students wait until they receive their UM email; the sign-up screen says so and the report lists it as a limitation.
 
 ---
 

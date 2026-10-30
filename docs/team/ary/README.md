@@ -51,33 +51,43 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 | **T4.1** Report sections | Dafi | 1 Introduction (300 words), UI and colours part of 3 | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
 
-### Open questions waiting for you (23)
+### Open questions waiting for you (7)
 
 These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
 
 - [E0.1](../../../TASKS/E0/E0.1.md): Ary: send the email to the lecturer. It is also what decides how the report describes AI use. Blocks: T4.2 wording.
-- [E0.1](../../../TASKS/E0/E0.1.md): Ary: confirm in GitHub settings that all six members are collaborators.
-- [E0.3](../../../TASKS/E0/E0.3.md): Ary and Aly: the 4.5:1 contrast of the real colours is not recorded anywhere in the repository. Measure it and note the result here.
 - [E1.1](../../../TASKS/E1/E1.1.md): Ary and Aly: real device and real inbox test before the video.
 - [E1.2](../../../TASKS/E1/E1.2.md): Ary and Aly: test the real email and "too many attempts" behaviour against the live project before the video.
-- [E1.3](../../../TASKS/E1/E1.3.md): **Gender (proposed, not decided).** In a brainstorm on 30 Oct 2026 Ary leaned to a required gender field, male or
-- [E1.3](../../../TASKS/E1/E1.3.md): **Where the gender field lives** (public `users` or `private/profile`): Gathan and Ary. Blocks: schema and Rules.
-- [E1.3](../../../TASKS/E1/E1.3.md): **Faculty list, lifestyle tags and the building list for the timetable:** the sources are not decided. Take the tags from the
-- [E1.3](../../../TASKS/E1/E1.3.md): **Timetable day format.** The schema draft stores `day` as `"Mon".."Sun"`, while the match function (`match.js`) takes
-- [E1.3](../../../TASKS/E1/E1.3.md): **Does a Host need extra profile data?** Decide with Gathan before E2.1.
-- [E1.4](../../../TASKS/E1/E1.4.md): Ary and Dafi: what Home should show for a student who has no Household yet. The PRD does not say; decide before E1.3 closes so the Home tab is not empty in the video.
-- [E3.1](../../../TASKS/E3/E3.1.md): Gathan and Ary: what the Rooms tab shows before any search (recent, nearby)? Blocks: the empty state.
-- [E3.2](../../../TASKS/E3/E3.2.md): Ary and Gathan: decide the gender rule before this story starts. Blocks: the gender filter.
 - [E6.1](../../../TASKS/E6/E6.1.md): Ary and Aly: review the survey wording so the questions match (T1.1).
-- [E6.1](../../../TASKS/E6/E6.1.md): Ary and Gathan: gender is a hard filter, not a score factor, if it is added (see E1.3).
-- [E6.4](../../../TASKS/E6/E6.4.md): Ary and Dafi: how many matches to show at most (the function takes up to 100 candidates). Blocks: paging.
-- [E7.3](../../../TASKS/E7/E7.3.md): Dafi and Ary: what the Unit tab shows with no Household yet. Blocks: the empty state.
-- [E9.2](../../../TASKS/E9/E9.2.md): Gathan and Ary: who is Host when several sign together (the group picks one). Blocks: the Host choice screen.
-- [E9.3](../../../TASKS/E9/E9.3.md): None recorded yet.
-- [E10.2](../../../TASKS/E10/E10.2.md): Ary and Aly: one reviewer for the Malay text. Blocks: the BM check.
-- [T1.1](../../../TASKS/T1/T1.1.md): Ary and Aly: do the questions match the final screens, including the gender question if the team adds it? Blocks: nothing, the survey is out.
-- [T1.5](../../../TASKS/T1/T1.5.md): Dafi and Ary: gender and the first-year student rule must be decided before the freeze.
-- [T3.1](../../../TASKS/T3/T3.1.md): Ary: confirm the rubric items and the maximum length (10 to 15 minutes).
+- [E10.2](../../../TASKS/E10/E10.2.md): Ary and Aly: find one Malay reviewer (a Malaysian classmate) for the BM text. Blocks: the BM check.
+- [T3.1](../../../TASKS/T3/T3.1.md): Ary: confirm the rubric items and the maximum length (10 to 15 minutes) from the brief.
+- [T4.2](../../../TASKS/T4/T4.2.md): Everyone: fill the TODO fields before merging into the appendix.
+
+### Decided on 31 Oct 2026 for your stories (21)
+
+Read these before you start; the full text is under *Open questions* in each task file.
+
+- [E0.1](../../../TASKS/E0/E0.1.md): All six members are collaborators: GitHub lists abqaryne (admin), aarntn, GathanAkhtar, IlhamSetiabudi365, Aly24212090 and dafiatha (write).
+- [E0.3](../../../TASKS/E0/E0.3.md): Contrast computed with the WCAG formula from `colors.xml`: every text pair is at least 4.5:1 (lowest: success text on success background 4.75:1; secondary text on fill 5.53:1; white on brand 6.38:1), and the strong border is 3.42:1 against white (non-text needs 3:1). Computed from the hex values, not measured on a device screen.
+- [E1.1](../../../TASKS/E1/E1.1.md): First-year students without a UM email wait until they receive it. The sign-up screen says so, and the report lists it as a limitation (PRD open question 9).
+- [E1.3](../../../TASKS/E1/E1.3.md): Gender: required at registration (profile setup right after sign-up), male or female, and shown on the profile so others see it. Rooms are not hidden automatically: the Rooms search and the housemate page have a filter chip the user picks (Male / Female / Any), default Any. PRD FR1.3 and section 8 updated.
+- [E1.3](../../../TASKS/E1/E1.3.md): The gender field lives in the public `users/{uid}` document, because others must see it.
+- [E1.3](../../../TASKS/E1/E1.3.md): Sources: the faculty list is UM's official list of faculties and academies, kept in a string resource with its source link and date; the building list comes from the same place search as Listings (E2.1). Lifestyle tags come from the survey (T1); until 13 Nov use a short starter set and mark it as a draft.
+- [E1.3](../../../TASKS/E1/E1.3.md): A Host needs no extra profile data: any student can be a Host; unit details live in the listing, and the phone number stays in the private document until a Connection.
+- [E1.4](../../../TASKS/E1/E1.4.md): Home for a student without a Household shows two cards, "Find a room" (Rooms tab) and "Find housemates" (matches), and a link "Join a Household with a code" (E5.3). No empty screen.
+- [E3.1](../../../TASKS/E3/E3.1.md): Before any search the Rooms tab shows the newest active listings first, with the filter chips on top. If the student saved a faculty, cards show travel time (E3.4). No location permission is needed.
+- [E3.2](../../../TASKS/E3/E3.2.md): Gender filter: a chip "For: Male / Female / Any", default Any. Male shows `male_only` and `any` listings, Female shows `female_only` and `any`. Nothing is hidden without the user choosing it (see E1.3).
+- [E4.1](../../../TASKS/E4/E4.1.md): Reported listings: reports go to a `reports` collection; Gathan moderates, Ary is the backup; the sheet says only "The team will review this" and promises no time; the item stays visible until a moderator hides it.
+- [E4.3](../../../TASKS/E4/E4.3.md): The request message is at most 300 characters. A listing with no vacant room cannot receive requests: the button is disabled and says "No rooms free".
+- [E5.1](../../../TASKS/E5/E5.1.md): An unanswered request expires after 14 days, checked on read like listings (`expiresAt`); the sender sees "Expired".
+- [E5.2](../../../TASKS/E5/E5.2.md): Chat attachments are photos only, resized on the phone to at most 1600 px and 2 MB, uploaded through the same Cloudinary flow as listings (E2.1). Contract files never go into a chat.
+- [E6.1](../../../TASKS/E6/E6.1.md): Gender is not part of the match score. The housemate page has the same filter chip as Rooms (Male / Female / Any, default Any).
+- [E6.4](../../../TASKS/E6/E6.4.md): Show the top 20 matches, no paging. The function still scores up to 100 candidates.
+- [E7.3](../../../TASKS/E7/E7.3.md): Unit tab without a Household: "You are not in a Household yet" and two buttons, "Find a room" and "Join with a code".
+- [E9.2](../../../TASKS/E9/E9.2.md): The group picks one member as Host; by default the person who created the group, and any member can hand it over before signing.
+- [E9.4](../../../TASKS/E9/E9.4.md): Building reviews: reports go to a `reports` collection; Gathan moderates, Ary is the backup; the sheet says only "The team will review this" and promises no time; the item stays visible until a moderator hides it.
+- [T1.1](../../../TASKS/T1/T1.1.md): The survey is out and stays as it is. Gender is asked in the app at registration (E1.3), so the survey needs no new question.
+- [T1.5](../../../TASKS/T1/T1.5.md): Both decided: gender is required at registration with a user-chosen filter (E1.3), and first-year students wait for their Siswa Mail (E1.1).
 
 **Always:** check and merge every PR, and help owners use the components. If the load gets too heavy, hand the Module 3 screens (E6, E9.2) to Ilham or Gathan.
 
