@@ -18,8 +18,8 @@ My role and stories: <<role and story IDs, from docs/team/<my name>.md>>.
 Before changing anything, read AGENTS.md, docs/team/<my name>.md, docs/team/TEAM_PLAN.md, docs/product/PRD.md
 (the single source of truth), docs/product/GLOSSARY.md and docs/design/DESIGN.md. Use the glossary words in code,
 UI and text. For the story I work on, read its subtasks in docs/team/work-breakdown.md and, if it exists, its task file
-docs/tasks/<story ID>.md (what to build, what is out of scope, open questions). If the file does not exist, copy
-docs/tasks/_TEMPLATE.md and write it with me before any code. Check git status and keep other people's uncommitted work.
+docs/tasks/<epic>/<story ID>.md, for example docs/tasks/E1/E1.1.md (what to build, what is out of scope, open questions). If the file does not exist, copy
+a finished one such as docs/tasks/E1/E1.1.md and write it with me before any code. Check git status and keep other people's uncommitted work.
 
 Stack (fixed, do not change it): native Android in Java with XML layouts and Material Components (MVVM);
 Firebase Auth and Firestore; a Cloudflare Worker in JavaScript for server code (free plan only);

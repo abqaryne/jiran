@@ -342,3 +342,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary). Be able to say why status is kept only in ClickUp and why a task file records what is left out and what is not verified.
 - **Follow-up the same day** (prompt: `langsung buatin aja buat semua subtask`): Claude wrote draft task files for the other 57 stories (generated from `work-breakdown.md` plus text written from the PRD, the code and the schema draft, marked "draft, owner to confirm") and put a short version in 51 ClickUp descriptions. Six ClickUp updates (T2.4, T2.5, T3.1, T3.2, T4.1, T4.2) were refused because the daily limit of the ClickUp connector (100 calls) was reached; they are still the old one-line descriptions.
 - **Limits:** the first five task files are detailed; the other 57 are drafts written without the owners and may contain wrong guesses (each lists open questions). The gender idea in E1.3 is written as a proposal, not a decision. The acceptance checks are drafts for Aly to run and correct.
+
+## 2026-10-30 · Group the task files by epic and drop the template · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** delete `docs/tasks/_TEMPLATE.md` and move each task file into a folder named after its epic.
+- **Prompts (exact):**
+  > hapus template.md dan buat tambahin parent folder epic untuk masing masing subtasknya
+- **Output used:** `docs/tasks/E0/` to `E10/` and `T1/` to `T4/` hold the 62 task files; links in `docs/tasks/README.md`, `docs/team/work-breakdown.md`, `docs/team/master-prompt.md` and inside the task files were updated. The earlier entry above still names `_TEMPLATE.md` and the old flat paths, because it describes what was true then.
+- **How it was tested or checked:** a script checked that every relative link in `docs/tasks/`, `work-breakdown.md` and `master-prompt.md` resolves. not verified: the paths written in the ClickUp descriptions (`docs/tasks/E1.1.md`) are now out of date; they could not be updated because the ClickUp connector's daily limit was reached.
+- **What the human changed or rejected:** Ary asked to remove the template; TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** until the ClickUp descriptions are updated, they point to the old flat paths.
