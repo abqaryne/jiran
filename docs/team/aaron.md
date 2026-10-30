@@ -178,33 +178,33 @@ continuation commits remain on the feature branch until reviewed by PR.
 
 ## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. A task file marked *(draft)* was written for the owner by Ary's assistant: correct it first and tell Ary what was wrong. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
 
 ### Do in this order (stories you lead: 7)
 
 | # | Story | Task file | FR, priority | Due | Waits for |
 |---|---|---|---|---|---|
-| 1 | **E0.1** Repo and CI are healthy | [E0.1.md](../../TASKS/E0/E0.1.md) (draft) | P0 | 2 Nov | - |
-| 2 | **E0.2** Firebase and the free server are ready | [E0.2.md](../../TASKS/E0/E0.2.md) (draft) | P0 | 8 Nov | - |
-| 3 | **E0.6** Function contracts (stubs) | [E0.6.md](../../TASKS/E0/E0.6.md) (draft) | P0 | 15 Nov | - |
-| 4 | **E3.3** Commute per travel mode | [E3.3.md](../../TASKS/E3/E3.3.md) (draft) | FR4.1, P0 | start now, due 29 Nov | may start early · transit coverage and fares (#3, #4, #5), shuttle timetable (T1) |
-| 5 | **E3.4** True monthly cost and travel time on the Room card | [E3.4.md](../../TASKS/E3/E3.4.md) (draft) | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
-| 6 | **E6.2** Match score function | [E6.2.md](../../TASKS/E6/E6.2.md) (draft) | FR3.2, P0 | 10 Dec | may start early · match weights (#9), `matchProfiles` (E6.1) |
-| 7 | **E4.4** Public transport route page, peak and off-peak | [E4.4.md](../../TASKS/E4/E4.4.md) (draft) | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
+| 1 | **E0.1** Repo and CI are healthy | [E0.1.md](../../TASKS/E0/E0.1.md) | P0 | 2 Nov | - |
+| 2 | **E0.2** Firebase and the free server are ready | [E0.2.md](../../TASKS/E0/E0.2.md) | P0 | 8 Nov | - |
+| 3 | **E0.6** Function contracts (stubs) | [E0.6.md](../../TASKS/E0/E0.6.md) | P0 | 15 Nov | - |
+| 4 | **E3.3** Commute per travel mode | [E3.3.md](../../TASKS/E3/E3.3.md) | FR4.1, P0 | start now, due 29 Nov | may start early · transit coverage and fares (#3, #4, #5), shuttle timetable (T1) |
+| 5 | **E3.4** True monthly cost and travel time on the Room card | [E3.4.md](../../TASKS/E3/E3.4.md) | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
+| 6 | **E6.2** Match score function | [E6.2.md](../../TASKS/E6/E6.2.md) | FR3.2, P0 | 10 Dec | may start early · match weights (#9), `matchProfiles` (E6.1) |
+| 7 | **E4.4** Public transport route page, peak and off-peak | [E4.4.md](../../TASKS/E4/E4.4.md) | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
 
 ### Stories where you do a subtask (9)
 
 | Story | Lead | Your subtask | Task file | Due |
 |---|---|---|---|---|
-| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../TASKS/E0/E0.4.md) (draft) | 30 Oct |
-| **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../../TASKS/T1/T1.1.md) (draft) | 8 Nov (launch 31 Oct) |
-| **T1.4** UM shuttle timetable and commute estimates | Dafi | Estimate commute time and cost for a few example routes; write them as estimates with sources | [T1.4.md](../../TASKS/T1/T1.4.md) (draft) | 8 Nov (timetable), 13 Nov (estimates) |
-| **T1.3** Verify the assumed numbers | Dafi | #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov; #4 Car cost, #5 Public transport (coverage 8 Nov, data 13 Nov); #6 CO₂ factors · 13 Nov, #11 Maps cost and quota · 8 Nov | [T1.3.md](../../TASKS/T1/T1.3.md) (draft) | 13 Nov |
+| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../TASKS/E0/E0.4.md) | 30 Oct |
+| **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
+| **T1.4** UM shuttle timetable and commute estimates | Dafi | Estimate commute time and cost for a few example routes; write them as estimates with sources | [T1.4.md](../../TASKS/T1/T1.4.md) | 8 Nov (timetable), 13 Nov (estimates) |
+| **T1.3** Verify the assumed numbers | Dafi | #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov; #4 Car cost, #5 Public transport (coverage 8 Nov, data 13 Nov); #6 CO₂ factors · 13 Nov, #11 Maps cost and quota · 8 Nov | [T1.3.md](../../TASKS/T1/T1.3.md) | 13 Nov |
 | **E1.1** Sign up with a UM email and verify it | Ary | An unverified account can only reach the verify screen (done in the app by `StartRoute`; Aaron still to review) | [E1.1.md](../../TASKS/E1/E1.1.md) | 19 Nov |
-| **E4.2** Commute options card | Ary | Response with time, cost and CO₂ per mode and the cheapest on-time option; CO₂ factors from a published source (#6) | [E4.2.md](../../TASKS/E4/E4.2.md) (draft) | 7 Dec |
-| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Technical implementation and AI data flow (1:30) | [T3.1.md](../../TASKS/T3/T3.1.md) (draft) | 20 Dec |
-| **T4.1** Report sections | Dafi | 3 Architecture (350), 4 System implementation (400) | [T4.1.md](../../TASKS/T4/T4.1.md) (draft) | 9 Jan |
-| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) (draft) | 9 Jan |
+| **E4.2** Commute options card | Ary | Response with time, cost and CO₂ per mode and the cheapest on-time option; CO₂ factors from a published source (#6) | [E4.2.md](../../TASKS/E4/E4.2.md) | 7 Dec |
+| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Technical implementation and AI data flow (1:30) | [T3.1.md](../../TASKS/T3/T3.1.md) | 20 Dec |
+| **T4.1** Report sections | Dafi | 3 Architecture (350), 4 System implementation (400) | [T4.1.md](../../TASKS/T4/T4.1.md) | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) | 9 Jan |
 
 ### Open questions waiting for you (11)
 

@@ -8,31 +8,31 @@
 
 ## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. A task file marked *(draft)* was written for the owner by Ary's assistant: correct it first and tell Ary what was wrong. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
 
 ### Do in this order (stories you lead: 9)
 
 | # | Story | Task file | FR, priority | Due | Waits for |
 |---|---|---|---|---|---|
-| 1 | **T1.1** Survey and interviews | [T1.1.md](../../TASKS/T1/T1.1.md) (draft) | P0 | 8 Nov (launch 31 Oct) | - |
-| 2 | **T1.2** Survey analysis | [T1.2.md](../../TASKS/T1/T1.2.md) (draft) | P0 | 15 Nov | T1.1 |
-| 3 | **T2.1** Test plan and integration tests | [T2.1.md](../../TASKS/T2/T2.1.md) (draft) | P0 | 15 Nov (plan), 27 Dec (run) | - |
-| 4 | **E7.5** Recurring chores | [E7.5.md](../../TASKS/E7/E7.5.md) (draft) | FR5.2, P1 | 13 Dec | may start early · E7.2 (logic can start now) |
-| 5 | **E7.6** House rules | [E7.6.md](../../TASKS/E7/E7.6.md) (draft) | FR5.3, P1 | 13 Dec | E7.2 |
-| 6 | **T2.2** NFR1: speed under load | [T2.2.md](../../TASKS/T2/T2.2.md) (draft) | P0 | 27 Dec | working search |
-| 7 | **T2.4** Usability test | [T2.4.md](../../TASKS/T2/T2.4.md) (draft) | P0 | 27 Dec | working app |
-| 8 | **T2.5** Release check | [T2.5.md](../../TASKS/T2/T2.5.md) (draft) | P0 | 27 Dec | all P0 flows |
-| 9 | **T3.2** Record, edit and final cut | [T3.2.md](../../TASKS/T3/T3.2.md) (draft) | P0 | 2 Jan | T3.1 |
+| 1 | **T1.1** Survey and interviews | [T1.1.md](../../TASKS/T1/T1.1.md) | P0 | 8 Nov (launch 31 Oct) | - |
+| 2 | **T1.2** Survey analysis | [T1.2.md](../../TASKS/T1/T1.2.md) | P0 | 15 Nov | T1.1 |
+| 3 | **T2.1** Test plan and integration tests | [T2.1.md](../../TASKS/T2/T2.1.md) | P0 | 15 Nov (plan), 27 Dec (run) | - |
+| 4 | **E7.5** Recurring chores | [E7.5.md](../../TASKS/E7/E7.5.md) | FR5.2, P1 | 13 Dec | may start early · E7.2 (logic can start now) |
+| 5 | **E7.6** House rules | [E7.6.md](../../TASKS/E7/E7.6.md) | FR5.3, P1 | 13 Dec | E7.2 |
+| 6 | **T2.2** NFR1: speed under load | [T2.2.md](../../TASKS/T2/T2.2.md) | P0 | 27 Dec | working search |
+| 7 | **T2.4** Usability test | [T2.4.md](../../TASKS/T2/T2.4.md) | P0 | 27 Dec | working app |
+| 8 | **T2.5** Release check | [T2.5.md](../../TASKS/T2/T2.5.md) | P0 | 27 Dec | all P0 flows |
+| 9 | **T3.2** Record, edit and final cut | [T3.2.md](../../TASKS/T3/T3.2.md) | P0 | 2 Jan | T3.1 |
 
 ### Stories where you do a subtask (5)
 
 | Story | Lead | Your subtask | Task file | Due |
 |---|---|---|---|---|
-| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../TASKS/E0/E0.4.md) (draft) | 30 Oct |
-| **T1.3** Verify the assumed numbers | Dafi | #1 Room price weights, #7 Utilities estimate · 10 Nov; #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov | [T1.3.md](../../TASKS/T1/T1.3.md) (draft) | 13 Nov |
-| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; NFR verification (1:30); Stakeholder validation (1:00) | [T3.1.md](../../TASKS/T3/T3.1.md) (draft) | 20 Dec |
-| **T4.1** Report sections | Dafi | 2a User study findings (350), 5 Testing and validation (300) | [T4.1.md](../../TASKS/T4/T4.1.md) (draft) | 9 Jan |
-| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) (draft) | 9 Jan |
+| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../TASKS/E0/E0.4.md) | 30 Oct |
+| **T1.3** Verify the assumed numbers | Dafi | #1 Room price weights, #7 Utilities estimate · 10 Nov; #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov | [T1.3.md](../../TASKS/T1/T1.3.md) | 13 Nov |
+| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; NFR verification (1:30); Stakeholder validation (1:00) | [T3.1.md](../../TASKS/T3/T3.1.md) | 20 Dec |
+| **T4.1** Report sections | Dafi | 2a User study findings (350), 5 Testing and validation (300) | [T4.1.md](../../TASKS/T4/T4.1.md) | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) | 9 Jan |
 
 ### Open questions waiting for you (20)
 

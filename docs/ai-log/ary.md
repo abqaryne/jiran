@@ -384,3 +384,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary). Be able to say why status is kept in both `TASK.md` and ClickUp and what makes an ADR different from a task.
 - **Limits:** the draft task files may contain wrong guesses about other members' work; ADR-0007 is only proposed.
 - **Follow-up the same day** (prompt: `udh langsung tulisin detail semua task ya`): Claude added more context to the thinnest task files (test and report tracks, Unit tab, notifications, AI labels) and wrote real *Resolution* and *Files and tests* sections for the tasks that already have code (E0.1, E0.2, E0.6, E3.3, E4.2 Aaron's part, E6.2), from the commit messages, the source files in `backend/functions/src` and the tests. `npm test` in `backend/functions` was run: 13 suites, 339 tests passed. The Resolution texts about other members' work were not read by those members. Two gaps found while writing them: the repository has no openrouteservice adapter (the provider adapter `routes-client.js` is the Google Routes one), and `backend/tests/load` already has k6 scripts but no recorded result.
+
+## 2026-10-30 · Task files are final, draft markers removed · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** remove the "draft, owner to confirm" markers from the 62 task files, `TASK.md`, `work-breakdown.md`, the personal files, `AGENTS.md` and `ADR.md`, because Ary decided the task files are final and need no further correction round.
+- **Prompts (exact):**
+  > gausah pake tetep draf, udh langsung finalized aj gaperlu dikoreksi lagi biar sejalan
+- **Output used:** the banner and the "(draft)" tags are gone; each task file keeps its Open questions with an owner and its "not recorded" or "not verified" marks.
+- **How it was tested or checked:** a text search finds no draft marker left in those files; a script found no broken relative link. not verified: that the other members have read their task files; the text about their work was written by Claude from the repository and Ary has not asked them to confirm it.
+- **What the human changed or rejected:** Ary decided to finalize without a correction round. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say that the task files describe plans and open questions, and that statements about other members' work come from the repository, not from the members.
+- **Limits:** if a member finds an error in their task file, fix the file and `TASK.md` in the same PR.

@@ -8,7 +8,7 @@ IDs are assigned once and never reused: `E<epic>.<n>` for the flows built in ord
 
 Decisions that are hard to reverse go in [ADR.md](ADR.md) (append-only). The shape of the product is in [docs/product/PRD.md](docs/product/PRD.md), the data in `docs/schema.md` (Gathan's PR #8, not merged on 30 Oct 2026), and the engineering notes in [docs/architecture.md](docs/architecture.md).
 
-Statuses below are a snapshot of 30 Oct 2026 taken from ClickUp. Tasks written as drafts (every task except E0.3 and E1.1 to E1.4) were drafted for their owners and need the owner's correction.
+Statuses below are a snapshot of 30 Oct 2026 taken from ClickUp. Each task file lists its open questions with an owner; an item marked not recorded or not verified was not seen in the repository.
 
 ## Milestones
 

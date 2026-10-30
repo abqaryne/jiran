@@ -70,7 +70,7 @@ The brief requires **significant and original human contribution** and a real un
 ### Task tracking
 
 - `TASK.md` is the master list, `TASKS/<epic>/<ID>.md` holds the detail of each task, `ADR.md` records decisions that are hard to
-  reverse (append-only). Read the task file of your story before you code; if it is a draft, correct it first and tell Ary.
+  reverse (append-only). Read the task file of your story before you code; if something in it is wrong or out of date, fix it in the same PR and tell Ary.
 - When you finish or change a task, update its file (status, resolution) and its row in `TASK.md` in the same PR. ClickUp mirrors
   the status; hours are logged there.
 - Never invent task detail: write `not recorded` or `not verified`, like in the AI log.

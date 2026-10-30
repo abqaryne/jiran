@@ -9,32 +9,32 @@ You must also write real code (the brief says nobody does only documentation): t
 
 ## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. A task file marked *(draft)* was written for the owner by Ary's assistant: correct it first and tell Ary what was wrong. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
 
 ### Do in this order (stories you lead: 8)
 
 | # | Story | Task file | FR, priority | Due | Waits for |
 |---|---|---|---|---|---|
-| 1 | **E0.4** Project management and docs | [E0.4.md](../../TASKS/E0/E0.4.md) (draft) | P0 | 30 Oct | - |
-| 2 | **T1.4** UM shuttle timetable and commute estimates | [T1.4.md](../../TASKS/T1/T1.4.md) (draft) | P0 | 8 Nov (timetable), 13 Nov (estimates) | - |
-| 3 | **T1.3** Verify the assumed numbers | [T1.3.md](../../TASKS/T1/T1.3.md) (draft) | P0 | 13 Nov | T1.1 |
-| 4 | **T1.5** Requirements freeze | [T1.5.md](../../TASKS/T1/T1.5.md) (draft) | P0 | 15 Nov | T1.2 |
-| 5 | **E7.1** Balance and settle-up logic | [E7.1.md](../../TASKS/E7/E7.1.md) (draft) | FR5.1, P0 | start now, due 29 Nov | may start early |
-| 6 | **E7.3** Expenses and balances screens | [E7.3.md](../../TASKS/E7/E7.3.md) (draft) | FR5.1, P0 | 12 Dec | E7.1, E7.2 |
-| 7 | **E7.4** Move out | [E7.4.md](../../TASKS/E7/E7.4.md) (draft) | FR5.1, P0 | 13 Dec | E7.3 |
-| 8 | **T4.1** Report sections | [T4.1.md](../../TASKS/T4/T4.1.md) (draft) | P0 | 9 Jan | each owner's part |
+| 1 | **E0.4** Project management and docs | [E0.4.md](../../TASKS/E0/E0.4.md) | P0 | 30 Oct | - |
+| 2 | **T1.4** UM shuttle timetable and commute estimates | [T1.4.md](../../TASKS/T1/T1.4.md) | P0 | 8 Nov (timetable), 13 Nov (estimates) | - |
+| 3 | **T1.3** Verify the assumed numbers | [T1.3.md](../../TASKS/T1/T1.3.md) | P0 | 13 Nov | T1.1 |
+| 4 | **T1.5** Requirements freeze | [T1.5.md](../../TASKS/T1/T1.5.md) | P0 | 15 Nov | T1.2 |
+| 5 | **E7.1** Balance and settle-up logic | [E7.1.md](../../TASKS/E7/E7.1.md) | FR5.1, P0 | start now, due 29 Nov | may start early |
+| 6 | **E7.3** Expenses and balances screens | [E7.3.md](../../TASKS/E7/E7.3.md) | FR5.1, P0 | 12 Dec | E7.1, E7.2 |
+| 7 | **E7.4** Move out | [E7.4.md](../../TASKS/E7/E7.4.md) | FR5.1, P0 | 13 Dec | E7.3 |
+| 8 | **T4.1** Report sections | [T4.1.md](../../TASKS/T4/T4.1.md) | P0 | 9 Jan | each owner's part |
 
 ### Stories where you do a subtask (7)
 
 | Story | Lead | Your subtask | Task file | Due |
 |---|---|---|---|---|
-| **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../../TASKS/T1/T1.1.md) (draft) | 8 Nov (launch 31 Oct) |
-| **T1.2** Survey analysis | Aly | Table "finding, FR it shaped" | [T1.2.md](../../TASKS/T1/T1.2.md) (draft) | 15 Nov |
+| **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
+| **T1.2** Survey analysis | Aly | Table "finding, FR it shaped" | [T1.2.md](../../TASKS/T1/T1.2.md) | 15 Nov |
 | **E1.1** Sign up with a UM email and verify it | Ary | Decided 30 Oct 2026: UM email only. Only `siswa.um.edu.my` counts (students only, no staff mail). Still to confirm with UM or the lecturer: whether postgraduate students have another domain, and what first-year students without a UM email can do | [E1.1.md](../../TASKS/E1/E1.1.md) | 19 Nov |
-| **E7.2** Household data and rules | Gathan | Household created from a Group or by invite code (with E5.3) | [E7.2.md](../../TASKS/E7/E7.2.md) (draft) | 8 Dec |
-| **E5.3** Move-in confirmation | Ary | The Household is created with the same members (E7.2) | [E5.3.md](../../TASKS/E5/E5.3.md) (draft) | 9 Dec |
-| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Team contributions (0:30) and closing summary (0:45) | [T3.1.md](../../TASKS/T3/T3.1.md) (draft) | 20 Dec |
-| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) (draft) | 9 Jan |
+| **E7.2** Household data and rules | Gathan | Household created from a Group or by invite code (with E5.3) | [E7.2.md](../../TASKS/E7/E7.2.md) | 8 Dec |
+| **E5.3** Move-in confirmation | Ary | The Household is created with the same members (E7.2) | [E5.3.md](../../TASKS/E5/E5.3.md) | 9 Dec |
+| **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Team contributions (0:30) and closing summary (0:45) | [T3.1.md](../../TASKS/T3/T3.1.md) | 20 Dec |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) | 9 Jan |
 
 ### Open questions waiting for you (15)
 

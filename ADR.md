@@ -173,5 +173,4 @@ the full detail of each task (description, work needed, constraints, acceptance,
 and mirrors the statuses. IDs stay `E<epic>.<n>` and `T<n>.<n>` because they already appear in commits, AI logs and ClickUp.
 
 ### Consequences
-Status is written in two places and must be changed in both on the same day. Drafts for stories owned by others need the
-owner's correction. See `docs/team/work-breakdown.md` for the subtasks.
+Status is written in two places and must be changed in both on the same day. Open questions in each task file have an owner. See `docs/team/work-breakdown.md` for the subtasks.

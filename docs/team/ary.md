@@ -11,7 +11,7 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 
 ## Your stories (subtasks for each are in [work-breakdown.md](work-breakdown.md))
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. A task file marked *(draft)* was written for the owner by Ary's assistant: correct it first and tell Ary what was wrong. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../TASK.md); the subtasks are in [work-breakdown.md](work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../ADR.md).
 
 ### Do in this order (stories you lead: 18)
 
@@ -22,34 +22,34 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 | 3 | **E1.2** Log in, log out and reset password | [E1.2.md](../../TASKS/E1/E1.2.md) | FR1.2, P0 | 20 Nov | E1.1 |
 | 4 | **E1.3** Profile setup and privacy | [E1.3.md](../../TASKS/E1/E1.3.md) | FR1.3, P0 | 22 Nov | `users` fields (E0.5) |
 | 5 | **E1.4** Home and the four tabs after sign-in | [E1.4.md](../../TASKS/E1/E1.4.md) | P0 | 22 Nov | E1.2 |
-| 6 | **E4.1** Room details screen | [E4.1.md](../../TASKS/E4/E4.1.md) (draft) | FR2.2, P0 | 4 Dec | E3.1 |
-| 7 | **E4.2** Commute options card | [E4.2.md](../../TASKS/E4/E4.2.md) (draft) | FR4.3, P0 | 7 Dec | E3.3 (use the stub until it lands) |
-| 8 | **E4.3** Send a request to the Host | [E4.3.md](../../TASKS/E4/E4.3.md) (draft) | FR3.3, P0 | 7 Dec | E5.1 |
-| 9 | **E5.1** Requests inbox and Connection | [E5.1.md](../../TASKS/E5/E5.1.md) (draft) | FR3.3, P0 | 7 Dec | E1.3 |
-| 10 | **E6.1** Compatibility questions | [E6.1.md](../../TASKS/E6/E6.1.md) (draft) | FR3.1, P0 | 8 Dec | E1.3 |
-| 11 | **E5.2** Chat and viewing | [E5.2.md](../../TASKS/E5/E5.2.md) (draft) | FR3.3, P0 | 9 Dec | E5.1 |
-| 12 | **E5.3** Move-in confirmation | [E5.3.md](../../TASKS/E5/E5.3.md) (draft) | FR3.3, FR5.1, P0 | 9 Dec | E5.2 |
-| 13 | **E6.4** Match list, match profile and connect | [E6.4.md](../../TASKS/E6/E6.4.md) (draft) | FR3.2, FR3.3, P0 | 11 Dec | E6.2 (fake scores meanwhile), E5.1 |
-| 14 | **E10.1** Profile and privacy settings screens | [E10.1.md](../../TASKS/E10/E10.1.md) (draft) | FR1.3, P1 | 18 Dec | E1.3 |
-| 15 | **E9.2** Group, split options and member status | [E9.2.md](../../TASKS/E9/E9.2.md) (draft) | FR3.3, P1 | 19 Dec | E5.2 |
-| 16 | **E10.2** Polish: empty states, errors, accessibility | [E10.2.md](../../TASKS/E10/E10.2.md) (draft) | P1 | 20 Dec | all P0 flows |
-| 17 | **E9.3** Compare units | [E9.3.md](../../TASKS/E9/E9.3.md) (draft) | FR3.3, P1 | 20 Dec | E9.1, E9.2 |
-| 18 | **T3.1** Script and screen captures | [T3.1.md](../../TASKS/T3/T3.1.md) (draft) | P0 | 20 Dec | - |
+| 6 | **E4.1** Room details screen | [E4.1.md](../../TASKS/E4/E4.1.md) | FR2.2, P0 | 4 Dec | E3.1 |
+| 7 | **E4.2** Commute options card | [E4.2.md](../../TASKS/E4/E4.2.md) | FR4.3, P0 | 7 Dec | E3.3 (use the stub until it lands) |
+| 8 | **E4.3** Send a request to the Host | [E4.3.md](../../TASKS/E4/E4.3.md) | FR3.3, P0 | 7 Dec | E5.1 |
+| 9 | **E5.1** Requests inbox and Connection | [E5.1.md](../../TASKS/E5/E5.1.md) | FR3.3, P0 | 7 Dec | E1.3 |
+| 10 | **E6.1** Compatibility questions | [E6.1.md](../../TASKS/E6/E6.1.md) | FR3.1, P0 | 8 Dec | E1.3 |
+| 11 | **E5.2** Chat and viewing | [E5.2.md](../../TASKS/E5/E5.2.md) | FR3.3, P0 | 9 Dec | E5.1 |
+| 12 | **E5.3** Move-in confirmation | [E5.3.md](../../TASKS/E5/E5.3.md) | FR3.3, FR5.1, P0 | 9 Dec | E5.2 |
+| 13 | **E6.4** Match list, match profile and connect | [E6.4.md](../../TASKS/E6/E6.4.md) | FR3.2, FR3.3, P0 | 11 Dec | E6.2 (fake scores meanwhile), E5.1 |
+| 14 | **E10.1** Profile and privacy settings screens | [E10.1.md](../../TASKS/E10/E10.1.md) | FR1.3, P1 | 18 Dec | E1.3 |
+| 15 | **E9.2** Group, split options and member status | [E9.2.md](../../TASKS/E9/E9.2.md) | FR3.3, P1 | 19 Dec | E5.2 |
+| 16 | **E10.2** Polish: empty states, errors, accessibility | [E10.2.md](../../TASKS/E10/E10.2.md) | P1 | 20 Dec | all P0 flows |
+| 17 | **E9.3** Compare units | [E9.3.md](../../TASKS/E9/E9.3.md) | FR3.3, P1 | 20 Dec | E9.1, E9.2 |
+| 18 | **T3.1** Script and screen captures | [T3.1.md](../../TASKS/T3/T3.1.md) | P0 | 20 Dec | - |
 
 ### Stories where you do a subtask (10)
 
 | Story | Lead | Your subtask | Task file | Due |
 |---|---|---|---|---|
-| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../TASKS/E0/E0.4.md) (draft) | 30 Oct |
-| **E0.1** Repo and CI are healthy | Aaron | Add everyone as collaborators on GitHub; Turn on branch protection: PR required, final check by Ary; Email the lecturer: Appendix 1, native Java OK, SDG 11 OK, what the AI policy counts as your own code, is a GitHub link needed | [E0.1.md](../../TASKS/E0/E0.1.md) (draft) | 2 Nov |
-| **T1.1** Survey and interviews | Aly | Review the survey wording so the questions match the screens; Share the survey link in your circles | [T1.1.md](../../TASKS/T1/T1.1.md) (draft) | 8 Nov (launch 31 Oct) |
-| **E5.4** Notifications | Gathan | Notifications screen | [E5.4.md](../../TASKS/E5/E5.4.md) (draft) | 13 Dec |
-| **E4.4** Public transport route page, peak and off-peak | Aaron | Public transport route page with the MapLibre map, and the Peak / Off-peak toggle | [E4.4.md](../../TASKS/E4/E4.4.md) (draft) | 14 Dec |
-| **E9.1** Evaluate any unit | Gathan | Evaluate form and result screens | [E9.1.md](../../TASKS/E9/E9.1.md) (draft) | 17 Dec |
-| **E9.4** Area page and building reviews | Gathan | Area page and review screens | [E9.4.md](../../TASKS/E9/E9.4.md) (draft) | 20 Dec |
-| **T3.2** Record, edit and final cut | Aly | Check against the rubric | [T3.2.md](../../TASKS/T3/T3.2.md) (draft) | 2 Jan |
-| **T4.1** Report sections | Dafi | 1 Introduction (300 words), UI and colours part of 3 | [T4.1.md](../../TASKS/T4/T4.1.md) (draft) | 9 Jan |
-| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) (draft) | 9 Jan |
+| **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../TASKS/E0/E0.4.md) | 30 Oct |
+| **E0.1** Repo and CI are healthy | Aaron | Add everyone as collaborators on GitHub; Turn on branch protection: PR required, final check by Ary; Email the lecturer: Appendix 1, native Java OK, SDG 11 OK, what the AI policy counts as your own code, is a GitHub link needed | [E0.1.md](../../TASKS/E0/E0.1.md) | 2 Nov |
+| **T1.1** Survey and interviews | Aly | Review the survey wording so the questions match the screens; Share the survey link in your circles | [T1.1.md](../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
+| **E5.4** Notifications | Gathan | Notifications screen | [E5.4.md](../../TASKS/E5/E5.4.md) | 13 Dec |
+| **E4.4** Public transport route page, peak and off-peak | Aaron | Public transport route page with the MapLibre map, and the Peak / Off-peak toggle | [E4.4.md](../../TASKS/E4/E4.4.md) | 14 Dec |
+| **E9.1** Evaluate any unit | Gathan | Evaluate form and result screens | [E9.1.md](../../TASKS/E9/E9.1.md) | 17 Dec |
+| **E9.4** Area page and building reviews | Gathan | Area page and review screens | [E9.4.md](../../TASKS/E9/E9.4.md) | 20 Dec |
+| **T3.2** Record, edit and final cut | Aly | Check against the rubric | [T3.2.md](../../TASKS/T3/T3.2.md) | 2 Jan |
+| **T4.1** Report sections | Dafi | 1 Introduction (300 words), UI and colours part of 3 | [T4.1.md](../../TASKS/T4/T4.1.md) | 9 Jan |
+| **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../TASKS/T4/T4.2.md) | 9 Jan |
 
 ### Open questions waiting for you (23)
 
