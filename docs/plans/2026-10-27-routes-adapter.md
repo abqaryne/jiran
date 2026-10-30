@@ -4,7 +4,7 @@
 
 **Goal:** Implement Aaron's server-side Routes integration boundary for FR4.1 without enabling a live endpoint or making paid requests.
 
-**Spec:** PRD FR4.1–FR4.3; team/aaron.md; docs/maps-readiness.md. Current feature branch is clean at 4b94a29; retain this authorized continuation workspace.
+**Spec:** PRD FR4.1–FR4.3; team/aaron.md; docs/research/maps-readiness.md. Current feature branch is clean at 4b94a29; retain this authorized continuation workspace.
 
 **Architecture:** `functions/src/routes-client.js` is a small Node 22 fetch client with a fixed Google HTTPS endpoint, explicit server credential injection, strict inputs, bounded fetch/body read, narrow response projection and sanitized errors. Caller owns Firebase authorization, listing/profile resolution and sourced cost assumptions. It never caches, logs, reads environment keys, writes data or exports a callable. Inject transport/clock only for server tests.
 

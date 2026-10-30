@@ -1,7 +1,7 @@
 # Cloud Function contracts — draft for team agreement
 
 Budget update: free-only. A candidate HTTPS Worker alternative is researched in
-[no-billing production](no-billing-production.md); no transport/runtime migration
+[no-billing production](../research/no-billing-production.md); no transport/runtime migration
 has been adopted. Firebase callable SDK/protocol conventions below still describe
 the current local implementation, not a ready Worker API.
 
@@ -137,7 +137,7 @@ The monthly calculator validates/preserves these optional fields in available
 options. Consumers must display them as appropriate before provider activation;
 the fixture preview exercises synthetic metadata, not the real provider/pricing path.
 No production configuration loader, authorization reader or live orchestration
-has been wired to this module. See the [pricing plan](superpowers/plans/2026-10-27-commute-pricing.md).
+has been wired to this module. See the [pricing plan](../plans/2026-10-27-commute-pricing.md).
 
 ### Implemented published-factor emission profile
 
@@ -170,7 +170,7 @@ monthly DTO retains its existing CO2/source fields; unknown emissions preserve
 the known-cost route and its timing/total. The existing synthetic fixtures stay
 synthetic, and no live callable/route-leg mapper is activated by this library.
 
-See [source values and boundaries](emission-methodology.md). The caller must verify
+See [source values and boundaries](../research/emission-methodology.md). The caller must verify
 factor-to-mode mapping, actual occupancy and any provider distance-rounding mismatch.
 This is not a Malaysian emissions measurement or total lifecycle CO2e estimate.
 
@@ -237,7 +237,7 @@ fare/fallback. Region MY, metric units and English labels are explicit. Alternat
 waypoints, toll computation and arrive-by requests are not enabled. Explicit
 traffic-aware DRIVE uses the relevant paid SKU; no call runs without caller action.
 See [official request reference](https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRoutes)
-and [readiness/pricing gates](maps-readiness.md).
+and [readiness/pricing gates](../research/maps-readiness.md).
 
 Available result example:
 

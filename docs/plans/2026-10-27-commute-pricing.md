@@ -4,7 +4,7 @@
 
 **Goal:** Connect provider-style route facts to Aaron's FR4 monthly calculator through explicit configurable e-hailing/driving formulas, without inventing survey rates or enabling paid requests.
 
-**Spec:** PRD FR4.1–4.3; ASSUMPTIONS #3/#4/#5/#6; docs/api-contracts.md. This layer does not own production configuration publication or profile/listing authorization.
+**Spec:** PRD FR4.1–4.3; ASSUMPTIONS #3/#4/#5/#6; docs/engineering/api-contracts.md. This layer does not own production configuration publication or profile/listing authorization.
 
 **Interface:** `priceRoutes({routes,assumptions})` returns `{assumptionVersion,modes}`. Routes use calculator mode names and available durationSeconds/distanceMetres, optional transitFareSen. Input may include provider-unavailable route states. At most four unique known modes; absent modes become missing_route.
 

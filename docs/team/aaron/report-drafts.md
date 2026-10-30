@@ -38,14 +38,14 @@ Verification evidence includes automated backend tests, Android lint, Checkstyle
 
 ## Evidence to attach after human review
 
-- Requirements: [FR3.2 and FR4.1–FR4.3](product/PRD.md); the canonical PRD's
+- Requirements: [FR3.2 and FR4.1–FR4.3](../../product/PRD.md); the canonical PRD's
   NFR1 remains p95 below3s at100 concurrent users. The50/100-user wording in
   AGENTS differs; keep both scenarios until the owner resolves it.
-- Implementation: [backend modules](../backend/functions/src),
-  [Java data models](../android/app/src/main/java/com/jiran/app/data),
-  [Worker experiment](../experiments/worker-feasibility/README.md).
-- Verification and remaining gates: [solo ledger](superpowers/plans/2026-10-27-aaron-solo-work.md),
-  [API contracts](api-contracts.md), [AI log](ai-log/aaron.md).
+- Implementation: [backend modules](../../../backend/functions/src),
+  [Java data models](../../../android/app/src/main/java/com/jiran/app/data),
+  [Worker experiment](../../../experiments/worker-feasibility/README.md).
+- Verification and remaining gates: [solo ledger](../../plans/2026-10-27-aaron-solo-work.md),
+  [API contracts](../../engineering/api-contracts.md), [AI log](../../ai-log/aaron.md).
 - Aaron's personal changes, commands run and understanding: **TODO (owner)**.
   No survey, usability, QA or production performance outcome is claimed here.
 
@@ -61,5 +61,5 @@ Verification evidence includes automated backend tests, Android lint, Checkstyle
 
 Before recording, Aaron rehearses the70-second portion with a timer, checks that
 only synthetic data is visible, and replaces narration he cannot explain. Build
-and emulator commands are in [README](../README.md). This is a script, not evidence
+and emulator commands are in [README](../../../README.md). This is a script, not evidence
 that a video was recorded or that another team member approved their segment.

@@ -11,7 +11,7 @@ Log** is a required appendix of the report. Missing or inaccurate logs, or work 
 minimal or no human effort", can lose marks, lower the grade or fail the course.
 
 - **Before you finish a task, add or update the entry** in `docs/ai-log/<owner>.md` (one file per person; Aaron's earlier
-  record is `docs/ai-usage-log.md`). Do it in the same PR as the work. Do not wait to be asked.
+  record is `docs/ai-log/aaron-earlier-record.md`). Do it in the same PR as the work. Do not wait to be asked.
 - Use the template in [docs/ai-log/README.md](docs/ai-log/README.md): date, human owner, tool and model, task, **exact
   prompts**, output used (files, PR), how it was tested or checked, what the human changed, what the human can explain,
   limits.

@@ -19,7 +19,7 @@ Rules for finding data:
 | 3 | **E-hailing fare**: base fare, rate per km and the peak/off-peak ratio | no values yet | E-hailing cost on the commute card | **Aaron** (formula), **Aly** (data) | Grab has no public fare API for us, and Google Maps does not return Grab prices. So: (a) survey E7 answers; (b) each team member opens the Grab fare estimate screen (no booking) for about 10 real routes from Pantai Dalam, Kerinchi, Bangsar South and PJ to UM, once around 8:00 and once around 14:00, and logs distance, time and price in a shared sheet; (c) fit a base fare plus a per-km rate, and take the peak/off-peak ratio as the surge. Show it as an estimate. | 13 Nov |
 | 4 | **Car cost**: fuel price, fuel use per km, tolls, parking | no values yet | Drive-alone and shared car cost | **Aaron**, **Dafi** (parking) | Fuel: the official pump price published by the government (it changes, so keep it in config). Fuel use: state a typical figure and its source. Tolls: check whether openrouteservice returns toll estimates (if not, use a flat toll figure from the operator's published rates). Parking: Dafi asks UM in the same email as the shuttle question. | 13 Nov |
 | 5 | **Public transport fares and coverage** (bus, LRT, MRT, UM shuttle) | unknown | Public transport option, route steps | **Aaron**, **Dafi** (finds the UM shuttle timetable) | Aaron checks the Prasarana GTFS timetables on 5 real routes and notes whether fares and the UM shuttle appear. If a fare is missing, use the operator's published fare chart and seed it. Dafi finds the UM shuttle timetable (stops, times, free or not); an email to UM transport only if it cannot be found. The shuttle is shown as scheduled, not live. | 8 Nov (coverage), 13 Nov (data) |
-| 6 | **CO₂ emission factors** per mode (petrol car, e-hailing car, bus, LRT/MRT, motorbike) | UK DESNZ2026 CO₂-only proxy catalogue selected; [values and limits](../emission-methodology.md). Source extraction verified27Oct2026; Malaysian fleet/grid fit and production route-leg mapping pending. | CO₂ on the commute card | **Aaron** | Keep CO₂ separate from total CO₂e and vehicle-km separate from passenger-km. Use per-leg distances, explicit vehicle occupancy and named UK proxy sources; replace only with compatible documented local data. | 13 Nov |
+| 6 | **CO₂ emission factors** per mode (petrol car, e-hailing car, bus, LRT/MRT, motorbike) | UK DESNZ2026 CO₂-only proxy catalogue selected; [values and limits](../research/emission-methodology.md). Source extraction verified27Oct2026; Malaysian fleet/grid fit and production route-leg mapping pending. | CO₂ on the commute card | **Aaron** | Keep CO₂ separate from total CO₂e and vehicle-km separate from passenger-km. Use per-leg distances, explicit vehicle occupancy and named UK proxy sources; replace only with compatible documented local data. | 13 Nov |
 | 7 | **Utilities estimate** (water, electricity, internet) per person per month | RM 62 (sample) | True monthly cost | **Aly** (survey C9), **Gathan** seeds | Median of survey answers, grouped by number of people in the Unit. | 10 Nov |
 | 8 | **Data retention periods**: contract upload 30 days, closed Household 6 months, unattached Evaluation 90 days, Listing 30 days | as listed | Privacy rules, scheduled deletion | **Gathan**, **Dafi** | Read the Retention Principle of the Personal Data Protection Act 2010 (data is kept no longer than needed for its purpose) and write one line of reasoning per period. If still unsure, Dafi asks the lecturer in the next email. | 13 Nov |
 | 9 | **Match score weights** (sleep time, cleanliness, noise, cooking, smoking, pets, budget) | not set | Match score formula | **Aaron** (formula), **Aly** (input) | Survey F2 ranks what matters most when choosing a housemate. Turn the ranking into weights. | 13 Nov |
@@ -30,15 +30,15 @@ Rules for finding data:
 
 User budget decision on 27 October 2026: **free only**. Assumption #11 now requires
 a no-billing production alternative, not Google billing activation. See
-[researched options and limits](../no-billing-production.md). Spark Auth/Firestore
+[researched options and limits](../research/no-billing-production.md). Spark Auth/Firestore
 remain; Worker/alternative-routing feasibility, transit and NFR1 remain open.
 
-Official Prasarana GTFS ZIPs were inspected for assumption#5: [snapshot evidence](../free-transit-evidence.md)
+Official Prasarana GTFS ZIPs were inspected for assumption#5: [snapshot evidence](../research/free-transit-evidence.md)
 identifies campus stops/route references, absent fare files and calendar expiry.
 No timed origin-to-faculty route or actual fare is verified by these joins.
 
 27 October 2026: Aaron checked official Maps pricing, SKU triggers, transit limits
-and caching/display requirements. See [Maps readiness evidence](../maps-readiness.md).
+and caching/display requirements. See [Maps readiness evidence](../research/maps-readiness.md).
 Assumption #11's documentation research is recorded; actual billing/quota/budget
 setup and measured workload remain pending. Assumption #5's five real route probes
 remain not run, so coverage/fares are still unknown. No current value is marked

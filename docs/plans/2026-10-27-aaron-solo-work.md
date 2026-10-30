@@ -179,12 +179,12 @@ CI40451044115 at a5b7d85 passed all three jobs with the updated action releases.
 
 ## Batch E: report, demonstration and handoff drafts
 
-Prepared docs/aaron-deliverable-drafts.md with exactly350 architecture words and
+Prepared docs/team/aaron/report-drafts.md with exactly350 architecture words and
 400 implementation words (whitespace count within marked body sections). The
 report describes verified local code and pending production gates, and includes
 a90-second technical-demo script with Ilham's20 seconds reserved but not invented.
 Aaron's final report wording, understanding and personal revisions remain TODO.
-Prepared docs/aaron-handoff.md with named unresolved decisions, evidence links
+Prepared docs/team/aaron/handoff.md with named unresolved decisions, evidence links
 and the13 December freeze gates. These complete the requested draft/checklist
 artifacts, not the team's final report, freeze, Trello posting or QA. The hours
 record remains6 user-reported hours on26 October with activities/card unspecified.
@@ -195,7 +195,7 @@ adoption and actual-hours/Trello details remain explicitly unresolved.
 
 ## Batch F: published commute inputs and probe definitions
 
-Completed the research artifact docs/commute-input-evidence.md with primary
+Completed the research artifact docs/research/commute-input-evidence.md with primary
 sources, dated fuel record/hash, conditional My50 eligibility and five concrete
 public-stop probes. No provider booking or paid call. Operator pages/PDF403 and
 missing parking tariffs remain explicit unknowns rather than invented defaults.
@@ -242,7 +242,7 @@ Ran the five probes plus the feeder-expiry repeat without inferred walking links
 R1 returns a headway estimate; R2/R3 cannot form the missing connections; R4 now
 returns a provisional bus alternative after bounded pruning; R5 returns a
 scheduled28 October result and no16 November journey. All fares remain unknown.
-See docs/transit-processing.md for reproducible inputs, exact outcomes and limits.
+See docs/engineering/transit-processing.md for reproducible inputs, exact outcomes and limits.
 
 Independent review was PARTIAL: reviewer identified chained-walk transfer-rule
 bypass and ignored feed_info coverage, then stopped due an account usage limit.

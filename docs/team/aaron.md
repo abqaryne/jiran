@@ -9,7 +9,7 @@ into a no-billing production alternative retaining Firebase Auth and Firestore.
 Do not enable billing, upgrade plans or activate Google Routes/production
 Functions/Storage. Earlier billing/key setup items below are historical plan
 dependencies, not current activation instructions. See the [candidate architecture,
-limits and staged feasibility plan](../no-billing-production.md). Java and
+limits and staged feasibility plan](../research/no-billing-production.md). Java and
 JavaScript code remain; no runtime migration or NFR completion is claimed.
 
 ### Confirm the stack before downloading anything
@@ -43,7 +43,7 @@ firebase.cmd --version
 & "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe" devices
 ```
 
-In Android Studio, confirm SDK packages/licences, select the build JDK and boot an AVD or connect a phone. Optionally add the SDK's `platform-tools` folder to your user PATH. After choosing the team's Google account, run `firebase.cmd login` and `firebase.cmd projects:list`; verify the intended project ID before initialization. The initial repository contained planning Markdown only. Local Android/Functions build and emulator files now exist; see [README.md](../../README.md) for current commands and the [batch plan](../superpowers/plans/2026-10-27-aaron-foundations.md) for verification evidence.
+In Android Studio, confirm SDK packages/licences, select the build JDK and boot an AVD or connect a phone. Optionally add the SDK's `platform-tools` folder to your user PATH. After choosing the team's Google account, run `firebase.cmd login` and `firebase.cmd projects:list`; verify the intended project ID before initialization. The initial repository contained planning Markdown only. Local Android/Functions build and emulator files now exist; see [README.md](../../README.md) for current commands and the [batch plan](../plans/2026-10-27-aaron-foundations.md) for verification evidence.
 
 ### Access and team decisions needed first
 
@@ -61,7 +61,7 @@ Do not run `firebase init` over existing configuration or create duplicate cloud
 
 1. **Now, Step 0 (through 8 November 2026):** verify tools and access; coordinate the Java app foundation with Ary; establish feature branches/PR rules, CI, Firebase connection, small JavaScript Functions skeleton and Emulator Suite. CI must run Android lint and unit tests, include Checkstyle for the Definition of Done, and test Functions with Jest. Protect the default branch with required reviews/checks where the repository plan supports it.
 2. **Before paid commute integration:** verify Maps pricing/quotas and transit coverage on real Pantai Dalam/Kerinchi-to-UM routes. Record evidence for assumptions #11 and #5 by 8 November. If UM shuttle coverage is missing, coordinate seeded stops/timetables with Dafi and Gathan; do not invent service availability.
-3. **By 15 November:** write `docs/api-contracts.md` with agreed inputs, outputs, units, time zone, authentication/authorization, validation, errors and sample fixtures for `getCommuteOptions`, `getTransitRoute`, `computeMatchScores`, `splitRoomPrices` and AI functions agreed with Ilham. Names below are planned interfaces, not implemented endpoints.
+3. **By 15 November:** write `docs/engineering/api-contracts.md` with agreed inputs, outputs, units, time zone, authentication/authorization, validation, errors and sample fixtures for `getCommuteOptions`, `getTransitRoute`, `computeMatchScores`, `splitRoomPrices` and AI functions agreed with Ilham. Names below are planned interfaces, not implemented endpoints.
 4. **Wave A, 16–29 November:** Module 4 P0, including all four modes, class-time arrival checks, per-room true monthly cost and sourced CO₂ estimates. Monthly total is room price + equal utilities share + cheapest commute that arrives on time. Deposit is separate. If no mode arrives on time, show that state rather than a fabricated monthly figure. Decide monthly trip/day counts, return trips, rounding and missing-data behavior explicitly.
 5. **Wave B, 30 November–13 December:** deterministic weighted match score with Jest tests, coordinated with Ary/Ilham. Add P1 peak/off-peak and transit steps after P0 works. Lead the P0 integration freeze on 13 December.
 
@@ -137,7 +137,7 @@ and the next Aaron action. Update this role checklist only with verified work.
 Current task: <insert one specific Aaron task here>
 Budget constraint: free only. Keep Firebase Auth/Firestore on Spark. Do not enable
 billing, deploy Firebase Functions/Storage or activate Google Routes. Research
-alternatives per docs/no-billing-production.md; document team/runtime decisions
+alternatives per docs/research/no-billing-production.md; document team/runtime decisions
 before migrating. Preserve Java Android and reusable JavaScript domain code.
 Acceptance criteria: <insert what must be demonstrably true>
 ```
@@ -156,7 +156,7 @@ Acceptance criteria: <insert what must be demonstrably true>
 
 ## Foundation batch status — 27 October 2026
 
-Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](../superpowers/plans/2026-10-27-aaron-foundations.md).
+Branch: `feature/aaron-foundations`. See the [implementation plan and evidence](../plans/2026-10-27-aaron-foundations.md).
 
 | Batch | Implemented locally | Verification / remaining boundary |
 |---|---|---|
@@ -170,7 +170,7 @@ registration connected, and Standard Firestore `(default)` in Singapore
 (`asia-southeast1`, approved by the user). Auth settings and tested prototype
 Firestore rules were deployed explicitly; Functions and Storage were not deployed.
 See [live setup instructions](../../README.md#use-the-existing-live-firebase-backend)
-and the [live setup plan](../superpowers/plans/2026-10-27-firebase-live-setup.md).
+and the [live setup plan](../plans/2026-10-27-firebase-live-setup.md).
 Team invitations, billing for later paid features, restricted Maps credentials, transit coverage,
 production UM verification, schema, commute/match formulas and full NFR tests are
 not complete. The foundation branch was pushed and merged through PR #1;
@@ -226,16 +226,16 @@ These come from the task files. Answer them in the task file (or in the PR) so t
 
 ## Solo implementation progress
 
-The [six solo workstreams](../superpowers/plans/2026-10-27-aaron-solo-work.md)
+The [six solo workstreams](../plans/2026-10-27-aaron-solo-work.md)
 are in progress. The isolated Worker experiment now has bounded verification-key
 fetching, provider freshness handling, rotation coalescing and cooldown protection,
 with75 offline/runtime tests passing, including bounded body reading and atomic
 SQLite quota reservations. This does not adopt a production runtime; identity-bound
 quota integration, real routing evidence and production verification remain open.
-The [hours draft](../aaron-work-log.md) contains the reported6 hours on26 October.
-The [350/400-word report drafts and demo script](../aaron-deliverable-drafts.md)
-and [handoff/freeze checklist](../aaron-handoff.md) need Aaron's personal review.
-The [GTFS processor checkpoint](../transit-processing.md) adds calendar, frequency,
+The [hours draft](aaron/work-log.md) contains the reported6 hours on26 October.
+The [350/400-word report drafts and demo script](aaron/report-drafts.md)
+and [handoff/freeze checklist](aaron/handoff.md) need Aaron's personal review.
+The [GTFS processor checkpoint](../engineering/transit-processing.md) adds calendar, frequency,
 transfer and stale-feed handling with62 focused tests and recorded snapshot probes.
 Independent follow-up review found no remaining actionable defect; production
 coverage remains open. [Local50/100-user load preparation](../../backend/tests/load/README.md)
@@ -247,7 +247,7 @@ records both a failed run and a passing run, without claiming production NFR1.
 ### Module 4 continuation — calculation batch
 
 The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
-`feature/aaron-commute-core`; see the [calculation plan](../superpowers/plans/2026-10-27-commute-core.md).
+`feature/aaron-commute-core`; see the [calculation plan](../plans/2026-10-27-commute-core.md).
 
 - [x] Pure commute calculation with explicit units/trips and cheapest-before-class selection.
 - [x] Missing-route/fare and no-on-time states; deposit exclusion; optional explicitly sourced CO₂.
@@ -256,13 +256,13 @@ The foundation PR #1 is merged on `main` (`6741b41`). Current continuation:
 - [x] Android validates and displays optional route/cost provenance, warnings and fallback notices; verified with labelled local metadata and native row checks. Final shared UI/provider attribution requirements remain with production integration.
 - [x] Real Android commute SDK integration verification: all three fixture scenarios pass through Firebase SDK → callable → typed parser.
 - [ ] Real Maps routing/coverage and verified fares/emission factors; production schema/timetable integration.
-- [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../maps-readiness.md); live quota/budget setup and coverage probes remain open.
-- [x] Server Routes provider adapter: strict request validation, bounded deadline/body, MYR fare parsing, warnings/fallback and sanitized errors; transport contract tests only. See [adapter plan](../superpowers/plans/2026-10-27-routes-adapter.md). Live activation and production calculation integration remain open.
-- [x] Configurable e-hailing/driving/transit pricing with exact sen arithmetic, explicit pickup/cost inputs, and preserved cost/provider metadata; [pricing evidence](../superpowers/plans/2026-10-27-commute-pricing.md). Real rates, monthly attendance/return-trip policy and production wiring remain open.
-- [x] Published CO₂-only source catalogue and exact mixed-leg emissions calculation with explicit occupancy/UK proxy selection; [method and values](../emission-methodology.md). Source extraction/arithmetic verified; Malaysian calibration, real leg mapping and production activation remain open.
+- [x] Official Maps pricing/SKU, transit request limits and caching/display research recorded in [Maps readiness](../research/maps-readiness.md); live quota/budget setup and coverage probes remain open.
+- [x] Server Routes provider adapter: strict request validation, bounded deadline/body, MYR fare parsing, warnings/fallback and sanitized errors; transport contract tests only. See [adapter plan](../plans/2026-10-27-routes-adapter.md). Live activation and production calculation integration remain open.
+- [x] Configurable e-hailing/driving/transit pricing with exact sen arithmetic, explicit pickup/cost inputs, and preserved cost/provider metadata; [pricing evidence](../plans/2026-10-27-commute-pricing.md). Real rates, monthly attendance/return-trip policy and production wiring remain open.
+- [x] Published CO₂-only source catalogue and exact mixed-leg emissions calculation with explicit occupancy/UK proxy selection; [method and values](../research/emission-methodology.md). Source extraction/arithmetic verified; Malaysian calibration, real leg mapping and production activation remain open.
 - [ ] Ary's final Room card/details integration and NFR1 load evidence.
-- [x] Internal authorized commute orchestration with mandatory context/config/quota adapters, bounded shared deadline, cancellation, private projection and mode-specific emissions mapping; [service plan](../superpowers/plans/2026-10-27-commute-service.md). No production reader, quota store or endpoint is wired.
-- [x] Free-only policy recorded and default live Google transport disabled; [alternative research](../no-billing-production.md) identifies Worker/free-routing candidate and transit/NFR gaps. Deployment feasibility remains open.
+- [x] Internal authorized commute orchestration with mandatory context/config/quota adapters, bounded shared deadline, cancellation, private projection and mode-specific emissions mapping; [service plan](../plans/2026-10-27-commute-service.md). No production reader, quota store or endpoint is wired.
+- [x] Free-only policy recorded and default live Google transport disabled; [alternative research](../research/no-billing-production.md) identifies Worker/free-routing candidate and transit/NFR gaps. Deployment feasibility remains open.
 - [x] Isolated [local Worker feasibility experiment](../../experiments/worker-feasibility/README.md): generated-key signature/claim checks and existing commute/match fixtures run in workerd;25 tests pass. No live Firebase token, database/quota, production migration or Free CPU claim.
 
 Sample fixture values are not verified assumptions or production estimates. The
@@ -280,13 +280,13 @@ the FR4.1–4.3 calculation foundation; the complete production module stays ope
 
 ### Module 3 continuation — deterministic scoring batch
 
-See the [match backend plan](../superpowers/plans/2026-10-27-match-core.md)
-and [contract](../api-contracts.md). Production formula approval is still open.
+See the [match backend plan](../plans/2026-10-27-match-core.md)
+and [contract](../engineering/api-contracts.md). Production formula approval is still open.
 
 - [x] Pure deterministic seven-factor match scoring with explicit versioned weights and transparent basis-point breakdown.
 - [x] Missing-answer state, stable ranking, self exclusion, bounded candidate count and rule reason codes.
 - [x] Authenticated emulator-only `computeMatchScores` with synthetic ranked, incomplete and empty scenarios.
-- [x] Typed Java match response/repository and guarded developer preview with score, rule reasons, missing/empty states, overlap days and factor breakdown; real local SDK/native checks. See [Android handoff evidence](../superpowers/plans/2026-10-27-android-match-preview.md). Ary's final product UI and production candidates remain open.
+- [x] Typed Java match response/repository and guarded developer preview with score, rule reasons, missing/empty states, overlap days and factor breakdown; real local SDK/native checks. See [Android handoff evidence](../plans/2026-10-27-android-match-preview.md). Ary's final product UI and production candidates remain open.
 - [ ] Survey-derived weight approval and agreed questionnaire mapping with Aly/Ary.
 - [ ] Production authorized candidate reader/privacy projection with Gathan; final Match UI and explanation handoff with Ary/Ilham.
 - [ ] Production end-to-end and QA evidence; no matching completion claim from fixtures alone.

@@ -77,7 +77,7 @@ public ZIPs whose hashes and source URLs are recorded in
 similarly named institutions outside the UM area. Generated join notes remain
 ignored in `.gradle/commute-inputs/route-evidence.json`.
 
-The [bounded schedule evaluation](transit-processing.md) now records these snapshot
+The [bounded schedule evaluation](../engineering/transit-processing.md) now records these snapshot
 probes and their limits. Next, refresh feeds for the intended travel date,
 confirm physical transfer paths and current fares, and
 collect real observed outcomes. Keep route availability, source freshness, fare

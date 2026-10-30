@@ -19,8 +19,8 @@ Copy-ready entry:
 > Task details: [add the actual activities].
 > Evidence links: [add the relevant commits/review/testing notes].
 
-See the [handoff/evidence index](aaron-handoff.md),
-[report and demo drafts](aaron-deliverable-drafts.md), and
-[implementation ledger](superpowers/plans/2026-10-27-aaron-solo-work.md).
+See the [handoff/evidence index](handoff.md),
+[report and demo drafts](report-drafts.md), and
+[implementation ledger](../../plans/2026-10-27-aaron-solo-work.md).
 These artifacts do not establish the activities covered by the reported hours.
 AI execution duration is not a personal-hours entry.

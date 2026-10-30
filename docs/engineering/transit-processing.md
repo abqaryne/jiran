@@ -5,9 +5,9 @@ production endpoint, live route guarantee or approved fare configuration.
 JavaScript remains the backend language. GTFS parsing is offline preprocessing,
 not work claimed to fit a Worker Free request's CPU allowance.
 
-Modules: [normalization](../backend/functions/src/gtfs.js),
-[journey search](../backend/functions/src/gtfs-journey.js), and
-[offline inspection CLI](../backend/scripts/gtfs-inspect.cjs).
+Modules: [normalization](../../backend/functions/src/gtfs.js),
+[journey search](../../backend/functions/src/gtfs-journey.js), and
+[offline inspection CLI](../../backend/scripts/gtfs-inspect.cjs).
 The [official GTFS reference](https://gtfs.org/documentation/schedule/reference/)
 defines calendars, service-day times, stop sequences and frequency semantics.
 
@@ -88,7 +88,7 @@ npm.cmd test --prefix backend/functions -- --runTestsByPath test/gtfs.test.js te
 The CLI does no networking. It reports source metadata, table hashes, accepted
 trip counts, bounded exclusion samples and probe results. Raw archives, extracted
 tables and generated full output stay ignored; source hashes are in
-[the snapshot record](free-transit-evidence.md).
+[the snapshot record](../research/free-transit-evidence.md).
 
 ## Observed snapshot results
 
@@ -98,7 +98,7 @@ Accepted trips: KL bus2,118; KL rail48; MRT feeder6,291. Three bus trip IDs
 `stop_times` rows, despite having frequency records. Other valid trips remain
 usable. None of these results establishes fare knowledge.
 
-Used the [five defined probes](commute-input-evidence.md), without inventing
+Used the [five defined probes](../research/commute-input-evidence.md), without inventing
 walking transfers. Both the future and current-date queries used the recorded
 27 October snapshot/as-of time; future dates are provisional schedule forecasts.
 

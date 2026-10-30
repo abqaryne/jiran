@@ -398,3 +398,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary decided to finalize without a correction round. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say that the task files describe plans and open questions, and that statements about other members' work come from the repository, not from the members.
 - **Limits:** if a member finds an error in their task file, fix the file and `TASK.md` in the same PR.
+
+## 2026-10-30 · Tidy the docs folder · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** `docs/` had 13 files in its root, most of them Aaron's notes, and a folder named after a tool (`superpowers/plans`). Group them by topic and fix every link.
+- **Prompts (exact):**
+  > itu di folder / docs kurang rapih deh coba di rapihin dh banyak file aaron gimana ya
+- **Output used:** `git mv` of 25 files: `engineering/` (architecture, api-contracts, transit-processing), `research/` (the five evidence files), `plans/` (13 plans, was `superpowers/plans/`), `team/aaron/` (handoff, work-log, report-drafts) and `ai-log/aaron-earlier-record.md` (was `docs/ai-usage-log.md`). A script rewrote the relative links and the `docs/...` paths in `AGENTS.md`, `README.md`, `TASK.md`, `TASKS/`, `ADR.md`, the product and team files and `experiments/worker-feasibility/README.md`. `docs/README.md` has the new tree. No file content was rewritten by hand except that README.
+- **How it was tested or checked:** a script over every tracked markdown file found no broken relative link after the move (none before). A text search finds no old path left outside `docs/ai-log/`. not verified: the links on GitHub (not pushed at the time of writing); `./gradlew` and `npm test` were not run because no code changed.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say what each folder holds.
+- **Limits:** inside `docs/ai-log/` only markdown links were changed; paths written in prose there (for example `docs/api-contracts.md` in Aaron's earlier record and in older entries of this file) are kept as written, because they record the path at that time. In `docs/ai-log/aaron.md` one link target changed, its visible text still shows the old path. The moved files were not reviewed by Aaron. Open PR #8 adds `docs/schema.md` and edits `docs/ai-log/ary.md`, so it may need a sync with `main` after this merges.

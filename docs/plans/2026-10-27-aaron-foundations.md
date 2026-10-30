@@ -50,7 +50,7 @@ Interface: debug initializes demo Firebase options and routes Auth/Firestore/Fun
 
 ## Batch 3: CI, handoff and contracts
 
-Files: `.github/workflows/ci.yml`, `.github/pull_request_template.md`, `README.md`, `docs/architecture.md`, `docs/api-contracts.md`, `docs/ai-usage-log.md`, `team/aaron.md`.
+Files: `.github/workflows/ci.yml`, `.github/pull_request_template.md`, `README.md`, `docs/engineering/architecture.md`, `docs/engineering/api-contracts.md`, `docs/ai-log/aaron-earlier-record.md`, `team/aaron.md`.
 
 - [x] CI: Android lint/tests/Checkstyle/debug build; locked Node install/Jest; emulator smoke on demo project.
 - [x] Document commands, branching and required checks for Ary; do not claim remote protection is configured.

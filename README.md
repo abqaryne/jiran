@@ -29,7 +29,7 @@ Working on screens, components or app logic: `android/`. Working on data, rules 
 Writing or reading requirements, design or the plan: `docs/`.
 
 Budget is **free-only**. Keep Firebase Auth/Firestore on Spark; no billing upgrade
-or paid provider activation. See [no-billing production research](docs/no-billing-production.md)
+or paid provider activation. See [no-billing production research](docs/research/no-billing-production.md)
 for the candidate Worker/openrouteservice architecture and unresolved transit,
 capacity and team decisions. It has not replaced the current local Functions stack.
 
@@ -200,9 +200,9 @@ administrator to protect `main` with reviews and required CI jobs `android` and
 Commits use `[Story] short description`, e.g. `[E7.1] Add balance calculation`
 (`[Docs]`, `[Infra]` or `[Design]` when there is no story). Log actual ClickUp hours and AI use.
 
-See [architecture](docs/architecture.md), [draft API contracts](docs/api-contracts.md),
-[AI log](docs/ai-usage-log.md), and [batch plan/evidence](docs/superpowers/plans/2026-10-27-aaron-foundations.md).
-The [live setup plan](docs/superpowers/plans/2026-10-27-firebase-live-setup.md) records
+See [architecture](docs/engineering/architecture.md), [draft API contracts](docs/engineering/api-contracts.md),
+[AI log](docs/ai-log/aaron-earlier-record.md), and [batch plan/evidence](docs/plans/2026-10-27-aaron-foundations.md).
+The [live setup plan](docs/plans/2026-10-27-firebase-live-setup.md) records
 current setup evidence. Team invitations, Maps/billing/coverage, product schema,
 scoring weights and remaining feature work still require their team inputs.
 
@@ -221,11 +221,11 @@ utilities RM62.00 and commute RM100.00. If no option qualifies, no total appears
 Missing fares/schedules and unknown CO₂ stay explicit. Deposit is excluded.
 
 The callable is emulator-only and accepts `{scenarioId}`; production listing/unit
-requests remain draft. See the [API contract](docs/api-contracts.md) and
-[implementation plan](docs/superpowers/plans/2026-10-27-commute-core.md).
+requests remain draft. See the [API contract](docs/engineering/api-contracts.md) and
+[implementation plan](docs/plans/2026-10-27-commute-core.md).
 There is no live Maps integration, approved local fare or Malaysian-calibrated
 emissions dataset, occupancy rounding default or inferred attendance assumption.
-Published UK proxy factors are sourced separately in `docs/emission-methodology.md`. Gathan/Ary/Aly
+Published UK proxy factors are sourced separately in `docs/research/emission-methodology.md`. Gathan/Ary/Aly
 still need to agree the production inputs and UI integration.
 
 The existing REST smoke checks callable authorization, all scenarios, selection
@@ -250,8 +250,8 @@ With the local emulators running, the callable `computeMatchScores` accepts only
 `{"scenarioId":"ranked"}`, `missing-answers` or `empty`, from a verified local
 account. The REST smoke exercises it automatically. The synthetic ranked fixture
 returns sample-a at 100 and sample-b at 50; these are not live recommendations.
-See [the contract](docs/api-contracts.md#computematchscores--implemented-local-fixture-interface-fr32)
-for normalization, rounding and validation, and [the plan](docs/superpowers/plans/2026-10-27-match-core.md)
+See [the contract](docs/engineering/api-contracts.md#computematchscores--implemented-local-fixture-interface-fr32)
+for normalization, rounding and validation, and [the plan](docs/plans/2026-10-27-match-core.md)
 for evidence. Production questionnaire mapping, survey weights, candidate privacy
 and the final Match screen remain team integration work.
 
@@ -261,7 +261,7 @@ empty fixture scenarios. The guarded screen shows sample scores, rule reasons,
 overlap days and sample weights/similarity; it does not call AI or recalculate
 scores. Native checks cover the bound data and missing/empty display states.
 `capturePreview=true` also writes `match-preview.png`; these are full-content
-render captures, not scroll-gesture coverage. See the [Android handoff plan](docs/superpowers/plans/2026-10-27-android-match-preview.md).
+render captures, not scroll-gesture coverage. See the [Android handoff plan](docs/plans/2026-10-27-android-match-preview.md).
 
 ## Routes provider adapter
 
@@ -272,8 +272,8 @@ normalizes duration/MYR fare, and retains route warnings/fallback status. Tests
 inject transport and use synthetic responses; no Google request runs during
 ordinary tests, builds or emulator startup. No callable activates this client yet.
 
-See [the server interface](docs/api-contracts.md#implemented-server-provider-boundary-not-a-callable)
-and [plan/evidence](docs/superpowers/plans/2026-10-27-routes-adapter.md).
+See [the server interface](docs/engineering/api-contracts.md#implemented-server-provider-boundary-not-a-callable)
+and [plan/evidence](docs/plans/2026-10-27-routes-adapter.md).
 Billing, API/key restrictions, real route probes, approved cost inputs and final
 schema/UI integration remain required. Never put a server Maps key in Android or Git.
 
@@ -282,7 +282,7 @@ into exact per-trip sen for the monthly calculator. It covers e-hailing base/km/
 multiplier plus pickup time, and driving fuel/tolls/parking. No production rate
 defaults are supplied. Missing fares stay unavailable, and route attribution,
 warnings and fallback status survive into the calculation response. See the
-[pricing contract](docs/api-contracts.md#implemented-configurable-pricing-layer).
+[pricing contract](docs/engineering/api-contracts.md#implemented-configurable-pricing-layer).
 
 ## Published emissions factors
 
@@ -295,5 +295,5 @@ the profile into the monthly calculation without changing known costs/timing.
 
 These are operational CO₂ estimates with UK fleet/grid limitations, not total
 lifecycle CO₂e or measured Malaysian emissions. Existing local fixture factors
-remain synthetic. See [methodology and sources](docs/emission-methodology.md) and
-[the contract](docs/api-contracts.md#implemented-published-factor-emission-profile).
+remain synthetic. See [methodology and sources](docs/research/emission-methodology.md) and
+[the contract](docs/engineering/api-contracts.md#implemented-published-factor-emission-profile).

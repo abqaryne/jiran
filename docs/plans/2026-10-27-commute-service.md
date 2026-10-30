@@ -4,7 +4,7 @@
 
 **Goal:** Connect the existing provider, pricing, emissions and monthly calculation behind an authorization/quota/deadline boundary for FR4.1–FR4.3. This is internal service code, not a deployed endpoint or invented Firestore schema.
 
-**Spec:** team/aaron.md, PRD FR4.1–FR4.3/NFR1/NFR2, docs/api-contracts.md. Retain existing emulator fixture callable; production schemas, verified UM policy, credentials/billing and approved rates remain required adapters/configuration.
+**Spec:** team/aaron.md, PRD FR4.1–FR4.3/NFR1/NFR2, docs/engineering/api-contracts.md. Retain existing emulator fixture callable; production schemas, verified UM policy, credentials/billing and approved rates remain required adapters/configuration.
 
 ## Interface and choices
 
@@ -31,10 +31,10 @@ Provider exceptions/malformed facts become per-mode provider_unavailable. If no 
 
 - Previous goal turn was progress:2b66c67 sourced CO2 catalogue/calculation and profile integration. Preflight worktree clean. Previous CI run40412579839 still in progress at start; poll that exact run. Billing owner/budget question remains pending, not permission to enable paid services.
 
-- User answered **free only**, then requested **research a no-billing production alternative**. Recorded in AGENTS/Aaron and [candidate research](../../no-billing-production.md); no deployment/runtime switch or billing activation. Google default transport now rejects before requests. Trusted injected transports remain local test seams, not absolute network enforcement.
+- User answered **free only**, then requested **research a no-billing production alternative**. Recorded in AGENTS/Aaron and [candidate research](../research/no-billing-production.md); no deployment/runtime switch or billing activation. Google default transport now rejects before requests. Trusted injected transports remain local test seams, not absolute network enforcement.
 - CI run40412579839 at2b66c67 completed successfully for backend and Android.
 - Initial service tests failed against stub; after implementation29/30 passed until vehicle_unavailable was supported throughout. Java parser and free-only transport tests failed before their fixes. Three caller-abort tests failed before implementation. Added shared-road car/taxi emissions, late config/quota and malformed mapper checks.
 - Final self-check exposed timer-only deadline behavior with synchronous adapter work: a10ms deadline plus25ms blocking read resolved before its timer fired. Added monotonic elapsed-time checks at stage boundaries. Independent review then identified late provider dispatch after blocking first transport; a failing regression observed3 calls, fixed to1 with a pre-dispatch deadline check. Synchronous work cannot be preempted; expired work is rejected at its next boundary.
 - Full backend verification: **277 tests /11 suites pass**, syntax check includes service. Android `lintDebug lintLiveDebug testDebugUnitTest checkstyleMain assembleDebug assembleLiveDebug` succeeded;15 JVM tests pass. Prior four native SDK/render checks remain historical evidence, not rerun evidence for this batch.
 - Independent review otherwise found no blockers. Future alternative-provider transit fares must replace the current Google-specific fare label during migration. No production authorizer/schema, persistent quota, provider activation or NFR1 completion is implied.
-- Committed/pushed `c3b63de`; PR#2 updated. [CI40425407258](https://github.com/abqaryne/jiran/actions/runs/40425407258) backend passed; Android was still running when this record was written. Follow-up public GTFS inspection and its source hashes are in [free transit evidence](../../free-transit-evidence.md); fare/coverage and date-validity gates remain open.
+- Committed/pushed `c3b63de`; PR#2 updated. [CI40425407258](https://github.com/abqaryne/jiran/actions/runs/40425407258) backend passed; Android was still running when this record was written. Follow-up public GTFS inspection and its source hashes are in [free transit evidence](../research/free-transit-evidence.md); fare/coverage and date-validity gates remain open.

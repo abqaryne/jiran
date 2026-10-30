@@ -156,7 +156,7 @@ Detail (task file): [TASKS/E0/E0.5.md](../../TASKS/E0/E0.5.md)
 
 **E0.6 Function contracts (stubs)** (P0) · Aaron · due 15 Nov
 Detail (task file): [TASKS/E0/E0.6.md](../../TASKS/E0/E0.6.md)
-- (Aaron) Write `docs/api-contracts.md`: request and response JSON for `getCommuteOptions`, `getTransitRoute`, `computeMatchScores`, `splitRoomPrices`
+- (Aaron) Write `docs/engineering/api-contracts.md`: request and response JSON for `getCommuteOptions`, `getTransitRoute`, `computeMatchScores`, `splitRoomPrices`
 - (Aaron, Ilham) Agree the shape of each AI function
 - (Aaron) Post the contracts to the group so everyone can build against stubs
 

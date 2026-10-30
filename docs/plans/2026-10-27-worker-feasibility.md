@@ -12,7 +12,7 @@ existing pure CommonJS helpers into an ES module. Node's test runner drives
 Miniflare/workerd with generated-in-memory RSA keys and a mocked fixed Google JWKS
 endpoint. No Firebase Admin SDK, Firestore reader, service account or provider key.
 
-**Spec:** `docs/no-billing-production.md` batch A, `team/aaron.md`, Firebase's
+**Spec:** `docs/research/no-billing-production.md` batch A, `team/aaron.md`, Firebase's
 third-party ID-token verification requirements. This research does not adopt
 Workers, change Android transport, approve schemas or satisfy NFR1.
 

@@ -2,7 +2,7 @@
 
 **Free-only constraint:** Firebase Auth/Firestore stay on Spark. Production
 Functions, Google Routes and Firebase Storage activation is outside the current
-budget. [No-billing production research](no-billing-production.md) proposes a
+budget. [No-billing production research](../research/no-billing-production.md) proposes a
 JavaScript Worker/alternative routing path for feasibility work; the runtime
 change is not adopted and the original production flow below remains unwired.
 
