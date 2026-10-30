@@ -335,6 +335,7 @@ Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms`, `un
 | `listings` | listingId, ownerUid, areaId, buildingName, placeId, totalRentSen, depositSen, genderPref, amenities[], photoUrls[], isSample, status, createdAt, expiresAt | M2, M4 |
 | `listings/{listingId}/private/location` | exactAddress, residentUids[] (Host, residents and accepted requesters only) | M2 |
 | `listingRequests` | requestId (`{listingId}_{requesterUid}`), listingId, hostUid, requesterUid, message, status (pending/accepted/rejected/cancelled), createdAt | M3 |
+| `connections` | pairId (the two UIDs sorted), uidA, uidB, source (listingRequest/match), listingId, hostUid, status (active/ended), createdAt, endedAt (proof of a Connection; opens contact, phone and chat) | M3 |
 | `rooms` | roomId, listingId, type (master/medium/small), priceSen, status (vacant/occupied) | M2, M4 |
 | `reviews` | reviewId, buildingName (listingId optional), authorUid, water, internet, security, noise (1–5), text, moderated | M2 |
 | `matchProfiles` | uid, answers{sleep, cleanliness, noise, cooking, smoking, pets, budget}, updatedAt | M3 |
@@ -352,7 +353,7 @@ Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms`, `un
 
 Room photos are stored outside Firebase and referenced by URL: Firebase Storage needs a paid plan, so the plan is Cloudinary Free with signed uploads **[DRAFT]**. Contract files are sent to the check and not kept; only the summary and flags are stored **[DRAFT, Gathan to confirm the schema]**.
 
-**Access rules (NFR2):** Security Rules judge a whole document, so each stage of sharing has its own document (the `private` ones above). A user reads and writes only their own `users` documents and `contractChecks`. Another user reads `contact` and `phone` only after a Connection: both sides accepted in `matches`, or the Host set a `listingRequests` request to `accepted`. A listing's exact address follows the same rule for the Host and the accepted requester. Only members of a Household read or write that household's `households`, `expenses` and `chores`. `contractChecks` are deleted after 30 days.
+**Access rules (NFR2):** Security Rules judge a whole document, so each stage of sharing has its own document (the `private` ones above). A user reads and writes only their own `users` documents and `contractChecks`. Another user reads `contact` and `phone` only after a Connection: an active `connections` record exists for the two users (created when both sides accepted in `matches`, or when the Host accepted a `listingRequests` request). A listing's exact address follows the same rule for the Host and the accepted requester. Only members of a Household read or write that household's `households`, `expenses` and `chores`. `contractChecks` are deleted after 30 days.
 
 ---
 

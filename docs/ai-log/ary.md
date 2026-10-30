@@ -216,3 +216,17 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary). Be able to say why each stage of sharing needs its own document (Security Rules judge a whole document) and why `listingRequests` exists (`matches` only links two students, not a student and a Host).
 - **Limits:** the PRD lists key fields only; field-level detail stays in `docs/schema.md`. `reports` and `notifications` are left out of section 8.
+
+## 2026-10-30 · Fix the Connection proof and the UM posting rule in the schema · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** correct two problems in `docs/schema.md` (PR #8) that Gathan's last revision left: the Rules lookup for `contact` and `phone` could not be written as described, and the sign-up policy changed (any email may register, UM email earns the UM verified badge).
+- **Prompts (exact):**
+  > oke now coba check update-an terbaru gathan
+  > langsung benerin aja deh
+- **Output used:** `docs/schema.md`: new collection `connections/{pairId}` (the two UIDs sorted) as the one proof of a Connection, the Rules lookup rows for `contact` and `phone` rewritten to use it, a posting rule for `listings` that needs a verified email on a UM domain, the chat retention counted from `connections.endedAt`, and a server task marked as an open question for Aaron. `docs/product/PRD.md` section 8: a `connections` row and the access rule sentence.
+- **How it was tested or checked:** read against the previous diff and the PRD only. not verified: no Security Rules or emulator test exists, so it is not proven that Rules can read `connections/{pairId}` the way the document says; whether the app or the Worker creates the document is open.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why Rules cannot find the listing from a user's contact document and why one document per pair of people solves it.
+- **Limits:** this edits Gathan's document; Gathan has to read it, agree with it and be able to explain it. His own AI log entry for his last revision is still to be written by him. `connections` is marked `[PROPOSED]` until Ary confirms it.

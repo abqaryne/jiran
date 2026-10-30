@@ -16,15 +16,18 @@ Firestore Security Rules evaluate permissions on the **entire document**, not on
 |---|---|---|---|
 | **Match** | `initials`, `faculty`, `year`, `lifestyleTags`, match `score`, `reasons`, `overlappingClassDays` | Full legal name, photo, phone number, exact unit address, detailed timetable, email | `users/{uid}` (Public profile), `matches/{matchId}` |
 | **Connection Request** | Match profile + short request message (`message` in `listingRequests` or `matches`) | Full name, photo, phone number, exact unit address | `matches/{matchId}`, `listingRequests/{listingId}_{requesterUid}` |
-| **Connection** (Host accepts `listingRequests` for THAT listing, or pairwise `matches` connected) | Chat, `firstName`, exact unit address (for viewing with Host), `phoneNumber` (if opted in) | Profile photo, detailed timetable | `listings/{listingId}/private/location`, `users/{uid}/private/contact`, `users/{uid}/private/phone`, `users/{uid}/private/profile` |
+| **Connection** (Host accepts `listingRequests` for THAT listing, or pairwise `matches` connected) | Chat, `firstName`, exact unit address (for viewing with Host), `phoneNumber` (if opted in) | Profile photo, detailed timetable | `listings/{listingId}/private/location`, `connections/{pairId}`, `users/{uid}/private/contact`, `users/{uid}/private/phone` |
 | **Household** | Member timetables, shared expenses, chores, rules, profile photo (`photoUrl`), exact unit address | Private contract check results | `users/{uid}/private/timetable`, `users/{uid}/private/photo`, `users/{uid}/private/contact`, `users/{uid}/private/phone`, `users/{uid}/private/membership`, `households/{householdId}`, `listings/{listingId}/private/location` |
 
 ### Proof of Connection (Single Source of Truth)
 
-Security Rules verify active Connection status using deterministic document reads:
-1. **Host & Listing Applicant Connection (Bi-directional):** `listingRequests/{listingId}_{applicantUid}` document where `status == "accepted"`. Gives the Host access to the Applicant's contact details, and the Applicant access to the Host's contact details and exact unit address for viewing.
-2. **Roommate Match Connection:** `matches/{matchId}` document where `status == "connected"` (or `statusA == "accepted" && statusB == "accepted"`).
-3. **Active Co-Household Members:** `users/{uid}/private/membership` document where `householdId` matches `households/{householdId}.memberUids`.
+When Rules read `users/{targetUid}/private/contact` they know only the two UIDs, not which listing the Connection came from, so they cannot build the path `listingRequests/{listingId}_{uid}` there. Every Connection, student to student or student to Host, is therefore also recorded as one `connections/{pairId}` document. Its ID is the two UIDs sorted and joined with `_`, so Rules can build it from `request.auth.uid` and `targetUid` without a query (`pairId = request.auth.uid < targetUid ? request.auth.uid + "_" + targetUid : targetUid + "_" + request.auth.uid`).
+
+1. **Student and Host:** the Host sets `listingRequests/{listingId}_{requesterUid}` to `"accepted"`, then a `connections/{pairId}` document is created with `source: "listingRequest"`. The `listingRequests` document stays the proof for the exact address, because the address document's path contains the `listingId`.
+2. **Student and student:** both sides are `"accepted"` in `matches/{matchId}`, then a `connections/{pairId}` document is created with `source: "match"`.
+3. **Active co-household members:** `users/{uid}/private/membership` document where `householdId` matches `households/{householdId}.memberUids`.
+
+Contact and phone checks use `connections/{pairId}.status == "active"` for 1 and 2, in both directions, because the document is the same for both people.
 
 ### Rules Lookup Map
 
@@ -34,8 +37,8 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 |---|---|---|---|
 | **Timetable** | `users/{targetUid}/private/timetable` | `users/{targetUid}/private/membership`, `users/{request.auth.uid}/private/membership` | `request.auth.uid == targetUid` OR (`targetMembership.householdId != null` AND `targetMembership.householdId == requestMembership.householdId`) |
 | **Photo** | `users/{targetUid}/private/photo` | `users/{targetUid}/private/membership`, `users/{request.auth.uid}/private/membership` | `request.auth.uid == targetUid` OR (`targetMembership.householdId != null` AND `targetMembership.householdId == requestMembership.householdId`) |
-| **Contact (`firstName`)** | `users/{targetUid}/private/contact` | `listingRequests/{listingId}_{request.auth.uid}`, `listingRequests/{listingId}_{targetUid}`, `matches/{matchId}`, `users/{targetUid}/private/membership`, `users/{request.auth.uid}/private/membership` | `request.auth.uid == targetUid` OR `listingRequest.status == "accepted"` (bi-directional) OR `match.status == "connected"` OR (`targetMembership.householdId != null` AND `targetMembership.householdId == requestMembership.householdId`) |
-| **Phone (`phoneNumber`)** | `users/{targetUid}/private/phone` | `users/{targetUid}/private/profile`, `listingRequests/{listingId}_{request.auth.uid}`, `listingRequests/{listingId}_{targetUid}`, `matches/{matchId}`, `users/{targetUid}/private/membership`, `users/{request.auth.uid}/private/membership` | `request.auth.uid == targetUid` OR (`targetProfile.privacy.showPhoneToConnections == true` AND (`listingRequest.status == "accepted"` (bi-directional) OR `match.status == "connected"`)) OR (`targetMembership.householdId != null` AND `targetMembership.householdId == requestMembership.householdId`) |
+| **Contact (`firstName`)** | `users/{targetUid}/private/contact` | `connections/{pairId}` (`pairId` = the two UIDs sorted), `users/{targetUid}/private/membership`, `users/{request.auth.uid}/private/membership` | `request.auth.uid == targetUid` OR `connection.status == "active"` OR (`targetMembership.householdId != null` AND `targetMembership.householdId == requestMembership.householdId`) |
+| **Phone (`phoneNumber`)** | `users/{targetUid}/private/phone` | `users/{targetUid}/private/profile`, `connections/{pairId}`, `users/{targetUid}/private/membership`, `users/{request.auth.uid}/private/membership` | `request.auth.uid == targetUid` OR (`targetProfile.privacy.showPhoneToConnections == true` AND `connection.status == "active"`) OR (`targetMembership.householdId != null` AND `targetMembership.householdId == requestMembership.householdId`) |
 | **Exact Address** | `listings/{listingId}/private/location` | `listings/{listingId}` (field `ownerUid`), `listings/{listingId}/private/location` (field `residentUids`), `listingRequests/{listingId}_{request.auth.uid}` | `request.auth.uid == listing.ownerUid` OR `request.auth.uid in location.residentUids` OR `listingRequest.status == "accepted"` |
 | **Chat Channel & Messages** | `chats/{chatId}`, `chats/{chatId}/messages/{messageId}` | `chats/{chatId}` (field `participantUids`) | `request.auth.uid in chat.participantUids` |
 | **Household Data** (Expenses, Chores, Rules) | `households/{householdId}`, `expenses/{expenseId}`, `chores/{choreId}` | `households/{householdId}` (field `memberUids`) | `request.auth.uid in household.memberUids` |
@@ -63,8 +66,8 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `updatedAt` | timestamp | Yes | Owner | Last update timestamp. `[PROPOSED]` |
 
 #### Subcollection: `users/{uid}/private/profile`
-- **Source:** PRD FR1.1 (UM email verification), FR1.3 (profile settings & privacy toggles), and PRD Section 5 (NFR2 Privacy).
-- **Purpose:** Consolidated private user profile document. Stores student full legal name, room search budget (in integer `sen`), vehicle ownership, and privacy toggles. Readable strictly by the owner. Firebase Auth already stores and verifies the user's email address (`request.auth.token.email`). Security Rules and server validation verify the UM domain directly via `request.auth.token.email` (`@siswa.um.edu.my` or `@um.edu.my`), so email addresses are not duplicated in Firestore or exposed on the public user document.
+- **Source:** PRD FR1.1 (email verification, UM verified badge), FR1.3 (profile settings & privacy toggles), and PRD Section 5 (NFR2 Privacy).
+- **Purpose:** Consolidated private user profile document. Stores student full legal name, room search budget (in integer `sen`), vehicle ownership, and privacy toggles. Readable strictly by the owner. Firebase Auth already stores and verifies the user's email address (`request.auth.token.email`), so the email is not duplicated in Firestore or exposed on the public user document. Any verified email may register (PRD FR1.1, decided 29 Oct 2026); only an email on a UM domain earns the UM verified badge, which Rules read from the token (see the posting rule under `listings`).
 - **Document ID:** `profile` (single document).
 - **Access Rule:** Readable strictly by the owner (`uid == request.auth.uid`).
 
@@ -81,7 +84,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 - **Source:** PRD Section 5 Stage Table (Connection stage visibility) and PRD FR1.3.
 - **Purpose:** Stores stage-accessible first name (`firstName`).
 - **Document ID:** `contact` (single document).
-- **Access Rule:** `firstName` is readable by accepted connections (bi-directionally via accepted `listingRequests` or connected `matches`) and household members (`users/{uid}/private/membership`).
+- **Access Rule:** `firstName` is readable by accepted connections (through an active `connections` document, in both directions) and household members (`users/{uid}/private/membership`).
 
 | Field Name | Type | Required | Who May Write | Notes |
 |---|---|---|---|---|
@@ -91,7 +94,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 - **Source:** PRD Section 5 Stage Table (Connection stage opt-in phone) and PRD FR1.3.
 - **Purpose:** Stores user's phone number for opt-in connection sharing.
 - **Document ID:** `phone` (single document).
-- **Access Rule:** Readable strictly by the owner (`uid == request.auth.uid`), by accepted connections (bi-directionally via accepted `listingRequests` or connected `matches`) ONLY when `privacy.showPhoneToConnections == true` (the rule reads `users/{uid}/private/profile` with `get()`), and by household members.
+- **Access Rule:** Readable strictly by the owner (`uid == request.auth.uid`), by users with an active `connections` document, in both directions, ONLY when `privacy.showPhoneToConnections == true` (the rule reads `users/{uid}/private/profile` with `get()`), and by household members.
 
 | Field Name | Type | Required | Who May Write | Notes |
 |---|---|---|---|---|
@@ -153,6 +156,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 - **Purpose:** Property listings posted by student Hosts. Public document contains general property metadata and search attributes.
 - **Document ID:** `{listingId}` (auto-generated ID).
 - **Used by:** Module 2 (FR2.1, FR2.2), Module 4 (FR4.2).
+- **Posting rule (UM verified):** creating or editing a listing, its rooms and its `private/location` requires `request.auth.token.email_verified == true` and a `request.auth.token.email` on a UM domain, matched exactly (`siswa.um.edu.my` or `um.edu.my`; the list is `[DRAFT]` until confirmed with UM). The screen explains the badge, but Rules enforce it.
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
@@ -204,6 +208,29 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `status` | string | Yes | Host / Requester | Status: `"pending"`, `"accepted"`, `"rejected"`, `"cancelled"`. Requester creates as `"pending"` or sets `"cancelled"`; Host sets `"accepted"` or `"rejected"`. `FR3.3` `[PROPOSED]` |
 | `createdAt` | timestamp | Yes | Requester (on create) | Creation timestamp. `[PROPOSED]` |
 | `updatedAt` | timestamp | Yes | Host / Requester | Last status change timestamp. `[PROPOSED]` |
+
+---
+
+### 2.4.1 Collection: `connections` `[PROPOSED]`
+- **Source:** `[PROPOSED]` (Needs Ary's confirmation). Rules cannot find the listing from a user's contact document, so one document per pair of people is the proof of a Connection (see Proof of Connection in section 1).
+- **Purpose:** Records that two people are connected: a student and a Host after the Host accepted a request, or two students after both accepted a Match. Opens `contact`, `phone` and chat for both.
+- **Document ID:** `{pairId}` (the two Auth UIDs sorted alphabetically and joined with `_`, as in `matchId`).
+- **Used by:** Module 3 (FR3.3), Module 2 (FR2.1).
+- **Access Rule:** Readable only by the two people in it (`request.auth.uid == uidA || request.auth.uid == uidB`). Either person may set `status` to `"ended"`; nobody else may change it.
+
+| Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
+|---|---|---|---|---|
+| `pairId` | string | Yes | On create | Same as the document ID. `[PROPOSED]` |
+| `uidA` | string | Yes | On create | The smaller UID of the two. `[PROPOSED]` |
+| `uidB` | string | Yes | On create | The larger UID of the two. `[PROPOSED]` |
+| `source` | string | Yes | On create | `"listingRequest"` or `"match"`. `FR3.3` |
+| `listingId` | string | No | On create | Set when `source == "listingRequest"`. `FR3.3` |
+| `hostUid` | string | No | On create | Set when `source == "listingRequest"`; must equal `listings/{listingId}.ownerUid`. `FR3.3` |
+| `status` | string | Yes | On create / either person | `"active"` or `"ended"`. `FR3.3` |
+| `createdAt` | timestamp | Yes | On create | Creation timestamp. `[PROPOSED]` |
+| `endedAt` | timestamp | No | Either person | Set when `status` becomes `"ended"`; starts the chat retention period in section 3. `[PROPOSED]` |
+
+> **Who creates it `[OPEN QUESTION for Aaron]`:** Firestore triggers are not on the free plan, so either the Cloudflare Worker creates the document when a request or match is accepted, or the accepting person's app creates it and Rules allow the create only if the accepted `listingRequests` or `matches` document exists for exactly that pair (the Rules can read `listingId` from the new document's data).
 
 ---
 
@@ -496,7 +523,7 @@ In compliance with the **Retention Principle of PDPA 2010** (personal data must 
 | Unattached `unitEvaluations` | **90 days** (PRD FR2.4 acceptance criteria, ASSUMPTIONS #8) | **90 days** | `[OPEN QUESTION for Aaron]` | Evaluations not linked to an active Group expire after 90 days as market prices change and search intent ends. |
 | Closed `listings` | **30 days** (PRD FR2.2 acceptance criteria: listing closes after 30 days if not renewed; ASSUMPTIONS #8) | **30 days** after closing/expiry | `[OPEN QUESTION for Aaron]` | Inactive/closed listings are purged 30 days after closing unless renewed by Host, preventing stale search results. |
 | Closed `households` | **6 months** (PRD FR5.1 acceptance criteria, ASSUMPTIONS #8) | **6 months** after closure | `[OPEN QUESTION for Aaron]` | Retained read-only for 6 months after household dissolution so former housemates can verify and settle lingering debt balances before complete purge. |
-| `chats` & messages | *Not explicitly specified in PRD* | **Duration of Connection + 30 days** | `[OPEN QUESTION for Aaron]` | Chat channels and messages are retained for 30 days after a Connection is closed/terminated to allow users to resolve pending viewing arrangements, deposit queries, or safety concerns before permanent purge in compliance with the PDPA 2010 Retention Principle. |
+| `chats` & messages | *Not explicitly specified in PRD* | **Duration of Connection + 30 days** (counted from `connections.endedAt`) | `[OPEN QUESTION for Aaron]` | Chat channels and messages are retained for 30 days after a Connection is closed/terminated to allow users to resolve pending viewing arrangements, deposit queries, or safety concerns before permanent purge in compliance with the PDPA 2010 Retention Principle. |
 
 > **Retention Deletion Mechanism Open Question:** Scheduled Cloud Functions are unavailable on the free Firebase tier. Options for Aaron/Gathan to evaluate:
 > 1. Client-triggered cleanup on query/write.
@@ -553,6 +580,9 @@ Firestore Security Rules cannot execute multi-document aggregations, complex ari
 5. **Commute Calculation & Route Directions (FR4.1, FR4.2):**
    - *Server Task:* `getCommuteOptions` and `getTransitRoute` endpoints use openrouteservice for walking and road travel times/distances, and Prasarana GTFS timetables for bus and rail schedules/routes, calculating peak/off-peak fares and CO2 estimates, and returning cached results.
 
-6. **Moderation & Listing Expiry:**
+6. **Connection documents `[OPEN QUESTION for Aaron]`:**
+   - *Server Task:* when a Host accepts a `listingRequests` request or both students accept a `matches` document, create `connections/{pairId}`; or let Rules allow the app to create it after checking the accepted request (see section 2.4.1).
+
+7. **Moderation & Listing Expiry:**
    - *Server Task:* Moderates review submissions (`moderated` boolean) and manages automated status updates for expired listings.
    - *Open Question for Aaron:* Does the Worker write `moderated` status directly to Firestore?
