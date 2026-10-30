@@ -424,3 +424,18 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary asked for the folders and for a single Aaron log. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say where a member puts their own notes and why the AI log has one file per person.
 - **Limits:** `docs/ai-log/aaron.md` is Aaron's record and was edited without him: besides the merge, it was converted to UTF-8 (it mixed Windows-1252 and UTF-8, which showed as "Â·" in two entries), so Aaron should read it once. The character `˜` in one entry is kept as it was stored. Paths written as text in his older entries still show the old locations on purpose. Open PR #8 edits `docs/ai-log/ary.md`, so it may need a sync with `main`.
+
+## 2026-10-31 · Decide who creates the connections document (ADR-0007) · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** Ary asked why Aaron's answer on `connections` was needed, then told Claude to take the best option instead of waiting. Claude had recommended that the Worker creates the document.
+- **Prompts (exact):**
+  > minta kepastian dari aaron buat apa?
+
+  > pokokny yg terbaik lha kt ngikut aja
+- **Output used:** `ADR.md` ADR-0007 changed from Proposed to Accepted with the decision "only the Worker creates `connections`, Rules deny the app create and delete" and the reason; the same decision in `TASKS/E0/E0.5.md`, `E4.3.md`, `E5.1.md` and the open-question lines of `docs/team/aaron/README.md` and `docs/team/gathan/README.md`.
+- **How it was tested or checked:** a text search finds no "who creates connections" open question left outside the AI log. not verified: that Aaron agrees (his confirmation is listed as an open item in his file); no Rules or Worker code was written or run.
+- **What the human changed or rejected:** Ary chose to follow the recommended option. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why Rules cannot query, why a deterministic `pairId` is used, and why the Worker and not the app creates the document.
+- **Limits:** the choice rests on Claude's reasoning about the free plan (no Firestore triggers) and on the draft schema in PR #8, which is not merged. Core privacy logic: needs human review by Aaron and Gathan.

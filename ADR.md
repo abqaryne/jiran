@@ -139,9 +139,9 @@ another domain, which is unconfirmed. Replaces the 29 Oct open sign-up (`a719dec
 
 ## ADR-0007: A `connections` document is the proof of a Connection
 
-- **Status:** Proposed
-- **Date:** 2026-10-30
-- **Decided by:** Ary (review of Gathan's schema, PR #8); awaiting Aaron
+- **Status:** Accepted (31 Oct 2026)
+- **Date:** 2026-10-30, updated 2026-10-31
+- **Decided by:** Ary (review of Gathan's schema, PR #8; on 31 Oct 2026 Ary chose that the Worker creates the document). Aaron owns the Worker and has not confirmed: not recorded
 
 ### Context
 Security Rules cannot run queries. They can only `get()` documents on paths built from the request or the document. Contact
@@ -151,10 +151,15 @@ details, the phone number and chat must open only when two people are connected.
 One document `connections/{pairId}` per pair, where `pairId` is the two Auth UIDs sorted and joined by `_`. A Host accepting a
 listing request, or two students both accepting a match, produces it. Rules read it to open `contact`, `phone` and chat.
 
+Only the Worker creates a `connections` document, with admin access, after it checks that the Host accepted the listing request, or
+that both `statusA` and `statusB` of the match are accepted. Security Rules deny the app create and delete on `connections`.
+
 ### Consequences
-Chat retention is counted from `connections.endedAt`. Open question for Aaron: Firestore triggers are not on the free plan, so
-either the Worker creates the document or the accepting app does under a Rules check on the accepted request. Not final until
-PR #8 is merged.
+Chat retention is counted from `connections.endedAt`. Firestore triggers are not on the free plan, so the accept action calls a
+Worker endpoint instead of writing the document. Why not the app: a Rules check on the accepted request is easy to get wrong, and a
+wrong rule would open a phone number or a chat to the wrong person (PDPA 2010, NFR2). Cost: the accept action needs that
+endpoint (E5.1, Aaron) and the Worker must be reachable for a Connection to start. Who may end a Connection (set `ended`) and
+which fields they may change stays as in the schema draft; Gathan writes those Rules and their emulator tests.
 
 ## ADR-0008: Task tracking lives in the repository as well as in ClickUp
 

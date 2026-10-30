@@ -211,7 +211,7 @@ continuation commits remain on the feature branch until reviewed by PR.
 These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
 
 - [E0.2](../../../TASKS/E0/E0.2.md): Aaron: is a Worker deployed under the free plan, and what is its URL pattern? Blocks: the Android calls in E3.4 and E4.2.
-- [E0.5](../../../TASKS/E0/E0.5.md): Aaron: does the Worker or the app create `connections`? Blocks: the Rules for it.
+- [E0.5](../../../TASKS/E0/E0.5.md): Aaron: confirm that the Worker creates `connections` (ADR-0007, chosen by Ary on 31 Oct 2026). Gathan writes the Rules on that basis.
 - [E0.5](../../../TASKS/E0/E0.5.md): A second reviewer for PR #8 (Aaron). Blocks: merge.
 - [E0.6](../../../TASKS/E0/E0.6.md): Aaron and Ilham: agree the three AI function shapes. Blocks: E3.5, E6.3, E8.2.
 - [E1.1](../../../TASKS/E1/E1.1.md): Aaron: review "unverified account can only reach the verify screen". Blocks: closing the subtask.
@@ -219,7 +219,7 @@ These come from the task files. Answer them in the task file (or in the PR) so t
 - [E3.3](../../../TASKS/E3/E3.3.md): Aaron: confirm which fare and transit checks (#3, #4, #5) are still open.
 - [E4.2](../../../TASKS/E4/E4.2.md): Aaron: CO₂ factor sources (#6). Blocks: the CO₂ numbers.
 - [E4.4](../../../TASKS/E4/E4.4.md): Aly and Aaron: the peak hours and factor (T1.3 #2). Blocks: the peak column.
-- [E5.1](../../../TASKS/E5/E5.1.md): Aaron and Gathan: who writes `connections`, the Worker or the app? Blocks: the accept action.
+- [E5.1](../../../TASKS/E5/E5.1.md): Aaron: add the Worker endpoint that creates `connections` when the accept conditions hold (ADR-0007). Blocks: the accept action.
 - [E6.2](../../../TASKS/E6/E6.2.md): Aaron and Aly: the final weights from the survey. Blocks: claiming the score as validated.
 
 **Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You also lead the P0 code freeze (Gate 3, 13 Dec).

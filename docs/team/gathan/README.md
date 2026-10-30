@@ -62,7 +62,7 @@ These come from the task files. Answer them in the task file (or in the PR) so t
 - [E3.2](../../../TASKS/E3/E3.2.md): Ary and Gathan: decide the gender rule before this story starts. Blocks: the gender filter.
 - [E4.1](../../../TASKS/E4/E4.1.md): Gathan: who reviews reported listings, and how fast? Blocks: what the report sheet promises.
 - [E4.3](../../../TASKS/E4/E4.3.md): Gathan: the maximum message length and the rule for requests to a full listing. Blocks: the sheet's validation.
-- [E5.1](../../../TASKS/E5/E5.1.md): Aaron and Gathan: who writes `connections`, the Worker or the app? Blocks: the accept action.
+- [E5.1](../../../TASKS/E5/E5.1.md): Gathan: the Rules deny the app create and delete on `connections`; the Worker writes it (ADR-0007). Aaron builds the endpoint.
 - [E5.1](../../../TASKS/E5/E5.1.md): Gathan: how long an unanswered request stays open. Blocks: the inbox empty state.
 - [E5.2](../../../TASKS/E5/E5.2.md): Gathan: file size limit for chat attachments on the free plan. Blocks: the attach button.
 - [E5.3](../../../TASKS/E5/E5.3.md): Dafi and Gathan: the invite code alternative for joining a Household (E7.2). Blocks: the move-in screens.
