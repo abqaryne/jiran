@@ -495,3 +495,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary).
 - **What the human understands and can explain:** TODO (Ary). Be able to say why Google Places was dropped (it needs billing).
 - **Limits:** other places that may still name Google Places or Firebase Storage outside `TASKS/` and the PRD (for example the research notes and `TEAM_PLAN.md` "Storage rules") were not changed.
+
+## 2026-10-31 · Mark E0.4 done after Ary's check · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** record that Ary checked E0.4 (project management and docs) and that it is done.
+- **Prompts (exact):**
+  > E0.4 tandain done karena udh aku cek
+- **Output used:** `TASKS/E0/E0.4.md`: the four subtasks ticked, the four acceptance checks ticked with "Ary checked them on 31 Oct 2026", the Resolution updated, and two stale `docs/tasks/` references replaced. `TASK.md` and ClickUp already showed E0.4 as done.
+- **How it was tested or checked:** ClickUp search shows the E0.4 task with status done; its subtasks were not read (the connector's daily limit). What Ary checked is not recorded.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the acceptance checks are normally Aly's; here Ary did them.
