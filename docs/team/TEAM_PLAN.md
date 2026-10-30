@@ -1,7 +1,7 @@
 # Jiran: Work Division (from the WIA2007 brief)
 
 Source: the course brief (`MAD Group Project.docx`) and the [PRD](../product/PRD.md).
-Work is divided **by module**, with one owner per module and specialists helping (see Section 2). Day-to-day work is tracked as Initiative, Epics, Stories and Subtasks in [work-breakdown.md](work-breakdown.md).
+Work is divided **by module**, with one owner per module and specialists helping (see Section 2). Day-to-day work is tracked as Initiative, Epics, Stories and Subtasks: stories and subtasks are in the task files listed in [TASK.md](../../TASK.md).
 
 ## 1. What the brief requires (and what it is marked on)
 
@@ -34,7 +34,7 @@ Work is divided **by module**: each module has one owner who builds it end to en
 
 ### How the work is tracked
 
-The full breakdown is in [work-breakdown.md](work-breakdown.md): the **initiative** (Jiran, delivered by 3 and 10 January 2027), the **epics**, the **stories** (one task each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and below. Each story also has a task file in `TASKS/<epic>/<ID>.md`, listed in the master [TASK.md](../../TASK.md) (description, work needed, constraints, acceptance, resolution, notes); the personal files link to them.
+The work is broken down into the **initiative** (Jiran, delivered by 3 and 10 January 2027), the **epics**, the **stories** (one task each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and below. Each story also has a task file in `TASKS/<epic>/<ID>.md`, listed in the master [TASK.md](../../TASK.md) (description, work needed, constraints, acceptance, resolution, notes); the personal files link to them.
 
 **An epic is one flow of the app, and the epics are done in order: E0 first, then E1, E2 and so on.** Each flow is built end to end (screens, data, rules, tests) by the whole team together, then merged and tested before the next one starts. Stories marked *can start early* need nobody and may run ahead. Tracks T1 to T4 (research, testing, video, report) run in parallel by date.
 
@@ -53,6 +53,87 @@ The full breakdown is in [work-breakdown.md](work-breakdown.md): the **initiativ
 | **E10** Profile, privacy and polish (P1) | Profile and Safety Flow | 14 to 20 Dec | Ary |
 | **E11** Optional (P2) | only if P0 and P1 are on track | after 20 Dec | whoever has time |
 | **T1 to T4** Research, testing, video, report | parallel tracks | by date | Aly, Dafi, Ilham |
+
+### Order of work, ClickUp and gates
+
+Moved here from the former `work-breakdown.md` on 31 Oct 2026. The stories and their subtasks are in the task files
+(`TASKS/<epic>/<ID>.md`), listed in [TASK.md](../../TASK.md).
+
+#### How the order works
+
+**Epics E0 to E10 are done in order, one flow after another.** Each epic is one flow of the app built end to end: screens, data,
+rules and tests, with the whole team working on that flow. When an epic is merged and tested, the next one starts.
+
+- **E0 first.** It holds what every flow needs: the repo, Firebase, the design system and shell, the data schema and rules, and
+  the function contracts. Gate 2 (15 Nov) closes E0.
+- **E1 to E8 are the P0 flows.** E1 to E7 are built and merged by the P0 code freeze (13 Dec); the contract check (E8) and the AI
+  evaluation finish by 20 Dec.
+- **E9 and E10 are P1.** They start only after the P0 flows work end to end. Anything not stable by 20 Dec is dropped, not rushed.
+- **Stories marked *can start early*** need nobody and are allowed to run before their epic starts (for example Aaron's commute
+  engine, Dafi's balance logic, Ilham's contract prompts, Gathan's seed listings). They are the only exception to the order.
+- **Tracks T1 to T4 run in parallel, by date, not by order:** research and numbers, testing, video, report. They are not flows.
+- A story marked **WAIT** is not started until the thing it waits for exists. Use a stub or mock data meanwhile.
+
+#### How it is set up in ClickUp
+
+| Level | In ClickUp |
+|---|---|
+| **Initiative** | one **Space** named "Jiran" |
+| **Epic** | one **List** per epic, in build order: `E0 Foundations`, `E1 Starting and Profile` ... `E10 Polish`. Put the flows in a Folder `Flows` and the tracks `T1` to `T4` in a Folder `Tracks`. The epic's goal goes in the List description. |
+| **Story** | a **task** in its epic's List. Title format `E1.2 Log in, log out and reset password` |
+| **Subtask** | a **subtask** of the story task, written `(Owner) what` |
+
+**Statuses** (set them once for the whole Space so every List shares them; use Board view to see them as columns):
+
+| Status | ClickUp type | Meaning |
+|---|---|---|
+| **Backlog** | Not started | not scheduled yet; stories of later epics wait here |
+| **This week** | Not started | picked at sprint planning, not started |
+| **In progress** | Active | one person is working on it |
+| **Blocked** | Active | waits for a person or data (a story marked WAIT). Write who in a comment. |
+| **In review** | Active | PR open; Aaron reviews backend, Gathan schema and rules, then Ary |
+| **QA** | Active | Aly checks it on the emulator or a device |
+| **Done** | Done | all subtasks ticked, PR merged by Ary, CI green, QA passed, hours logged |
+
+Only stories of the **current epic**, plus the *can start early* ones, belong in This week.
+
+**Tags:** priority `P0` `P1` `P2` · `WAIT`. **Fields:** Assignee, Due date and Time estimate are built in; add Custom Fields
+for FR (text), PR link (URL) and AI log link (URL).
+
+**Rules**
+- Log your **actual hours on the story task** with ClickUp time tracking (this is the evidence for the peer evaluation).
+- Max two stories In progress per person.
+- If AI helped, add the entry to `docs/ai-log/<name>.md` and link it on the task.
+- Screenshot the Board view every week (evidence for the report).
+- **Who builds screens:** each module owner builds their own screens using Ary's components. Ary builds the screens of Modules 1 and 3,
+  the Room details and commute card, and reviews the rest.
+
+**Story task template** (paste into the description)
+
+```
+Epic: E_   FR: FRn.n   Priority: P_   Owner: @name   Reviewer: @name   Due: date   Estimate: h
+Goal: one sentence in plain words ("A student can ...")
+WAIT: what this needs from someone else, and what to use meanwhile (mock data, stub)
+Done when: the behaviour in the PRD works on a device; unit tests; design system only; CI green; PR merged; hours logged
+```
+
+#### Initiative and gates
+
+**Initiative:** Jiran, a verified UM-only app for off-campus rooms, housemates and commute (SDG 11), delivered as a working
+Android app, a 10 to 15 minute video (12:00, 3 Jan 2027) and a report (12:00, 10 Jan 2027).
+
+| Milestone | Date | Owner | Done when |
+|---|---|---|---|
+| Gate 1 | 8 Nov | Dafi | survey has 100+ responses, repo runs, Firebase project exists |
+| Gate 2: E0 done | 15 Nov | Dafi | requirements frozen, app shell and schema merged, Auth works, every Cloud Function has an agreed stub |
+| Gate 3: P0 code freeze | 13 Dec | Aaron | E1 to E7 work on a real device with real data |
+| Gate 4: testing done | 27 Dec | Aly | NFR1 and NFR2 evidence collected, no P0 bug left, SUS at least 68 |
+
+#### Weekly routine (Dafi)
+
+- Daily: look for `Blocked` and `WAIT` stories, and check that the current epic is moving.
+- Twice a week: a short sync.
+- Weekend: demo, retro, update risks, post the hours summary and a screenshot of the Board view.
 
 ### What the support members must code
 

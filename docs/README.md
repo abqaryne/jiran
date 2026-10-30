@@ -24,8 +24,7 @@ docs/
 │   └── no-billing-production.md    free-only production candidate
 ├── plans/          implementation plans and verification notes (Aaron, 27 Oct 2026)
 ├── team/           who does what and when
-│   ├── TEAM_PLAN.md      roles, timeline, workflow
-│   ├── work-breakdown.md work breakdown: initiative, epics, stories and subtasks in ClickUp
+│   ├── TEAM_PLAN.md      roles, timeline, workflow, order of work and ClickUp set-up
 │   ├── master-prompt.md  prompt to start an AI assistant on your story
 │   └── <name>/           one folder per person (aaron, ary, aly, dafi, gathan, ilham)
 │       └── README.md     personal task file; put your own notes in your own folder

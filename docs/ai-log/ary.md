@@ -469,3 +469,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose the gender rule and the first-year rule. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to explain each decision in your own stories, and why the remainder rule in E7.1 keeps the total exact.
 - **Limits:** the 42 recommended decisions were not discussed with their owners; numbers such as the 300-character message, 14-day request expiry, 2 MB chat photo and 5 MB contract file are product choices, not measured limits. E7.1 (balances), E7.5 and the Rules cases in T2.3 are core logic: needs human review. The ClickUp descriptions do not have these answers yet (the connector's daily limit was reached).
+
+## 2026-10-31 · Remove work-breakdown.md · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** delete `docs/team/work-breakdown.md`, because the task files already hold every story and subtask.
+- **Prompts (exact):**
+  > work breakdown apus aja kali ya karena task detailnya kan udh ada di folder task
+- **Output used:** `docs/team/work-breakdown.md` deleted. Its parts that existed nowhere else (how the order works, the ClickUp set-up with statuses, tags, rules and the story template, the gates table, Dafi's weekly routine) moved into `docs/team/TEAM_PLAN.md` under "Order of work, ClickUp and gates"; the Done status type there now reads Done instead of Closed. Links in the six personal files, `master-prompt.md`, `TEAM_PLAN.md`, `ADR.md` (ADR-0008) and `docs/README.md` updated.
+- **How it was tested or checked:** a script compared the 157 subtasks in `work-breakdown.md` with the task files and found every one of them there; a script found no broken relative link after the delete. Older entries of this log still name the file as it was at the time.
+- **What the human changed or rejected:** Ary proposed the delete. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say where subtasks and the ClickUp rules now live.
+- **Limits:** the epic table still appears in both `TEAM_PLAN.md` and the Milestones table of `TASK.md`.

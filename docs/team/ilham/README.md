@@ -5,9 +5,9 @@
 - The **match reason text** for Module 3 (FR3.2)
 - AI evaluation, API key handling, and the **AI Usage Log** (mandatory appendix)
 
-## Your stories (subtasks for each are in [work-breakdown.md](../work-breakdown.md))
+## Your stories (subtasks for each are in its task file)
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); the subtasks are in [work-breakdown.md](../work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
 
 ### Do in this order (stories you lead: 8)
 
