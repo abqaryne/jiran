@@ -439,3 +439,18 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose to follow the recommended option. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say why Rules cannot query, why a deterministic `pairId` is used, and why the Worker and not the app creates the document.
 - **Limits:** the choice rests on Claude's reasoning about the free plan (no Firestore triggers) and on the draft schema in PR #8, which is not merged. Core privacy logic: needs human review by Aaron and Gathan.
+
+## 2026-10-31 · Point every AI assistant to the owner file in AGENTS.md · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** `AGENTS.md` named only Aaron's owner file, so an assistant of another member might not find their stories. Add one general line.
+- **Prompts (exact):**
+  > itu MD masing masing gapapa README? agent ai mereka pasti ngerti kah?
+
+  > di #8 ya
+- **Output used:** one bullet at the start of "Task tracking" in `AGENTS.md`: every member has `docs/team/<name>/README.md`, read it first, then the task file; personal notes go in `docs/team/<name>/`.
+- **How it was tested or checked:** not verified with another assistant. The titles of the six owner files name their person, and `docs/team/master-prompt.md` already uses the same path; a script found no broken relative link.
+- **What the human changed or rejected:** Ary asked for the change to go in PR #8. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say how a member's assistant finds its work.
+- **Limits:** whether other tools (Codex, Gemini, Copilot) read `AGENTS.md` first is not verified.
