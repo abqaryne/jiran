@@ -178,3 +178,7 @@ and mirrors the statuses. IDs stay `E<epic>.<n>` and `T<n>.<n>` because they alr
 
 ### Consequences
 Status is written in two places and must be changed in both on the same day. Open questions in each task file have an owner. Subtasks are in the task files (`work-breakdown.md` was removed on 31 Oct 2026).
+
+**Update 2026-10-31 (Ary):** the status in `TASK.md` and the task files is set from the repository (what is merged in `main`,
+on a branch or in an open PR, and which *Acceptance* checks are ticked), not copied from ClickUp. ClickUp keeps planning
+states and logged hours and may show a different status. The statuses were re-derived on 31 Oct 2026 under these rules.

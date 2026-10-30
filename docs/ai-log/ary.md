@@ -536,3 +536,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary).
 - **What the human understands and can explain:** TODO (Ary). Be able to say why a passing local fixture run is not NFR1 evidence.
 - **Limits:** a deployed Worker is still not recorded anywhere in the repository (E0.2).
+
+## 2026-10-31 · Status in TASK.md comes from the repository · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** Ary decided that the status in `TASK.md` must come from the code and documents in the repository, not from a copy of ClickUp. Write the rule and re-derive every status.
+- **Prompts (exact):**
+  > hei TASK.md itu jangan dari salinan clickup tapi dari kode yang udh dibuat
+- **Output used:** a status table at the top of `TASK.md` (backlog: nothing in the repository; inprogress: part of *Work needed*; inreview: all of it in an open PR; qa: merged, *Acceptance* not all ticked; done: merged and every *Acceptance* check ticked; dropped). `todo` and `blocked` are no longer statuses: waiting is shown in *Depends on*, planning stays in ClickUp. 15 statuses changed in `TASK.md` and the task files: E0.1 and E0.2 done → inprogress (missing work listed in their resolution), E1.3 blocked → backlog, E2.1 to E2.4, E3.1, E3.2, E3.5 todo → backlog, E3.4 inprogress → backlog (no code; ask Aaron), E4.2, T1.1, T2.2, T4.2 backlog → inprogress. The rule is also in `AGENTS.md` and as an update under ADR-0008.
+- **How it was tested or checked:** each status was set from the resolution text of the task file (written from the repository) and the ticked *Acceptance* boxes; only E0.4 has all of them ticked. not verified: local work that a member has not pushed.
+- **What the human changed or rejected:** Ary chose the rule. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why E0.1 and E0.2 are not done although ClickUp says so.
+- **Limits:** ClickUp now shows different statuses for some tasks; that is expected under the new rule.

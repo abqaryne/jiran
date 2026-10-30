@@ -1,14 +1,25 @@
 # Tasks
 
-Master task list for Jiran. Full detail for each task lives in `TASKS/<milestone>/<ID>.md`. Keep this table and each task file's header in sync (status especially). The ClickUp board mirrors this file; when they disagree, fix both on the same day.
+Master task list for Jiran. Full detail for each task lives in `TASKS/<milestone>/<ID>.md`. Keep this table and each task file's header in sync (status especially).
 
-Status values: `backlog`, `todo` (picked for this week), `inprogress`, `blocked`, `inreview`, `qa`, `done`, `dropped`. Definition of Done: merged by Ary after review, CI green, Aly's QA passed, hours logged in ClickUp.
+**Status comes from the repository, not from ClickUp** (decided by Ary on 31 Oct 2026). Set it from what is merged or open on GitHub:
+
+| Status | When |
+|---|---|
+| `backlog` | nothing for this task is in the repository yet |
+| `inprogress` | part of the work is in `main` or on a branch, but not all of *Work needed* |
+| `inreview` | all the work is in an open PR, waiting for review |
+| `qa` | the work is merged in `main`; the *Acceptance* checks are not all ticked yet |
+| `done` | merged in `main` and every *Acceptance* check in the task file is ticked |
+| `dropped` | the team decided not to do it; the task file says why |
+
+Waiting for another task is shown in *Depends on*, not as a status. ClickUp is used for planning (This week, Blocked) and for logged hours, so its status may differ; when it does, this file follows the repository. Definition of Done: merged by Ary after review, CI green, Aly's QA passed (the *Acceptance* checks ticked), hours logged in ClickUp.
 
 IDs are assigned once and never reused: `E<epic>.<n>` for the flows built in order, `T<n>.<n>` for the tracks that run in parallel. Commit messages use them (`[E1.2] Add Log in`). Work with no task uses `[Docs]`, `[Infra]` or `[Design]`.
 
 Decisions that are hard to reverse go in [ADR.md](ADR.md) (append-only). The shape of the product is in [docs/product/PRD.md](docs/product/PRD.md), the data in `docs/schema.md` (Gathan's PR #8, not merged on 30 Oct 2026), and the engineering notes in [docs/engineering/architecture.md](docs/engineering/architecture.md).
 
-Statuses below are a snapshot of 30 Oct 2026 taken from ClickUp. Each task file lists its open questions with an owner; an item marked not recorded or not verified was not seen in the repository.
+Statuses below were set from the repository on 31 Oct 2026. Each task file lists its open questions with an owner; an item marked not recorded or not verified was not seen in the repository.
 
 ## Milestones
 
@@ -36,27 +47,27 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 
 | ID | Milestone | Status | Category | Owner | Due | Title |
 |---|---|---|---|---|---|---|
-| [E0.1](TASKS/E0/E0.1.md) | E0 - Foundations and setup | done | process / infra | Aaron | 2 Nov | Repo and CI are healthy |
-| [E0.2](TASKS/E0/E0.2.md) | E0 - Foundations and setup | done | infra | Aaron | 8 Nov | Firebase and the free server are ready |
+| [E0.1](TASKS/E0/E0.1.md) | E0 - Foundations and setup | inprogress | process / infra | Aaron | 2 Nov | Repo and CI are healthy |
+| [E0.2](TASKS/E0/E0.2.md) | E0 - Foundations and setup | inprogress | infra | Aaron | 8 Nov | Firebase and the free server are ready |
 | [E0.3](TASKS/E0/E0.3.md) | E0 - Foundations and setup | qa | ui | Ary | 15 Nov | Design system and app shell |
 | [E0.4](TASKS/E0/E0.4.md) | E0 - Foundations and setup | done | process | Dafi | 30 Oct | Project management and docs |
 | [E0.5](TASKS/E0/E0.5.md) | E0 - Foundations and setup | inprogress | persistence / rules | Gathan | draft 8 Nov, merged 15 Nov | Data schema and Security Rules |
 | [E0.6](TASKS/E0/E0.6.md) | E0 - Foundations and setup | inprogress | api / docs | Aaron | 15 Nov | Function contracts (stubs) |
 | [E1.1](TASKS/E1/E1.1.md) | E1 - Starting and Profile Setup flows | qa | auth / ui | Ary | 19 Nov | Sign up with a UM email and verify it |
 | [E1.2](TASKS/E1/E1.2.md) | E1 - Starting and Profile Setup flows | qa | auth / ui | Ary | 20 Nov | Log in, log out and reset password |
-| [E1.3](TASKS/E1/E1.3.md) | E1 - Starting and Profile Setup flows | blocked | ui / persistence | Ary | 22 Nov | Profile setup and privacy |
+| [E1.3](TASKS/E1/E1.3.md) | E1 - Starting and Profile Setup flows | backlog | ui / persistence | Ary | 22 Nov | Profile setup and privacy |
 | [E1.4](TASKS/E1/E1.4.md) | E1 - Starting and Profile Setup flows | qa | ui | Ary | 22 Nov | Home and the four tabs after sign-in |
-| [E2.1](TASKS/E2/E2.1.md) | E2 - Host Listing flow | todo | ui / persistence | Gathan | 25 Nov | Pick the building and enter rent and deposit |
-| [E2.2](TASKS/E2/E2.2.md) | E2 - Host Listing flow | todo | logic / ui | Gathan | 27 Nov | Rooms and prices with the price rule |
-| [E2.3](TASKS/E2/E2.3.md) | E2 - Host Listing flow | todo | ui / rules | Gathan | 29 Nov | My listing: renew, requests and mark occupied |
-| [E2.4](TASKS/E2/E2.4.md) | E2 - Host Listing flow | todo | data | Gathan | 29 Nov | Fictional seed listings |
-| [E3.1](TASKS/E3/E3.1.md) | E3 - Find a Room flow | todo | ui | Gathan | 2 Dec | Rooms screen and Room cards |
-| [E3.2](TASKS/E3/E3.2.md) | E3 - Find a Room flow | todo | ui / logic | Gathan | 3 Dec | Filters |
+| [E2.1](TASKS/E2/E2.1.md) | E2 - Host Listing flow | backlog | ui / persistence | Gathan | 25 Nov | Pick the building and enter rent and deposit |
+| [E2.2](TASKS/E2/E2.2.md) | E2 - Host Listing flow | backlog | logic / ui | Gathan | 27 Nov | Rooms and prices with the price rule |
+| [E2.3](TASKS/E2/E2.3.md) | E2 - Host Listing flow | backlog | ui / rules | Gathan | 29 Nov | My listing: renew, requests and mark occupied |
+| [E2.4](TASKS/E2/E2.4.md) | E2 - Host Listing flow | backlog | data | Gathan | 29 Nov | Fictional seed listings |
+| [E3.1](TASKS/E3/E3.1.md) | E3 - Find a Room flow | backlog | ui | Gathan | 2 Dec | Rooms screen and Room cards |
+| [E3.2](TASKS/E3/E3.2.md) | E3 - Find a Room flow | backlog | ui / logic | Gathan | 3 Dec | Filters |
 | [E3.3](TASKS/E3/E3.3.md) | E3 - Find a Room flow | inprogress | api / logic | Aaron | start now, due 29 Nov | Commute per travel mode |
-| [E3.4](TASKS/E3/E3.4.md) | E3 - Find a Room flow | inprogress | logic / ui | Aaron | 4 Dec | True monthly cost and travel time on the Room card |
-| [E3.5](TASKS/E3/E3.5.md) | E3 - Find a Room flow | todo | ai | Ilham | 4 Dec | Plain-language AI search |
+| [E3.4](TASKS/E3/E3.4.md) | E3 - Find a Room flow | backlog | logic / ui | Aaron | 4 Dec | True monthly cost and travel time on the Room card |
+| [E3.5](TASKS/E3/E3.5.md) | E3 - Find a Room flow | backlog | ai | Ilham | 4 Dec | Plain-language AI search |
 | [E4.1](TASKS/E4/E4.1.md) | E4 - Room Details flow | backlog | ui | Ary | 4 Dec | Room details screen |
-| [E4.2](TASKS/E4/E4.2.md) | E4 - Room Details flow | backlog | ui | Ary | 7 Dec | Commute options card |
+| [E4.2](TASKS/E4/E4.2.md) | E4 - Room Details flow | inprogress | ui | Ary | 7 Dec | Commute options card |
 | [E4.3](TASKS/E4/E4.3.md) | E4 - Room Details flow | backlog | ui / rules | Ary | 7 Dec | Send a request to the Host |
 | [E4.4](TASKS/E4/E4.4.md) | E4 - Room Details flow | backlog | api / ui | Aaron | 14 Dec | Public transport route page, peak and off-peak |
 | [E5.1](TASKS/E5/E5.1.md) | E5 - Request and Chat flow | backlog | ui / rules | Ary | 7 Dec | Requests inbox and Connection |
@@ -84,17 +95,17 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 | [E9.4](TASKS/E9/E9.4.md) | E9 - Evaluate Unit and Group flows (P1) | backlog | ui / persistence | Gathan | 20 Dec | Area page and building reviews |
 | [E10.1](TASKS/E10/E10.1.md) | E10 - Profile, privacy and polish (P1) | backlog | ui | Ary | 18 Dec | Profile and privacy settings screens |
 | [E10.2](TASKS/E10/E10.2.md) | E10 - Profile, privacy and polish (P1) | backlog | ui | Ary | 20 Dec | Polish: empty states, errors, accessibility |
-| [T1.1](TASKS/T1/T1.1.md) | T1 - Research and validation | backlog | research | Aly | 8 Nov (launch 31 Oct) | Survey and interviews |
+| [T1.1](TASKS/T1/T1.1.md) | T1 - Research and validation | inprogress | research | Aly | 8 Nov (launch 31 Oct) | Survey and interviews |
 | [T1.2](TASKS/T1/T1.2.md) | T1 - Research and validation | backlog | research | Aly | 15 Nov | Survey analysis |
 | [T1.3](TASKS/T1/T1.3.md) | T1 - Research and validation | backlog | research | Dafi | 13 Nov | Verify the assumed numbers |
 | [T1.4](TASKS/T1/T1.4.md) | T1 - Research and validation | backlog | research | Dafi | 8 Nov (timetable), 13 Nov (estimates) | UM shuttle timetable and commute estimates |
 | [T1.5](TASKS/T1/T1.5.md) | T1 - Research and validation | backlog | process | Dafi | 15 Nov | Requirements freeze |
 | [T2.1](TASKS/T2/T2.1.md) | T2 - Testing and quality | backlog | qa | Aly | 15 Nov (plan), 27 Dec (run) | Test plan and integration tests |
-| [T2.2](TASKS/T2/T2.2.md) | T2 - Testing and quality | backlog | qa | Aly | 27 Dec | NFR1: speed under load |
+| [T2.2](TASKS/T2/T2.2.md) | T2 - Testing and quality | inprogress | qa | Aly | 27 Dec | NFR1: speed under load |
 | [T2.3](TASKS/T2/T2.3.md) | T2 - Testing and quality | backlog | qa / rules | Gathan | 27 Dec | NFR2: privacy and security evidence |
 | [T2.4](TASKS/T2/T2.4.md) | T2 - Testing and quality | backlog | qa / research | Aly | 27 Dec | Usability test |
 | [T2.5](TASKS/T2/T2.5.md) | T2 - Testing and quality | backlog | qa | Aly | 27 Dec | Release check |
 | [T3.1](TASKS/T3/T3.1.md) | T3 - Video | backlog | video | Ary | 20 Dec | Script and screen captures |
 | [T3.2](TASKS/T3/T3.2.md) | T3 - Video | backlog | video | Aly | 2 Jan | Record, edit and final cut |
 | [T4.1](TASKS/T4/T4.1.md) | T4 - Report and AI Usage Log | backlog | docs | Dafi | 9 Jan | Report sections |
-| [T4.2](TASKS/T4/T4.2.md) | T4 - Report and AI Usage Log | backlog | docs / process | Ilham | 9 Jan | AI Usage Log appendix (Appendix 2(b)) |
+| [T4.2](TASKS/T4/T4.2.md) | T4 - Report and AI Usage Log | inprogress | docs / process | Ilham | 9 Jan | AI Usage Log appendix (Appendix 2(b)) |
