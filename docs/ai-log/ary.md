@@ -333,7 +333,7 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 
 - **Human owner:** Ary
 - **AI tool and model:** Claude Code
-- **Task:** make the tasks more detailed. Read how the repository `a reference project` writes a task (`TASK.md` master table and `TASKS/<ID>.md` files with header, why, what already exists, numbered deliverables with a done mark, deliberate omissions with reasons, decisions with superseded entries kept, open questions), copy that structure for Jiran, write the first five task files and update the ClickUp tasks.
+- **Task:** make the tasks more detailed. Read how a reference repository writes a task (`TASK.md` master table and `TASKS/<ID>.md` files with header, why, what already exists, numbered deliverables with a done mark, deliberate omissions with reasons, decisions with superseded entries kept, open questions), copy that structure for Jiran, write the first five task files and update the ClickUp tasks.
 - **Prompts (exact):**
   > oke kayaknya ini perlu dirombak deh clickup dan task breakdownnya, karena kurang detail, coba liat repo [nama repo dihapus] di github dan ikutin cara dia detailing task-tasknya dan tolong update rombak di clickup juga ya
 - **Output used:** `docs/tasks/README.md` (master table of the 62 stories, generated from `work-breakdown.md`), `docs/tasks/_TEMPLATE.md`, and task files for E0.3, E1.1, E1.2, E1.3, E1.4; "Detail" links and an explanation in `docs/team/work-breakdown.md`. In ClickUp (through the connector, on Ary's request): the descriptions of the same five stories were replaced with the text of the task files, E1.3 moved from In progress to Blocked with a comment, because no code exists and it waits for the `users` fields of E0.5. The other stories were not changed.
@@ -373,7 +373,7 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 
 - **Human owner:** Ary
 - **AI tool and model:** Claude Code
-- **Task:** restructure the task management in the style of `a reference project` (a master `TASK.md` with a Milestones table and a Tasks table with status and category, one `TASKS/<ID>.md` per task with Description, Work needed, Constraints, Resolution and Notes, and an append-only `ADR.md`), and give every task more detail and context.
+- **Task:** restructure the task management in the style of a second reference repository (a master `TASK.md` with a Milestones table and a Tasks table with status and category, one `TASKS/<ID>.md` per task with Description, Work needed, Constraints, Resolution and Notes, and an append-only `ADR.md`), and give every task more detail and context.
 - **Prompts (exact):**
   > Ulang deh restruktur samain management tasknya kayak project itu ya dan tasknya juga kurang detail dan context buat dipahami coba di benerin
   

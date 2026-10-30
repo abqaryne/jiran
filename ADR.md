@@ -164,8 +164,7 @@ PR #8 is merged.
 
 ### Context
 Task titles in ClickUp were one line, so owners and their AI assistants had no context, and the course asks for evidence of
-who did what. The `a reference project` and `a reference project` repositories keep a master `TASK.md` and a file per
-task, which worked well.
+who did what. A master `TASK.md` with a file per task, as used in other projects the team knows, works well for this.
 
 ### Decision
 `TASK.md` at the root is the master list (milestones and tasks with status and category). `TASKS/<milestone>/<ID>.md` holds
