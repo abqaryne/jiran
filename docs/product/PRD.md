@@ -44,7 +44,7 @@ Target wording below is paraphrased; use the official UN wording in the report.
 
 ### Goals
 1. Show **true monthly cost** (rent + utilities + commute) and **travel time** on every Room card, and a dedicated **commute options card** with per-mode time, cost and CO₂ estimate on the listing detail page.
-2. Let students find rooms and housemates with explainable matching, with Listings posted only by UM verified Hosts.
+2. Let verified UM students find rooms and housemates with explainable matching.
 3. Help housemates run a shared household: split rent and bills fairly, rotate chores and agree house rules.
 4. Give a safe, privacy-first experience for people meeting strangers.
 5. Use AI only where rules-based approaches fail (free-text search, contract reading, match explanations).
@@ -85,7 +85,7 @@ Target wording below is paraphrased; use the official UN wording in the report.
 
 Priority: **P0** = required for the graded demo, **P1** = should have, **P2** = if time allows. **[DRAFT]**
 
-**The P0 slice (what must work on a real device before 13 December):** sign-up with an email and profile (Module 1); post a Listing with priced Rooms, search with filters and Room cards showing true monthly cost (Module 2); the commute options card with walking, public transport, e-hailing estimate and driving, at the user's class start time (Module 4); the Match questionnaire, Matches with score and reasons, and Connection requests (Module 3); expenses and balances in the Unit tab (Module 5, FR5.1); plain-language search, contract check and AI labelling (Module 6). Everything marked P1 is built only after the P0 slice works end to end; anything not stable by 20 December is dropped.
+**The P0 slice (what must work on a real device before 13 December):** sign-up with a UM email and profile (Module 1); post a Listing with priced Rooms, search with filters and Room cards showing true monthly cost (Module 2); the commute options card with walking, public transport, e-hailing estimate and driving, at the user's class start time (Module 4); the Match questionnaire, Matches with score and reasons, and Connection requests (Module 3); expenses and balances in the Unit tab (Module 5, FR5.1); plain-language search, contract check and AI labelling (Module 6). Everything marked P1 is built only after the P0 slice works end to end; anything not stable by 20 December is dropped.
 
 | P1 (after the P0 slice works) | P2 (only if time allows) |
 |---|---|
@@ -100,13 +100,12 @@ Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 ### Module 1: Authentication and verified profile
 | ID | Requirement | Priority |
 |---|---|---|
-| FR1.1 | The user shall be able to register with any email address, confirmed through an email verification link. A UM email address earns the **UM verified** badge, which is needed to post a Listing. | P0 |
+| FR1.1 | The user shall be able to register only with a UM student email address, confirmed through an email verification link. | P0 |
 | FR1.2 | The user shall be able to log in, log out and reset their password. | P0 |
 | FR1.3 | The user shall be able to create a profile with faculty, class timetable, monthly budget, lifestyle tags and whether they own a car, and choose which details stay hidden until a Connection. | P0 |
 
 **Acceptance criteria [DRAFT]**
-- Any well-formed email can register (first-year students may not have a UM email yet); a malformed address is rejected with a clear message. An unverified account cannot reach any screen except "verify your email".
-- An address on a UM domain (`siswa.um.edu.my`, `um.edu.my`; **[DRAFT]**, domains still to be confirmed with UM) earns the UM verified badge. Without the badge a user can search, match and send Connection requests, but cannot post a Listing; Security Rules enforce this, not only the screen.
+- Registration with a non-UM domain is rejected with a clear message; an unverified account cannot reach any screen except "verify your email".
 - Timetable entries store day, start, end and building; profile shows initials, not a photo, by default.
 - Each hidden-field toggle takes effect immediately and is enforced by Security Rules, not just the UI.
 
@@ -127,7 +126,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 - The host (Flow A) or group (Flow B/C) can edit any suggested price, but the total can never exceed the unit's total rent (Flow A) or must equal it exactly (Flow B/C).
 - Utilities are shared equally among all residents, not priced per room.
 - Search results show one **Room card** per vacant room, so the true monthly cost is calculated for that room's price.
-- **Host rules:** a Host is a student with the UM verified badge who holds or is about to hold the tenancy; there is at most one active Host per unit, and landlords have no account. If the Host leaves, they hand the Host role to another member of the household. If nobody accepts it, the Listing closes automatically and the household stays.
+- **Host rules:** a Host is a verified UM student who holds or is about to hold the tenancy; there is at most one active Host per unit, and landlords have no account. If the Host leaves, they hand the Host role to another member of the household. If nobody accepts it, the Listing closes automatically and the household stays.
 - Filters combine with AND logic; the travel-time filter uses the commute calculation from Module 4.
 - Reviews are visible only after moderation; users can report a listing or review.
 - A Building can be reviewed only by people who are, or were, members of a Household in a Unit of that Building, so reviews come from real residents.
@@ -237,7 +236,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 | ID | Requirement | Why it matters at UM | Verification |
 |---|---|---|---|
 | **NFR1 Performance** | Listing search results, including commute estimates, load within 3 s for 95% of requests at 100 concurrent users. | Searches spike before each semester; a slow app sends users back to Telegram. | Load test with 100 simulated users (k6 or JMeter) against the search endpoint; report p95. |
-| **NFR2 Privacy and security** | Only accounts with a confirmed email access the app, and only UM verified accounts post Listings. A user's exact address, phone number and contract uploads are visible only to that user; contact details only once a Connection exists (both sides have accepted). | Students share where they live, their timetable and contracts with strangers; a leak is a real safety risk. | Firebase Security Rules unit tests in the emulator: every unauthorised read/write must be denied (target 100%). |
+| **NFR2 Privacy and security** | Only verified UM accounts access the app. A user's exact address, phone number and contract uploads are visible only to that user; contact details only once a Connection exists (both sides have accepted). | Students share where they live, their timetable and contracts with strangers; a leak is a real safety risk. | Firebase Security Rules unit tests in the emulator: every unauthorised read/write must be denied (target 100%). |
 
 **What another person can see, by stage**
 
@@ -439,8 +438,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 | Risk | Mitigation |
 |---|---|
 | Few listings at launch (cold start) | Fictional sample listings from reference prices; launch via UMSU, PEKOM and faculty channels |
-| Inaccurate listings or scams | UM verified posters only (badge needed to post), report button, moderated reviews |
-| People outside UM can sign up now (decided so first-year students without a UM email can join) | They can search and connect but not post; contact details stay hidden until both accept; say this limit in the report |
+| Inaccurate listings or scams | UM-verified posters only, report button, moderated reviews |
 | Safety when meeting housemates or commuting with strangers | Verified accounts, ratings, contact hidden until both accept (share-my-trip link if commute groups are built) |
 | CO₂ figures are estimates | Label as estimates and name the emission factors |
 | AI can be wrong | Editable filters, "not legal advice" label, report-a-wrong-result button |
@@ -461,7 +459,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 
 8. ~~Server language~~ **Decided:** keep JavaScript, written small and simple by Aaron and Ilham (the rest of the app is Java). Updated 27 Oct 2026: the server is a Cloudflare Worker, because the team uses free plans only and Firebase Cloud Functions need billing. **[DRAFT]** until Aaron's feasibility spike passes.
 
-9. ~~Who may register~~ **Decided 29 Oct 2026 (Ary):** any email may register; a UM email earns the UM verified badge, required to post a Listing. Reason: first-year students may not have a UM email yet. Still open: which UM domains count (student, staff, postgraduate).
+9. ~~Who may register~~ **Decided 30 Oct 2026 (Ary): UM email only**, so that every account is a verified UM student and scams are harder. Open: which UM domains count (student, staff, postgraduate), and what first-year students without a UM email yet can do until they get one (Dafi asks UM when new students receive their address).
 
 ---
 

@@ -24,8 +24,8 @@ public final class SignUpCheckTest {
     }
 
     @Test
-    public void acceptsAnyWellFormedEmailButNotATypo() {
-        assertEquals(Problem.NONE,
+    public void tellsAnotherDomainApartFromATypo() {
+        assertEquals(Problem.NOT_UM_EMAIL,
                 SignUpCheck.of("A", "a@gmail.com", "12345678").email());
         assertEquals(Problem.NOT_AN_EMAIL,
                 SignUpCheck.of("A", "a-at-um.edu.my", "12345678").email());

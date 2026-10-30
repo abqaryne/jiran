@@ -198,7 +198,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 | Story | Lead | Due |
 |---|---|---|
 | **E0.4** Project management and docs | Dafi | 30 Oct |
-| **E1.1** Sign up with an email and verify it | Ary | 19 Nov |
+| **E1.1** Sign up with a UM email and verify it | Ary | 19 Nov |
 | **E4.2** Commute options card | Ary | 7 Dec |
 | **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |
 | **T1.3** Verify the assumed numbers | Dafi | 13 Nov |

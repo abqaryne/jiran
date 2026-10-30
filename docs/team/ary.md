@@ -18,7 +18,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 | Story | FR, priority | Due | Waits for |
 |---|---|---|---|
 | **E0.3** Design system and app shell | P0 | 15 Nov |  |
-| **E1.1** Sign up with an email and verify it | FR1.1, P0 | 19 Nov |  |
+| **E1.1** Sign up with a UM email and verify it | FR1.1, P0 | 19 Nov | UM domain list |
 | **E1.2** Log in, log out and reset password | FR1.2, P0 | 20 Nov | E1.1 |
 | **E1.3** Profile setup and privacy | FR1.3, P0 | 22 Nov | `users` fields (E0.5) |
 | **E1.4** Home and the four tabs after sign-in | P0 | 22 Nov | E1.2 |

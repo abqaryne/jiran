@@ -28,7 +28,7 @@ Work is organised as flows (epics E0 to E10, done in order) plus parallel tracks
 
 | Story | Lead | Due |
 |---|---|---|
-| **E1.1** Sign up with an email and verify it | Ary | 19 Nov |
+| **E1.1** Sign up with a UM email and verify it | Ary | 19 Nov |
 | **E5.3** Move-in confirmation | Ary | 9 Dec |
 | **E7.2** Household data and rules | Gathan | 8 Dec |
 | **T1.1** Survey and interviews | Aly | 8 Nov (launch 31 Oct) |

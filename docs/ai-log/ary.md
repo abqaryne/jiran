@@ -302,3 +302,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary decided to open sign-up so first-year students without a UM email can join, and chose to require the badge only for posting a Listing. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say why the badge is checked in Security Rules and not only on the screen, and what risk opening sign-up adds (people outside UM can search and connect).
 - **Limits:** which UM domains count is still a draft; Gathan must change his rule text (his `schema.md` says Rules verify the UM domain for identity) and Dafi must hear about the policy change.
+
+## 2026-10-30 · Back to UM-only sign-up · Module 1 (FR1.1)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** undo the "any email may register" change of the previous entry, because Ary decided that only UM emails should sign up, so that every account is a verified UM student and scams are harder.
+- **Prompts (exact):**
+  > tapi kayaknya better UM only ya biar terpercaya bahwa ini khusus pelajar UM doang, kan takut ada penipu atau apa klo semuanya boleh
+- **Output used:** a revert of the previous commit (code, strings, tests, PRD, glossary, user flow, team files), keeping the earlier AI log entry as the record of what happened; PRD open question 9 now records the UM-only decision; `work-breakdown.md` and `ary.md` mark E1.1 as waiting for the UM domain list.
+- **How it was tested or checked:** see the checks run before the push (listed in the pull request). not verified: the sign-up screen on an emulator after the revert.
+- **What the human changed or rejected:** Ary reversed the earlier decision for trust and scam reasons. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say what each rule gives up: UM-only keeps accounts trusted but first-year students without a UM email cannot join yet.
+- **Limits:** the first-year problem is not solved, only recorded as an open question. The two entries on 2026-10-29 and 2026-10-30 describe a decision made and then undone; both stay in the log because both happened.
