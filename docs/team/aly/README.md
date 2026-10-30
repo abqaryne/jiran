@@ -6,9 +6,9 @@
 - The test plan, integration tests, the load test (NFR1), and the usability test
 - The release checklist and the video editing
 
-## Your stories (subtasks for each are in [work-breakdown.md](../work-breakdown.md))
+## Your stories (subtasks for each are in its task file)
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); the subtasks are in [work-breakdown.md](../work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
 
 ### Do in this order (stories you lead: 9)
 
@@ -34,30 +34,35 @@
 | **T4.1** Report sections | Dafi | 2a User study findings (350), 5 Testing and validation (300) | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
 
-### Open questions waiting for you (20)
+### Open questions waiting for you (10)
 
 These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
 
-- [E0.3](../../../TASKS/E0/E0.3.md): Ary and Aly: the 4.5:1 contrast of the real colours is not recorded anywhere in the repository. Measure it and note the result here.
 - [E1.1](../../../TASKS/E1/E1.1.md): Ary and Aly: real device and real inbox test before the video.
 - [E1.2](../../../TASKS/E1/E1.2.md): Ary and Aly: test the real email and "too many attempts" behaviour against the live project before the video.
-- [E2.2](../../../TASKS/E2/E2.2.md): Aly and Gathan: survey check of the weights (T1.3 #1). Blocks: calling the numbers anything but estimates in the report.
-- [E2.4](../../../TASKS/E2/E2.4.md): Gathan and Aly: where the reference prices come from (survey T1.2 or hand notes). Blocks: realistic ranges.
-- [E3.4](../../../TASKS/E3/E3.4.md): Aly: the utilities estimate (T1.3 #7) is still an assumption. Blocks: calling the figure anything but an estimate.
-- [E4.4](../../../TASKS/E4/E4.4.md): Aly and Aaron: the peak hours and factor (T1.3 #2). Blocks: the peak column.
+- [E2.2](../../../TASKS/E2/E2.2.md): Aly and Gathan: survey check of the weights (T1.3 #1, results 13 Nov). Until then the app and the report call 1.3 / 1.0 / 0.7 an estimate.
+- [E3.4](../../../TASKS/E3/E3.4.md): Aly: the utilities estimate (T1.3 #7, survey results 13 Nov). Until then the card shows RM 62 labelled as an estimate.
+- [E4.4](../../../TASKS/E4/E4.4.md): Aly and Aaron: the peak hours and factor (T1.3 #2, survey results 13 Nov). Until then the peak column is not shown (P1).
 - [E6.1](../../../TASKS/E6/E6.1.md): Ary and Aly: review the survey wording so the questions match (T1.1).
-- [E6.2](../../../TASKS/E6/E6.2.md): Aaron and Aly: the final weights from the survey. Blocks: claiming the score as validated.
-- [E7.5](../../../TASKS/E7/E7.5.md): Aly: fairness rule when a member joins mid-cycle. Blocks: the tests.
-- [E7.6](../../../TASKS/E7/E7.6.md): Aly: starter examples (quiet hours, guests, cleaning) wording. Blocks: the empty state.
-- [E8.5](../../../TASKS/E8/E8.5.md): Ilham and Aly: who rates the reasons and how many raters. Blocks: the rating figure.
-- [E10.2](../../../TASKS/E10/E10.2.md): Ary and Aly: one reviewer for the Malay text. Blocks: the BM check.
-- [T1.1](../../../TASKS/T1/T1.1.md): Ary and Aly: do the questions match the final screens, including the gender question if the team adds it? Blocks: nothing, the survey is out.
-- [T1.2](../../../TASKS/T1/T1.2.md): Aly: tool for analysis. Blocks: nothing.
+- [E6.2](../../../TASKS/E6/E6.2.md): Aaron and Aly: the final weights from the survey (results 13 Nov). Blocks: claiming the score as validated.
+- [E10.2](../../../TASKS/E10/E10.2.md): Ary and Aly: find one Malay reviewer (a Malaysian classmate) for the BM text. Blocks: the BM check.
 - [T2.1](../../../TASKS/T2/T2.1.md): Aly: the plan by 15 Nov.
-- [T2.2](../../../TASKS/T2/T2.2.md): Aly: test data volume. Blocks: a meaningful result.
-- [T2.4](../../../TASKS/T2/T2.4.md): Aly: consent and fictional accounts. Blocks: the session.
-- [T2.5](../../../TASKS/T2/T2.5.md): None recorded yet.
-- [T3.2](../../../TASKS/T3/T3.2.md): None recorded yet.
+- [T4.2](../../../TASKS/T4/T4.2.md): Everyone: fill the TODO fields before merging into the appendix.
+
+### Decided on 31 Oct 2026 for your stories (10)
+
+Read these before you start; the full text is under *Decisions taken* in each task file.
+
+- [E0.3](../../../TASKS/E0/E0.3.md): Contrast computed with the WCAG formula from `colors.xml`: every text pair is at least 4.5:1 (lowest: success text on success background 4.75:1; secondary text on fill 5.53:1; white on brand 6.38:1), and the strong border is 3.42:1 against white (non-text needs 3:1). Computed from the hex values, not measured on a device screen.
+- [E2.4](../../../TASKS/E2/E2.4.md): Reference prices: hand-noted price facts from public advertisements (area, room type, price range, source and date), as the rules in `ASSUMPTIONS.md` allow, checked against the survey (T1.2). Gathan notes them, Aly checks.
+- [E7.5](../../../TASKS/E7/E7.5.md): A member who joins mid-cycle shares only expenses dated on or after the day they join, and enters the chore rotation from the next cycle. Needs review by Aly.
+- [E7.6](../../../TASKS/E7/E7.6.md): Starter rules (editable examples): "Quiet hours from 11 pm to 7 am", "Tell the Household before a guest stays overnight", "Clean the kitchen after you cook".
+- [E8.2](../../../TASKS/E8/E8.2.md): No real contracts. The team writes 10 fictional tenancy agreements from common clauses (deposit, notice, repairs, utilities), so nothing needs anonymising. Ilham writes them, Aly checks.
+- [E8.5](../../../TASKS/E8/E8.5.md): At least 5 UM students outside the team, recruited by Aly with consent, each rate 10 reasons on a 1 to 5 scale.
+- [T1.1](../../../TASKS/T1/T1.1.md): The survey is out and stays as it is. Gender is asked in the app at registration (E1.3), so the survey needs no new question.
+- [T1.2](../../../TASKS/T1/T1.2.md): Analysis tool: Google Sheets.
+- [T2.2](../../../TASKS/T2/T2.2.md): Test data for the load test: 100 fictional accounts and 50 fictional listings, separate from the 10 to 15 demo listings, on the emulator or test data only.
+- [T2.4](../../../TASKS/T2/T2.4.md): Testers use fictional accounts the team creates (no real names or phone numbers) and agree to a one-paragraph consent: purpose, what is recorded, and that they can stop at any time. No video of a tester without their consent.
 
 You also record, assemble and edit the video (T3.2); Ary reviews it against the rubric.
 

@@ -102,11 +102,11 @@ Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 |---|---|---|
 | FR1.1 | The user shall be able to register only with a UM student email address, confirmed through an email verification link. | P0 |
 | FR1.2 | The user shall be able to log in, log out and reset their password. | P0 |
-| FR1.3 | The user shall be able to create a profile with faculty, class timetable, monthly budget, lifestyle tags and whether they own a car, and choose which details stay hidden until a Connection. | P0 |
+| FR1.3 | The user shall be able to create a profile with gender (male or female, required, shown on the profile), faculty, class timetable, monthly budget, lifestyle tags and whether they own a car, and choose which details stay hidden until a Connection. | P0 |
 
 **Acceptance criteria [DRAFT]**
 - Registration with a non-UM domain is rejected with a clear message; an unverified account cannot reach any screen except "verify your email".
-- Timetable entries store day, start, end and building; profile shows initials, not a photo, by default.
+- Timetable entries store day (ISO weekday 1 to 7, Monday = 1), start, end and building; profile shows initials, not a photo, by default.
 - Each hidden-field toggle takes effect immediately and is enforced by Security Rules, not just the UI.
 
 ### Module 2: Housing listings and area guide
@@ -119,7 +119,7 @@ Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 
 **Acceptance criteria [DRAFT]**
 - A listing cannot be published without property or building name, total rent, deposit, area, at least one photo and at least one vacant room with a price.
-- The property or building name is picked from a place search (Google Places autocomplete), which also fills in the address and coordinates used by the commute calculation, so hosts and groups do not type an address by hand. A name that is not found can be entered as free text with the area chosen manually.
+- The property or building name is picked from a place search, which also fills in the address and coordinates used by the commute calculation (not Google Places, which needs billing: the seeded area list and a typed building name, with openrouteservice geocoding only if its free quota fits; decided 31 Oct 2026, E2.1), so hosts and groups do not type an address by hand. A name that is not found can be entered as free text with the area chosen manually.
 - Listings and evaluations in the same building share the building name, which links them to that building's moderated reviews and to the area page (FR2.3).
 - The host sets each room's price. The sum of all room prices in the unit (vacant and occupied) must not exceed the unit's total rent, so nobody profits from subletting; the app rejects a higher total and shows how much is left to allocate.
 - **Default room price split:** the app divides the unit's total rent by room-type weights (master 1.3, medium 1.0, small 0.7) and rounds to the nearest RM1, giving any rounding remainder to the master room. Example: a RM1,500 unit with one room of each type suggests master RM650, medium RM500, small RM350. The weights are [DRAFT] assumptions to be checked against survey answers on what students actually pay, and are kept in config so they can change without a release.
@@ -324,7 +324,7 @@ Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms`, `un
 
 | Collection | Key fields | Used by (module) |
 |---|---|---|
-| `users` | uid, initials, faculty, year, lifestyleTags[], createdAt, updatedAt (public profile; the UM email is read from the sign-in token and not copied here) | M1, all |
+| `users` | uid, initials, gender (male/female, required, decided 31 Oct 2026), faculty, year, lifestyleTags[], createdAt, updatedAt (public profile; the UM email is read from the sign-in token and not copied here) | M1, all |
 | `users/{uid}/private/profile` | fullName, budgetMinSen, budgetMaxSen, hasCar, homeAreaId, privacy{} (owner only) | M1 |
 | `users/{uid}/private/contact` | firstName (readable after a Connection and inside a Household) | M1, M3 |
 | `users/{uid}/private/phone` | phoneNumber (readable after a Connection only if the owner opted in, and inside a Household) | M1, M3 |
@@ -470,7 +470,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 
 8. ~~Server language~~ **Decided:** keep JavaScript, written small and simple by Aaron and Ilham (the rest of the app is Java). Updated 27 Oct 2026: the server is a Cloudflare Worker, because the team uses free plans only and Firebase Cloud Functions need billing. **[DRAFT]** until Aaron's feasibility spike passes.
 
-9. ~~Who may register~~ **Decided 30 Oct 2026 (Ary): UM email only**, so that every account is a verified UM student and scams are harder. Domain: only `siswa.um.edu.my` (students only; staff mail is not accepted, decided 30 Oct 2026). Open: whether postgraduate students have another domain, and what first-year students without a UM email yet can do until they get one (Dafi asks UM when new students receive their address).
+9. ~~Who may register~~ **Decided 30 Oct 2026 (Ary): UM email only**, so that every account is a verified UM student and scams are harder. Domain: only `siswa.um.edu.my` (students only; staff mail is not accepted, decided 30 Oct 2026). Open: whether postgraduate students have another domain, and what first-year students without a UM email yet can do until they get one (Dafi asks UM when new students receive their address). **Decided 31 Oct 2026 (Ary):** first-year students wait until they receive their UM email; the sign-up screen says so and the report lists it as a limitation.
 
 ---
 
