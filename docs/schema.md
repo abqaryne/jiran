@@ -294,7 +294,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 ---
 
 ### 2.8 Collection: `matches`
-- **Source:** PRD Section 8 (`matches` collection) and PRD Module 3 (FR3.2, FR3.3). Aligned with `backend/functions/src/match.js` and `docs/api-contracts.md`.
+- **Source:** PRD Section 8 (`matches` collection) and PRD Module 3 (FR3.2, FR3.3). Aligned with `backend/functions/src/match.js` and `docs/engineering/api-contracts.md`.
 - **Purpose:** Pairwise compatibility score, factor similarities, AI/rule match reasons, overlapping class days, and Connection request status. Proves Connection between roommate matches when `status == "connected"`.
 - **Document ID:** `{matchId}` (Alphabetically sorted `"{uidA}_{uidB}"`).
 

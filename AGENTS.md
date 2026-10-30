@@ -10,8 +10,7 @@ The brief puts this course under UM's **Level 2 AI policy (limited usage, specif
 Log** is a required appendix of the report. Missing or inaccurate logs, or work that is "predominantly AI-generated with
 minimal or no human effort", can lose marks, lower the grade or fail the course.
 
-- **Before you finish a task, add or update the entry** in `docs/ai-log/<owner>.md` (one file per person; Aaron's earlier
-  record is `docs/ai-usage-log.md`). Do it in the same PR as the work. Do not wait to be asked.
+- **Before you finish a task, add or update the entry** in `docs/ai-log/<owner>.md` (one file per person). Do it in the same PR as the work. Do not wait to be asked.
 - Use the template in [docs/ai-log/README.md](docs/ai-log/README.md): date, human owner, tool and model, task, **exact
   prompts**, output used (files, PR), how it was tested or checked, what the human changed, what the human can explain,
   limits.
@@ -67,6 +66,14 @@ The brief requires **significant and original human contribution** and a real un
 - Documents for the report must stay short (report limit: 15 pages and 2,500 words, so use tables). Keep the PRD as the
   single source of truth and link to it instead of copying it.
 
+### Task tracking
+
+- `TASK.md` is the master list, `TASKS/<epic>/<ID>.md` holds the detail of each task, `ADR.md` records decisions that are hard to
+  reverse (append-only). Read the task file of your story before you code; if something in it is wrong or out of date, fix it in the same PR and tell Ary.
+- When you finish or change a task, update its file (status, resolution) and its row in `TASK.md` in the same PR. ClickUp mirrors
+  the status; hours are logged there.
+- Never invent task detail: write `not recorded` or `not verified`, like in the AI log.
+
 ## 5. Firebase and backend
 
 For every Firebase task, first find and use the appropriate official Firebase
@@ -75,7 +82,7 @@ for app registration/configuration, `firebase-auth-basics` for authentication,
 `firebase-firestore` for database/SDK work, and `firestore-rules-creation` before
 authoring rules. Use Firebase MCP tools where available and the official CLI.
 
-Read `docs/team/aaron.md` and preserve the Java Android / JavaScript Functions stack.
+Read `docs/team/aaron/README.md` and preserve the Java Android / JavaScript Functions stack.
 The existing live project is `jiran-mad`; its Android app is named Jiran with
 application ID `jiran.com`. Do not create duplicate apps/projects. Use explicit
 `--project jiran-mad` for authorized live operations. Default local development

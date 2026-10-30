@@ -7,7 +7,6 @@ effort", carry penalties up to a failing grade. This folder is that log. Ilham m
 ## Rules
 
 1. **Everyone logs their own AI use**, in `docs/ai-log/<name>.md` (one file per person, so there are no merge conflicts).
-   Aaron's earlier record stays in [../ai-usage-log.md](../ai-usage-log.md).
 2. **Log it right away**, at the end of each task, in the same PR as the work. Not at the end of the semester.
 3. **Never invent anything.** If a prompt, a result or a number was not recorded, write `not recorded`. Do not write
    "tested" or "reviewed" unless it happened.
@@ -39,7 +38,7 @@ effort", carry penalties up to a failing grade. This folder is that log. Ilham m
 | File | Who |
 |---|---|
 | [ary.md](ary.md) | Ary |
-| [aaron.md](aaron.md) | Aaron (his earlier record is [../ai-usage-log.md](../ai-usage-log.md)) |
+| [aaron.md](aaron.md) | Aaron (also holds his earlier Codex record of 27 October 2026) |
 | [aly.md](aly.md) | Aly |
 | [dafi.md](dafi.md) | Dafi |
 | [gathan.md](gathan.md) | Gathan |

@@ -329,6 +329,102 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** "done" here means code and unit tests exist; the stories are not Done by the Definition of Done until Ary merges the PR, Aly passes QA and hours are logged in ClickUp.
 
+## 2026-10-30 · Rework the task breakdown in the style of a reference project · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** make the tasks more detailed. Read how a reference repository writes a task (`TASK.md` master table and `TASKS/<ID>.md` files with header, why, what already exists, numbered deliverables with a done mark, deliberate omissions with reasons, decisions with superseded entries kept, open questions), copy that structure for Jiran, write the first five task files and update the ClickUp tasks.
+- **Prompts (exact):**
+  > oke kayaknya ini perlu dirombak deh clickup dan task breakdownnya, karena kurang detail, coba liat repo [nama repo dihapus] di github dan ikutin cara dia detailing task-tasknya dan tolong update rombak di clickup juga ya
+  (At Ary's request on 2026-10-30 the name of the reference repository was removed from this prompt and from the commit messages; the rest of the prompt is as typed.)
+- **Output used:** `docs/tasks/README.md` (master table of the 62 stories, generated from `work-breakdown.md`), `docs/tasks/_TEMPLATE.md`, and task files for E0.3, E1.1, E1.2, E1.3, E1.4; "Detail" links and an explanation in `docs/team/work-breakdown.md`. In ClickUp (through the connector, on Ary's request): the descriptions of the same five stories were replaced with the text of the task files, E1.3 moved from In progress to Blocked with a comment, because no code exists and it waits for the `users` fields of E0.5. The other stories were not changed.
+- **How it was tested or checked:** relative links in `docs/tasks/` and `work-breakdown.md` all resolve. The facts in E0.3 to E1.4 come from the code, tests, PRD, the earlier entries of this log and the schema draft on PR #8; items that were not seen are marked "not verified". not verified: that the acceptance checks pass (nobody ran them), and the descriptions as shown in ClickUp.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why status is kept only in ClickUp and why a task file records what is left out and what is not verified.
+- **Follow-up the same day** (prompt: `langsung buatin aja buat semua subtask`): Claude wrote draft task files for the other 57 stories (generated from `work-breakdown.md` plus text written from the PRD, the code and the schema draft, marked "draft, owner to confirm") and put a short version in 51 ClickUp descriptions. Six ClickUp updates (T2.4, T2.5, T3.1, T3.2, T4.1, T4.2) were refused because the daily limit of the ClickUp connector (100 calls) was reached; they are still the old one-line descriptions.
+- **Limits:** the first five task files are detailed; the other 57 are drafts written without the owners and may contain wrong guesses (each lists open questions). The gender idea in E1.3 is written as a proposal, not a decision. The acceptance checks are drafts for Aly to run and correct.
+
+## 2026-10-30 · Group the task files by epic and drop the template · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** delete `docs/tasks/_TEMPLATE.md` and move each task file into a folder named after its epic.
+- **Prompts (exact):**
+  > hapus template.md dan buat tambahin parent folder epic untuk masing masing subtasknya
+- **Output used:** `docs/tasks/E0/` to `E10/` and `T1/` to `T4/` hold the 62 task files; links in `docs/tasks/README.md`, `docs/team/work-breakdown.md`, `docs/team/master-prompt.md` and inside the task files were updated. The earlier entry above still names `_TEMPLATE.md` and the old flat paths, because it describes what was true then.
+- **How it was tested or checked:** a script checked that every relative link in `docs/tasks/`, `work-breakdown.md` and `master-prompt.md` resolves. not verified: the paths written in the ClickUp descriptions (`docs/tasks/E1.1.md`) are now out of date; they could not be updated because the ClickUp connector's daily limit was reached.
+- **What the human changed or rejected:** Ary asked to remove the template; TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** until the ClickUp descriptions are updated, they point to the old flat paths.
+
+## 2026-10-30 · Personal task files point to the task files · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** rewrite the "Your stories" section of each personal file in `docs/team/` so that a member and their AI assistant see the order of work, the task file of every story, their own subtasks in other people's stories, and the open questions waiting for them.
+- **Prompts (exact):**
+  > coba sekalian update md masing masing ya sesuai yang baru biar lebih enak dibacanya dan juga biar ai mereka langsung paham task apa aj ayng harus dikerjain dan jg biar refer ke folder terbaru yang tadi kamu buat
+- **Output used:** the section was regenerated by a script (kept outside the repository) from `work-breakdown.md` and the task files, in `ary.md`, `aaron.md`, `dafi.md`, `gathan.md`, `ilham.md` and `aly.md`; a one-line pointer in `docs/README.md` and `TEAM_PLAN.md`. The prose that followed each old table (for example Aaron's note on Cloud Functions) was kept. The other parts of the personal files, including Aaron's long setup notes, were not changed.
+- **How it was tested or checked:** every relative link in `docs/team/` resolves; counts match the old files (18, 7, 8, 12, 8 and 9 stories led). not verified: that the open questions assigned by name are the right ones; they were matched by a name at the start of each question in the task files, so a question that names two people appears in both files.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the sections are a snapshot of 30 Oct 2026. When a story changes owner or a task file changes, update the personal file by hand.
+
+## 2026-10-30 · Manage tasks like a reference project: TASK.md, TASKS/, ADR.md · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** restructure the task management in the style of a second reference repository (a master `TASK.md` with a Milestones table and a Tasks table with status and category, one `TASKS/<ID>.md` per task with Description, Work needed, Constraints, Resolution and Notes, and an append-only `ADR.md`), and give every task more detail and context.
+- **Prompts (exact):**
+  > Ulang deh restruktur samain management tasknya kayak project itu ya dan tasknya juga kurang detail dan context buat dipahami coba di benerin
+  
+  Ary answered two questions: keep the IDs `E1.1`/`T3.1` (epics and tracks become the Milestone column), and put `TASK.md` at the root with the task files still grouped by epic folder.
+- **Output used:** root `TASK.md` (14 milestones, 62 tasks with status and category), `TASKS/<epic>/<ID>.md` for all 62 tasks (moved from `docs/tasks/`, rewritten with Description, Work needed, Constraints, Acceptance, Not in scope, Resolution or Where it stands, Notes), root `ADR.md` with eight entries, a "Task tracking" rule in `AGENTS.md`, and updated links in `docs/team/`, `docs/README.md` and the personal files. The extra detail comes from `docs/schema.md` (PR #8), `docs/api-contracts.md`, the PRD, `ASSUMPTIONS.md`, `USER-FLOW.md` and Aaron's merged backend code; for the 57 tasks owned by others it is a draft marked "owner to confirm". Statuses are the ClickUp statuses read earlier on 30 Oct 2026.
+- **How it was tested or checked:** a script checked 75 markdown files and found no broken relative link. not verified: the statuses in `TASK.md` against the live board today; the ClickUp descriptions still point to the old `docs/tasks/` path (the connector's daily limit was reached); every ADR date and "decided by" except the ones Ary stated in this conversation (UM-only, free-only, UM domain) comes from commit messages and documents, so Ary should confirm them.
+- **What the human changed or rejected:** Ary chose the ID scheme and the layout. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why status is kept in both `TASK.md` and ClickUp and what makes an ADR different from a task.
+- **Limits:** the draft task files may contain wrong guesses about other members' work; ADR-0007 is only proposed.
+- **Follow-up the same day** (prompt: `udh langsung tulisin detail semua task ya`): Claude added more context to the thinnest task files (test and report tracks, Unit tab, notifications, AI labels) and wrote real *Resolution* and *Files and tests* sections for the tasks that already have code (E0.1, E0.2, E0.6, E3.3, E4.2 Aaron's part, E6.2), from the commit messages, the source files in `backend/functions/src` and the tests. `npm test` in `backend/functions` was run: 13 suites, 339 tests passed. The Resolution texts about other members' work were not read by those members. Two gaps found while writing them: the repository has no openrouteservice adapter (the provider adapter `routes-client.js` is the Google Routes one), and `backend/tests/load` already has k6 scripts but no recorded result.
+
+## 2026-10-30 · Task files are final, draft markers removed · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** remove the "draft, owner to confirm" markers from the 62 task files, `TASK.md`, `work-breakdown.md`, the personal files, `AGENTS.md` and `ADR.md`, because Ary decided the task files are final and need no further correction round.
+- **Prompts (exact):**
+  > gausah pake tetep draf, udh langsung finalized aj gaperlu dikoreksi lagi biar sejalan
+- **Output used:** the banner and the "(draft)" tags are gone; each task file keeps its Open questions with an owner and its "not recorded" or "not verified" marks.
+- **How it was tested or checked:** a text search finds no draft marker left in those files; a script found no broken relative link. not verified: that the other members have read their task files; the text about their work was written by Claude from the repository and Ary has not asked them to confirm it.
+- **What the human changed or rejected:** Ary decided to finalize without a correction round. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say that the task files describe plans and open questions, and that statements about other members' work come from the repository, not from the members.
+- **Limits:** if a member finds an error in their task file, fix the file and `TASK.md` in the same PR.
+
+## 2026-10-30 · Tidy the docs folder · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** `docs/` had 13 files in its root, most of them Aaron's notes, and a folder named after a tool (`superpowers/plans`). Group them by topic and fix every link.
+- **Prompts (exact):**
+  > itu di folder / docs kurang rapih deh coba di rapihin dh banyak file aaron gimana ya
+- **Output used:** `git mv` of 25 files: `engineering/` (architecture, api-contracts, transit-processing), `research/` (the five evidence files), `plans/` (13 plans, was `superpowers/plans/`), `team/aaron/` (handoff, work-log, report-drafts) and `ai-log/aaron-earlier-record.md` (was `docs/ai-usage-log.md`). A script rewrote the relative links and the `docs/...` paths in `AGENTS.md`, `README.md`, `TASK.md`, `TASKS/`, `ADR.md`, the product and team files and `experiments/worker-feasibility/README.md`. `docs/README.md` has the new tree. No file content was rewritten by hand except that README.
+- **How it was tested or checked:** a script over every tracked markdown file found no broken relative link after the move (none before). A text search finds no old path left outside `docs/ai-log/`. not verified: the links on GitHub (not pushed at the time of writing); `./gradlew` and `npm test` were not run because no code changed.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say what each folder holds.
+- **Limits:** inside `docs/ai-log/` only markdown links were changed; paths written in prose there (for example `docs/api-contracts.md` in Aaron's earlier record and in older entries of this file) are kept as written, because they record the path at that time. In `docs/ai-log/aaron.md` one link target changed, its visible text still shows the old path. The moved files were not reviewed by Aaron. Open PR #8 adds `docs/schema.md` and edits `docs/ai-log/ary.md`, so it may need a sync with `main` after this merges.
+
+## 2026-10-30 · One folder per person in docs/team, one AI log file for Aaron · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** after PR #10 was merged, stop members from adding their own documents to the root of `docs/team/` (give each person a folder) and remove the duplicate AI log for Aaron.
+- **Prompts (exact):**
+  > udah aku merge, coba dibuat folder aja per masing masing orang karena takut mereka buat docs mereka sendiri di folder team dan tolong itu aaron di folder ai log kenapa ada dua jadi satu aja jangan ada yang duplikat
+- **Output used:** `docs/team/<name>.md` moved to `docs/team/<name>/README.md` for the six members (Aaron's folder already held his working notes); links and the `docs/team/...` paths updated in `AGENTS.md`, `README.md`, the team files, the plans and `master-prompt.md`; `docs/ai-log/aaron-earlier-record.md` merged into `docs/ai-log/aaron.md` (its text sits under the heading "Earlier record", heading levels lowered by one, and the old file is deleted); a rule in `docs/README.md` that personal notes go in `team/<name>/`. This work sits on top of the previous "Tidy the docs folder" entry, whose commit was not yet in `main` when PR #10 was merged.
+- **How it was tested or checked:** a script over every tracked markdown file found no broken relative link; a line-by-line comparison found that every non-empty line of both old Aaron files is in the merged file, except two lines that were replaced on purpose (the pointer to the second file and "No new entries yet."). not verified: the links on GitHub (not pushed at the time of writing); no code changed, so `./gradlew` and `npm test` were not run.
+- **What the human changed or rejected:** Ary asked for the folders and for a single Aaron log. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say where a member puts their own notes and why the AI log has one file per person.
+- **Limits:** `docs/ai-log/aaron.md` is Aaron's record and was edited without him: besides the merge, it was converted to UTF-8 (it mixed Windows-1252 and UTF-8, which showed as "Â·" in two entries), so Aaron should read it once. The character `˜` in one entry is kept as it was stored. Paths written as text in his older entries still show the old locations on purpose. Open PR #8 edits `docs/ai-log/ary.md`, so it may need a sync with `main`.
+
 ## 2026-10-29 · PRD data model update for the new Firestore collections · Module 2 (E0.5)
 
 - **Human owner:** Ary
@@ -382,3 +478,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** this branch is Gathan's. He should pull before his next push, and tell Aaron or Ary about the schema file change.
+
+## 2026-10-31 · Resolve the second merge conflict of PR #8 with main · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** PR #8 (Gathan's schema draft) conflicted again with `main` after PRs #10 and #11 were merged, so that Gathan can continue the story.
+- **Prompts (exact):**
+  > oke coba benerin conflict di PR#8 dan nanti aku tinggal ngomong ke gathan buat lanjutin task nya
+- **Output used:** merge of `main` into `gathan/schema-draft`. The only conflict was this file: both sides had appended entries at the end, so both were kept (the entries from `main` first, then the four PR #8 entries). One path in `docs/schema.md` changed from `docs/api-contracts.md` to `docs/engineering/api-contracts.md`.
+- **How it was tested or checked:** a script found no broken relative markdown link after the merge; the entry count is 33 = 29 (main) + 4 (PR #8). not verified: CI on the merge commit at the time of writing.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say why both sides of an append-only log are kept in a conflict.
+- **Limits:** `docs/schema.md` stays in the root of `docs/` as Gathan placed it, many task files link to that path; whether it moves to `docs/engineering/` is a decision for Ary and Gathan. Task files still say "PR #8, not merged" until it merges. Paths written as text in `docs/ai-log/gathan.md` are kept as written.

@@ -30,11 +30,11 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | ClickUp and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
 | **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
 
-**Personal task files** (each lists that person's stories with priority, due date and what they wait for): [Ary](ary.md), [Dafi](dafi.md), [Aaron](aaron.md), [Gathan](gathan.md), [Ilham](ilham.md), [Aly](aly.md). Starting an AI session? Use the [master prompt](master-prompt.md).
+**Personal task files** (each lists that person's stories with priority, due date and what they wait for): [Ary](ary/README.md), [Dafi](dafi/README.md), [Aaron](aaron/README.md), [Gathan](gathan/README.md), [Ilham](ilham/README.md), [Aly](aly/README.md). Starting an AI session? Use the [master prompt](master-prompt.md).
 
 ### How the work is tracked
 
-The full breakdown is in [work-breakdown.md](work-breakdown.md): the **initiative** (Jiran, delivered by 3 and 10 January 2027), the **epics**, the **stories** (one task each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and below.
+The full breakdown is in [work-breakdown.md](work-breakdown.md): the **initiative** (Jiran, delivered by 3 and 10 January 2027), the **epics**, the **stories** (one task each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and below. Each story also has a task file in `TASKS/<epic>/<ID>.md`, listed in the master [TASK.md](../../TASK.md) (description, work needed, constraints, acceptance, resolution, notes); the personal files link to them.
 
 **An epic is one flow of the app, and the epics are done in order: E0 first, then E1, E2 and so on.** Each flow is built end to end (screens, data, rules, tests) by the whole team together, then merged and tested before the next one starts. Stories marked *can start early* need nobody and may run ahead. Tracks T1 to T4 (research, testing, video, report) run in parallel by date.
 
