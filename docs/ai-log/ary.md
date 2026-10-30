@@ -508,3 +508,18 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary).
 - **What the human understands and can explain:** TODO (Ary).
 - **Limits:** the acceptance checks are normally Aly's; here Ary did them.
+
+## 2026-10-31 · Who does what in the shared stories · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** Ary asked whether AI assistants understand the short subtasks of stories shared by several people, and whether one person per story would be simpler. Claude advised keeping the split (one person writes all Security Rules, one owns the components) and making each person's part explicit; Ary agreed and asked to leave ClickUp for later.
+- **Prompts (exact):**
+  > ini kan ada subtask dan stories. dan di stories ini ada subtask yang dikerjain beberapa orang. apakah AI nya paham dengan subtask sesimple itu? apa better kita ganti aja satu orang kerjain satu story itu biar lebih gampang? gimana menurut kamu
+
+  > oke deh boleh buat clickup nanti aja karena aku mau kamu hapus semua dan update rombak ulang ya
+- **Output used:** a "Who does what" table (order, person, their part, where the hand-over is agreed) in the 14 flow stories that are shared: E3.4, E4.2, E4.3, E4.4, E5.1, E5.2, E5.3, E5.4, E6.1, E7.2, E8.3, E9.1, E9.2, E9.4. The table tells each person's AI to work only on its row and never invent field names. E2.1, E3.1 and E7.3 were left out because only one person does the work there (Ary supplies the components).
+- **How it was tested or checked:** the rows were taken from each story's existing subtasks and the 31 Oct decisions; a script found no broken relative link. not verified: that the owners agree with the order; the field names named as hand-over points are not all in `docs/schema.md` yet (PR #8).
+- **What the human changed or rejected:** Ary chose to keep shared stories and to rebuild ClickUp later. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why Security Rules stay with one person.
+- **Limits:** ClickUp subtasks still have no assignee; deleting and recreating the ClickUp tasks would also delete logged hours and comments, which was pointed out to Ary.
