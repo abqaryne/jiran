@@ -523,3 +523,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose to keep shared stories and to rebuild ClickUp later. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say why Security Rules stay with one person.
 - **Limits:** ClickUp subtasks still have no assignee; deleting and recreating the ClickUp tasks would also delete logged hours and comments, which was pointed out to Ary.
+
+## 2026-10-31 · Check Aaron's latest work and correct T2.2 · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** check Aaron's latest pull request and bring the progress in the task files up to date.
+- **Prompts (exact):**
+  > coba kamu cek PR updatean terakhir dari aaron dh dan update progressnya di file-file kita
+- **Output used:** Aaron's latest pull request is PR #2 (merged 27 Oct 2026); all 27 of his commits are in `main` and no branch of his has unmerged work. The task files already described that work except one fact: `TASKS/T2/T2.2.md` said no load-test result was recorded, but `backend/tests/load/README.md` records two local runs on 27 Oct 2026 (the first failed the 100-user threshold, the second passed). T2.2 now states both runs, that they measure the synthetic commute fixture on the emulator and are not NFR1 evidence, and lists the files; its subtask is marked ⚠️. E3.3 lists the load harness. An earlier entry of this log (30 Oct, "backend/tests/load already has k6 scripts but no recorded result") was wrong on this point.
+- **How it was tested or checked:** `gh pr list --author aarntn`, `git log --author=aarntn` across all branches, and the numbers copied from `backend/tests/load/README.md`; a script found no broken relative link. not verified: the runs themselves (not re-run).
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say why a passing local fixture run is not NFR1 evidence.
+- **Limits:** a deployed Worker is still not recorded anywhere in the repository (E0.2).
