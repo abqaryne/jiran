@@ -211,7 +211,7 @@ continuation commits remain on the feature branch until reviewed by PR.
 These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
 
 - [E0.2](../../../TASKS/E0/E0.2.md): Aaron: deploy it under the free plan and write the real URL here. Not verified as deployed. Blocks: the Android calls in E3.4 and E4.2.
-- [E0.5](../../../TASKS/E0/E0.5.md): Aaron: confirm that the Worker creates `connections` (ADR-0007, chosen by Ary on 31 Oct 2026; his confirmation is not recorded). Gathan writes the Rules on that basis.
+- [E0.5](../../../TASKS/E0/E0.5.md): Aaron: confirm that the Worker creates `connections` (ADR-0007, chosen by Ary on 31 Oct 2026; Aaron's confirmation is not recorded). Gathan writes the Rules on that basis.
 - [E0.5](../../../TASKS/E0/E0.5.md): Aaron: second review of PR #8. Blocks: merge.
 - [E0.6](../../../TASKS/E0/E0.6.md): Aaron and Ilham: write the final request and response into `docs/engineering/api-contracts.md`. Blocks: E3.5, E6.3, E8.2.
 - [E1.1](../../../TASKS/E1/E1.1.md): Aaron: review "unverified account can only reach the verify screen". Blocks: closing the subtask.
