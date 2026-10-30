@@ -377,10 +377,10 @@ Android app (Java)
 | AI | Gemini API (or Claude API) |
 | Notifications | Firebase Cloud Messaging |
 | Design | Figma |
-| Code and tasks | GitHub, Trello |
+| Code and tasks | GitHub, ClickUp |
 | Testing | JUnit and Mockito, Espresso, Firebase Emulator Suite, k6 |
 
-**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the story (e.g. `[E7.1] Add balance calculation`); the story card holds the FR.
+**Engineering conventions:** feature branches merged by PR with one reviewer; Google Java Style (Checkstyle) and Android Lint must pass; commit messages name the story (e.g. `[E7.1] Add balance calculation`); the story task holds the FR.
 
 ---
 
@@ -458,6 +458,9 @@ Every FR has at least one test case; both NFRs have a measured test.
 7. Does the Prasarana GTFS data cover the bus/LRT routes students actually use around UM? Check a few real routes (e.g. Pantai Dalam, Kerinchi) early. The UM shuttle is not in it, so the team seeds shuttle stops and timetables from UM transport.
 
 8. ~~Server language~~ **Decided:** keep JavaScript, written small and simple by Aaron and Ilham (the rest of the app is Java). Updated 27 Oct 2026: the server is a Cloudflare Worker, because the team uses free plans only and Firebase Cloud Functions need billing. **[DRAFT]** until Aaron's feasibility spike passes.
+
+9. ~~Who may register~~ **Decided 30 Oct 2026 (Ary): UM email only**, so that every account is a verified UM student and scams are harder. Domain: only `siswa.um.edu.my` (students only; staff mail is not accepted, decided 30 Oct 2026). Open: whether postgraduate students have another domain, and what first-year students without a UM email yet can do until they get one (Dafi asks UM when new students receive their address).
+
 ---
 
 ## 15. Future work

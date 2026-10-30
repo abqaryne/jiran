@@ -1,7 +1,7 @@
 # Jiran: Work Division (from the WIA2007 brief)
 
 Source: the course brief (`MAD Group Project.docx`) and the [PRD](../product/PRD.md).
-Work is divided **by module**, with one owner per module and specialists helping (see Section 2). Day-to-day work is tracked as Initiative, Epics, Stories and Subtasks in [trello-cards.md](trello-cards.md).
+Work is divided **by module**, with one owner per module and specialists helping (see Section 2). Day-to-day work is tracked as Initiative, Epics, Stories and Subtasks in [work-breakdown.md](work-breakdown.md).
 
 ## 1. What the brief requires (and what it is marked on)
 
@@ -12,7 +12,7 @@ Work is divided **by module**, with one owner per module and specialists helping
 | Peer evaluation | after submission | multiplier | Final mark = (video + report) × contribution factor (0–1.0) |
 | AI Usage Log | appendix to report | mandatory | Tool, exact prompts, how output was tested/modified. Missing/inaccurate log = penalties |
 
-Other rules: **every member must take part in development** and no one may do *only* documentation; every member's tasks need evidence (Git commits / Trello); ≥5 modules × 3 FRs; ≤2 NFRs; late submission needs lecturer approval *before* the deadline (−5%/day).
+Other rules: **every member must take part in development** and no one may do *only* documentation; every member's tasks need evidence (Git commits / ClickUp); ≥5 modules × 3 FRs; ≤2 NFRs; late submission needs lecturer approval *before* the deadline (−5%/day).
 
 **Video marking (100):** Overview 10 · **System demo 30** · Design/usability 10 · Technical implementation 10 · NFR verification 10 · Stakeholder validation 10 · Team contributions 10 · Closing 10
 **Report marking (100):** Intro 10 · User study 10 · **FRs 15** · NFRs 5 · Architecture/design 10 · **System implementation 20** · Testing 10 · Impact/limits 5 · Team roles 10 · References/writing 5
@@ -27,14 +27,14 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3) | Architecture, server (Worker) structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
 | **Gathan** | Backend and Database Developer | **Module 2** Listings and area guide (FR2.1–2.4) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, 10 to 15 fictional seed listings from reference prices (never copied from other sites), FCM notifications |
 | **Ilham** | AI Engineer | **Module 6** AI assistant and private contract checker (FR6.1–6.3) | The match-reason text for Module 3 (FR3.2), AI evaluation, API key handling, **AI Usage Log** |
-| **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | Trello and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
+| **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | ClickUp and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
 | **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
 
-**Personal task files** (each lists that person's stories with priority, due date and what they wait for): [Ary](ary.md), [Dafi](dafi.md), [Aaron](aaron.md), [Gathan](gathan.md), [Ilham](ilham.md), [Aly](aly.md).
+**Personal task files** (each lists that person's stories with priority, due date and what they wait for): [Ary](ary.md), [Dafi](dafi.md), [Aaron](aaron.md), [Gathan](gathan.md), [Ilham](ilham.md), [Aly](aly.md). Starting an AI session? Use the [master prompt](master-prompt.md).
 
 ### How the work is tracked
 
-The full breakdown is in [trello-cards.md](trello-cards.md): the **initiative** (Jiran, delivered by 3 and 10 January 2027), the **epics**, the **stories** (one card each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and below.
+The full breakdown is in [work-breakdown.md](work-breakdown.md): the **initiative** (Jiran, delivered by 3 and 10 January 2027), the **epics**, the **stories** (one task each) and the **subtasks** (checklist items, one person each). Story IDs such as `E1.2` are used in the personal files and below.
 
 **An epic is one flow of the app, and the epics are done in order: E0 first, then E1, E2 and so on.** Each flow is built end to end (screens, data, rules, tests) by the whole team together, then merged and tested before the next one starts. Stories marked *can start early* need nobody and may run ahead. Tracks T1 to T4 (research, testing, video, report) run in parallel by date.
 
@@ -84,11 +84,11 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 ### Working agreements
 
 - **The server is JavaScript** on a Cloudflare Worker (free plan; Firebase Cloud Functions need billing); the rest of the app is Java. Aaron and Ilham write it, kept small and simple: one function per job, no framework, unit tests with Jest. Free plans only, no billing on any service.
-- **Definition of Done:** merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story card on the board moved with hours logged, and checked by QA.
+- **Definition of Done:** merged by PR, Android Lint, Checkstyle and tests pass in CI, reviewed, story task moved with hours logged in ClickUp, and checked by QA.
 - **PR check-in:** Ary does the final check and merge of every PR. Before that, Aaron reviews server and routing PRs, Gathan reviews schema and rules PRs, and one other member reviews each PR so everyone has review evidence.
 - **Tests:** every module owner writes unit tests for their module; Aly writes the integration tests and load test.
 - **Sprints:** one-week sprints planned by Dafi, short sync twice a week, 30-minute demo and retro on weekends.
-- **Commit messages** start with the story ID from its Trello card: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. No story: `[Docs]`, `[Infra]` or `[Design]`. The card holds the FR, so each commit traces to a card and a requirement.
+- **Commit messages** start with the story ID from its ClickUp task: `[Story] short description`, e.g. `[E7.1] Add balance calculation`. No story: `[Docs]`, `[Infra]` or `[Design]`. The task holds the FR, so each commit traces to a card and a requirement.
 - **Frontend:** Ary builds the shared components first; every module owner builds their own module's screens with them, and Ary reviews the UI.
 
 ### Honest risks of this split
@@ -107,7 +107,7 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 | Who | Does |
 |---|---|
 | Aly | Puts the survey live, starts interviews, begins the test plan (T1.1, T2.1) |
-| Dafi | Sets up the Trello board and sprint plan, finds the UM shuttle timetable, keeps the PRD up to date (E0.4, T1.4) |
+| Dafi | Sets up the ClickUp Space and sprint plan, finds the UM shuttle timetable, keeps the PRD up to date (E0.4, T1.4) |
 | Ary | Figma, design system and app shell are done; adds collaborators, emails the lecturer, announces the components (E0.1, E0.3) |
 | Aaron | GitHub repo, branching rules, CI, Firebase project, Worker skeleton, openrouteservice key (E0.1, E0.2) |
 | Gathan | Firestore schema draft, a first version of the Security Rules, fictional seed listings (E0.5) |
@@ -181,7 +181,7 @@ The epics E1 to E7 are the P0 flows. Each one is built end to end by the team to
 | 4 | Technical implementation (10): Android (Java), Firebase and server (Worker) diagram, AI data flow | Aaron (AI flow: Ilham, 20 s) | 1:30 |
 | 5 | NFR verification (10): NFR1 k6 results; NFR2 rules tests all denied | Aly (NFR1), Gathan (NFR2) | 1:30 |
 | 6 | Stakeholder validation (10): survey charts, interview quotes, user testing results and what changed | Aly | 1:00 |
-| 7 | Team contributions (10) | Built into segment 2; Dafi adds 30 s with the Trello hours and commit summary | 0:30 |
+| 7 | Team contributions (10) | Built into segment 2; Dafi adds 30 s with the ClickUp hours and commit summary | 0:30 |
 | 8 | Closing summary (10): achievements, lessons, adoption at UM | Dafi | 0:45 |
 
 Editing and final cut: Aly records and edits; Ary reviews against the rubric. Everyone records their own screen capture.
@@ -198,7 +198,7 @@ Editing and final cut: Aly records and edits; Ary reviews against the rubric. Ev
 | 4. System implementation (20) | Aaron | each member supplies 1 code segment and screenshots from their work; Ilham writes the AI usage statement | 400 |
 | 5. Testing and validation (10) | Aly | Ilham (AI evaluation), Gathan (rules tests), Dafi (unit tests) | 300 |
 | 6. Impact, limitations, future work (5) | Ilham | Ary | 150 |
-| 7. Team roles and contributions (10) | Dafi | each member writes own entry; attach Git and Trello logs | table (exempt) |
+| 7. Team roles and contributions (10) | Dafi | each member writes own entry; attach Git and ClickUp logs | table (exempt) |
 | 8. References and academic writing (5) | Dafi | all; Dafi does the final style pass | refs list |
 | **Appendix:** AI Usage Log (Appendix 2(b) template) | Ilham | everyone logs their own AI use as they go | not counted |
 

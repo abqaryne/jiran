@@ -14,7 +14,7 @@ effort", carry penalties up to a failing grade. This folder is that log. Ilham m
 4. Keep the **exact prompts** (copy them). A short excerpt is fine in the entry if the full conversation is exported and kept.
 5. The **human owner** fills in what they personally verified, changed and understood. An AI assistant may draft the entry
    but must leave those fields for the human, marked `TODO (owner)`.
-6. Hours are not guessed: real hours go on the Trello card.
+6. Hours are not guessed: real hours go on the ClickUp task.
 
 ## Entry template (matches Appendix 2(b): tool, prompts, how the output was used, tested and modified)
 
