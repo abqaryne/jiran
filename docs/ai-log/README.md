@@ -38,7 +38,7 @@ effort", carry penalties up to a failing grade. This folder is that log. Ilham m
 | File | Who |
 |---|---|
 | [ary.md](ary.md) | Ary |
-| [aaron.md](aaron.md) | Aaron (also holds his earlier Codex record of 27 October 2026) |
+| [aaron.md](aaron.md) | Aaron (also holds Aaron's earlier Codex record of 27 October 2026) |
 | [aly.md](aly.md) | Aly |
 | [dafi.md](dafi.md) | Dafi |
 | [gathan.md](gathan.md) | Gathan |

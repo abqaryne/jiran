@@ -424,3 +424,74 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary asked for the folders and for a single Aaron log. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say where a member puts their own notes and why the AI log has one file per person.
 - **Limits:** `docs/ai-log/aaron.md` is Aaron's record and was edited without him: besides the merge, it was converted to UTF-8 (it mixed Windows-1252 and UTF-8, which showed as "Â·" in two entries), so Aaron should read it once. The character `˜` in one entry is kept as it was stored. Paths written as text in his older entries still show the old locations on purpose. Open PR #8 edits `docs/ai-log/ary.md`, so it may need a sync with `main`.
+
+## 2026-10-31 · Decide who creates the connections document (ADR-0007) · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** Ary asked why Aaron's answer on `connections` was needed, then told Claude to take the best option instead of waiting. Claude had recommended that the Worker creates the document.
+- **Prompts (exact):**
+  > minta kepastian dari aaron buat apa?
+
+  > pokokny yg terbaik lha kt ngikut aja
+- **Output used:** `ADR.md` ADR-0007 changed from Proposed to Accepted with the decision "only the Worker creates `connections`, Rules deny the app create and delete" and the reason; the same decision in `TASKS/E0/E0.5.md`, `E4.3.md`, `E5.1.md` and the open-question lines of `docs/team/aaron/README.md` and `docs/team/gathan/README.md`.
+- **How it was tested or checked:** a text search finds no "who creates connections" open question left outside the AI log. not verified: that Aaron agrees (Aaron's confirmation is listed as an open item in his file); no Rules or Worker code was written or run.
+- **What the human changed or rejected:** Ary chose to follow the recommended option. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why Rules cannot query, why a deterministic `pairId` is used, and why the Worker and not the app creates the document.
+- **Limits:** the choice rests on Claude's reasoning about the free plan (no Firestore triggers) and on the draft schema in PR #8, which is not merged. Core privacy logic: needs human review by Aaron and Gathan.
+
+## 2026-10-31 · Point every AI assistant to the owner file in AGENTS.md · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** `AGENTS.md` named only Aaron's owner file, so an assistant of another member might not find their stories. Add one general line.
+- **Prompts (exact):**
+  > itu MD masing masing gapapa README? agent ai mereka pasti ngerti kah?
+
+  > di #8 ya
+- **Output used:** one bullet at the start of "Task tracking" in `AGENTS.md`: every member has `docs/team/<name>/README.md`, read it first, then the task file; personal notes go in `docs/team/<name>/`.
+- **How it was tested or checked:** not verified with another assistant. The titles of the six owner files name their person, and `docs/team/master-prompt.md` already uses the same path; a script found no broken relative link.
+- **What the human changed or rejected:** Ary asked for the change to go in PR #8. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say how a member's assistant finds its work.
+- **Limits:** whether other tools (Codex, Gemini, Copilot) read `AGENTS.md` first is not verified.
+
+## 2026-10-31 · Answer the open questions in the task files · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** answer the 74 open questions in `TASKS/` so the team can move, and say which ones really need a human.
+- **Prompts (exact):**
+  > jawab semua open question itu deh biar semuanya bisa langsung gerak tapi emang itu butuh jawaban dari kita banget?
+
+  Ary answered two questions: gender is "Filter saja tapi saat register isi gender wajib biar keliatan dia laki laki atau perempuan", and first-year students "Tunggu Siswa Mail (Recommended)".
+- **Output used:** every *Open questions* section in `TASKS/` rewritten: 7 items decided by Ary (gender, first-year rule), 42 decided by Ary on Claude's recommendation (labelled so), 3 answered from a check, 27 left open and labelled (18 actions, 8 needing data such as the 13 Nov survey results or the shuttle timetable, 1 confirmation from Aaron). PRD FR1.3, the timetable line, the `users` row and open question 9 updated for gender and the first-year rule. The E2.1 subtask "photo upload to Storage" now says Cloudinary through the Worker (also in `work-breakdown.md`). The personal files list the still-open questions and the decisions for each person.
+- **How it was tested or checked:** collaborators read from the GitHub API (six people); colour contrast computed with the WCAG formula from `colors.xml` (all text pairs at least 4.75:1), not measured on a device; a script found no broken relative link. not verified: the postgraduate email domain (the web search failed, left open for Dafi); that the Cloudflare free plan includes the Cron Trigger the cleanup job needs; the Gemini free-tier data terms.
+- **What the human changed or rejected:** Ary chose the gender rule and the first-year rule. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain each decision in your own stories, and why the remainder rule in E7.1 keeps the total exact.
+- **Limits:** the 42 recommended decisions were not discussed with their owners; numbers such as the 300-character message, 14-day request expiry, 2 MB chat photo and 5 MB contract file are product choices, not measured limits. E7.1 (balances), E7.5 and the Rules cases in T2.3 are core logic: needs human review. The ClickUp descriptions do not have these answers yet (the connector's daily limit was reached).
+
+## 2026-10-31 · Remove work-breakdown.md · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** delete `docs/team/work-breakdown.md`, because the task files already hold every story and subtask.
+- **Prompts (exact):**
+  > work breakdown apus aja kali ya karena task detailnya kan udh ada di folder task
+- **Output used:** `docs/team/work-breakdown.md` deleted. Its parts that existed nowhere else (how the order works, the ClickUp set-up with statuses, tags, rules and the story template, the gates table, Dafi's weekly routine) moved into `docs/team/TEAM_PLAN.md` under "Order of work, ClickUp and gates"; the Done status type there now reads Done instead of Closed. Links in the six personal files, `master-prompt.md`, `TEAM_PLAN.md`, `ADR.md` (ADR-0008) and `docs/README.md` updated.
+- **How it was tested or checked:** a script compared the 157 subtasks in `work-breakdown.md` with the task files and found every one of them there; a script found no broken relative link after the delete. Older entries of this log still name the file as it was at the time.
+- **What the human changed or rejected:** Ary proposed the delete. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say where subtasks and the ClickUp rules now live.
+- **Limits:** the epic table still appears in both `TEAM_PLAN.md` and the Milestones table of `TASK.md`.
+
+## 2026-10-31 · Move the answers into Decisions taken · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** the previous entry put the 52 answers under *Open questions*, where a reader would take them for open items. Move them to *Decisions taken*, which every task file already has.
+- **Prompts (exact):**
+  > Ya, pindahkan
+- **Output used:** in every task file the decided and answered items now sit under *Decisions taken* as `31 Oct 2026, Ary: ...`, `31 Oct 2026, Ary on Claude's recommendation: ...` or `31 Oct 2026, checked by Claude: ...`; *Open questions* keeps only the 27 open items, labelled **Action.**, **Needs data.** or **Needs confirmation.**, or says "None.". Two contradictions found while moving were fixed: the old E2.1 decision "Google Places autocomplete" is struck through and points to its replacement, and PRD section 4 (building picker) and E1.3 (photo host) now match the 31 Oct decisions. The personal files point to *Decisions taken*.
+- **How it was tested or checked:** a text search finds no "Decided", "Answered" or "Still open" label left in `TASKS/`; a script found no broken relative link.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say why Google Places was dropped (it needs billing).
+- **Limits:** other places that may still name Google Places or Firebase Storage outside `TASKS/` and the PRD (for example the research notes and `TEAM_PLAN.md` "Storage rules") were not changed.

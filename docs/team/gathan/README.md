@@ -7,9 +7,9 @@
 
 Your schema and rules are the first thing others wait for, so they land first.
 
-## Your stories (subtasks for each are in [work-breakdown.md](../work-breakdown.md))
+## Your stories (subtasks for each are in its task file)
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); the subtasks are in [work-breakdown.md](../work-breakdown.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
 
 ### Do in this order (stories you lead: 12)
 
@@ -47,33 +47,43 @@ Your schema and rules are the first thing others wait for, so they land first.
 | **T4.1** Report sections | Dafi | 2c Non-functional requirements (150), database schema part of 3 | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
 
-### Open questions waiting for you (23)
+### Open questions waiting for you (3)
 
 These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
 
-- [E0.5](../../../TASKS/E0/E0.5.md): Gathan: field names for gender if the team adds it (see E1.3). Blocks: E1.3 and E3.2.
-- [E1.1](../../../TASKS/E1/E1.1.md): Gathan: Security Rules that require `email_verified == true` and the UM domain, with an emulator test. Blocks: FR1.1's
-- [E2.1](../../../TASKS/E2/E2.1.md): Gathan: the subtask says 'photo upload to Storage', but the schema says Firebase Storage is not used and photos are URLs from a free host. Which one? Blocks: this story's first subtask.
-- [E2.1](../../../TASKS/E2/E2.1.md): Gathan and Aaron: Places autocomplete cost and quota on the free plan (#11).
-- [E2.2](../../../TASKS/E2/E2.2.md): Aly and Gathan: survey check of the weights (T1.3 #1). Blocks: calling the numbers anything but estimates in the report.
-- [E2.3](../../../TASKS/E2/E2.3.md): Gathan: closing 'by itself' needs a scheduled job on the free Worker or a check on read. Which one? Blocks: this story.
-- [E2.4](../../../TASKS/E2/E2.4.md): Gathan and Aly: where the reference prices come from (survey T1.2 or hand notes). Blocks: realistic ranges.
-- [E3.1](../../../TASKS/E3/E3.1.md): Gathan and Ary: what the Rooms tab shows before any search (recent, nearby)? Blocks: the empty state.
-- [E3.2](../../../TASKS/E3/E3.2.md): Ary and Gathan: decide the gender rule before this story starts. Blocks: the gender filter.
-- [E4.1](../../../TASKS/E4/E4.1.md): Gathan: who reviews reported listings, and how fast? Blocks: what the report sheet promises.
-- [E4.3](../../../TASKS/E4/E4.3.md): Gathan: the maximum message length and the rule for requests to a full listing. Blocks: the sheet's validation.
-- [E5.1](../../../TASKS/E5/E5.1.md): Aaron and Gathan: who writes `connections`, the Worker or the app? Blocks: the accept action.
-- [E5.1](../../../TASKS/E5/E5.1.md): Gathan: how long an unanswered request stays open. Blocks: the inbox empty state.
-- [E5.2](../../../TASKS/E5/E5.2.md): Gathan: file size limit for chat attachments on the free plan. Blocks: the attach button.
-- [E5.3](../../../TASKS/E5/E5.3.md): Dafi and Gathan: the invite code alternative for joining a Household (E7.2). Blocks: the move-in screens.
-- [E5.4](../../../TASKS/E5/E5.4.md): Gathan: FCM on the free plan needs a sender on the Worker. Blocks: this story.
-- [E6.1](../../../TASKS/E6/E6.1.md): Ary and Gathan: gender is a hard filter, not a score factor, if it is added (see E1.3).
-- [E7.2](../../../TASKS/E7/E7.2.md): Gathan: how the 6-month deletion runs on the free plan. Blocks: closing.
-- [E8.3](../../../TASKS/E8/E8.3.md): Gathan: file size limits and storage on the free plan. Blocks: private file rules.
-- [E9.1](../../../TASKS/E9/E9.1.md): Gathan: the daily deletion job on the free plan. Blocks: the 90-day rule.
-- [E9.2](../../../TASKS/E9/E9.2.md): Gathan and Ary: who is Host when several sign together (the group picks one). Blocks: the Host choice screen.
-- [E9.4](../../../TASKS/E9/E9.4.md): Gathan: who moderates and how fast. Blocks: the review flow.
-- [T2.3](../../../TASKS/T2/T2.3.md): Gathan: the list of cases. Blocks: the report.
+- [E1.1](../../../TASKS/E1/E1.1.md): Gathan: Security Rules that require `email_verified == true` and the UM domain, with an emulator test. Blocks: the "enforced by Rules" claim for FR1.1 in the report.
+- [E2.2](../../../TASKS/E2/E2.2.md): Aly and Gathan: survey check of the weights (T1.3 #1, results 13 Nov). Until then the app and the report call 1.3 / 1.0 / 0.7 an estimate.
+- [T4.2](../../../TASKS/T4/T4.2.md): Everyone: fill the TODO fields before merging into the appendix.
+
+### Decided on 31 Oct 2026 for your stories (25)
+
+Read these before you start; the full text is under *Decisions taken* in each task file.
+
+- [E0.5](../../../TASKS/E0/E0.5.md): Gender field: public `users/{uid}.gender`, string `"male"` or `"female"`, required when the profile is created (E1.3). Gathan adds it to the schema and the Rules.
+- [E0.5](../../../TASKS/E0/E0.5.md): Timetable `day` is stored as the ISO weekday number 1 to 7 (Monday = 1), the same as `classDays` in `match.js`; the app shows Mon to Sun. `start` and `end` stay `"HH:mm"` in Malaysia time. Needs review by Gathan and Aaron.
+- [E1.3](../../../TASKS/E1/E1.3.md): Gender: required at registration (profile setup right after sign-up), male or female, and shown on the profile so others see it. Rooms are not hidden automatically: the Rooms search and the housemate page have a filter chip the user picks (Male / Female / Any), default Any. PRD FR1.3 and section 8 updated.
+- [E1.3](../../../TASKS/E1/E1.3.md): The gender field lives in the public `users/{uid}` document, because others must see it.
+- [E1.3](../../../TASKS/E1/E1.3.md): Timetable day format: stored as ISO weekday numbers 1 to 7 (Monday = 1), matching `match.js`; `start` and `end` are `"HH:mm"` in Malaysia time, and the commute function uses `start` as the class start. Needs review by Gathan and Aaron.
+- [E1.3](../../../TASKS/E1/E1.3.md): A Host needs no extra profile data: any student can be a Host; unit details live in the listing, and the phone number stays in the private document until a Connection.
+- [E2.1](../../../TASKS/E2/E2.1.md): Photos: no Firebase Storage (it needs the Blaze plan). Photos go to Cloudinary Free through an upload signed by the Worker (the API secret stays in the Worker), and Firestore stores the URLs, as in the schema draft. The first subtask now says so.
+- [E2.1](../../../TASKS/E2/E2.1.md): No Google Places autocomplete (it needs billing). The building picker uses the seeded area list plus a typed building name; openrouteservice geocoding is used only if its free quota fits (Aaron, assumption #11).
+- [E2.3](../../../TASKS/E2/E2.3.md): Closing by itself is a check on read, not a scheduled job: each listing has `expiresAt` (renewed date + 30 days), searches filter `expiresAt > now`, and "My listing" shows Expired with a Renew button.
+- [E2.4](../../../TASKS/E2/E2.4.md): Reference prices: hand-noted price facts from public advertisements (area, room type, price range, source and date), as the rules in `ASSUMPTIONS.md` allow, checked against the survey (T1.2). Gathan notes them, Aly checks.
+- [E3.1](../../../TASKS/E3/E3.1.md): Before any search the Rooms tab shows the newest active listings first, with the filter chips on top. If the student saved a faculty, cards show travel time (E3.4). No location permission is needed.
+- [E3.2](../../../TASKS/E3/E3.2.md): Gender filter: a chip "For: Male / Female / Any", default Any. Male shows `male_only` and `any` listings, Female shows `female_only` and `any`. Nothing is hidden without the user choosing it (see E1.3).
+- [E4.1](../../../TASKS/E4/E4.1.md): Reported listings: reports go to a `reports` collection; Gathan moderates, Ary is the backup; the sheet says only "The team will review this" and promises no time; the item stays visible until a moderator hides it.
+- [E4.3](../../../TASKS/E4/E4.3.md): The request message is at most 300 characters. A listing with no vacant room cannot receive requests: the button is disabled and says "No rooms free".
+- [E5.1](../../../TASKS/E5/E5.1.md): An unanswered request expires after 14 days, checked on read like listings (`expiresAt`); the sender sees "Expired".
+- [E5.2](../../../TASKS/E5/E5.2.md): Chat attachments are photos only, resized on the phone to at most 1600 px and 2 MB, uploaded through the same Cloudinary flow as listings (E2.1). Contract files never go into a chat.
+- [E5.3](../../../TASKS/E5/E5.3.md): Joining a Household: after a Connection with the Host, or with an invite code made by a member (6 characters, valid 7 days, one Household). The code covers students who already live together.
+- [E5.4](../../../TASKS/E5/E5.4.md): Notifications start in the app: a `notifications` collection and a badge, read while the app is open. Push through FCM from the Worker comes only if time remains after the freeze (P1).
+- [E6.1](../../../TASKS/E6/E6.1.md): Gender is not part of the match score. The housemate page has the same filter chip as Rooms (Male / Female / Any, default Any).
+- [E7.2](../../../TASKS/E7/E7.2.md): 6-month deletion: one daily cleanup job on the Worker (a Cron Trigger with admin access) deletes what is past its retention period; Aaron sets up the trigger and checks it is in the free plan (assumption #11), Gathan writes the queries.
+- [E8.3](../../../TASKS/E8/E8.3.md): Contract files are not stored: the app sends the PDF or photo (at most 5 MB) to the Worker, which reads it in memory and discards it. Only the result is saved in `contractChecks`, deleted after 30 days by the daily cleanup job (E7.2).
+- [E9.1](../../../TASKS/E9/E9.1.md): The 90-day deletion is part of the same daily cleanup job as E7.2.
+- [E9.2](../../../TASKS/E9/E9.2.md): The group picks one member as Host; by default the person who created the group, and any member can hand it over before signing.
+- [E9.4](../../../TASKS/E9/E9.4.md): Building reviews: reports go to a `reports` collection; Gathan moderates, Ary is the backup; the sheet says only "The team will review this" and promises no time; the item stays visible until a moderator hides it.
+- [T2.3](../../../TASKS/T2/T2.3.md): Starter list of cases (Gathan completes it): a stranger cannot read `private/*`; at the Match stage only public fields are readable; contact and phone are readable only when `connections/{pairId}` exists; the app cannot create or delete `connections`; a non-member cannot read a Household; an unverified or non-UM account cannot write; `contractChecks` is readable only by its owner.
 
 Your schema and rules (E0.5) land first because everyone waits for the field names.
 
