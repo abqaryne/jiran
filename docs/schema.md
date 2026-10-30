@@ -10,6 +10,10 @@ This document defines the complete Cloud Firestore database schema for Jiran, co
 
 Firestore Security Rules evaluate permissions on the **entire document**, not on individual fields. To protect user privacy in compliance with Malaysia's **Personal Data Protection Act 2010 (PDPA 2010)** and **NFR2**, sensitive data is strictly isolated into separate subcollections and subdocuments.
 
+### Access baseline (UM only)
+
+Only UM students may use Jiran (PRD FR1.1 and NFR2, decided 30 Oct 2026). Every read and write in every collection needs `request.auth.token.email_verified == true` and a `request.auth.token.email` on a UM domain, matched exactly (`siswa.um.edu.my` or `um.edu.my`; the list is `[DRAFT]` until confirmed with UM). The rules below are checked on top of this baseline.
+
 ### Stage Visibility Matrix
 
 | Stage | What is visible | What is NOT visible | Isolated Storage Path |
@@ -66,8 +70,8 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `updatedAt` | timestamp | Yes | Owner | Last update timestamp. `[PROPOSED]` |
 
 #### Subcollection: `users/{uid}/private/profile`
-- **Source:** PRD FR1.1 (email verification, UM verified badge), FR1.3 (profile settings & privacy toggles), and PRD Section 5 (NFR2 Privacy).
-- **Purpose:** Consolidated private user profile document. Stores student full legal name, room search budget (in integer `sen`), vehicle ownership, and privacy toggles. Readable strictly by the owner. Firebase Auth already stores and verifies the user's email address (`request.auth.token.email`), so the email is not duplicated in Firestore or exposed on the public user document. Any verified email may register (PRD FR1.1, decided 29 Oct 2026); only an email on a UM domain earns the UM verified badge, which Rules read from the token (see the posting rule under `listings`).
+- **Source:** PRD FR1.1 (UM email verification), FR1.3 (profile settings & privacy toggles), and PRD Section 5 (NFR2 Privacy).
+- **Purpose:** Consolidated private user profile document. Stores student full legal name, room search budget (in integer `sen`), vehicle ownership, and privacy toggles. Readable strictly by the owner. Firebase Auth already stores and verifies the user's email address (`request.auth.token.email`), so the email is not duplicated in Firestore or exposed on the public user document. Only UM emails may register (PRD FR1.1, decided 30 Oct 2026), so Rules check the domain from the token for every access (see the access baseline in section 1).
 - **Document ID:** `profile` (single document).
 - **Access Rule:** Readable strictly by the owner (`uid == request.auth.uid`).
 
@@ -156,7 +160,6 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 - **Purpose:** Property listings posted by student Hosts. Public document contains general property metadata and search attributes.
 - **Document ID:** `{listingId}` (auto-generated ID).
 - **Used by:** Module 2 (FR2.1, FR2.2), Module 4 (FR4.2).
-- **Posting rule (UM verified):** creating or editing a listing, its rooms and its `private/location` requires `request.auth.token.email_verified == true` and a `request.auth.token.email` on a UM domain, matched exactly (`siswa.um.edu.my` or `um.edu.my`; the list is `[DRAFT]` until confirmed with UM). The screen explains the badge, but Rules enforce it.
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|

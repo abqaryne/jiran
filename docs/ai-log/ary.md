@@ -230,3 +230,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary). Be able to say why Rules cannot find the listing from a user's contact document and why one document per pair of people solves it.
 - **Limits:** this edits Gathan's document; Gathan has to read it, agree with it and be able to explain it. His own AI log entry for his last revision is still to be written by him. `connections` is marked `[PROPOSED]` until Ary confirms it.
+
+## 2026-10-30 · Schema back to UM-only access · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** change `docs/schema.md` (PR #8) back to UM-only access after Ary reversed the "any email may register" decision.
+- **Prompts (exact):**
+  > tapi kayaknya better UM only ya biar terpercaya bahwa ini khusus pelajar UM doang, kan takut ada penipu atau apa klo semuanya boleh
+- **Output used:** `docs/schema.md`: the "posting rule (UM verified)" under `listings` is replaced by one access baseline in section 1 (every read and write needs a verified email on a UM domain); the `profile` text says Rules check the UM domain from the token.
+- **How it was tested or checked:** read only; no Security Rules or emulator test exists yet. not verified: that the baseline can be written as one Rules function and tested.
+- **What the human changed or rejected:** Ary reversed the earlier decision. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the domain list is a draft; first-year students without a UM email cannot join yet (PRD open question 9).
