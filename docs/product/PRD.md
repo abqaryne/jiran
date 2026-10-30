@@ -459,7 +459,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 
 8. ~~Server language~~ **Decided:** keep JavaScript, written small and simple by Aaron and Ilham (the rest of the app is Java). Updated 27 Oct 2026: the server is a Cloudflare Worker, because the team uses free plans only and Firebase Cloud Functions need billing. **[DRAFT]** until Aaron's feasibility spike passes.
 
-9. ~~Who may register~~ **Decided 30 Oct 2026 (Ary): UM email only**, so that every account is a verified UM student and scams are harder. Open: which UM domains count (student, staff, postgraduate), and what first-year students without a UM email yet can do until they get one (Dafi asks UM when new students receive their address).
+9. ~~Who may register~~ **Decided 30 Oct 2026 (Ary): UM email only**, so that every account is a verified UM student and scams are harder. Domain: only `siswa.um.edu.my` (students only; staff mail is not accepted, decided 30 Oct 2026). Open: whether postgraduate students have another domain, and what first-year students without a UM email yet can do until they get one (Dafi asks UM when new students receive their address).
 
 ---
 

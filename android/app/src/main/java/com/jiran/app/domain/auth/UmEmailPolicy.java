@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Decides which email addresses may register (FR1.1). The list of allowed domains is the single place to change
- * when the team settles the UM email policy (student domain only, or staff too).
+ * Decides which email addresses may register (FR1.1). Jiran is for UM students only, so the list holds the student
+ * domain. It is the single place to change if the team adds another domain (for example postgraduate).
  *
  * <p>A domain must match exactly. "evil-um.edu.my" and "siswa.um.edu.my.example.com" are rejected.
  */
 public final class UmEmailPolicy {
 
-    /** Domains allowed to register. Draft policy from the Figma design: UM student and UM staff mail. */
+    /** Domains allowed to register. Decided 30 Oct 2026 (Ary): UM student mail only, staff mail is not accepted. */
     public static final List<String> ALLOWED_DOMAINS =
-            Collections.unmodifiableList(Arrays.asList("siswa.um.edu.my", "um.edu.my"));
+            Collections.unmodifiableList(Arrays.asList("siswa.um.edu.my"));
 
     private UmEmailPolicy() { }
 

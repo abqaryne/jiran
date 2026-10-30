@@ -34,10 +34,10 @@ public final class SignUpCheckTest {
     @Test
     public void requiresEightCharactersAndKeepsSpaces() {
         assertEquals(Problem.TOO_SHORT,
-                SignUpCheck.of("A", "a@um.edu.my", "1234567").password());
+                SignUpCheck.of("A", "a@siswa.um.edu.my", "1234567").password());
         assertEquals(Problem.NONE,
-                SignUpCheck.of("A", "a@um.edu.my", "12345678").password());
+                SignUpCheck.of("A", "a@siswa.um.edu.my", "12345678").password());
         assertEquals(Problem.NONE,
-                SignUpCheck.of("A", "a@um.edu.my", "        ").password());
+                SignUpCheck.of("A", "a@siswa.um.edu.my", "        ").password());
     }
 }

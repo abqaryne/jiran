@@ -7,9 +7,13 @@ import org.junit.Test;
 
 public final class UmEmailPolicyTest {
     @Test
-    public void acceptsStudentAndStaffDomains() {
+    public void acceptsTheStudentDomain() {
         assertTrue(UmEmailPolicy.isUmEmail("meiling@siswa.um.edu.my"));
-        assertTrue(UmEmailPolicy.isUmEmail("lecturer@um.edu.my"));
+    }
+
+    @Test
+    public void rejectsStaffMailBecauseJiranIsForStudents() {
+        assertFalse(UmEmailPolicy.isUmEmail("lecturer@um.edu.my"));
     }
 
     @Test

@@ -23,14 +23,14 @@
     <string name="auth_field_name">Full name</string>
     <string name="auth_field_email">UM email</string>
     <string name="auth_field_password">Password</string>
-    <string name="auth_password_hint">At least %1$d characters. Only @siswa.um.edu.my and @um.edu.my emails work.</string>
+    <string name="auth_password_hint">At least %1$d characters. Only @siswa.um.edu.my emails work.</string>
     <string name="auth_create_account">Create account</string>
     <string name="auth_creating_account">Creating account…</string>
     <string name="auth_terms">By continuing you accept the Terms and the Privacy Policy. We handle your data under PDPA 2010.</string>
     <string name="auth_error_name_required">Enter your full name.</string>
     <string name="auth_error_email_required">Enter your UM email.</string>
     <string name="auth_error_email_invalid">Check the email address. It should look like name@siswa.um.edu.my.</string>
-    <string name="auth_error_email_not_um">Only UM emails can sign up (@siswa.um.edu.my or @um.edu.my).</string>
+    <string name="auth_error_email_not_um">Only UM student emails can sign up (@siswa.um.edu.my).</string>
     <string name="auth_error_password_required">Enter a password.</string>
     <string name="auth_error_password_short">Use at least %1$d characters.</string>
     <string name="auth_error_email_taken">This email already has an account. Log in instead.</string>
