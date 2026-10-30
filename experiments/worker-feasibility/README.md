@@ -120,6 +120,6 @@ the locked experiment dependencies; that is not a security-completion claim.
 - Team agreement on the proposed runtime/provider change and the broader
   photo/AI feature alternatives. Existing Node Functions work remains local.
 
-See [candidate architecture](../../docs/no-billing-production.md),
-[GTFS snapshot](../../docs/free-transit-evidence.md), and
-[plan/evidence ledger](../../docs/superpowers/plans/2026-10-27-worker-feasibility.md).
+See [candidate architecture](../../docs/research/no-billing-production.md),
+[GTFS snapshot](../../docs/research/free-transit-evidence.md), and
+[plan/evidence ledger](../../docs/plans/2026-10-27-worker-feasibility.md).

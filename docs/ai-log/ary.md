@@ -398,3 +398,29 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary decided to finalize without a correction round. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say that the task files describe plans and open questions, and that statements about other members' work come from the repository, not from the members.
 - **Limits:** if a member finds an error in their task file, fix the file and `TASK.md` in the same PR.
+
+## 2026-10-30 · Tidy the docs folder · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** `docs/` had 13 files in its root, most of them Aaron's notes, and a folder named after a tool (`superpowers/plans`). Group them by topic and fix every link.
+- **Prompts (exact):**
+  > itu di folder / docs kurang rapih deh coba di rapihin dh banyak file aaron gimana ya
+- **Output used:** `git mv` of 25 files: `engineering/` (architecture, api-contracts, transit-processing), `research/` (the five evidence files), `plans/` (13 plans, was `superpowers/plans/`), `team/aaron/` (handoff, work-log, report-drafts) and `ai-log/aaron-earlier-record.md` (was `docs/ai-usage-log.md`). A script rewrote the relative links and the `docs/...` paths in `AGENTS.md`, `README.md`, `TASK.md`, `TASKS/`, `ADR.md`, the product and team files and `experiments/worker-feasibility/README.md`. `docs/README.md` has the new tree. No file content was rewritten by hand except that README.
+- **How it was tested or checked:** a script over every tracked markdown file found no broken relative link after the move (none before). A text search finds no old path left outside `docs/ai-log/`. not verified: the links on GitHub (not pushed at the time of writing); `./gradlew` and `npm test` were not run because no code changed.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say what each folder holds.
+- **Limits:** inside `docs/ai-log/` only markdown links were changed; paths written in prose there (for example `docs/api-contracts.md` in Aaron's earlier record and in older entries of this file) are kept as written, because they record the path at that time. In `docs/ai-log/aaron.md` one link target changed, its visible text still shows the old path. The moved files were not reviewed by Aaron. Open PR #8 adds `docs/schema.md` and edits `docs/ai-log/ary.md`, so it may need a sync with `main` after this merges.
+
+## 2026-10-30 · One folder per person in docs/team, one AI log file for Aaron · Documentation
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** after PR #10 was merged, stop members from adding their own documents to the root of `docs/team/` (give each person a folder) and remove the duplicate AI log for Aaron.
+- **Prompts (exact):**
+  > udah aku merge, coba dibuat folder aja per masing masing orang karena takut mereka buat docs mereka sendiri di folder team dan tolong itu aaron di folder ai log kenapa ada dua jadi satu aja jangan ada yang duplikat
+- **Output used:** `docs/team/<name>.md` moved to `docs/team/<name>/README.md` for the six members (Aaron's folder already held his working notes); links and the `docs/team/...` paths updated in `AGENTS.md`, `README.md`, the team files, the plans and `master-prompt.md`; `docs/ai-log/aaron-earlier-record.md` merged into `docs/ai-log/aaron.md` (its text sits under the heading "Earlier record", heading levels lowered by one, and the old file is deleted); a rule in `docs/README.md` that personal notes go in `team/<name>/`. This work sits on top of the previous "Tidy the docs folder" entry, whose commit was not yet in `main` when PR #10 was merged.
+- **How it was tested or checked:** a script over every tracked markdown file found no broken relative link; a line-by-line comparison found that every non-empty line of both old Aaron files is in the merged file, except two lines that were replaced on purpose (the pointer to the second file and "No new entries yet."). not verified: the links on GitHub (not pushed at the time of writing); no code changed, so `./gradlew` and `npm test` were not run.
+- **What the human changed or rejected:** Ary asked for the folders and for a single Aaron log. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say where a member puts their own notes and why the AI log has one file per person.
+- **Limits:** `docs/ai-log/aaron.md` is Aaron's record and was edited without him: besides the merge, it was converted to UTF-8 (it mixed Windows-1252 and UTF-8, which showed as "Â·" in two entries), so Aaron should read it once. The character `˜` in one entry is kept as it was stored. Paths written as text in his older entries still show the old locations on purpose. Open PR #8 edits `docs/ai-log/ary.md`, so it may need a sync with `main`.

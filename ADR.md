@@ -63,8 +63,8 @@ MapLibre; photos are URLs from a free host.
 
 ### Consequences
 No live traffic data, so peak times are an assumption (E4.4). Firestore triggers are not available, so deletion and expiry
-jobs need the Worker or a check on read (E2.3, E7.2). Evidence is in `docs/no-billing-production.md`,
-`docs/maps-readiness.md` and `docs/free-transit-evidence.md`.
+jobs need the Worker or a check on read (E2.3, E7.2). Evidence is in `docs/research/no-billing-production.md`,
+`docs/research/maps-readiness.md` and `docs/research/free-transit-evidence.md`.
 
 ## ADR-0003: Money is stored as integer sen
 

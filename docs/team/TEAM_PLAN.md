@@ -30,7 +30,7 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | ClickUp and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
 | **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
 
-**Personal task files** (each lists that person's stories with priority, due date and what they wait for): [Ary](ary.md), [Dafi](dafi.md), [Aaron](aaron.md), [Gathan](gathan.md), [Ilham](ilham.md), [Aly](aly.md). Starting an AI session? Use the [master prompt](master-prompt.md).
+**Personal task files** (each lists that person's stories with priority, due date and what they wait for): [Ary](ary/README.md), [Dafi](dafi/README.md), [Aaron](aaron/README.md), [Gathan](gathan/README.md), [Ilham](ilham/README.md), [Aly](aly/README.md). Starting an AI session? Use the [master prompt](master-prompt.md).
 
 ### How the work is tracked
 
