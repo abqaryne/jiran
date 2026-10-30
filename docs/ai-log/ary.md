@@ -549,3 +549,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose the rule. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say why E0.1 and E0.2 are not done although ClickUp says so.
 - **Limits:** ClickUp now shows different statuses for some tasks; that is expected under the new rule.
+
+## 2026-10-31 · E0.1 done, lecturer email dropped · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** Ary said the email to the lecturer is not needed and that every member has been added as a collaborator, so E0.1 is done.
+- **Prompts (exact):**
+  > jawaban dosen gaperlu itu, apus dan subtask 1 udh aku add semua jadi done
+- **Output used:** `TASKS/E0/E0.1.md`: the lecturer email removed from *Work needed*, the subtasks and *Acceptance*; subtask 1 ticked; the two remaining *Acceptance* checks ticked as confirmed by Ary; status `done`, the resolution and a decision line added; the open question removed. `TASK.md` row set to done. The lecturer-email item also removed from Ary's file, `TEAM_PLAN.md` (Ary's step 0 and the platform note) and PRD open question 2.
+- **How it was tested or checked:** collaborators were read from the GitHub API earlier the same day (six people); no broken relative link. not verified: a direct push to `main` being refused (not tried).
+- **What the human changed or rejected:** Ary dropped the lecturer email. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** Ary's role "Main contact with the lecturer" in the personal file and the other mentions of the lecturer (data retention, UM domain) were kept, as they are not about this email.

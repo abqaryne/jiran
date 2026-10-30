@@ -47,7 +47,7 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 
 | ID | Milestone | Status | Category | Owner | Due | Title |
 |---|---|---|---|---|---|---|
-| [E0.1](TASKS/E0/E0.1.md) | E0 - Foundations and setup | inprogress | process / infra | Aaron | 2 Nov | Repo and CI are healthy |
+| [E0.1](TASKS/E0/E0.1.md) | E0 - Foundations and setup | done | process / infra | Aaron | 2 Nov | Repo and CI are healthy |
 | [E0.2](TASKS/E0/E0.2.md) | E0 - Foundations and setup | inprogress | infra | Aaron | 8 Nov | Firebase and the free server are ready |
 | [E0.3](TASKS/E0/E0.3.md) | E0 - Foundations and setup | qa | ui | Ary | 15 Nov | Design system and app shell |
 | [E0.4](TASKS/E0/E0.4.md) | E0 - Foundations and setup | done | process | Dafi | 30 Oct | Project management and docs |

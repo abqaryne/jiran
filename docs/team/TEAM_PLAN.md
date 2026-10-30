@@ -189,7 +189,7 @@ The brief gives **additional credit** (not required marks) for engaging a UM uni
 |---|---|
 | Aly | Puts the survey live, starts interviews, begins the test plan (T1.1, T2.1) |
 | Dafi | Sets up the ClickUp Space and sprint plan, finds the UM shuttle timetable, keeps the PRD up to date (E0.4, T1.4) |
-| Ary | Figma, design system and app shell are done; adds collaborators, emails the lecturer, announces the components (E0.1, E0.3) |
+| Ary | Figma, design system and app shell are done; adds collaborators, announces the components (E0.1, E0.3) |
 | Aaron | GitHub repo, branching rules, CI, Firebase project, Worker skeleton, openrouteservice key (E0.1, E0.2) |
 | Gathan | Firestore schema draft, a first version of the Security Rules, fictional seed listings (E0.5) |
 | Ilham | Picks the AI provider, collects 10 sample tenancy agreements and tries prompts for the contract checker (E8.1, E8.2) |
@@ -304,7 +304,7 @@ Rule: report ownership is *in addition to* code, never instead of it.
 ## 6. Issues to resolve now
 
 1. **Group registration:** done (the brief's date, "Sunday 21 October 2026", is a Wednesday, so it was probably a typo for 25 Oct).
-2. **Platform decided:** native Android in Java (the team knows Java; the brief talks about "activities"). Confirm with the lecturer when asking for Appendix 1. The SDG is also decided: SDG 11.
+2. **Platform decided:** native Android in Java (the team knows Java; the brief talks about "activities"). The SDG is also decided: SDG 11.
 3. **The PRD is the source of truth.** The original proposal PDF is not maintained and can be ignored.
 4. **Numbers and assumptions** (room price weights, peak hours, e-hailing fares, emission factors, retention periods and others) each have an owner and a deadline in [ASSUMPTIONS.md](../product/ASSUMPTIONS.md). They are due before the requirements freeze on 15 Nov.
 5. The brief's AI policy text refers to "parallel algorithms, thread synchronization" (copied from another course). The log requirement still applies to us in full.
