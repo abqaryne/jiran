@@ -369,3 +369,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary reversed the earlier decision. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the domain list is a draft; first-year students without a UM email cannot join yet (PRD open question 9).
+
+## 2026-10-30 · Resolve the merge conflict of PR #8 with main · Module 2 (E0.5)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** PR #8 conflicted with `main` after PR #9 was merged; bring `main` into Gathan's branch and keep both sets of AI log entries.
+- **Prompts (exact):**
+  > there's a conflict on PR#8 fix that
+- **Output used:** a merge commit on `gathan/schema-draft` (no force-push). The only conflict was `docs/ai-log/ary.md` (both sides appended entries); both were kept. `docs/schema.md` access baseline now says `siswa.um.edu.my` only, to match PR #9.
+- **How it was tested or checked:** no conflict markers remain; GitHub's mergeable state was `UNKNOWN` right after the push. not verified: that CI is green on the merge commit; Gathan has not read the merge.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** this branch is Gathan's. He should pull before his next push, and tell Aaron or Ary about the schema file change.
