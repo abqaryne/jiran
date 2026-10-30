@@ -315,3 +315,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary reversed the earlier decision for trust and scam reasons. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say what each rule gives up: UM-only keeps accounts trusted but first-year students without a UM email cannot join yet.
 - **Limits:** the first-year problem is not solved, only recorded as an open question. The two entries on 2026-10-29 and 2026-10-30 describe a decision made and then undone; both stay in the log because both happened.
+
+## 2026-10-30 · Write up finished work on Ary's tasks · Module 1 (E1.1, E1.2)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** record which subtasks of E1.1 and E1.2 are finished, in `work-breakdown.md`, and draft the text Ary pastes into the ClickUp tasks.
+- **Prompts (exact):**
+  > oke coba tulis task yang udh kita kerjain buat task aku
+- **Output used:** `(done)` marks on the finished subtasks of E1.1 and E1.2 in `docs/team/work-breakdown.md`; the ClickUp text was given in the chat and is not stored in the repository. Later in the same session, through the ClickUp connector and with Ary's request ("ya tolong update semua task saya (cuma task saya)"), Claude set E1.1 and E1.2 to *in review*, set the finished subtasks of E1.1, E1.2 and E0.3 to *done* (the subtask "unverified account can only reach the verify screen" to *in review*, waiting for Aaron), and wrote one comment on each of the three stories. Tasks that were not Ary's, and Ary's other tasks, were not changed. After Ary asked whether E0 and E1 were all done, Claude read the code again and also set both subtasks of E1.4 to *done* and E1.4 to *in review* (shell opens after sign-in, four placeholder tabs and a Post button stub exist); E1.3 (the `ui/profile` package is empty) and two E0.3 subtasks were left open. Claude's earlier statement that E1.4 was not started was wrong. Ary then said the last two E0.3 subtasks were done; Claude set them to *done* and E0.3 to *qa* on Ary's word (not verified in the repository: that the component list was announced, and that an error-state component exists). Last, at Ary's request ("ubah di pr ini dan push semua commit ya"), Claude changed `UmEmailPolicy.ALLOWED_DOMAINS` to `siswa.um.edu.my` only (staff mail `um.edu.my` is no longer accepted, because Jiran is for students), updated `UmEmailPolicyTest`, `SignUpCheckTest`, the two sign-up texts, PRD open question 9 and the E1.1 note in `work-breakdown.md`. The schema note on Gathan's branch (PR #8) still has to follow.
+- **How it was tested or checked:** the marks were compared with the code in `android/app/src/main/java/com/jiran/app/ui/auth` and `domain/auth` and with the test classes beside them. not verified: the screens on an emulator after the UM-only revert; QA by Aly has not happened.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** "done" here means code and unit tests exist; the stories are not Done by the Definition of Done until Ary merges the PR, Aly passes QA and hours are logged in ClickUp.
