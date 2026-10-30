@@ -328,3 +328,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** "done" here means code and unit tests exist; the stories are not Done by the Definition of Done until Ary merges the PR, Aly passes QA and hours are logged in ClickUp.
+
+## 2026-10-30 · Rework the task breakdown in the style of a reference project · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** make the tasks more detailed. Read how the repository `a reference project` writes a task (`TASK.md` master table and `TASKS/<ID>.md` files with header, why, what already exists, numbered deliverables with a done mark, deliberate omissions with reasons, decisions with superseded entries kept, open questions), copy that structure for Jiran, write the first five task files and update the ClickUp tasks.
+- **Prompts (exact):**
+  > oke kayaknya ini perlu dirombak deh clickup dan task breakdownnya, karena kurang detail, coba liat repo [nama repo dihapus] di github dan ikutin cara dia detailing task-tasknya dan tolong update rombak di clickup juga ya
+- **Output used:** `docs/tasks/README.md` (master table of the 62 stories, generated from `work-breakdown.md`), `docs/tasks/_TEMPLATE.md`, and task files for E0.3, E1.1, E1.2, E1.3, E1.4; "Detail" links and an explanation in `docs/team/work-breakdown.md`. In ClickUp (through the connector, on Ary's request): the descriptions of the same five stories were replaced with the text of the task files, E1.3 moved from In progress to Blocked with a comment, because no code exists and it waits for the `users` fields of E0.5. The other stories were not changed.
+- **How it was tested or checked:** relative links in `docs/tasks/` and `work-breakdown.md` all resolve. The facts in E0.3 to E1.4 come from the code, tests, PRD, the earlier entries of this log and the schema draft on PR #8; items that were not seen are marked "not verified". not verified: that the acceptance checks pass (nobody ran them), and the descriptions as shown in ClickUp.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why status is kept only in ClickUp and why a task file records what is left out and what is not verified.
+- **Limits:** only five of 62 stories have a task file; the others still hold subtasks only. The gender idea in E1.3 is written as a proposal, not a decision. The acceptance checks are drafts for Aly to run and correct.

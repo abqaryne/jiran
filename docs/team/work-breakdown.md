@@ -13,6 +13,12 @@ Sources: [PRD.md](../product/PRD.md) (FRs), [USER-FLOW.md](../product/USER-FLOW.
 [TEAM_PLAN.md](TEAM_PLAN.md) (owners, gates) and [ASSUMPTIONS.md](../product/ASSUMPTIONS.md) (numbers). Update this file when
 the plan changes. Estimates (hours) are left empty on purpose: fill them in at sprint planning.
 
+**Two levels of detail.** This file lists every story and its subtasks (what ClickUp holds). A story that is about to start,
+or is in progress, also gets a file in [docs/tasks/](../tasks/README.md), copied from
+[_TEMPLATE.md](../tasks/_TEMPLATE.md): why it exists, what to build with a ✅/⚠️/⬜ mark, how QA checks it, what is left out
+and why, decisions with dates, and open questions with an owner. The ClickUp description of the story holds the same text.
+Write the task file before the first line of code, and update its "Where it stands" paragraph when the story changes state.
+
 ## 1. How the order works
 
 **Epics E0 to E10 are done in order, one flow after another.** Each epic is one flow of the app built end to end: screens, data,
@@ -130,6 +136,7 @@ Everything the flows need to start: repo and CI, Firebase and Maps, the design s
 - (Aaron) Check transit coverage for Pantai Dalam and Kerinchi to UM (#5)
 
 **E0.3 Design system and app shell** (P0) · Ary · due 15 Nov
+Detail: [docs/tasks/E0.3.md](../tasks/E0.3.md) (why, what to build, acceptance, out of scope, decisions, open questions)
 - (Ary) Figma tokens, components and all screens (done)
 - (Ary) Components, shell and component gallery in code (done)
 - (Ary) Announce the component list to the team and how to use it (done)
@@ -159,6 +166,7 @@ Flow: Starting Flow, Profile Setup Flow, Core Tabs · window: 16 to 22 Nov · le
 A student signs up with a UM email, verifies it, logs in, sets up a profile and lands on Home with the four tabs.
 
 **E1.1 Sign up with a UM email and verify it** (FR1.1, P0) · Ary · due 19 Nov · WAIT UM domain list
+Detail: [docs/tasks/E1.1.md](../tasks/E1.1.md) (why, what to build, acceptance, out of scope, decisions, open questions)
 - (Dafi, Ary) Decided 30 Oct 2026: UM email only. Only `siswa.um.edu.my` counts (students only, no staff mail). Still to confirm with UM or the lecturer: whether postgraduate students have another domain, and what first-year students without a UM email can do
 - (Ary) Welcome, Sign up and Verify email screens (done)
 - (Ary) Connect to the existing email and password repository; reject non-UM emails with a clear message (done)
@@ -166,17 +174,20 @@ A student signs up with a UM email, verifies it, logs in, sets up a profile and 
 - (Ary) Unit tests for the email check and the sign-up flow (done)
 
 **E1.2 Log in, log out and reset password** (FR1.2, P0) · Ary · due 20 Nov · WAIT E1.1
+Detail: [docs/tasks/E1.2.md](../tasks/E1.2.md) (why, what to build, acceptance, out of scope, decisions, open questions)
 - (Ary) Log in and Reset password screens (done)
 - (Ary) Session handling and log out (done)
 - (Ary) Tests for wrong password, unverified email and reset (done)
 
 **E1.3 Profile setup and privacy** (FR1.3, P0) · Ary · due 22 Nov · WAIT `users` fields (E0.5)
+Detail: [docs/tasks/E1.3.md](../tasks/E1.3.md) (why, what to build, acceptance, out of scope, decisions, open questions)
 - (Ary) Four profile steps: faculty and year, timetable, budget and lifestyle, privacy
 - (Ary) Timetable entry (day, start, end, building)
 - (Gathan) `users` fields and rules so hidden details stay hidden until a Connection
 - (Ary) Tests for saving and loading a profile
 
 **E1.4 Home and the four tabs after sign-in** (P0) · Ary · due 22 Nov · WAIT E1.2
+Detail: [docs/tasks/E1.4.md](../tasks/E1.4.md) (why, what to build, acceptance, out of scope, decisions, open questions)
 - (Ary) Make the shell the first screen after sign-in (done)
 - (Ary) Home, Rooms, Match and Unit tabs with placeholders and the Post button (done; the Post button does nothing until E2)
 
