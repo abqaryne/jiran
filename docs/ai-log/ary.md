@@ -328,3 +328,73 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** "done" here means code and unit tests exist; the stories are not Done by the Definition of Done until Ary merges the PR, Aly passes QA and hours are logged in ClickUp.
+
+## 2026-10-30 · Rework the task breakdown in the style of a reference project · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** make the tasks more detailed. Read how a reference repository writes a task (`TASK.md` master table and `TASKS/<ID>.md` files with header, why, what already exists, numbered deliverables with a done mark, deliberate omissions with reasons, decisions with superseded entries kept, open questions), copy that structure for Jiran, write the first five task files and update the ClickUp tasks.
+- **Prompts (exact):**
+  > oke kayaknya ini perlu dirombak deh clickup dan task breakdownnya, karena kurang detail, coba liat repo [nama repo dihapus] di github dan ikutin cara dia detailing task-tasknya dan tolong update rombak di clickup juga ya
+  (At Ary's request on 2026-10-30 the name of the reference repository was removed from this prompt and from the commit messages; the rest of the prompt is as typed.)
+- **Output used:** `docs/tasks/README.md` (master table of the 62 stories, generated from `work-breakdown.md`), `docs/tasks/_TEMPLATE.md`, and task files for E0.3, E1.1, E1.2, E1.3, E1.4; "Detail" links and an explanation in `docs/team/work-breakdown.md`. In ClickUp (through the connector, on Ary's request): the descriptions of the same five stories were replaced with the text of the task files, E1.3 moved from In progress to Blocked with a comment, because no code exists and it waits for the `users` fields of E0.5. The other stories were not changed.
+- **How it was tested or checked:** relative links in `docs/tasks/` and `work-breakdown.md` all resolve. The facts in E0.3 to E1.4 come from the code, tests, PRD, the earlier entries of this log and the schema draft on PR #8; items that were not seen are marked "not verified". not verified: that the acceptance checks pass (nobody ran them), and the descriptions as shown in ClickUp.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why status is kept only in ClickUp and why a task file records what is left out and what is not verified.
+- **Follow-up the same day** (prompt: `langsung buatin aja buat semua subtask`): Claude wrote draft task files for the other 57 stories (generated from `work-breakdown.md` plus text written from the PRD, the code and the schema draft, marked "draft, owner to confirm") and put a short version in 51 ClickUp descriptions. Six ClickUp updates (T2.4, T2.5, T3.1, T3.2, T4.1, T4.2) were refused because the daily limit of the ClickUp connector (100 calls) was reached; they are still the old one-line descriptions.
+- **Limits:** the first five task files are detailed; the other 57 are drafts written without the owners and may contain wrong guesses (each lists open questions). The gender idea in E1.3 is written as a proposal, not a decision. The acceptance checks are drafts for Aly to run and correct.
+
+## 2026-10-30 · Group the task files by epic and drop the template · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** delete `docs/tasks/_TEMPLATE.md` and move each task file into a folder named after its epic.
+- **Prompts (exact):**
+  > hapus template.md dan buat tambahin parent folder epic untuk masing masing subtasknya
+- **Output used:** `docs/tasks/E0/` to `E10/` and `T1/` to `T4/` hold the 62 task files; links in `docs/tasks/README.md`, `docs/team/work-breakdown.md`, `docs/team/master-prompt.md` and inside the task files were updated. The earlier entry above still names `_TEMPLATE.md` and the old flat paths, because it describes what was true then.
+- **How it was tested or checked:** a script checked that every relative link in `docs/tasks/`, `work-breakdown.md` and `master-prompt.md` resolves. not verified: the paths written in the ClickUp descriptions (`docs/tasks/E1.1.md`) are now out of date; they could not be updated because the ClickUp connector's daily limit was reached.
+- **What the human changed or rejected:** Ary asked to remove the template; TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** until the ClickUp descriptions are updated, they point to the old flat paths.
+
+## 2026-10-30 · Personal task files point to the task files · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** rewrite the "Your stories" section of each personal file in `docs/team/` so that a member and their AI assistant see the order of work, the task file of every story, their own subtasks in other people's stories, and the open questions waiting for them.
+- **Prompts (exact):**
+  > coba sekalian update md masing masing ya sesuai yang baru biar lebih enak dibacanya dan juga biar ai mereka langsung paham task apa aj ayng harus dikerjain dan jg biar refer ke folder terbaru yang tadi kamu buat
+- **Output used:** the section was regenerated by a script (kept outside the repository) from `work-breakdown.md` and the task files, in `ary.md`, `aaron.md`, `dafi.md`, `gathan.md`, `ilham.md` and `aly.md`; a one-line pointer in `docs/README.md` and `TEAM_PLAN.md`. The prose that followed each old table (for example Aaron's note on Cloud Functions) was kept. The other parts of the personal files, including Aaron's long setup notes, were not changed.
+- **How it was tested or checked:** every relative link in `docs/team/` resolves; counts match the old files (18, 7, 8, 12, 8 and 9 stories led). not verified: that the open questions assigned by name are the right ones; they were matched by a name at the start of each question in the task files, so a question that names two people appears in both files.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the sections are a snapshot of 30 Oct 2026. When a story changes owner or a task file changes, update the personal file by hand.
+
+## 2026-10-30 · Manage tasks like a reference project: TASK.md, TASKS/, ADR.md · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** restructure the task management in the style of a second reference repository (a master `TASK.md` with a Milestones table and a Tasks table with status and category, one `TASKS/<ID>.md` per task with Description, Work needed, Constraints, Resolution and Notes, and an append-only `ADR.md`), and give every task more detail and context.
+- **Prompts (exact):**
+  > Ulang deh restruktur samain management tasknya kayak project itu ya dan tasknya juga kurang detail dan context buat dipahami coba di benerin
+  
+  Ary answered two questions: keep the IDs `E1.1`/`T3.1` (epics and tracks become the Milestone column), and put `TASK.md` at the root with the task files still grouped by epic folder.
+- **Output used:** root `TASK.md` (14 milestones, 62 tasks with status and category), `TASKS/<epic>/<ID>.md` for all 62 tasks (moved from `docs/tasks/`, rewritten with Description, Work needed, Constraints, Acceptance, Not in scope, Resolution or Where it stands, Notes), root `ADR.md` with eight entries, a "Task tracking" rule in `AGENTS.md`, and updated links in `docs/team/`, `docs/README.md` and the personal files. The extra detail comes from `docs/schema.md` (PR #8), `docs/api-contracts.md`, the PRD, `ASSUMPTIONS.md`, `USER-FLOW.md` and Aaron's merged backend code; for the 57 tasks owned by others it is a draft marked "owner to confirm". Statuses are the ClickUp statuses read earlier on 30 Oct 2026.
+- **How it was tested or checked:** a script checked 75 markdown files and found no broken relative link. not verified: the statuses in `TASK.md` against the live board today; the ClickUp descriptions still point to the old `docs/tasks/` path (the connector's daily limit was reached); every ADR date and "decided by" except the ones Ary stated in this conversation (UM-only, free-only, UM domain) comes from commit messages and documents, so Ary should confirm them.
+- **What the human changed or rejected:** Ary chose the ID scheme and the layout. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why status is kept in both `TASK.md` and ClickUp and what makes an ADR different from a task.
+- **Limits:** the draft task files may contain wrong guesses about other members' work; ADR-0007 is only proposed.
+- **Follow-up the same day** (prompt: `udh langsung tulisin detail semua task ya`): Claude added more context to the thinnest task files (test and report tracks, Unit tab, notifications, AI labels) and wrote real *Resolution* and *Files and tests* sections for the tasks that already have code (E0.1, E0.2, E0.6, E3.3, E4.2 Aaron's part, E6.2), from the commit messages, the source files in `backend/functions/src` and the tests. `npm test` in `backend/functions` was run: 13 suites, 339 tests passed. The Resolution texts about other members' work were not read by those members. Two gaps found while writing them: the repository has no openrouteservice adapter (the provider adapter `routes-client.js` is the Google Routes one), and `backend/tests/load` already has k6 scripts but no recorded result.
+
+## 2026-10-30 · Task files are final, draft markers removed · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** remove the "draft, owner to confirm" markers from the 62 task files, `TASK.md`, `work-breakdown.md`, the personal files, `AGENTS.md` and `ADR.md`, because Ary decided the task files are final and need no further correction round.
+- **Prompts (exact):**
+  > gausah pake tetep draf, udh langsung finalized aj gaperlu dikoreksi lagi biar sejalan
+- **Output used:** the banner and the "(draft)" tags are gone; each task file keeps its Open questions with an owner and its "not recorded" or "not verified" marks.
+- **How it was tested or checked:** a text search finds no draft marker left in those files; a script found no broken relative link. not verified: that the other members have read their task files; the text about their work was written by Claude from the repository and Ary has not asked them to confirm it.
+- **What the human changed or rejected:** Ary decided to finalize without a correction round. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say that the task files describe plans and open questions, and that statements about other members' work come from the repository, not from the members.
+- **Limits:** if a member finds an error in their task file, fix the file and `TASK.md` in the same PR.

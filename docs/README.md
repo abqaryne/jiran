@@ -1,6 +1,6 @@
 # Docs
 
-Everything the team writes down lives here. Start with the PRD.
+Everything the team writes down lives here. Start with the PRD. Tasks are tracked outside this folder: the root `TASK.md` (master list) and `TASKS/<epic>/<ID>.md` (one file per task), with decisions in the root `ADR.md`.
 
 ```
 docs/

@@ -67,6 +67,14 @@ The brief requires **significant and original human contribution** and a real un
 - Documents for the report must stay short (report limit: 15 pages and 2,500 words, so use tables). Keep the PRD as the
   single source of truth and link to it instead of copying it.
 
+### Task tracking
+
+- `TASK.md` is the master list, `TASKS/<epic>/<ID>.md` holds the detail of each task, `ADR.md` records decisions that are hard to
+  reverse (append-only). Read the task file of your story before you code; if something in it is wrong or out of date, fix it in the same PR and tell Ary.
+- When you finish or change a task, update its file (status, resolution) and its row in `TASK.md` in the same PR. ClickUp mirrors
+  the status; hours are logged there.
+- Never invent task detail: write `not recorded` or `not verified`, like in the AI log.
+
 ## 5. Firebase and backend
 
 For every Firebase task, first find and use the appropriate official Firebase
