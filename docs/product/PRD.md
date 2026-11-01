@@ -461,7 +461,7 @@ Every FR has at least one test case; both NFRs have a measured test.
 ## 14. Open questions
 
 1. ~~SDG choice~~ **Decided:** SDG 11 (main target 11.1, supporting 11.2); the team has confirmed the brief allows any SDG, not only 6 or 13.
-2. ~~Platform~~ **Decided:** native Android in Java, because the team learned Java in earlier semesters and the brief itself talks about "activities". Confirm with the lecturer together with the Appendix 1 request.
+2. ~~Platform~~ **Decided:** native Android in Java, because the team learned Java in earlier semesters and the brief itself talks about "activities". 
 3. Which AI provider: Gemini or Claude? (Cost, quota, Malay language quality.)
 4. Which published emission factor source for each travel mode?
 5. ~~Firestore collections~~ **Decided 29 Oct 2026:** the list in section 8 stands, including `listingRequests` (the proof of a Connection between a student and a Host), `chats` and `config`. `reports` and `notifications` stay optional (P2) and are not in section 8 yet. Gathan keeps `schema.md` in line with this table.
