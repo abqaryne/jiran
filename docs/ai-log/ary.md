@@ -523,3 +523,42 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary chose to keep shared stories and to rebuild ClickUp later. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say why Security Rules stay with one person.
 - **Limits:** ClickUp subtasks still have no assignee; deleting and recreating the ClickUp tasks would also delete logged hours and comments, which was pointed out to Ary.
+
+## 2026-10-31 · Check Aaron's latest work and correct T2.2 · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** check Aaron's latest pull request and bring the progress in the task files up to date.
+- **Prompts (exact):**
+  > coba kamu cek PR updatean terakhir dari aaron dh dan update progressnya di file-file kita
+- **Output used:** Aaron's latest pull request is PR #2 (merged 27 Oct 2026); all 27 of his commits are in `main` and no branch of his has unmerged work. The task files already described that work except one fact: `TASKS/T2/T2.2.md` said no load-test result was recorded, but `backend/tests/load/README.md` records two local runs on 27 Oct 2026 (the first failed the 100-user threshold, the second passed). T2.2 now states both runs, that they measure the synthetic commute fixture on the emulator and are not NFR1 evidence, and lists the files; its subtask is marked ⚠️. E3.3 lists the load harness. An earlier entry of this log (30 Oct, "backend/tests/load already has k6 scripts but no recorded result") was wrong on this point.
+- **How it was tested or checked:** `gh pr list --author aarntn`, `git log --author=aarntn` across all branches, and the numbers copied from `backend/tests/load/README.md`; a script found no broken relative link. not verified: the runs themselves (not re-run).
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to say why a passing local fixture run is not NFR1 evidence.
+- **Limits:** a deployed Worker is still not recorded anywhere in the repository (E0.2).
+
+## 2026-10-31 · Status in TASK.md comes from the repository · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** Ary decided that the status in `TASK.md` must come from the code and documents in the repository, not from a copy of ClickUp. Write the rule and re-derive every status.
+- **Prompts (exact):**
+  > hei TASK.md itu jangan dari salinan clickup tapi dari kode yang udh dibuat
+- **Output used:** a status table at the top of `TASK.md` (backlog: nothing in the repository; inprogress: part of *Work needed*; inreview: all of it in an open PR; qa: merged, *Acceptance* not all ticked; done: merged and every *Acceptance* check ticked; dropped). `todo` and `blocked` are no longer statuses: waiting is shown in *Depends on*, planning stays in ClickUp. 15 statuses changed in `TASK.md` and the task files: E0.1 and E0.2 done → inprogress (missing work listed in their resolution), E1.3 blocked → backlog, E2.1 to E2.4, E3.1, E3.2, E3.5 todo → backlog, E3.4 inprogress → backlog (no code; ask Aaron), E4.2, T1.1, T2.2, T4.2 backlog → inprogress. The rule is also in `AGENTS.md` and as an update under ADR-0008.
+- **How it was tested or checked:** each status was set from the resolution text of the task file (written from the repository) and the ticked *Acceptance* boxes; only E0.4 has all of them ticked. not verified: local work that a member has not pushed.
+- **What the human changed or rejected:** Ary chose the rule. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why E0.1 and E0.2 are not done although ClickUp says so.
+- **Limits:** ClickUp now shows different statuses for some tasks; that is expected under the new rule.
+
+## 2026-10-31 · E0.1 done, lecturer email dropped · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code
+- **Task:** Ary said the email to the lecturer is not needed and that every member has been added as a collaborator, so E0.1 is done.
+- **Prompts (exact):**
+  > jawaban dosen gaperlu itu, apus dan subtask 1 udh aku add semua jadi done
+- **Output used:** `TASKS/E0/E0.1.md`: the lecturer email removed from *Work needed*, the subtasks and *Acceptance*; subtask 1 ticked; the two remaining *Acceptance* checks ticked as confirmed by Ary; status `done`, the resolution and a decision line added; the open question removed. `TASK.md` row set to done. The lecturer-email item also removed from Ary's file, `TEAM_PLAN.md` (Ary's step 0 and the platform note) and PRD open question 2.
+- **How it was tested or checked:** collaborators were read from the GitHub API earlier the same day (six people); no broken relative link. not verified: a direct push to `main` being refused (not tried).
+- **What the human changed or rejected:** Ary dropped the lecturer email. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** Ary's role "Main contact with the lecturer" in the personal file and the other mentions of the lecturer (data retention, UM domain) were kept, as they are not about this email.

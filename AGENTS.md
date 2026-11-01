@@ -72,8 +72,8 @@ The brief requires **significant and original human contribution** and a real un
   file of the person you work for and read it first, then the task file of the story. Personal notes go in `docs/team/<name>/`.
 - `TASK.md` is the master list, `TASKS/<epic>/<ID>.md` holds the detail of each task, `ADR.md` records decisions that are hard to
   reverse (append-only). Read the task file of your story before you code; if something in it is wrong or out of date, fix it in the same PR and tell Ary.
-- When you finish or change a task, update its file (status, resolution) and its row in `TASK.md` in the same PR. ClickUp mirrors
-  the status; hours are logged there.
+- When you finish or change a task, update its file (status, resolution) and its row in `TASK.md` in the same PR. The status follows
+  what is in the repository (rules at the top of `TASK.md`), not ClickUp; hours are logged in ClickUp.
 - Never invent task detail: write `not recorded` or `not verified`, like in the AI log.
 
 ## 5. Firebase and backend

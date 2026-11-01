@@ -41,7 +41,7 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 | Story | Lead | Your subtask | Task file | Due |
 |---|---|---|---|---|
 | **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../../TASKS/E0/E0.4.md) | 30 Oct |
-| **E0.1** Repo and CI are healthy | Aaron | Add everyone as collaborators on GitHub; Turn on branch protection: PR required, final check by Ary; Email the lecturer: Appendix 1, native Java OK, SDG 11 OK, what the AI policy counts as your own code, is a GitHub link needed | [E0.1.md](../../../TASKS/E0/E0.1.md) | 2 Nov |
+| **E0.1** Repo and CI are healthy | Aaron | Add everyone as collaborators on GitHub; Turn on branch protection: PR required, final check by Ary | [E0.1.md](../../../TASKS/E0/E0.1.md) | 2 Nov |
 | **T1.1** Survey and interviews | Aly | Review the survey wording so the questions match the screens; Share the survey link in your circles | [T1.1.md](../../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
 | **E5.4** Notifications | Gathan | Notifications screen | [E5.4.md](../../../TASKS/E5/E5.4.md) | 13 Dec |
 | **E4.4** Public transport route page, peak and off-peak | Aaron | Public transport route page with the MapLibre map, and the Peak / Off-peak toggle | [E4.4.md](../../../TASKS/E4/E4.4.md) | 14 Dec |
@@ -51,11 +51,10 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 | **T4.1** Report sections | Dafi | 1 Introduction (300 words), UI and colours part of 3 | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
 
-### Open questions waiting for you (7)
+### Open questions waiting for you (6)
 
 These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
 
-- [E0.1](../../../TASKS/E0/E0.1.md): Ary: send the email to the lecturer. It is also what decides how the report describes AI use. Blocks: T4.2 wording.
 - [E1.1](../../../TASKS/E1/E1.1.md): Ary and Aly: real device and real inbox test before the video.
 - [E1.2](../../../TASKS/E1/E1.2.md): Ary and Aly: test the real email and "too many attempts" behaviour against the live project before the video.
 - [E6.1](../../../TASKS/E6/E6.1.md): Ary and Aly: review the survey wording so the questions match (T1.1).
