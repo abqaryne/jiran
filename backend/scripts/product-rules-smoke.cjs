@@ -1,14 +1,14 @@
 const assert = require('node:assert/strict');
 
-function str(v) { return {stringValue: v}; }
-function int(v) { return {integerValue: String(v)}; }
-function bool(v) { return {booleanValue: Boolean(v)}; }
 function encodeField(val) {
-  if (typeof val === 'string') return str(val);
-  if (typeof val === 'number') return int(val);
-  if (typeof val === 'boolean') return bool(val);
+  if (val === null || val === undefined) return {nullValue: null};
+  if (typeof val === 'string') return {stringValue: val};
+  if (typeof val === 'number') {
+    return Number.isInteger(val) ? {integerValue: String(val)} : {doubleValue: val};
+  }
+  if (typeof val === 'boolean') return {booleanValue: val};
   if (Array.isArray(val)) return {arrayValue: {values: val.map(encodeField)}};
-  if (val && typeof val === 'object') {
+  if (typeof val === 'object') {
     const fields = {};
     for (const [k, v] of Object.entries(val)) {
       fields[k] = encodeField(v);
@@ -26,7 +26,8 @@ function encodeFields(data) {
   return fields;
 }
 
-function makeClient(base, token) {
+function makeClient(base, token, project) {
+  const docPrefix = `projects/${project}/databases/(default)/documents`;
   return {
     async get(path) {
       return fetch(`${base}/${path}`, {
@@ -34,21 +35,33 @@ function makeClient(base, token) {
         signal: AbortSignal.timeout(10000),
       });
     },
-    async set(path, data) {
-      return fetch(`${base}/${path}`, {
-        method: 'PATCH',
+    async set(path, data, maskFields = null) {
+      const update = {
+        name: `${docPrefix}/${path}`,
+        fields: encodeFields(data),
+      };
+      const write = {update};
+      if (maskFields && Array.isArray(maskFields)) {
+        write.updateMask = {fieldPaths: maskFields};
+      }
+      return fetch(`${base}:commit`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           ...(token ? {Authorization: `Bearer ${token}`} : {}),
         },
-        body: JSON.stringify({fields: encodeFields(data)}),
+        body: JSON.stringify({writes: [write]}),
         signal: AbortSignal.timeout(10000),
       });
     },
     async delete(path) {
-      return fetch(`${base}/${path}`, {
-        method: 'DELETE',
-        headers: token ? {Authorization: `Bearer ${token}`} : {},
+      return fetch(`${base}:commit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? {Authorization: `Bearer ${token}`} : {}),
+        },
+        body: JSON.stringify({writes: [{delete: `${docPrefix}/${path}`}]}),
         signal: AbortSignal.timeout(10000),
       });
     },
@@ -87,8 +100,8 @@ async function createAuthUser(authBase, email, password, emailVerified = true) {
 
 async function checkProductRules({authBase, firestoreHost, project}) {
   const base = `http://${firestoreHost}/v1/projects/${project}/databases/(default)/documents`;
-  const admin = makeClient(base, 'owner');
-  const anon = makeClient(base, null);
+  const admin = makeClient(base, 'owner', project);
+  const anon = makeClient(base, null, project);
 
   const nonce = Date.now();
   console.log('Setting up test accounts for NFR2 Security Rules suite...');
@@ -99,12 +112,12 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   const staff = await createAuthUser(authBase, `staff-${nonce}@um.edu.my`, 'pass123', true);
   const outsider = await createAuthUser(authBase, `outsider-${nonce}@example.com`, 'pass123', true);
 
-  const clientA = makeClient(base, studentA.token);
-  const clientB = makeClient(base, studentB.token);
-  const clientC = makeClient(base, studentC.token);
-  const clientUnverified = makeClient(base, unverified.token);
-  const clientStaff = makeClient(base, staff.token);
-  const clientOutsider = makeClient(base, outsider.token);
+  const clientA = makeClient(base, studentA.token, project);
+  const clientB = makeClient(base, studentB.token, project);
+  const clientC = makeClient(base, studentC.token, project);
+  const clientUnverified = makeClient(base, unverified.token, project);
+  const clientStaff = makeClient(base, staff.token, project);
+  const clientOutsider = makeClient(base, outsider.token, project);
 
   let deniedCount = 0;
   let passedCount = 0;
@@ -122,7 +135,8 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   }
 
   console.log('1. Testing Access Baseline (ADR-0006)...');
-  await admin.set('areas/pantai_dalam', {name: 'Pantai Dalam', lat: 3.11, lng: 101.66});
+  const setAreaRes = await admin.set('areas/pantai_dalam', {name: 'Pantai Dalam', lat: 3.11, lng: 101.66});
+  assert.equal(setAreaRes.status, 200, 'Admin setup area must succeed');
 
   await assertDenied(anon.get('areas/pantai_dalam'), 'Anonymous read');
   await assertDenied(clientUnverified.get('areas/pantai_dalam'), 'Unverified student read');
@@ -152,6 +166,10 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertPermitted(
     clientA.set(`users/${studentA.uid}/private/contact`, {firstName: 'Aisyah'}),
     'Student A creates own contact'
+  );
+  await assertPermitted(
+    clientB.set(`users/${studentB.uid}/private/contact`, {firstName: 'Bob'}),
+    'Student B creates own contact'
   );
   await assertPermitted(
     clientA.set(`users/${studentA.uid}/private/phone`, {phoneNumber: '+60123456789'}),
@@ -185,23 +203,24 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertDenied(clientA.set(`connections/${pairId}`, {status: 'active'}), 'Client creates connection');
   await assertDenied(clientA.delete(`connections/${pairId}`), 'Client deletes connection');
 
-  await admin.set(`connections/${pairId}`, {
+  const setConnRes = await admin.set(`connections/${pairId}`, {
     pairId,
     uidA: studentA.uid < studentB.uid ? studentA.uid : studentB.uid,
     uidB: studentA.uid < studentB.uid ? studentB.uid : studentA.uid,
     status: 'active',
   });
+  assert.equal(setConnRes.status, 200, 'Admin setup connection must succeed');
 
   await assertPermitted(clientB.get(`users/${studentA.uid}/private/contact`), 'Connected Student B reads Student A firstName');
   await assertPermitted(clientA.get(`users/${studentB.uid}/private/contact`), 'Connected Student A reads Student B firstName');
   await assertDenied(clientC.get(`users/${studentA.uid}/private/contact`), 'Third-party Student C reads Student A contact');
 
   await assertDenied(clientB.get(`users/${studentA.uid}/private/phone`), 'Connected Student B reads phone when opt-in is false');
-  await clientA.set(`users/${studentA.uid}/private/profile`, {privacy: {showPhoneToConnections: true}});
+  await clientA.set(`users/${studentA.uid}/private/profile`, {privacy: {showPhoneToConnections: true}}, ['privacy']);
   await assertPermitted(clientB.get(`users/${studentA.uid}/private/phone`), 'Connected Student B reads phone when opt-in is true');
 
-  await assertPermitted(clientA.set(`connections/${pairId}`, {status: 'ended'}), 'Participant ends connection');
-  await assertDenied(clientC.set(`connections/${pairId}`, {status: 'ended'}), 'Stranger ends connection');
+  await assertPermitted(clientA.set(`connections/${pairId}`, {status: 'ended'}, ['status']), 'Participant ends connection');
+  await assertDenied(clientC.set(`connections/${pairId}`, {status: 'ended'}, ['status']), 'Stranger ends connection');
 
   console.log('5. Testing Listing Requests & Location Privacy...');
   const listingId = `listing_${nonce}`;
@@ -224,7 +243,7 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertDenied(clientC.get(`listingRequests/${reqId}`), 'Third-party reads listing request');
 
   await assertPermitted(
-    clientA.set(`listingRequests/${reqId}`, {status: 'accepted'}),
+    clientA.set(`listingRequests/${reqId}`, {status: 'accepted'}, ['status']),
     'Host A accepts listing request'
   );
 
@@ -233,10 +252,11 @@ async function checkProductRules({authBase, firestoreHost, project}) {
 
   console.log('6. Testing Household & Co-household Data Isolation (Module 5)...');
   const householdId = `hh_${nonce}`;
-  await admin.set(`households/${householdId}`, {
+  const setHhRes = await admin.set(`households/${householdId}`, {
     householdId,
     memberUids: [studentA.uid, studentB.uid],
   });
+  assert.equal(setHhRes.status, 200, 'Admin setup household must succeed');
 
   await assertPermitted(
     clientA.set(`expenses/exp_${nonce}`, {householdId, description: 'Wi-Fi', amountSen: 10000}),
@@ -246,8 +266,10 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertDenied(clientC.get(`expenses/exp_${nonce}`), 'Non-member C reads shared expense');
   await assertDenied(clientC.get(`households/${householdId}`), 'Non-member C reads household');
 
-  await admin.set(`users/${studentA.uid}/private/membership`, {householdId});
-  await admin.set(`users/${studentB.uid}/private/membership`, {householdId});
+  const setMemARes = await admin.set(`users/${studentA.uid}/private/membership`, {householdId});
+  assert.equal(setMemARes.status, 200, 'Admin setup membership A must succeed');
+  const setMemBRes = await admin.set(`users/${studentB.uid}/private/membership`, {householdId});
+  assert.equal(setMemBRes.status, 200, 'Admin setup membership B must succeed');
 
   await assertPermitted(clientB.get(`users/${studentA.uid}/private/timetable`), 'Co-household member B reads timetable');
   await assertPermitted(clientB.get(`users/${studentA.uid}/private/photo`), 'Co-household member B reads photo');
