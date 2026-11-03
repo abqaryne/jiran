@@ -13,3 +13,17 @@
 - **What the human changed or rejected:** Reviewed generated field structures, added [DRAFT] tags on unconfirmed stack choices, and verified integer sen conversions across collections.
 - **What the human understands and can explain:** Understands how Firestore security rules use direct path lookups (`get()`) instead of collection queries, why currency is stored in integer sen to avoid floating-point bugs, and how subcollection isolation enforces PDPA 2010 privacy across match stages.
 - **Limits:** Exact Cloudflare Worker routing and Cloudinary storage endpoints remain draft choices marked `[DRAFT]`.
+
+
+## 2026-11-03 · Security Rules Implementation and Schema Alignment · E0.5 / Security Rules & NFR2
+
+- **Human owner:** Gathan
+- **AI tool and model:** Gemini (Gemini 2.5 Pro)
+- **Task:** Closed schema gap (gender field, timetable ISO day format 1..7, ADR-0007 Worker-created connections), implemented full Firestore Security Rules in backend/firestore.rules enforcing strict siswa.um.edu.my baseline, stage privacy, and connection lookups, and created NFR2 rules test suite.
+- **Prompts (exact):**
+  > Okay so, can you start working on E0.5 first. Since i already made schema.md, use that one and change it, dont create a new one. Check the readme.md first at Gathan folder, then check the E0.5 md and start working on that. Make sure to do the exact task that was given
+- **Output used:** Updated docs/schema.md, backend/firestore.rules, backend/scripts/product-rules-smoke.cjs, backend/scripts/emulator-smoke.cjs, backend/scripts/firestore-rule-check.cjs, backend/functions/package.json, TASKS/E0/E0.5.md.
+- **How it was tested or checked:** Ran Android checks (lintDebug, testDebugUnitTest, checkstyleMain, assembleDebug all passed). Ran backend checks (npm test passed with 13 test suites / 339 tests, npm run test:load, npm run check).
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Local emulator run for product-rules-smoke requires running Firebase emulator (auth/firestore); in CI it runs automatically via emulator-smoke.cjs in firebase emulators:exec.

@@ -18,7 +18,7 @@ Only UM students may use Jiran (PRD FR1.1 and NFR2, decided 30 Oct 2026). Every 
 
 | Stage | What is visible | What is NOT visible | Isolated Storage Path |
 |---|---|---|---|
-| **Match** | `initials`, `faculty`, `year`, `lifestyleTags`, match `score`, `reasons`, `overlappingClassDays` | Full legal name, photo, phone number, exact unit address, detailed timetable, email | `users/{uid}` (Public profile), `matches/{matchId}` |
+| **Match** | `initials`, `gender`, `faculty`, `year`, `lifestyleTags`, match `score`, `reasons`, `overlappingClassDays` | Full legal name, photo, phone number, exact unit address, detailed timetable, email | `users/{uid}` (Public profile), `matches/{matchId}` |
 | **Connection Request** | Match profile + short request message (`message` in `listingRequests` or `matches`) | Full name, photo, phone number, exact unit address | `matches/{matchId}`, `listingRequests/{listingId}_{requesterUid}` |
 | **Connection** (Host accepts `listingRequests` for THAT listing, or pairwise `matches` connected) | Chat, `firstName`, exact unit address (for viewing with Host), `phoneNumber` (if opted in) | Profile photo, detailed timetable | `listings/{listingId}/private/location`, `connections/{pairId}`, `users/{uid}/private/contact`, `users/{uid}/private/phone` |
 | **Household** | Member timetables, shared expenses, chores, rules, profile photo (`photoUrl`), exact unit address | Private contract check results | `users/{uid}/private/timetable`, `users/{uid}/private/photo`, `users/{uid}/private/contact`, `users/{uid}/private/phone`, `users/{uid}/private/membership`, `households/{householdId}`, `listings/{listingId}/private/location` |
@@ -63,6 +63,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 |---|---|---|---|---|
 | `uid` | string | Yes | Owner (on create) | Firebase Auth UID. `E1.3` |
 | `initials` | string | Yes | Owner | Student initials for Match stage display (e.g., `"M.L."`). `FR1.3`, `E1.3` |
+| `gender` | string | Yes | Owner | Required at profile creation: `"male"` or `"female"`. Public on profile for room and housemate filtering. `FR1.3`, `E1.3`, `Decided 31 Oct 2026` |
 | `faculty` | string | Yes | Owner | UM Faculty (e.g., `"FSKTM"`, `"FBL"`). `FR1.3`, `E1.3` |
 | `year` | number | Yes | Owner | Academic year (1–4). `FR1.3`, `E1.3` |
 | `lifestyleTags` | array<string> | Yes | Owner | Array of tags e.g. `["quiet", "non_smoker", "early_riser"]`. `FR1.3`, `E1.3` |
@@ -123,7 +124,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 
 | Field Name | Type | Required | Who May Write | Notes |
 |---|---|---|---|---|
-| `entries` | array<map> | Yes | Owner | `[{ day: string ("Mon".."Sun"), start: string ("09:00"), end: string ("11:00"), building: string }]`. `FR1.3` |
+| `entries` | array<map> | Yes | Owner | `[{ day: number (1..7, where 1=Mon, 7=Sun), start: string ("09:00"), end: string ("11:00"), building: string }]`. Stored as ISO weekday 1–7 to match `match.js`. `FR1.3`, `Decided 31 Oct 2026` |
 
 #### Subcollection: `users/{uid}/private/photo`
 - **Source:** PRD FR1.3 ("profile shows initials, not a photo, by default") and Section 5 Stage Table (Household stage photo access).
@@ -233,7 +234,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `createdAt` | timestamp | Yes | On create | Creation timestamp. `[PROPOSED]` |
 | `endedAt` | timestamp | No | Either person | Set when `status` becomes `"ended"`; starts the chat retention period in section 3. `[PROPOSED]` |
 
-> **Who creates it `[OPEN QUESTION for Aaron]`:** Firestore triggers are not on the free plan, so either the Cloudflare Worker creates the document when a request or match is accepted, or the accepting person's app creates it and Rules allow the create only if the accepted `listingRequests` or `matches` document exists for exactly that pair (the Rules can read `listingId` from the new document's data).
+> **Worker-Created (ADR-0007, Accepted 31 Oct 2026):** Only the Cloudflare Worker creates `connections` documents with admin access after verifying that the Host accepted the listing request or that both match statuses are accepted. Client-side `create` and `delete` are denied by Security Rules. Clients may only update `status` to `"ended"` and `endedAt` to close the connection.
 
 ---
 
