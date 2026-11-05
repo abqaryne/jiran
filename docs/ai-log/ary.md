@@ -674,3 +674,22 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary).
 - **What the human understands and can explain:** TODO (Ary).
 - **Limits:** none beyond the earlier entries.
+
+## 2026-11-05 · Review of Gathan's Security Rules on PR #8 · Review
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** check Gathan's latest commits on PR #8 (`a5b7cb0`, `004a3c0`, 3 Nov 2026) and post the findings as a review comment.
+- **Prompts (exact):**
+  > coba cek committan terbaru gathan
+
+  > berarti ini udh oke kah?
+
+  > command di pr itu ya
+
+  > comment maksudnya
+- **Output used:** one review comment (state COMMENTED, not an approval) on PR #8. Two privacy gaps in `backend/firestore.rules`, each with a suggested fix and a test: (1) a requester can set `hostUid` to themself, accept their own `listingRequests` document and then read `listings/{id}/private/location`; (2) `chats` create does not require a Connection. Non-blocking notes: the E0.5 row in `TASK.md` is not updated, the E0.5 Resolution heading still says 30 Oct, and the `listings` update rule lets the owner change `ownerUid`.
+- **How it was tested or checked:** the rules and the smoke test were read; the CI log of run 41575153413 shows 25 denials and 27 permissions passing, and all three checks green. The two gaps were found by reading the rules; not verified: no emulator run reproduces them yet.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why each gap breaks the PRD rule that the address and contact stay hidden until a Connection exists.
+- **Limits:** a reading review only; Aaron's review of PR #8 is still missing.
