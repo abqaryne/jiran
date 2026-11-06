@@ -44,6 +44,17 @@ service cloud.firestore {
         && get(connectionDoc(targetUid)).data.status == 'active';
     }
 
+    function areParticipantsConnected(participantUids) {
+      return participantUids is list
+        && participantUids.size() == 2
+        && request.auth.uid in participantUids
+        && (
+          (participantUids[0] == request.auth.uid && hasActiveConnection(participantUids[1]))
+          ||
+          (participantUids[1] == request.auth.uid && hasActiveConnection(participantUids[0]))
+        );
+    }
+
     function userMembershipPath(uid) {
       return /databases/$(database)/documents/users/$(uid)/private/membership;
     }
@@ -145,7 +156,9 @@ service cloud.firestore {
       // Public listing: readable by verified UM students
       allow read: if isVerifiedUmUser();
       allow create: if isVerifiedUmUser() && request.resource.data.ownerUid == request.auth.uid;
-      allow update: if isVerifiedUmUser() && resource.data.ownerUid == request.auth.uid;
+      allow update: if isVerifiedUmUser()
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == resource.data.ownerUid;
       allow delete: if isVerifiedUmUser() && resource.data.ownerUid == request.auth.uid;
 
       match /private/location {
@@ -167,11 +180,14 @@ service cloud.firestore {
         request.auth.uid == resource.data.requesterUid
         || request.auth.uid == resource.data.hostUid
       );
-      // Requester can create a pending request
+      // Requester can create a pending request (host must match listing owner and cannot be requester)
       allow create: if isVerifiedUmUser()
         && request.auth.uid == request.resource.data.requesterUid
         && request.resource.data.status == 'pending'
-        && requestId == request.resource.data.listingId + '_' + request.auth.uid;
+        && requestId == request.resource.data.listingId + '_' + request.auth.uid
+        && exists(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+        && request.resource.data.hostUid == get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.ownerUid
+        && request.resource.data.hostUid != request.auth.uid;
       // Requester can cancel; Host can accept or reject
       allow update: if isVerifiedUmUser() && (
         (request.auth.uid == resource.data.requesterUid && request.resource.data.status == 'cancelled'
@@ -298,10 +314,12 @@ service cloud.firestore {
 
     // --- 2.15 Chats and Messages ---
     match /chats/{chatId} {
-      // Chat between connected users: participants only
+      // Chat between connected users: participants only, create requires active connection
       allow read: if isVerifiedUmUser() && request.auth.uid in resource.data.participantUids;
-      allow create: if isVerifiedUmUser() && request.auth.uid in request.resource.data.participantUids;
-      allow update: if isVerifiedUmUser() && request.auth.uid in resource.data.participantUids;
+      allow create: if isVerifiedUmUser() && areParticipantsConnected(request.resource.data.participantUids);
+      allow update: if isVerifiedUmUser()
+        && request.auth.uid in resource.data.participantUids
+        && request.resource.data.participantUids == resource.data.participantUids;
       allow delete: if false;
 
       match /messages/{messageId} {

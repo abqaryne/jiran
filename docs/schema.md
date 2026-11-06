@@ -161,6 +161,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 - **Purpose:** Property listings posted by student Hosts. Public document contains general property metadata and search attributes.
 - **Document ID:** `{listingId}` (auto-generated ID).
 - **Used by:** Module 2 (FR2.1, FR2.2), Module 4 (FR4.2).
+- **Access Rule:** Readable by verified UM students. Writable only by the Host (`ownerUid == request.auth.uid`). On update, `ownerUid` cannot be modified (`request.resource.data.ownerUid == resource.data.ownerUid`).
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
@@ -200,13 +201,13 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 - **Purpose:** Stores listing-specific connection requests sent to a Host to request a viewing and unlock exact address. Proves Connection between applicant and Host when status is `"accepted"`.
 - **Document ID:** `{listingId}_{requesterUid}` (deterministic ID combining `listingId` and applicant's Auth UID).
 - **Used by:** Module 3 (FR3.3), Module 2 (FR2.1).
-- **Access Rule:** Requester (`request.auth.uid == requesterUid`) may only create a request with `status == "pending"`, and may cancel it (`status == "cancelled"`). Only the Host (`request.auth.uid == hostUid`, where `hostUid == listings/{listingId}.ownerUid`) may set `status` to `"accepted"` or `"rejected"`.
+- **Access Rule:** Requester (`request.auth.uid == requesterUid`) may only create a request with `status == "pending"`, and may cancel it (`status == "cancelled"`). On create, `hostUid` must equal `listings/{listingId}.ownerUid` and must not equal `request.auth.uid` (preventing self-acceptance to unlock private address). Only the Host (`request.auth.uid == hostUid`) may set `status` to `"accepted"` or `"rejected"`.
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
 | `requestId` | string | Yes | Requester (on create) | Deterministic ID `{listingId}_{requesterUid}`. `[PROPOSED]` |
 | `listingId` | string | Yes | Requester (on create) | Foreign key to `listings/{listingId}`. `[PROPOSED]` |
-| `hostUid` | string | Yes | Requester (on create) | Auth UID of listing Host. Must equal `listings/{listingId}.ownerUid`. `[PROPOSED]` |
+| `hostUid` | string | Yes | Requester (on create) | Auth UID of listing Host. Must equal `listings/{listingId}.ownerUid` and must not equal `requesterUid`. `[PROPOSED]` |
 | `requesterUid` | string | Yes | Requester (on create) | Auth UID of applicant (`request.auth.uid`). `[PROPOSED]` |
 | `message` | string | Yes | Requester | Short introduction message sent with the viewing request. `FR3.3` `[PROPOSED]` |
 | `status` | string | Yes | Host / Requester | Status: `"pending"`, `"accepted"`, `"rejected"`, `"cancelled"`. Requester creates as `"pending"` or sets `"cancelled"`; Host sets `"accepted"` or `"rejected"`. `FR3.3` `[PROPOSED]` |
@@ -243,6 +244,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 - **Purpose:** Individual rooms within a posted listing. Room search operates on vacant room cards.
 - **Document ID:** `{roomId}` (auto-generated ID).
 - **Used by:** Module 2 (FR2.1, FR2.2), Module 4 (FR4.2).
+- **Access Rule:** Readable by verified UM students. Writable only by the Host of the associated listing (`isListingHost(listingId)`).
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
@@ -461,6 +463,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 - **Purpose:** Private messaging channels between connected users or Host/applicant pairs.
 - **Document ID:** `{chatId}` (auto-generated ID or `"{uidA}_{uidB}"`).
 - **Used by:** Module 3 (FR3.3), Module 6 (FR6.2).
+- **Access Rule:** Readable strictly by participants in `participantUids`. Creation is permitted strictly for exactly two participants who have an active Connection (`connections/{pairId}` with status `"active"`). Strangers without an active Connection cannot create a chat channel.
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|

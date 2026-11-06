@@ -197,11 +197,18 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertPermitted(clientA.get(`contractChecks/cc_${nonce}`), 'Student A reads own contract check');
   await assertDenied(clientB.get(`contractChecks/cc_${nonce}`), 'Student B reads Student A contract check');
 
-  console.log('4. Testing Connection Unlocking Privacy (ADR-0007)...');
+  console.log('4. Testing Connection Unlocking Privacy (ADR-0007) and Connected Chats...');
   const pairId = studentA.uid < studentB.uid ? `${studentA.uid}_${studentB.uid}` : `${studentB.uid}_${studentA.uid}`;
 
   await assertDenied(clientA.set(`connections/${pairId}`, {status: 'active'}), 'Client creates connection');
   await assertDenied(clientA.delete(`connections/${pairId}`), 'Client deletes connection');
+
+  // Verify that stranger C cannot create a chat without an active connection
+  const chatCA = `chat_ca_${nonce}`;
+  await assertDenied(
+    clientC.set(`chats/${chatCA}`, {chatId: chatCA, participantUids: [studentC.uid, studentA.uid]}),
+    'Stranger C creates chat with Student A without active connection'
+  );
 
   const setConnRes = await admin.set(`connections/${pairId}`, {
     pairId,
@@ -219,6 +226,23 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await clientA.set(`users/${studentA.uid}/private/profile`, {privacy: {showPhoneToConnections: true}}, ['privacy']);
   await assertPermitted(clientB.get(`users/${studentA.uid}/private/phone`), 'Connected Student B reads phone when opt-in is true');
 
+  // Connected Student A creates chat with Student B (now allowed because connection is active)
+  const chatId = `chat_${nonce}`;
+  await assertPermitted(
+    clientA.set(`chats/${chatId}`, {chatId, participantUids: [studentA.uid, studentB.uid]}),
+    'Connected Student A creates chat with Student B'
+  );
+  await assertPermitted(
+    clientB.set(`chats/${chatId}/messages/m1`, {messageId: 'm1', senderUid: studentB.uid, text: 'Hello!'}),
+    'Participant B sends message in chat'
+  );
+  await assertDenied(
+    clientC.set(`chats/${chatId}/messages/m2`, {messageId: 'm2', senderUid: studentC.uid, text: 'Intruder'}),
+    'Stranger C sends message in chat'
+  );
+  await assertDenied(clientC.get(`chats/${chatId}`), 'Stranger C reads chat');
+
+  // Participant ends connection
   await assertPermitted(clientA.set(`connections/${pairId}`, {status: 'ended'}, ['status']), 'Participant ends connection');
   await assertDenied(clientC.set(`connections/${pairId}`, {status: 'ended'}, ['status']), 'Stranger ends connection');
 
@@ -228,6 +252,17 @@ async function checkProductRules({authBase, firestoreHost, project}) {
     clientA.set(`listings/${listingId}`, {listingId, ownerUid: studentA.uid, totalRentSen: 120000}),
     'Host A creates listing'
   );
+
+  // Host cannot change ownerUid on listing update
+  await assertDenied(
+    clientA.set(`listings/${listingId}`, {ownerUid: studentB.uid, totalRentSen: 130000}, ['ownerUid', 'totalRentSen']),
+    'Host A attempts to change listing ownerUid'
+  );
+  await assertPermitted(
+    clientA.set(`listings/${listingId}`, {ownerUid: studentA.uid, totalRentSen: 130000}, ['ownerUid', 'totalRentSen']),
+    'Host A updates listing retaining same ownerUid'
+  );
+
   await assertPermitted(
     clientA.set(`listings/${listingId}/private/location`, {exactAddress: 'A-12-03, Pantai Hillpark', residentUids: [studentA.uid]}),
     'Host A sets exact location'
@@ -236,6 +271,20 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertDenied(clientB.get(`listings/${listingId}/private/location`), 'Applicant reads exact address before request accepted');
 
   const reqId = `${listingId}_${studentB.uid}`;
+
+  // Requester cannot set hostUid to self to attempt self-acceptance
+  await assertDenied(
+    clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentB.uid, requesterUid: studentB.uid, status: 'pending'}),
+    'Requester B sets hostUid to self to attempt self-acceptance'
+  );
+
+  // Requester cannot set mismatched hostUid
+  await assertDenied(
+    clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentC.uid, requesterUid: studentB.uid, status: 'pending'}),
+    'Requester B sets hostUid to mismatched third party'
+  );
+
+  // Valid request: hostUid matches listing ownerUid and is not requester
   await assertPermitted(
     clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentA.uid, requesterUid: studentB.uid, status: 'pending'}),
     'Student B sends viewing request to Host A'
@@ -274,22 +323,6 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertPermitted(clientB.get(`users/${studentA.uid}/private/timetable`), 'Co-household member B reads timetable');
   await assertPermitted(clientB.get(`users/${studentA.uid}/private/photo`), 'Co-household member B reads photo');
   await assertDenied(clientC.get(`users/${studentA.uid}/private/timetable`), 'Non-household member C reads timetable');
-
-  console.log('7. Testing Chats & Messages (Module 3 & 6)...');
-  const chatId = `chat_${nonce}`;
-  await assertPermitted(
-    clientA.set(`chats/${chatId}`, {chatId, participantUids: [studentA.uid, studentB.uid]}),
-    'Student A creates chat with Student B'
-  );
-  await assertPermitted(
-    clientB.set(`chats/${chatId}/messages/m1`, {messageId: 'm1', senderUid: studentB.uid, text: 'Hello!'}),
-    'Participant B sends message in chat'
-  );
-  await assertDenied(
-    clientC.set(`chats/${chatId}/messages/m2`, {messageId: 'm2', senderUid: studentC.uid, text: 'Intruder'}),
-    'Stranger C sends message in chat'
-  );
-  await assertDenied(clientC.get(`chats/${chatId}`), 'Stranger C reads chat');
 
   console.log(`\n========================================================`);
   console.log(`PASS: All NFR2 Security Rules checks succeeded!`);

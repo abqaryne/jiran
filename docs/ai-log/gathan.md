@@ -27,3 +27,24 @@
 - **What the human changed or rejected:** TODO (Gathan)
 - **What the human understands and can explain:** TODO (Gathan)
 - **Limits:** Local emulator run for product-rules-smoke requires running Firebase emulator (auth/firestore); in CI it runs automatically via emulator-smoke.cjs in firebase emulators:exec.
+
+
+## 2026-11-06 · Address Ary PR Review on Privacy Rules · E0.5 / Security Rules & NFR2
+
+- **Human owner:** Gathan
+- **AI tool and model:** Antigravity (Gemini 2.5 Pro)
+- **Task:** Fixed privacy loopholes identified in Ary's PR #8 review: prevented listingRequests self-acceptance by validating hostUid against listing ownerUid and ensuring hostUid != requesterUid; prevented stranger chat creation by requiring active connections (areParticipantsConnected helper); locked listing ownerUid against modification on update; updated schema documentation, task tracking status, and smoke tests.
+- **Prompts (exact):**
+  > Thanks Gathan, the rules cover every collection and the CI smoke test passes (25 denials, 27 permissions). Two privacy gaps need closing before this merges, because the PRD promises that the address and contact stay hidden until a Connection exists.
+  > 1. A requester can accept their own request and read the exact address (backend/firestore.rules, listingRequests create, line 171)
+  > 2. Anyone can open a chat with any student without a Connection (chats create, line 300)
+  > Smaller items, not blocking:
+  > The TASK.md row for E0.5 is not updated.
+  > The Resolution heading in TASKS/E0/E0.5.md still says 30 Oct.
+  > The listings update rule does not stop the owner from changing ownerUid.
+  > Still waiting for Aaron's review.
+- **Output used:** Updated backend/firestore.rules, backend/scripts/product-rules-smoke.cjs, docs/schema.md, TASK.md, TASKS/E0/E0.5.md, docs/ai-log/gathan.md.
+- **How it was tested or checked:** Backend unit and contract tests (npm test, npm run check). Android local checks (lintDebug, testDebugUnitTest, checkstyleMain, assembleDebug).
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Live CI emulator execution runs on GitHub Actions pull request check Jiran checks / backend (pull_request).
