@@ -1,5 +1,6 @@
 const assert = require('node:assert/strict');
 const {checkConnectionRules} = require('./firestore-smoke.cjs');
+const {checkProductRules} = require('./product-rules-smoke.cjs');
 async function main() {
   assert.equal(process.env.FIREBASE_AUTH_EMULATOR_HOST, '127.0.0.1:9099');
   const base = 'http://127.0.0.1:9099/identitytoolkit.googleapis.com/v1';
@@ -17,5 +18,6 @@ async function main() {
   await post('accounts:update', {localId:created.localId, emailVerified:true}, true);
   const verified = await post('accounts:signInWithPassword', {email, password, returnSecureToken:true});
   await checkConnectionRules({token:verified.idToken, unverifiedToken:created.idToken, uid:created.localId});
+  await checkProductRules({authBase: base, firestoreHost: process.env.FIRESTORE_EMULATOR_HOST, project: 'demo-jiran'});
 }
 main().catch(error => {console.error(error);process.exitCode=1;});

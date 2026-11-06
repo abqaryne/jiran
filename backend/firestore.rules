@@ -1,9 +1,10 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // --- Helper Functions ---
+
     // Prototype infrastructure model: _connectionChecks/{auth.uid}
-    // checkedAt: required server timestamp; no other fields or ownership changes.
-    // Product schemas/rules remain Gathan's responsibility and are denied below.
     function isVerifiedOwner(userId) {
       return request.auth != null
         && request.auth.uid == userId
@@ -17,12 +18,345 @@ service cloud.firestore {
         && data.checkedAt == request.time;
     }
 
+    // Access Baseline: verified UM student account (ADR-0006)
+    function isVerifiedUmUser() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email != null
+        && request.auth.token.email.matches('^[^@]+@siswa[.]um[.]edu[.]my$');
+    }
+
+    function isOwner(uid) {
+      return isVerifiedUmUser() && request.auth.uid == uid;
+    }
+
+    function pairId(uidA, uidB) {
+      return uidA < uidB ? uidA + '_' + uidB : uidB + '_' + uidA;
+    }
+
+    function connectionDoc(targetUid) {
+      return /databases/$(database)/documents/connections/$(pairId(request.auth.uid, targetUid));
+    }
+
+    function hasActiveConnection(targetUid) {
+      return isVerifiedUmUser()
+        && exists(connectionDoc(targetUid))
+        && get(connectionDoc(targetUid)).data.status == 'active';
+    }
+
+    function areParticipantsConnected(participantUids) {
+      return participantUids is list
+        && participantUids.size() == 2
+        && request.auth.uid in participantUids
+        && (
+          (participantUids[0] == request.auth.uid && hasActiveConnection(participantUids[1]))
+          ||
+          (participantUids[1] == request.auth.uid && hasActiveConnection(participantUids[0]))
+        );
+    }
+
+    function userMembershipPath(uid) {
+      return /databases/$(database)/documents/users/$(uid)/private/membership;
+    }
+
+    function isHouseholdMember(householdId) {
+      return isVerifiedUmUser()
+        && exists(/databases/$(database)/documents/households/$(householdId))
+        && request.auth.uid in get(/databases/$(database)/documents/households/$(householdId)).data.memberUids;
+    }
+
+    function isCoHouseholdMember(targetUid) {
+      return isVerifiedUmUser()
+        && exists(userMembershipPath(targetUid))
+        && exists(userMembershipPath(request.auth.uid))
+        && get(userMembershipPath(targetUid)).data.householdId != null
+        && get(userMembershipPath(targetUid)).data.householdId == get(userMembershipPath(request.auth.uid)).data.householdId;
+    }
+
+    function targetAllowsPhoneToConnections(targetUid) {
+      return exists(/databases/$(database)/documents/users/$(targetUid)/private/profile)
+        && get(/databases/$(database)/documents/users/$(targetUid)/private/profile).data.privacy.showPhoneToConnections == true;
+    }
+
+    function isListingHost(listingId) {
+      return exists(/databases/$(database)/documents/listings/$(listingId))
+        && get(/databases/$(database)/documents/listings/$(listingId)).data.ownerUid == request.auth.uid;
+    }
+
+    function isAcceptedListingRequester(listingId) {
+      return exists(/databases/$(database)/documents/listingRequests/$(listingId + '_' + request.auth.uid))
+        && get(/databases/$(database)/documents/listingRequests/$(listingId + '_' + request.auth.uid)).data.status == 'accepted';
+    }
+
+    // --- Diagnostic Collection ---
     match /_connectionChecks/{userId} {
       allow read, delete: if isVerifiedOwner(userId);
       allow create, update: if isVerifiedOwner(userId)
         && isValidConnectionCheck(request.resource.data);
     }
 
+    // --- 2.1 Users and Privacy Subdocuments ---
+    match /users/{uid} {
+      // Public profile readable by verified UM students; writable only by owner
+      allow read: if isVerifiedUmUser();
+      allow create, update: if isOwner(uid) && request.resource.data.uid == uid;
+      allow delete: if false;
+
+      match /private/profile {
+        // Consolidated private profile: strictly owner only
+        allow read, write: if isOwner(uid);
+      }
+
+      match /private/contact {
+        // First name: owner, active connection, or co-household member
+        allow read: if isOwner(uid) || hasActiveConnection(uid) || isCoHouseholdMember(uid);
+        allow create, update: if isOwner(uid);
+        allow delete: if false;
+      }
+
+      match /private/phone {
+        // Phone: owner, co-household member, or active connection with opt-in toggle enabled
+        allow read: if isOwner(uid)
+          || isCoHouseholdMember(uid)
+          || (hasActiveConnection(uid) && targetAllowsPhoneToConnections(uid));
+        allow create, update: if isOwner(uid);
+        allow delete: if false;
+      }
+
+      match /private/membership {
+        // Membership: owner can read; writable only by server (Worker)
+        allow read: if isOwner(uid);
+        allow write: if false;
+      }
+
+      match /private/timetable {
+        // Class timetable: owner or co-household member
+        allow read: if isOwner(uid) || isCoHouseholdMember(uid);
+        allow create, update: if isOwner(uid);
+        allow delete: if false;
+      }
+
+      match /private/photo {
+        // Profile photo URL: owner or co-household member
+        allow read: if isOwner(uid) || isCoHouseholdMember(uid);
+        allow create, update: if isOwner(uid);
+        allow delete: if false;
+      }
+    }
+
+    // --- 2.2 Areas ---
+    match /areas/{areaId} {
+      // Pre-seeded geographic areas: public read to verified UM students; write admin only
+      allow read: if isVerifiedUmUser();
+      allow write: if false;
+    }
+
+    // --- 2.3 Listings and Exact Location ---
+    match /listings/{listingId} {
+      // Public listing: readable by verified UM students
+      allow read: if isVerifiedUmUser();
+      allow create: if isVerifiedUmUser() && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if isVerifiedUmUser()
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == resource.data.ownerUid;
+      allow delete: if isVerifiedUmUser() && resource.data.ownerUid == request.auth.uid;
+
+      match /private/location {
+        // Exact unit address: host, listed co-residents, or accepted requester for this listing
+        allow read: if isVerifiedUmUser() && (
+          isListingHost(listingId)
+          || request.auth.uid in resource.data.residentUids
+          || isAcceptedListingRequester(listingId)
+        );
+        allow create, update: if isListingHost(listingId);
+        allow delete: if isListingHost(listingId);
+      }
+    }
+
+    // --- 2.4 Listing Requests ---
+    match /listingRequests/{requestId} {
+      // Deterministic ID: {listingId}_{requesterUid}
+      allow read: if isVerifiedUmUser() && (
+        request.auth.uid == resource.data.requesterUid
+        || request.auth.uid == resource.data.hostUid
+      );
+      // Requester can create a pending request (host must match listing owner and cannot be requester)
+      allow create: if isVerifiedUmUser()
+        && request.auth.uid == request.resource.data.requesterUid
+        && request.resource.data.status == 'pending'
+        && requestId == request.resource.data.listingId + '_' + request.auth.uid
+        && exists(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+        && request.resource.data.hostUid == get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.ownerUid
+        && request.resource.data.hostUid != request.auth.uid;
+      // Requester can cancel; Host can accept or reject
+      allow update: if isVerifiedUmUser() && (
+        (request.auth.uid == resource.data.requesterUid && request.resource.data.status == 'cancelled'
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt']))
+        ||
+        (request.auth.uid == resource.data.hostUid && (request.resource.data.status == 'accepted' || request.resource.data.status == 'rejected')
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt']))
+      );
+      allow delete: if false;
+    }
+
+    // --- 2.4.1 Connections ---
+    match /connections/{pairId} {
+      // ADR-0007: Only the Worker creates and deletes connections documents
+      allow create, delete: if false;
+      // Either connected user can read
+      allow read: if isVerifiedUmUser() && (
+        request.auth.uid == resource.data.uidA
+        || request.auth.uid == resource.data.uidB
+      );
+      // Either user may end the connection
+      allow update: if isVerifiedUmUser()
+        && (request.auth.uid == resource.data.uidA || request.auth.uid == resource.data.uidB)
+        && request.resource.data.status == 'ended'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'endedAt']);
+    }
+
+    // --- 2.5 Rooms ---
+    match /rooms/{roomId} {
+      // Rooms in a listing: readable by verified UM students; writable by the listing's host
+      allow read: if isVerifiedUmUser();
+      allow create, update: if isVerifiedUmUser() && isListingHost(request.resource.data.listingId);
+      allow delete: if isVerifiedUmUser() && isListingHost(resource.data.listingId);
+    }
+
+    // --- 2.6 Reviews ---
+    match /reviews/{reviewId} {
+      // Building reviews: public read if moderated or if author; created by verified author; update/delete admin only
+      allow read: if isVerifiedUmUser() && (resource.data.moderated == true || resource.data.authorUid == request.auth.uid);
+      allow create: if isVerifiedUmUser() && request.resource.data.authorUid == request.auth.uid && request.resource.data.moderated == false;
+      allow update, delete: if false;
+    }
+
+    // --- 2.7 Match Profiles ---
+    match /matchProfiles/{uid} {
+      // Match questionnaire answers: readable by verified UM students; writable by owner
+      allow read: if isVerifiedUmUser();
+      allow create, update: if isOwner(uid) && request.resource.data.uid == uid;
+      allow delete: if isOwner(uid);
+    }
+
+    // --- 2.8 Matches ---
+    match /matches/{matchId} {
+      // Deterministic ID: {uidA}_{uidB}. Created/deleted by server only.
+      allow create, delete: if false;
+      allow read: if isVerifiedUmUser() && (
+        request.auth.uid == resource.data.uidA
+        || request.auth.uid == resource.data.uidB
+      );
+      // Participants update their own status (statusA / statusB)
+      allow update: if isVerifiedUmUser() && (
+        (request.auth.uid == resource.data.uidA
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['statusA', 'messageA', 'updatedAt']))
+        ||
+        (request.auth.uid == resource.data.uidB
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['statusB', 'messageB', 'updatedAt']))
+      );
+    }
+
+    // --- 2.9 Groups ---
+    match /groups/{groupId} {
+      // Group renting together: readable and writable by group members
+      allow read: if isVerifiedUmUser() && request.auth.uid in resource.data.memberUids;
+      allow create: if isVerifiedUmUser() && request.auth.uid in request.resource.data.memberUids;
+      allow update: if isVerifiedUmUser() && request.auth.uid in resource.data.memberUids;
+      allow delete: if false;
+    }
+
+    // --- 2.10 Unit Evaluations ---
+    match /unitEvaluations/{evalId} {
+      // Private evaluation of a unit: creator or attached group members
+      allow read: if isVerifiedUmUser() && (
+        resource.data.createdByUid == request.auth.uid
+        || (resource.data.groupId != null
+            && exists(/databases/$(database)/documents/groups/$(resource.data.groupId))
+            && request.auth.uid in get(/databases/$(database)/documents/groups/$(resource.data.groupId)).data.memberUids)
+      );
+      allow create: if isVerifiedUmUser() && request.resource.data.createdByUid == request.auth.uid;
+      allow update, delete: if isVerifiedUmUser() && resource.data.createdByUid == request.auth.uid;
+    }
+
+    // --- 2.11 Households ---
+    match /households/{householdId} {
+      // Household members only
+      allow read: if isVerifiedUmUser() && request.auth.uid in resource.data.memberUids;
+      allow create: if isVerifiedUmUser() && request.auth.uid in request.resource.data.memberUids;
+      allow update: if isVerifiedUmUser() && request.auth.uid in resource.data.memberUids;
+      allow delete: if false;
+    }
+
+    // --- 2.12 Expenses ---
+    match /expenses/{expenseId} {
+      // Shared household expenses: household members only
+      allow read: if isHouseholdMember(resource.data.householdId);
+      allow create: if isHouseholdMember(request.resource.data.householdId);
+      allow update, delete: if isHouseholdMember(resource.data.householdId);
+    }
+
+    // --- 2.13 Chores ---
+    match /chores/{choreId} {
+      // Chores: household members only
+      allow read: if isHouseholdMember(resource.data.householdId);
+      allow create: if isHouseholdMember(request.resource.data.householdId);
+      allow update, delete: if isHouseholdMember(resource.data.householdId);
+    }
+
+    // --- 2.14 Contract Checks ---
+    match /contractChecks/{checkId} {
+      // Strictly private to uploader
+      allow read, delete: if isVerifiedUmUser() && resource.data.uid == request.auth.uid;
+      allow create: if isVerifiedUmUser() && request.resource.data.uid == request.auth.uid;
+      allow update: if false;
+    }
+
+    // --- 2.15 Chats and Messages ---
+    match /chats/{chatId} {
+      // Chat between connected users: participants only, create requires active connection
+      allow read: if isVerifiedUmUser() && request.auth.uid in resource.data.participantUids;
+      allow create: if isVerifiedUmUser() && areParticipantsConnected(request.resource.data.participantUids);
+      allow update: if isVerifiedUmUser()
+        && request.auth.uid in resource.data.participantUids
+        && request.resource.data.participantUids == resource.data.participantUids;
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow read: if isVerifiedUmUser()
+          && request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participantUids;
+        allow create: if isVerifiedUmUser()
+          && request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participantUids
+          && request.resource.data.senderUid == request.auth.uid;
+        allow update, delete: if false;
+      }
+    }
+
+    // --- 2.16 Config ---
+    match /config/{docId} {
+      // System config: read-only for verified UM students; writes admin only
+      allow read: if isVerifiedUmUser();
+      allow write: if false;
+    }
+
+    // --- 2.17 Reports ---
+    match /reports/{reportId} {
+      // Reports: verified user can create; read/update/delete admin/moderator only
+      allow create: if isVerifiedUmUser() && request.resource.data.reporterUid == request.auth.uid;
+      allow read, update, delete: if false;
+    }
+
+    // --- 2.17 Notifications ---
+    match /notifications/{notificationId} {
+      // Notifications: recipient only; read and mark read; create by server
+      allow read: if isVerifiedUmUser() && resource.data.recipientUid == request.auth.uid;
+      allow update: if isVerifiedUmUser()
+        && resource.data.recipientUid == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+      allow create, delete: if false;
+    }
+
+    // --- Fallback: Deny everything else ---
     match /{document=**} {
       allow read, write: if false;
     }
