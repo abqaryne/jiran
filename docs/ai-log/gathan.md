@@ -48,3 +48,59 @@
 - **What the human changed or rejected:** TODO (Gathan)
 - **What the human understands and can explain:** TODO (Gathan)
 - **Limits:** Live CI emulator execution runs on GitHub Actions pull request check Jiran checks / backend (pull_request).
+
+## 2026-11-09 · Listing draft and photo foundation · E2.1 subtask 1 / FR2.1 / NFR2
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex, GPT-6 Astra
+- **Task:** Implement only E2.1 subtask 1, teach the data/privacy design, verify locally and stop before staging or committing.
+- **Prompts (exact):**
+
+  > I have completed Epic E0.5 (PR #8) and created my new branch `gathan/e2.1-building-rent`. We are now starting work on **E2.1 (Pick the building and enter rent and deposit)**.
+  >
+  > Before writing any code, please follow these workspace guardrails:
+  >
+  > 1. **Environment Check**:
+  >    - Verify that all dependencies in `backend/` are installed (`node_modules` exists).
+  >    - Confirm you are on the `gathan/e2.1-building-rent` branch.
+  >
+  > 2. **Task Context**:
+  >    - Read `TASKS/E2/E2.1.md` to understand the Description, Work needed, Constraints, Acceptance criteria, and Decisions taken.
+  >    - Break down E2.1 into its individual subtasks.
+  >
+  > 3. **Subtask Workflow & Approval Guardrail**:
+  >    - Work ONLY on the **first subtask** of E2.1.
+  >    - Do NOT attempt to complete the whole task or move to subsequent subtasks automatically.
+  >    - Once the first subtask code is written and verified (passing tests/checks), STOP and present your work to me for review.
+  >    - Wait for my explicit approval ("okay to commit" or similar) before staging or committing any changes.
+  >
+  > 4. **Commit Format**:
+  >    - When approved, commit the subtask changes using the required format: `[E2.1] short description`.
+  >
+  > Please confirm you understand these guardrails and outline the first subtask from `TASKS/E2/E2.1.md` so we can begin.
+
+  > Looks good. Proceed with writing the code for Subtask 1
+
+  Assistant clarification: “E2.1 says a Listing starts active, but the PRD requires a priced vacant Room before publication (E2.2). May I add a Host-only draft state for step 1, with publication left to E2.2?”
+
+  > Yes, use a private draft
+
+- **Output used:** Local uncommitted code in `backend/functions/src/listing-draft.js`, `listing-photo.js`, their Jest tests and `listing-worker.test.js`; `backend/worker/` gateway/config/review guide; Listing rules and emulator smoke cases. Updated `.gitignore`, `TASK.md`, `TASKS/E2/E2.1.md`, PRD draft clarification, schema, ADR-0009 and this log. No new PR, staging, commit, push or deployment. Building picker/screens and subtasks 2–4 not implemented. Existing untracked `gradle/` preserved.
+- **How it was tested or checked:** `npm ls --depth=0` confirms installed declared dependencies. `npm test`: 16 suites, 377 tests pass (339 baseline). `npm run check` and new Worker syntax checks pass. Auth/Firestore emulators with `--project demo-jiran`, `node scripts/firestore-rule-check.cjs`: diagnostic tests pass plus 60 denied and 35 permitted product-rule cases. `android/gradlew.bat lintDebug testDebugUnitTest checkstyleMain assembleDebug --console=plain` passes using Android Studio JBR; 53 tasks, 52 up-to-date. Wrangler 4.153.0 `deploy --dry-run --outdir build` bundles successfully without deploying (warning: multiple environments, top-level local environment used). `git -c core.fsmonitor=false diff --check` passes. Security review considered unauthorized reads/writes, ownership forgery, schema pollution, immutable fields, malformed money/coordinates/arrays, draft publication bypass, orphan location access, query constraints and upload failure handling. This is not an exhaustive NFR2 claim.
+- **Initial failures and recovery:** Android first failed with `gradle-9.6.0-bin.zip.lck (Access is denied)`; rerun with granted elevated access and Studio JBR passed. Sandboxed npx downloads failed with `getaddrinfo ENOTFOUND registry.npmjs.org`; elevated CLI downloads/checks succeeded. Firebase CLI install warned that this machine's Node 26.12.1 is outside a transitive dependency's supported Node 20/22/24 range; tests passed here, Node 22 CI remains unverified. Plain Git emitted an fsmonitor IPC warning; read-only checks used `-c core.fsmonitor=false`.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Needs human review. Provider tests intercept requests; no live Cloudinary upload, production token flow, deployment, device integration, quota/CPU/load test, E1.3 readiness or QA acceptance verified. Public image URLs do not inherit draft document privacy. Failed Firestore saves after upload can leave orphan images; cleanup/abuse controls and engineering size/count limits need review before live use. Publication and 30-day expiry remain E2.2. Human review and understanding not verified; hours not recorded.
+
+## 2026-11-09 · Commit approval · E2.1 subtask 1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex, GPT-6 Astra
+- **Task:** Commit the reviewed local subtask scope after explicit authorization.
+- **Prompts (exact):**
+  > Okay to commit
+- **Output used:** Authorized staging and local commit of the E2.1 subtask 1 files described above, with message `[E2.1] Add private Listing drafts and signed photo uploads`. No push, merge, deployment or subsequent subtask authorized. The earlier entry describes the pre-approval state.
+- **How it was tested or checked:** Pre-commit Git status and staged whitespace checks; removed one extra blank line at EOF found in the newly staged draft test. The implementation checks and their results are recorded in the preceding entry; no behavior changes, tests not rerun. Initial staging failed with `.git/index.lock: Permission denied`; elevated staging succeeded. Existing untracked `gradle/` excluded.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Approval to commit is recorded; depth of human review and understanding is not verified. Live/provider/device and quota limitations from the preceding entry remain.

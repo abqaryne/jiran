@@ -1,0 +1,25 @@
+const {makeListingDraft, fields} = require('../src/listing-draft');
+
+const input = () => ({areaId: 'sample-area', buildingName: 'Fictional Building',
+  lat: 0, lng: 0, totalRentSen: 100000, depositSen: 0, genderPref: 'any',
+  amenities: ['wifi'], exactAddress: 'Fictional Unit 1'});
+
+test('draft separates exact address and derives identity; money stays in sen', () => {
+  const result = makeListingDraft(input(), 'host', 'listing-1');
+  expect(result.listing).toMatchObject({ownerUid: 'host', status: 'draft',
+    totalRentSen: 100000, depositSen: 0, photoUrls: []});
+  expect(result.listing).not.toHaveProperty('exactAddress');
+  expect(result.listing).not.toHaveProperty('expiresAt');
+  expect(result.location).toEqual({exactAddress: 'Fictional Unit 1', residentUids: ['host']});
+  expect(fields(result.listing).totalRentSen).toEqual({integerValue: '100000'});
+});
+
+test.each([
+  {totalRentSen: 1.5}, {depositSen: -1}, {totalRentSen: Number.MAX_SAFE_INTEGER + 1},
+  {buildingName: ' '}, {buildingName: 'x'.repeat(201)}, {lat: NaN}, {lng: 181},
+  {genderPref: 'invalid'}, {amenities: [false]}, {amenities: Array(11).fill('wifi')},
+  {exactAddress: ''}, {ownerUid: 'stranger'}, {status: 'active'}, {photoUrls: ['https://example.com']},
+  {areaId: '../private'}, {placeId: null},
+])('rejects malformed or caller-controlled protected data: %j', override => {
+  expect(() => makeListingDraft({...input(), ...override}, 'host', 'listing-1')).toThrow('invalid-listing');
+});

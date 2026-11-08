@@ -182,3 +182,17 @@ Status is written in two places and must be changed in both on the same day. Ope
 **Update 2026-10-31 (Ary):** the status in `TASK.md` and the task files is set from the repository (what is merged in `main`,
 on a branch or in an open PR, and which *Acceptance* checks are ticked), not copied from ClickUp. ClickUp keeps planning
 states and logged hours and may show a different status. The statuses were re-derived on 31 Oct 2026 under these rules.
+
+## ADR-0009: Step 1 saves a private Listing draft
+
+- **Status:** Accepted by Gathan for E2.1; team review pending
+- **Date:** 2026-11-09
+- **Decided by:** Gathan, in this Codex chat
+
+E2.1 originally said to create an active Listing, but the PRD forbids publication
+without a priced vacant Room, supplied by E2.2. Gathan approved a Host-only
+`draft` state. Step 1 atomically saves the draft and its private address; other
+students cannot read it or send a Connection request. E2.2 owns publication and
+starts the 30-day expiry then. Drafts have no `expiresAt`. Public queries must
+filter published status; Host queries must filter ownership. Draft retention
+and abandoned photo cleanup need later lifecycle review, not invented expiry.

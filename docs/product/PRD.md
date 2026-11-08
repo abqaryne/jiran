@@ -357,6 +357,11 @@ Room photos are stored outside Firebase and referenced by URL: Firebase Storage 
 
 ---
 
+**E2.1 clarification (Gathan, 9 Nov 2026):** step 1 saves a Host-only Listing
+with `status: draft`. It is excluded from public search and cannot receive
+Connection requests. E2.2 publishes only after the required priced vacant Room
+exists; the 30-day Listing expiry begins at publication. Drafts have no `expiresAt`.
+
 ## 9. System architecture
 
 ```

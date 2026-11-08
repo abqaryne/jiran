@@ -57,7 +57,7 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 | [E1.2](TASKS/E1/E1.2.md) | E1 - Starting and Profile Setup flows | qa | auth / ui | Ary | 20 Nov | Log in, log out and reset password |
 | [E1.3](TASKS/E1/E1.3.md) | E1 - Starting and Profile Setup flows | backlog | ui / persistence | Ary | 22 Nov | Profile setup and privacy |
 | [E1.4](TASKS/E1/E1.4.md) | E1 - Starting and Profile Setup flows | qa | ui | Ary | 22 Nov | Home and the four tabs after sign-in |
-| [E2.1](TASKS/E2/E2.1.md) | E2 - Host Listing flow | backlog | ui / persistence | Gathan | 25 Nov | Pick the building and enter rent and deposit |
+| [E2.1](TASKS/E2/E2.1.md) | E2 - Host Listing flow | inprogress | ui / persistence | Gathan | 25 Nov | Pick the building and enter rent and deposit |
 | [E2.2](TASKS/E2/E2.2.md) | E2 - Host Listing flow | backlog | logic / ui | Gathan | 27 Nov | Rooms and prices with the price rule |
 | [E2.3](TASKS/E2/E2.3.md) | E2 - Host Listing flow | backlog | ui / rules | Gathan | 29 Nov | My listing: renew, requests and mark occupied |
 | [E2.4](TASKS/E2/E2.4.md) | E2 - Host Listing flow | backlog | data | Gathan | 29 Nov | Fictional seed listings |

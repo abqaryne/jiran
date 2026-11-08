@@ -157,6 +157,16 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 ---
 
 ### 2.3 Collection: `listings`
+**E2.1 implementation (9 Nov 2026):** new Listings are private drafts, readable
+only by their verified UM Host. Create the Listing and `private/location` in one
+atomic commit. Client creation of active Listings and status changes are denied
+until E2.2 implements the publication gate. Query own Listings by `ownerUid`,
+public Listings by `status == active`. Drafts have no expiry timestamp.
+Listing writes validate allowed fields, integer sen, coordinates, immutable
+identity/creation time and server update time. Photo URLs must use the Listing's
+Cloudinary path. Initial `residentUids` is `[ownerUid]` and client updates cannot
+change it. Full lifecycle and live provider verification remain pending.
+
 - **Source:** PRD Section 8 (`listings` collection) and PRD Module 2 (FR2.1, FR2.2).
 - **Purpose:** Property listings posted by student Hosts. Public document contains general property metadata and search attributes.
 - **Document ID:** `{listingId}` (auto-generated ID).
@@ -178,10 +188,10 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `amenities` | array<string> | Yes | Host | Amenities list e.g. `["wifi", "aircon", "washing_machine"]`. `FR2.1`, `E2.1` |
 | `photoUrls` | array<string> | Yes | Host | Cloudinary image URLs `[DRAFT]`. `FR2.1`, `E2.1` |
 | `isSample` | boolean | Yes | Host / Seed | True for fictional seed listings; app labels them as sample data. `[PROPOSED]`, `E2.4` |
-| `status` | string | Yes | Host / Server | Status: `"active"`, `"closed"`, `"expired"`. `E2.3` |
+| `status` | string | Yes | Host / Server | `"draft"` (Host-only; Gathan approved 9 Nov 2026), `"active"`, `"closed"`, `"expired"`. E2.2 owns publication, E2.3 later lifecycle. |
 | `createdAt` | timestamp | Yes | Host (on create) | Creation timestamp. `E2.1` |
 | `updatedAt` | timestamp | Yes | Host | Last update timestamp. `[PROPOSED]` |
-| `expiresAt` | timestamp | Yes | Host / Server | Auto-expiry date (30 days from creation/renewal). `PRD Section 8` `[PROPOSED]` |
+| `expiresAt` | timestamp | Published only | Host / Server | Absent for drafts; 30 days from publication/renewal. E2.2/E2.3. |
 
 #### Subcollection: `listings/{listingId}/private/location`
 - **Source:** PRD Section 5 (NFR2 Privacy) and PRD Section 5 Stage Table (Connection stage).
