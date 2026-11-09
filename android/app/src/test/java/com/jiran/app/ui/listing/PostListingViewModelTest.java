@@ -97,7 +97,7 @@ public class PostListingViewModelTest {
     @Test public void destroyedModelIgnoresLateCompletion() {
         PostListingViewModel model = ready(1);
         model.save();
-        model.onCleared();
+        model.endSession();
         gateway.callback.success("draft-1");
         assertEquals(0, gateway.uploads);
         assertEquals("", model.form.address);

@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jiran.app.BuildConfig;
 import com.jiran.app.domain.auth.UmEmailPolicy;
+import com.jiran.app.domain.auth.VerifiedHostPolicy;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -37,8 +38,8 @@ public final class WorkerListingGateway implements ListingGateway {
     }
     private boolean sameUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        return user != null && user.getUid().equals(ownerUid) && user.isEmailVerified()
-            && UmEmailPolicy.isUmEmail(user.getEmail());
+        return user != null && VerifiedHostPolicy.permits(ownerUid, user.getUid(),
+                user.getEmail(), user.isEmailVerified());
     }
     private void request(String path, byte[] body, String contentType, String resultKey, Callback callback) {
         URI endpoint;
@@ -61,8 +62,15 @@ public final class WorkerListingGateway implements ListingGateway {
             return;
         }
         URI target = endpoint.resolve(path);
-        FirebaseAuth.getInstance().getCurrentUser().getIdToken(false).addOnCompleteListener(task -> {
+        FirebaseAuth.getInstance().getCurrentUser().getIdToken(true).addOnCompleteListener(task -> {
             if (!task.isSuccessful() || !sameUser() || task.getResult().getToken() == null) {
+                callback.failure(Problem.AUTH);
+                return;
+            }
+            Map<String, Object> claims = task.getResult().getClaims();
+            if (!Boolean.TRUE.equals(claims.get("email_verified"))
+                    || !(claims.get("email") instanceof String)
+                    || !UmEmailPolicy.isUmEmail((String) claims.get("email"))) {
                 callback.failure(Problem.AUTH);
                 return;
             }

@@ -391,6 +391,60 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   }), 'Draft cannot receive viewing requests');
   await assertDenied(clientA.delete(`listings/${draftId}`), 'Deletion deferred to Listing lifecycle');
 
+  console.log('5c. Testing verified UM Host through the real Worker handler and emulator Rules...');
+  const {createListingWorker} = require('../worker/listings');
+  const {webcrypto} = require('node:crypto');
+  let providerCalls = 0;
+  const worker = createListingWorker({cryptoApi: webcrypto, fetchImpl: async (url, options) => {
+    if (String(url).startsWith('https://api.cloudinary.com/')) {
+      providerCalls++;
+      const id = options.body.get('public_id');
+      return Response.json({public_id: id, resource_type: 'image', format: 'jpg',
+        secure_url: `https://res.cloudinary.com/fixture-cloud/image/upload/v1/${id}.jpg`});
+    }
+    assert.ok(String(url).startsWith('http://127.0.0.1:8080/v1/projects/demo-jiran/'),
+      'Host integration test must never call a live database');
+    return fetch(url, options);
+  }});
+  const workerEnv = {MODE: 'local', FIREBASE_PROJECT_ID: 'demo-jiran', CLOUDINARY_CLOUD_NAME: 'fixture-cloud',
+    CLOUDINARY_API_KEY: 'fake-key', CLOUDINARY_API_SECRET: 'fake-secret', CLOUDINARY_UPLOAD_PRESET: 'fixture'};
+  const hostInput = {areaId: 'sample-area', buildingName: 'Fictional Building', lat: 0, lng: 0,
+    coordinateSource: 'area_center_estimate', totalRentSen: 100000, depositSen: 0,
+    genderPref: 'any', amenities: [], exactAddress: 'Fictional Unit 1'};
+  const workerRequest = (path, token, photo = false) => worker.fetch(new Request(`http://127.0.0.1${path}`, {
+    method: 'POST', headers: {...(token ? {authorization: `Bearer ${token}`} : {}),
+      'content-type': photo ? 'image/jpeg' : 'application/json'},
+    body: photo ? new Uint8Array([255, 216, 255, 0]) : JSON.stringify(hostInput),
+  }), workerEnv);
+  assert.equal((await workerRequest('/listings', null)).status, 401);
+  deniedCount++;
+  const lookalike = await createAuthUser(authBase, `lookalike-${nonce}@siswa.um.edu.my.example.com`, 'pass123', true);
+  for (const account of [unverified, staff, outsider, lookalike]) {
+    await assertDenied(workerRequest('/listings', account.token), 'Worker denies ineligible Host creation');
+  }
+  const created = await workerRequest('/listings', studentA.token);
+  assert.equal(created.status, 201);
+  passedCount++;
+  const savedId = (await created.json()).listingId;
+  const saved = await clientA.get(`listings/${savedId}`);
+  assert.equal(saved.status, 200);
+  const savedFields = (await saved.json()).fields;
+  assert.equal(savedFields.ownerUid.stringValue, studentA.uid);
+  assert.equal(savedFields.status.stringValue, 'draft');
+  assert.ok(!savedFields.exactAddress);
+  await assertPermitted(clientA.get(`listings/${savedId}/private/location`), 'Worker-created address readable by Host');
+  await assertDenied(clientB.get(`listings/${savedId}/private/location`), 'Worker-created address hidden from stranger');
+  for (const account of [unverified, staff, outsider, lookalike, studentB]) {
+    await assertDenied(workerRequest(`/listings/${savedId}/photos`, account.token, true),
+      'Worker denies ineligible or non-owner photo upload');
+  }
+  assert.equal((await workerRequest(`/listings/${savedId}/photos`, null, true)).status, 401);
+  deniedCount++;
+  assert.equal(providerCalls, 0, 'Rejected Hosts never reach the photo provider');
+  await assertPermitted(workerRequest(`/listings/${savedId}/photos`, studentA.token, true),
+    'Verified Host uploads through a stub provider and real Rules');
+  assert.equal(providerCalls, 1);
+
   console.log('6. Testing Household & Co-household Data Isolation (Module 5)...');
   const householdId = `hh_${nonce}`;
   const setHhRes = await admin.set(`households/${householdId}`, {

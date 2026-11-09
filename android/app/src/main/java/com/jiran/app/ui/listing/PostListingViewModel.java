@@ -45,7 +45,7 @@ public final class PostListingViewModel extends ViewModel {
             || state.getValue() == State.PREPARING;
     }
     public boolean preparePhoto() {
-        if (!editable() || photos.size() >= 5) {
+        if (cleared || !editable() || photos.size() >= 5) {
             return false;
         }
         state.setValue(State.PREPARING);
@@ -71,7 +71,7 @@ public final class PostListingViewModel extends ViewModel {
         return !invalid.isEmpty() ? invalid : photos.isEmpty() ? "photos" : "";
     }
     public void save() {
-        if (busy() || state.getValue() == State.SAVED || state.getValue() == State.UNCERTAIN
+        if (cleared || busy() || state.getValue() == State.SAVED || state.getValue() == State.UNCERTAIN
             || !invalidField().isEmpty()) {
             return;
         }
@@ -122,9 +122,18 @@ public final class PostListingViewModel extends ViewModel {
     public void markInterrupted() {
         state.setValue(State.UNCERTAIN);
     }
-    @Override protected void onCleared() {
+    public void endSession() {
         cleared = true;
         photos.clear();
         form.address = "";
+        form.buildingName = "";
+        form.area = null;
+        form.rent = "";
+        form.deposit = "";
+        form.amenities.clear();
+    }
+
+    @Override protected void onCleared() {
+        endSession();
     }
 }

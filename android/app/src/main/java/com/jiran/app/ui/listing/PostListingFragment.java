@@ -22,12 +22,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.jiran.app.R;
 import com.jiran.app.data.AreaOption;
 import com.jiran.app.data.ListingGateway;
 import com.jiran.app.data.ListingPhotoReader;
 import com.jiran.app.data.WorkerListingGateway;
 import com.jiran.app.databinding.FragmentPostListingBinding;
+import com.jiran.app.domain.auth.UmEmailPolicy;
+import com.jiran.app.domain.auth.VerifiedHostPolicy;
+import com.jiran.app.ui.auth.LauncherActivity;
 import com.jiran.app.ui.common.InfoBannerView;
 import com.jiran.app.ui.common.JiranSnackbar;
 import java.util.concurrent.ExecutorService;
@@ -38,6 +43,9 @@ public class PostListingFragment extends Fragment {
     private FragmentPostListingBinding binding;
     private PostListingViewModel model;
     private int renderedPhotos = -1;
+    private String hostUid;
+    private boolean leavingSession;
+    private final FirebaseAuth.IdTokenListener hostListener = auth -> checkHostSession();
     private final ActivityResultLauncher<String[]> pickPhoto = registerForActivityResult(
     new ActivityResultContracts.OpenDocument(), uri -> {
         if (uri == null || !model.preparePhoto()) {
@@ -73,6 +81,11 @@ public class PostListingFragment extends Fragment {
     }
     @Override public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!allowsSampleData()) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            hostUid = savedInstanceState == null ? (user == null ? "" : user.getUid())
+                    : savedInstanceState.getString("hostUid", "");
+        }
         model = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull @Override @SuppressWarnings("unchecked")
             public <T extends ViewModel> T create(@NonNull Class<T> type) {
@@ -84,6 +97,52 @@ public class PostListingFragment extends Fragment {
                 return (T) created;
             }
         }).get(PostListingViewModel.class);
+    }
+
+    @Override public void onStart() {
+        super.onStart();
+        if (!allowsSampleData()) {
+            FirebaseAuth.getInstance().addIdTokenListener(hostListener);
+            checkHostSession();
+        }
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        if (!allowsSampleData()) {
+            checkHostSession();
+        }
+    }
+
+    @Override public void onStop() {
+        if (!allowsSampleData()) {
+            FirebaseAuth.getInstance().removeIdTokenListener(hostListener);
+        }
+        super.onStop();
+    }
+
+    private void checkHostSession() {
+        if (leavingSession || !isAdded()) {
+            return;
+        }
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        if (VerifiedHostPolicy.permits(hostUid, user == null ? null : user.getUid(),
+                user == null ? null : user.getEmail(), user != null && user.isEmailVerified())) {
+            return;
+        }
+        leavingSession = true;
+        if (binding != null) {
+            binding.getRoot().setVisibility(View.INVISIBLE);
+        }
+        model.endSession();
+        // Non-UM sessions must not loop back through Launcher's generic verified-account route.
+        if (user != null && !UmEmailPolicy.isUmEmail(user.getEmail())) {
+            auth.signOut();
+        }
+        android.content.Intent restart = new android.content.Intent(requireContext(), LauncherActivity.class);
+        restart.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(restart);
     }
     @Nullable @Override public View onCreateView(@NonNull LayoutInflater inflater,
     @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -275,6 +334,7 @@ public class PostListingFragment extends Fragment {
     }
     @Override public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString("hostUid", hostUid);
         outState.putBoolean("writeStarted", !model.listingId().isEmpty()
             || model.state().getValue() == PostListingViewModel.State.SAVING
             || model.state().getValue() == PostListingViewModel.State.UNCERTAIN);

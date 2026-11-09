@@ -165,3 +165,32 @@
 - **What the human changed or rejected:** TODO (Gathan)
 - **What the human understands and can explain:** TODO (Gathan)
 - **Limits:** Commit approval recorded; human review depth and understanding not verified. Live integration and recovery limitations above remain. Subtask 4 untouched.
+
+## 2026-11-09 · Verified UM Host check · E2.1 subtask 4 / FR2.1 / FR1.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact model not recorded
+- **Task:** Complete the local Subtask 4 Host check and verification, preserve the remaining story gaps and stop before committing.
+- **Prompts (exact):**
+  > I have reviewed the Subtask 3 handoff document (`E2.1 Subtask 3: Post step 1 / FR2.1`).
+  >
+  > Please proceed to **Subtask 4 (Verified UM Host check)** per `TASKS/E2/E2.1.md` to complete story E2.1.
+- **Output used:** `VerifiedHostPolicy`, Post entry/resume/session guard, in-memory private form cleanup, refreshed ID token and verified/email claim checks in `WorkerListingGateway`; policy/model JUnit checks; `VerifiedHostScreenTest`; direct Worker/real-emulator Rules cases with an intercepted Cloudinary provider in `product-rules-smoke.cjs`. Updated E2.1 task/row and Gathan handoffs. Existing Firestore Rules and auth providers unchanged. No staging, commit, push, live operations or deployment. Preserved pre-existing untracked root `gradle/` and `android/gradle/gradle-daemon-jvm.properties`.
+- **How it was tested or checked:** Required Android `lintDebug testDebugUnitTest checkstyleMain assembleDebug` passes using Studio JBR; 89 unit tests, zero failures/errors/skips. `assembleDebugAndroidTest` passes. API 37 `connectedDebugAndroidTest` for `VerifiedHostScreenTest`: 4 cases pass (signed-out, unverified student, verified staff, verified student then sign-out) against disposable `demo-jiran` Auth accounts. Existing `PostListingScreenTest` separately passes (1 case). Backend `npm test`: 380 tests/16 suites pass; `npm run check` passes. Auth/Firestore emulators started with explicit `--project demo-jiran`; `firestore-rule-check.cjs` passes diagnostic checks and 80 denied/41 allowed product cases. Worker cases use real emulator-issued tokens and Firestore Rules; reject ineligible creation/uploads and non-owner uploads with zero photo-provider calls, then verify a valid Host draft/private address/upload through a provider stub. No real images/provider calls. Git whitespace and staged-scope checks pass; nothing staged.
+- **Failures and corrections:** No failing implementation tests. The combined device class filter ran only the 4 Host cases; inspected the report and ran the Post regression class separately (passed). Gradle device tooling emitted a transitive protobuf `sun.misc.Unsafe` deprecation warning; build/tests succeeded. Official `firebase-auth-basics` skill read; retained the approved Java/email-password stack and existing local project.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Needs human review: session binding, private-state cleanup, token/Rules trust boundary. Emulator verification is simulated, not a real inbox or production-token validation. UI observes cached account/session metadata; fresh tokens/Rules guard writes, without a claim of instantaneous revocation of all issued tokens. An already accepted in-flight write cannot be undone by closing the form. Real Area seeds, deployed Free Worker/Cloudinary integration, quotas/cleanup, same-Building identity, E1.3 readiness, physical-device/human QA and full E2.1 acceptance remain unverified. All four subtasks have local implementations, but E2.1 stays `inprogress` under TASK.md's merged/QA requirements. Hours and human understanding not recorded.
+
+## 2026-11-09 · Commit approval · E2.1 subtask 4
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact model not recorded
+- **Task:** Commit the approved verified UM Host check locally.
+- **Prompts (exact):**
+  > Go ahead and commit
+- **Output used:** Authorized local commit of the Subtask 4 files described above with message `[E2.1] Enforce verified UM Host session checks`. Task resolution and handoff record approval; earlier entry describes the pre-approval state. Both unrelated Gradle paths excluded. No push or merge.
+- **How it was tested or checked:** Git branch/status and staged scope/whitespace checks. Implementation checks and passing results are recorded above; no implementation changes this turn, so tests were not rerun.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Commit approval recorded; depth of human review and understanding not verified. Story-level live integration and QA gaps remain; E2.1 stays inprogress.
