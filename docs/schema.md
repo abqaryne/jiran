@@ -180,6 +180,7 @@ change it. Full lifecycle and live provider verification remain pending.
 | `areaId` | string | Yes | Host | Foreign key to `areas/{areaId}`. `FR2.1`, `E2.1` |
 | `buildingName` | string | Yes | Host | Building/Property name (picked via place search / Cloudflare Worker place search proxy `[DRAFT]`). `FR2.1`, `E2.1` |
 | `placeId` | string | No | Host | Optional place ID `[DRAFT]`. `FR2.1` |
+| `coordinateSource` | string | Manual picker | Host on create | `area_center_estimate`: `lat`/`lng` describe the selected Area centre, not a verified Building. Immutable in current clients. Absent legacy values have unspecified provenance. Gathan approved 9 Nov 2026; FR2.1. |
 | `lat` | number | Yes | Host | General latitude for commute calculations. `FR4.1` `[PROPOSED]` |
 | `lng` | number | Yes | Host | General longitude for commute calculations. `FR4.1` `[PROPOSED]` |
 | `totalRentSen` | number | Yes | Host | Total monthly rent for entire unit in integer sen (RM). Price Rule: sum of all room prices <= `totalRentSen`. `FR2.1`, `E2.1` |

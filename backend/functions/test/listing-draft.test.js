@@ -19,7 +19,14 @@ test.each([
   {buildingName: ' '}, {buildingName: 'x'.repeat(201)}, {lat: NaN}, {lng: 181},
   {genderPref: 'invalid'}, {amenities: [false]}, {amenities: Array(11).fill('wifi')},
   {exactAddress: ''}, {ownerUid: 'stranger'}, {status: 'active'}, {photoUrls: ['https://example.com']},
-  {areaId: '../private'}, {placeId: null},
+  {areaId: '../private'}, {placeId: null}, {coordinateSource: 'verified'}, {coordinateSource: null},
 ])('rejects malformed or caller-controlled protected data: %j', override => {
   expect(() => makeListingDraft({...input(), ...override}, 'host', 'listing-1')).toThrow('invalid-listing');
+});
+
+test('manual picker keeps explicit estimate provenance beside general coordinates', () => {
+  const result = makeListingDraft({...input(), coordinateSource: 'area_center_estimate'}, 'host', 'listing-1');
+  expect(result.listing.coordinateSource).toBe('area_center_estimate');
+  expect(result.location).not.toHaveProperty('coordinateSource');
+  expect(result.listing).not.toHaveProperty('exactAddress');
 });

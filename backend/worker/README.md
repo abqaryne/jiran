@@ -13,6 +13,12 @@ Both routes require `Authorization: Bearer <Firebase ID token>`.
 | `POST /listings/{listingId}/photos` | Raw JPEG/PNG bytes and matching Content-Type | 201 `{photoUrl}` after upload **and** Firestore save |
 
 Draft creation atomically commits `listings/{id}` and its `private/location`.
+The manual picker also sends `coordinateSource: "area_center_estimate"`.
+It persists beside `lat`/`lng`; these are estimated Area-centre coordinates,
+not a verified Building location. The source cannot be removed/changed by an
+update. Legacy documents without the field have unspecified provenance.
+The Host types `exactAddress` only for the private location document (Gathan
+approved this fallback on 9 Nov 2026).
 The decoded JWT subject is an **untrusted hint**, not authentication. Firestore
 verifies the caller's token and enforces `ownerUid == request.auth.uid` before
 accepting the commit. No service account or Admin SDK bypasses Rules.

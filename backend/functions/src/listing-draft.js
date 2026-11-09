@@ -1,7 +1,7 @@
 'use strict';
 
 const INPUT_FIELDS = ['areaId', 'buildingName', 'placeId', 'lat', 'lng', 'totalRentSen',
-  'depositSen', 'genderPref', 'amenities', 'exactAddress'];
+  'depositSen', 'genderPref', 'amenities', 'exactAddress', 'coordinateSource'];
 
 function validText(value, max) {
   return typeof value === 'string' && value.trim().length > 0 && value.length <= max;
@@ -17,6 +17,7 @@ function makeListingDraft(input, uid, listingId) {
       || (input.placeId !== undefined && !validText(input.placeId, 256))
       || !Number.isFinite(input.lat) || Math.abs(input.lat) > 90
       || !Number.isFinite(input.lng) || Math.abs(input.lng) > 180
+      || (input.coordinateSource !== undefined && input.coordinateSource !== 'area_center_estimate')
       || !Number.isSafeInteger(input.totalRentSen) || input.totalRentSen <= 0
       || !Number.isSafeInteger(input.depositSen) || input.depositSen < 0
       || !['male_only', 'female_only', 'any'].includes(input.genderPref)
@@ -30,6 +31,7 @@ function makeListingDraft(input, uid, listingId) {
     genderPref: input.genderPref, amenities: [...input.amenities], photoUrls: [],
     isSample: false, status: 'draft'};
   if (input.placeId !== undefined) listing.placeId = input.placeId;
+  if (input.coordinateSource !== undefined) listing.coordinateSource = input.coordinateSource;
   return {listing, location: {exactAddress: input.exactAddress.trim(), residentUids: [uid]}};
 }
 

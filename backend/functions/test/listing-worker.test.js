@@ -17,6 +17,7 @@ test('creates draft and private location in one commit; server timestamps; no ad
     const {writes} = JSON.parse(options.body);
     expect(writes).toHaveLength(2);
     expect(writes[0].update.fields).not.toHaveProperty('exactAddress');
+    expect(writes[0].update.fields.coordinateSource.stringValue).toBe('area_center_estimate');
     expect(writes[1].update.fields.exactAddress.stringValue).toBe('Fictional Unit 1');
     expect(writes[0].updateTransforms).toContainEqual({fieldPath: 'createdAt', setToServerValue: 'REQUEST_TIME'});
     return Response.json({});
@@ -24,6 +25,7 @@ test('creates draft and private location in one commit; server timestamps; no ad
   const request = new Request('https://worker.example/listings', {method: 'POST',
     headers: {...headers, 'content-type': 'application/json'}, body: JSON.stringify({
       areaId: 'sample-area', buildingName: 'Fictional Building', lat: 0, lng: 0,
+      coordinateSource: 'area_center_estimate',
       totalRentSen: 100000, depositSen: 0, genderPref: 'any', amenities: [], exactAddress: 'Fictional Unit 1',
     })});
   const response = await createListingWorker({fetchImpl, cryptoApi: webcrypto}).fetch(request, env);

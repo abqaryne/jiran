@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
     <application android:usesCleartextTraffic="true">
+        <activity android:name=".ui.gallery.PostPreviewActivity" android:exported="false"
+            android:theme="@style/Theme.Jiran" android:windowSoftInputMode="adjustResize" />
         <!-- Debug-only component gallery: every design system component in one scroll. Launcher: "Jiran UI". -->
         <activity
             android:name="com.jiran.app.ui.gallery.ComponentGalleryActivity"

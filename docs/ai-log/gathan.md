@@ -131,3 +131,37 @@
 - **What the human changed or rejected:** TODO (Gathan)
 - **What the human understands and can explain:** TODO (Gathan)
 - **Limits:** Commit approval is recorded; human review depth and understanding are not verified. Subtask 2 integration and live-data limitations above remain.
+
+## 2026-11-09 · Post screens step 1 · E2.1 subtask 3 / FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact model not recorded
+- **Task:** Implement only Subtask 3, verify locally, stop before staging or committing.
+- **Prompts (exact):**
+  > I've reviewed the Subtask 2 handoff notes. Proceed to **Subtask 3 (Post screens, step 1)** per `TASKS/E2/E2.1.md`.
+  >
+  > Work strictly on Subtask 3, run all relevant tests when finished, and STOP for my review before committing.
+
+  Assistant clarification: “The picker returns Area-centre estimates, while the Worker requires Building coordinates. May Subtask 3 save those coordinates with an explicit `coordinateSource = area_center_estimate` field, and collect the exact Unit address in a private-only field? This requires a small schema/Worker/Rules update so estimates stay identifiable.”
+
+  > Yes, use labelled estimates and private address
+
+- **Output used:** Local Java/XML Post form and shell navigation; Building picker integration; `ListingForm`, `PostListingViewModel`, `ListingGateway`, `WorkerListingGateway`, `ListingPhotoReader`; sample-only debug preview; JUnit and focused device test. Small approved JS draft/Firestore Rules provenance extension with Jest/emulator cases. PRD, schema, task tracking, Worker/picker handoffs and `docs/team/gathan/e2.1-post-step-one.md` updated. No staging, commit, push, deployment, real area seeds, real photos or live account operations. Existing untracked root `gradle/` preserved. Subtask 4 and E2.2 remain untouched.
+- **How it was tested or checked:** Android `gradlew.bat lintDebug testDebugUnitTest checkstyleMain assembleDebug --console=plain` using Studio JBR; 87 JUnit tests (11 new), zero failures/errors. Backend `npm test`: 380 tests in 16 suites pass; `npm run check` passes. Local Standard-edition Auth/Firestore emulator `demo-jiran`, `node scripts/firestore-rule-check.cjs`: diagnostic pass, 68 denials and 38 permissions; new cases reject invalid provenance on create/update and deletion of estimate source. Focused `connectedDebugAndroidTest '-Pandroid.testInstrumentationRunnerArguments.class=com.jiran.app.PostListingScreenTest'` passes on API 37: synthetic photo orientation/GPS removal, bounds, invalid form blocking, chooser result and sequential sample save with no network. This device test preceded final icon/inset/layout polish; required Android checks rerun afterward. Inspected normal/200% font layouts and verified typed address survives configuration recreation. Original font scale was 1.0 and restored. Git whitespace/scope checks performed.
+- **Failures and corrections:** Initial Checkstyle failed with `OneStatementPerLine` (38 violations); reformatted new Java and passed. First device-test command failed with `Task '.testInstrumentationRunnerArguments.class=com.jiran.app.PostListingScreenTest' not found` because PowerShell required quoting the Gradle property. Initial device tests reported `AssertionError: Check the highlighted fields...` then `AssertionError: Selected photo reaches the form`; corrected the test to wait for async photo delivery and match the chooser MIME type/category, then passed. First APK install before boot returned `Can't find service: package`; retried after boot successfully. Visual inspection found low-contrast soft-button icons and content scrolling behind the system bar; corrected with existing tokens/insets. One documentation patch failed to match and was reapplied against the exact existing text.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Needs human review, particularly Security Rules, private/public mapping, upload authorization and failure handling. Official `firebase-firestore` and `firestore-rules-creation` skills were read; existing Standard `demo-jiran` used, no deployment/new database. Endpoint defaults empty; real Android-to-Worker/Cloudinary save, real seeds, production token flow, quota/CPU/load behavior, TalkBack, Malay copy, Figma/human QA and E1.3 readiness are not verified. Photo checks use synthetic media and a fake gateway, not provider evidence. Ambiguous network outcomes block retry; automatic reconciliation, draft resume/edit and orphan cleanup are not implemented. Private unsaved form data/photos survive rotation only, not process death/exit. Legacy coordinates have unspecified provenance; same-Building identity/geocoding remain open. Human understanding, review depth and hours not recorded.
+
+## 2026-11-09 · Commit approval · E2.1 subtask 3
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact model not recorded
+- **Task:** Commit the approved Post step 1 changes locally.
+- **Prompts (exact):**
+  > Looks good, go ahead and commit
+- **Output used:** Authorized local commit of the Subtask 3 files described above with message `[E2.1] Add Post step one form and draft saving`. Task resolution and handoff record approval. Earlier entry describes the pre-approval state. Unrelated root `gradle/` excluded. No push or merge.
+- **How it was tested or checked:** Git branch/status and commit scope inspected; staged whitespace check. Implementation checks and results are recorded above. No implementation changes during this commit turn; tests not rerun.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Commit approval recorded; human review depth and understanding not verified. Live integration and recovery limitations above remain. Subtask 4 untouched.

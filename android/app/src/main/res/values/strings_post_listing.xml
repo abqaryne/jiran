@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="post_sample">Sample preview · nothing is uploaded or saved.\n%1$s</string>
+    <string name="post_title">New Listing</string>
+    <string name="post_back">Back</string>
+    <string name="post_intro">Step 1 · Save a private draft. Your Listing stays hidden until Rooms and prices are ready.</string>
+    <string name="post_photos">Photos</string>
+    <string name="post_photo_help">Add 1–5 JPEG or PNG photos. Choose photos without people, addresses or phone numbers. Uploaded images have public links.</string>
+    <string name="post_add_photo">Add photo</string>
+    <string name="post_remove_photo">Remove photo %1$d</string>
+    <string name="post_photo_description">Selected photo %1$d</string>
+    <string name="post_photo_error">Could not prepare this photo. Choose a JPEG or PNG up to 20 MB.</string>
+    <string name="post_choose_building">Choose Building</string>
+    <string name="post_building_help">Choose an Area and enter the Building name.</string>
+    <string name="post_building_summary">%1$s · %2$s\nLocation estimate: Area centre, not the exact Building.</string>
+    <string name="post_address">Unit address (private)</string>
+    <string name="post_rent">Unit rent per month (RM)</string>
+    <string name="post_deposit">Deposit (RM)</string>
+    <string name="post_private_help">Your address stays private until a Connection. Enter the full address here because this Building was selected manually.</string>
+    <string name="post_gender">Gender preference</string>
+    <string name="post_any">Any</string>
+    <string name="post_male">Male</string>
+    <string name="post_female">Female</string>
+    <string name="post_amenities">Amenities</string>
+    <string name="post_wifi">Wi-Fi</string>
+    <string name="post_aircon">Air conditioning</string>
+    <string name="post_washing">Washing machine</string>
+    <string name="post_save">Save private draft</string>
+    <string name="post_retry">Retry unfinished save</string>
+    <string name="post_preparing">Preparing photo…</string>
+    <string name="post_saving">Saving your private draft…</string>
+    <string name="post_uploading">Uploading photos · %1$d of %2$d saved</string>
+    <string name="post_saved">Draft saved privately. It is not published. Rooms and prices are the next step.</string>
+    <string name="post_unavailable">Saving is unavailable right now. Your form is still here.</string>
+    <string name="post_auth">Sign in with your verified UM account to save. Your form is still here.</string>
+    <string name="post_rejected">The save was rejected. Check your details and account before trying again.</string>
+    <string name="post_uncertain">Save outcome unknown. A draft or photo may have been saved. Do not submit it again until its saved state has been checked.</string>
+    <string name="post_invalid">Check the highlighted fields, choose a Building and add at least one photo.</string>
+    <string name="post_required_address">Enter a private address, up to 500 characters.</string>
+    <string name="post_invalid_rent">Enter a positive amount with at most two decimal places.</string>
+    <string name="post_invalid_deposit">Enter zero or a positive amount with at most two decimal places.</string>
+    <string name="post_leave_title">Leave this form?</string>
+    <string name="post_leave_body">Unsaved details will be lost. Any draft or photos already saved remain private.</string>
+    <string name="post_leave">Leave</string>
+    <string name="post_stay">Stay</string>
+</resources>

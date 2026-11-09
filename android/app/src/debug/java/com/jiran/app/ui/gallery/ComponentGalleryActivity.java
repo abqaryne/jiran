@@ -21,6 +21,8 @@ public class ComponentGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityComponentGalleryBinding binding = ActivityComponentGalleryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.previewPost.setOnClickListener(button -> startActivity(
+                new android.content.Intent(this, PostPreviewActivity.class)));
         binding.previewBuildingPicker.setOnClickListener(button -> {
             if (getSupportFragmentManager().findFragmentByTag("building-picker") == null) {
                 new SampleBuildingPickerDialog().show(getSupportFragmentManager(), "building-picker");

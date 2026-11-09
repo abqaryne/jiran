@@ -340,6 +340,7 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   const {makeListingDraft} = require('../functions/src/listing-draft');
   const draftId = `draft_${nonce}`;
   const draft = makeListingDraft({areaId: 'sample-area', buildingName: 'Fictional Building',
+    coordinateSource: 'area_center_estimate',
     lat: 0, lng: 0, totalRentSen: 100000, depositSen: 0, genderPref: 'any',
     amenities: ['wifi'], exactAddress: 'Fictional Unit 1'}, studentA.uid, draftId);
   const prefix = `projects/${project}/databases/(default)/documents`;
@@ -353,7 +354,13 @@ async function checkProductRules({authBase, firestoreHost, project}) {
     [clientUnverified, 'Unverified'], [clientStaff, 'Staff'], [clientOutsider, 'Non-UM']]) {
     await assertDenied(client.commit(draftWrites()), `${label} draft creation`);
   }
+  draft.listing.coordinateSource = 'verified';
+  await assertDenied(clientA.commit(draftWrites()), 'Reject invented coordinate provenance on create');
+  draft.listing.coordinateSource = 'area_center_estimate';
   await assertPermitted(clientA.commit(draftWrites()), 'Host creates draft and private location atomically');
+  await assertDenied(clientA.set(`listings/${draftId}`, {}, ['coordinateSource']), 'Cannot erase estimate source');
+  await assertDenied(clientA.set(`listings/${draftId}`, {coordinateSource: 'verified'}, ['coordinateSource']),
+    'Cannot relabel estimates as verified');
   await assertPermitted(clientA.get(`listings/${draftId}`), 'Host reads draft');
   await assertPermitted(clientA.get(`listings/${draftId}/private/location`), 'Host reads draft address');
   await assertDenied(clientB.get(`listings/${draftId}`), 'Stranger reads draft');

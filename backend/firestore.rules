@@ -188,7 +188,8 @@ service cloud.firestore {
         'totalRentSen', 'depositSen', 'genderPref', 'amenities', 'photoUrls',
         'isSample', 'status', 'createdAt', 'updatedAt'];
       return data.keys().hasAll(required)
-        && data.keys().hasOnly(required.concat(['placeId', 'expiresAt']))
+        && data.keys().hasOnly(required.concat(['placeId', 'expiresAt', 'coordinateSource']))
+        && (!('coordinateSource' in data) || data.coordinateSource == 'area_center_estimate')
         && data.listingId == listingId && listingId.matches('[A-Za-z0-9_-]{1,128}')
         && listingText(data.ownerUid, 128)
         && listingText(data.areaId, 128) && data.areaId.matches('[A-Za-z0-9_-]+')
@@ -236,7 +237,7 @@ service cloud.firestore {
         && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.updatedAt == request.time
         && request.resource.data.isSample == resource.data.isSample
-        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['expiresAt'])
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['expiresAt', 'coordinateSource'])
         && request.resource.data.status == resource.data.status;
       // Publication (including the priced vacant Room gate) belongs to E2.2.
       allow delete: if false;

@@ -21,6 +21,9 @@ android {
         testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
         buildConfigField 'String', 'FUNCTIONS_REGION', '"us-central1"'
         buildConfigField 'boolean', 'USE_FIREBASE_EMULATORS', 'false'
+        // Public endpoint only; configure locally after Aaron verifies the Free Worker deployment.
+        buildConfigField 'String', 'LISTING_API_BASE_URL', groovy.json.JsonOutput.toJson(
+                providers.gradleProperty('listingApiBaseUrl').getOrElse(''))
     }
     buildTypes {
         debug {

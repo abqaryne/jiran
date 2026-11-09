@@ -6,6 +6,9 @@
     android:id="@+id/nav_main"
     app:startDestination="@id/homeFragment">
 
+    <fragment android:id="@+id/postListingFragment"
+        android:name="com.jiran.app.ui.listing.PostListingFragment"
+        android:label="@string/post_title" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.jiran.app.ui.home.HomeFragment"

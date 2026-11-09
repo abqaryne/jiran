@@ -44,12 +44,16 @@ public class ShellActivity extends AppCompatActivity {
 
             @Override
             public void onPostClicked() {
-                // Module 2: open the Post a room flow here.
+                if (navController.getCurrentDestination() != null
+                        && navController.getCurrentDestination().getId() != R.id.postListingFragment) {
+                    navController.navigate(R.id.postListingFragment);
+                }
             }
         });
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
+            binding.tabBar.setVisibility(id == R.id.postListingFragment ? android.view.View.GONE : android.view.View.VISIBLE);
             if (id == R.id.homeFragment) {
                 binding.tabBar.setSelectedTab(JiranTabBar.Tab.HOME);
             } else if (id == R.id.roomsFragment) {
