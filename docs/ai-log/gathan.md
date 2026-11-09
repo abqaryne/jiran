@@ -194,3 +194,16 @@
 - **What the human changed or rejected:** TODO (Gathan)
 - **What the human understands and can explain:** TODO (Gathan)
 - **Limits:** Commit approval recorded; depth of human review and understanding not verified. Story-level live integration and QA gaps remain; E2.1 stays inprogress.
+
+## 2026-11-09 · Push and pull request · E2.1 / FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact model not recorded
+- **Task:** Push the approved E2.1 branch and open a PR into main using gh.
+- **Prompts (exact):**
+  > Please push the branch `gathan/e2.1-building-rent` to origin and open a Pull Request into `main` using `gh pr create` summarizing Epic E2.1.
+- **Output used:** Branch pushed to origin; [PR #15](https://github.com/abqaryne/jiran/pull/15) created with all four local subtasks, previous test evidence and remaining gaps. Task row, resolution and verified-Host handoff linked to the PR. No implementation changes, merge or deployment. Unrelated Gradle files preserved.
+- **How it was tested or checked:** Git branch/status/history and comparison to fetched origin/main inspected. GitHub confirmed PR #8 remains OPEN, so its E0.5 dependency is explicitly documented. gh pr create returned PR #15. Implementation tests were not rerun for publication; previous passing evidence above applies. PR CI result is not verified in this entry. Initial status emitted an fsmonitor IPC error; subsequent Git checks disable fsmonitor. A temporary PR-body file was unavailable after context continuation and was recreated before successful creation.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Still inprogress; live integration and human QA remain unverified. Security Rules and authorization need human review. PR #8 is not merged. Human understanding and actual hours not recorded.
