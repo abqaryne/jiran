@@ -122,7 +122,7 @@
 ## 2026-11-09 · Commit approval · E2.1 subtask 2
 
 - **Human owner:** Gathan
-- **AI tool and model:** Codex; exact model for this commit turn not recorded
+- **AI tool and model:** Codex; GPT-6 Astra
 - **Task:** Commit the approved Building picker subtask locally.
 - **Prompts (exact):**
   > Go ahead and commit
@@ -135,7 +135,7 @@
 ## 2026-11-09 · Post screens step 1 · E2.1 subtask 3 / FR2.1
 
 - **Human owner:** Gathan
-- **AI tool and model:** Codex; exact model not recorded
+- **AI tool and model:** Codex; GPT-6 Astra
 - **Task:** Implement only Subtask 3, verify locally, stop before staging or committing.
 - **Prompts (exact):**
   > I've reviewed the Subtask 2 handoff notes. Proceed to **Subtask 3 (Post screens, step 1)** per `TASKS/E2/E2.1.md`.
@@ -156,7 +156,7 @@
 ## 2026-11-09 · Commit approval · E2.1 subtask 3
 
 - **Human owner:** Gathan
-- **AI tool and model:** Codex; exact model not recorded
+- **AI tool and model:** Codex; GPT-6 Astra
 - **Task:** Commit the approved Post step 1 changes locally.
 - **Prompts (exact):**
   > Looks good, go ahead and commit
@@ -169,7 +169,7 @@
 ## 2026-11-09 · Verified UM Host check · E2.1 subtask 4 / FR2.1 / FR1.1
 
 - **Human owner:** Gathan
-- **AI tool and model:** Codex; exact model not recorded
+- **AI tool and model:** Codex; GPT-6 Astra
 - **Task:** Complete the local Subtask 4 Host check and verification, preserve the remaining story gaps and stop before committing.
 - **Prompts (exact):**
   > I have reviewed the Subtask 3 handoff document (`E2.1 Subtask 3: Post step 1 / FR2.1`).
@@ -185,7 +185,7 @@
 ## 2026-11-09 · Commit approval · E2.1 subtask 4
 
 - **Human owner:** Gathan
-- **AI tool and model:** Codex; exact model not recorded
+- **AI tool and model:** Codex; GPT-6 Astra
 - **Task:** Commit the approved verified UM Host check locally.
 - **Prompts (exact):**
   > Go ahead and commit
@@ -198,7 +198,7 @@
 ## 2026-11-09 · Push and pull request · E2.1 / FR2.1
 
 - **Human owner:** Gathan
-- **AI tool and model:** Codex; exact model not recorded
+- **AI tool and model:** Codex; GPT-6 Astra
 - **Task:** Push the approved E2.1 branch and open a PR into main using gh.
 - **Prompts (exact):**
   > Please push the branch `gathan/e2.1-building-rent` to origin and open a Pull Request into `main` using `gh pr create` summarizing Epic E2.1.
