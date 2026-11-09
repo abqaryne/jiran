@@ -321,6 +321,22 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertDenied(clientC.get(`listings/${listingId}/private/location`), 'Unaccepted student C reads exact address');
 
   console.log('5b. Testing E2.1 private drafts and field validation...');
+  console.log('Testing E2.1 Building picker area access...');
+  await assertPermitted(admin.set(`areas/sample_${nonce}`, {
+    areaId: `sample_${nonce}`, name: 'Fictional sample area', lat: 0, lng: 0,
+  }), 'Admin seeds fictional area reference');
+  for (const [client, label] of [[anon, 'Anonymous'], [clientUnverified, 'Unverified'],
+    [clientStaff, 'Staff'], [clientOutsider, 'Non-UM']]) {
+    await assertDenied(client.get(`areas/sample_${nonce}`), `${label} reads area reference`);
+  }
+  await assertPermitted(clientA.get(`areas/sample_${nonce}`), 'Verified UM student reads area reference');
+  await assertDenied(clientA.set(`areas/sample_${nonce}`, {lat: 1}, ['lat']), 'Student cannot edit seeded area');
+  const areaQuery = await fetch(`${base}:runQuery`, {
+    method: 'POST', headers: {'Content-Type': 'application/json', Authorization: `Bearer ${studentA.token}`},
+    body: JSON.stringify({structuredQuery: {from: [{collectionId: 'areas'}], limit: 501}}),
+    signal: AbortSignal.timeout(10000),
+  });
+  await assertPermitted(Promise.resolve(areaQuery), 'Picker bounded areas query');
   const {makeListingDraft} = require('../functions/src/listing-draft');
   const draftId = `draft_${nonce}`;
   const draft = makeListingDraft({areaId: 'sample-area', buildingName: 'Fictional Building',

@@ -1,0 +1,4 @@
+<resources>
+    <string name="gallery_building_picker" translatable="false">Preview Building picker (sample data)</string>
+    <string name="gallery_building_result" translatable="false">Sample selection: %1$s · %2$s</string>
+</resources>

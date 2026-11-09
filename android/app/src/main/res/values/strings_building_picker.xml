@@ -1,0 +1,17 @@
+<resources>
+    <string name="building_picker_title">Pick a Building</string>
+    <string name="building_picker_name">Building name</string>
+    <string name="building_picker_area">Search areas</string>
+    <string name="building_picker_estimate">Enter the Building name and choose its area. The area centre is an estimated location, not an exact Building address.</string>
+    <string name="building_picker_sample">Sample data preview. These fictional areas and coordinates are for testing only. The location is an estimate.</string>
+    <string name="building_picker_loading">Loading areas…</string>
+    <string name="building_picker_empty">No areas are available yet. Try again after the area list is ready.</string>
+    <string name="building_picker_error">Areas could not be loaded. Check your connection and try again.</string>
+    <string name="building_picker_auth">Sign in with your verified UM student account to load areas.</string>
+    <string name="building_picker_choose_area">Choose an area from the list. Typing a name alone does not select it.</string>
+    <string name="building_picker_selected">Selected area: %1$s</string>
+    <string name="building_picker_invalid_name">Enter a Building name of 1–200 characters.</string>
+    <string name="building_picker_retry">Try again</string>
+    <string name="building_picker_confirm">Use this Building</string>
+    <string name="building_picker_close">Close Building picker</string>
+</resources>

@@ -104,3 +104,30 @@
 - **What the human changed or rejected:** TODO (Gathan)
 - **What the human understands and can explain:** TODO (Gathan)
 - **Limits:** Approval to commit is recorded; depth of human review and understanding is not verified. Live/provider/device and quota limitations from the preceding entry remain.
+
+## 2026-11-09 · Building picker · E2.1 subtask 2 / FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex, GPT-6 Astra
+- **Task:** Implement only subtask 2 using the existing decision for seeded areas plus a typed Building name; stop before staging/committing or proceeding to subtask 3.
+- **Prompts (exact):**
+  > Okay please proceed to do subtask 2
+- **Output used:** Android `AreaOption`, `AreaSource`, `FirestoreAreaSource`, `BuildingPickerViewModel`, `BuildingPickerDialog`, XML layouts and string resources; debug-only `SampleBuildingPickerDialog` and gallery entry; JUnit tests and area access cases in `backend/scripts/product-rules-smoke.cjs`. Updated E2.1 task/row and `docs/team/gathan/e2.1-building-picker.md`. No staging, commit, push, live data changes or deployment. Existing untracked `gradle/` preserved.
+- **How it was tested or checked:** Required Android `lintDebug testDebugUnitTest checkstyleMain assembleDebug` passes with Studio JBR; 76 JUnit tests, including 12 new area/model tests, zero failures/errors. Backend `npm test`: 377 tests across 16 suites pass; `npm run check` passes. Auth/Firestore emulators for `demo-jiran`, `node scripts/firestore-rule-check.cjs`: diagnostic checks pass plus 65 denied and 38 permitted product-rule cases, including the bounded areas query and denied client seed writes. API 37 emulator debug preview: typed Building name, searched sample areas, selected an area, observed confirmation change from disabled to enabled, and received the result in the gallery. Screenshot inspection at normal and 200% font size; typed Building name survived font-size recreation. Font setting restored to 1.0. No real area data was written; sample coordinates are explicitly fictional. Final whitespace and working-tree checks performed.
+- **Failures and corrections:** First Android lint run failed with `169 errors` / `MissingTranslation` after a new Malay locale exposed missing translations throughout the existing app. Removed this subtask's partial locale addition, preserved English string resources, and reran successfully without suppressing lint. Visual inspection found missing horizontal padding in the area field; corrected with design tokens and reran Android checks. The initial streaming APK install stalled; stopped it and `adb install --no-streaming -r` succeeded. ADB initially could not start inside the sandbox; authorized elevated commands worked. One early UI dump returned `null root node` during startup; a later dump and screenshots succeeded.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Local picker implementation only; real seeded-area data and the authenticated Android-to-Firestore path not verified. Repository has no area seed dataset or geocoding endpoint. Area-centre coordinates are explicitly estimates and are returned under `areaLatitude`/`areaLongitude`, not misrepresented as precise Building coordinates. No exactAddress/placeId invented. Same-Building identity across spelling variants, geocoding quota, private address capture, Post form integration, E1.3 readiness, Malay localization, TalkBack, Figma/human QA and end-to-end FR2.1 remain unverified. Subtasks 3–4 untouched. Human review/understanding and hours not recorded.
+
+## 2026-11-09 · Commit approval · E2.1 subtask 2
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact model for this commit turn not recorded
+- **Task:** Commit the approved Building picker subtask locally.
+- **Prompts (exact):**
+  > Go ahead and commit
+- **Output used:** Authorized local commit of the Subtask 2 files described above, with message `[E2.1] Add Building picker with Area selection`; updated task resolution to record approval. Earlier entry describes the pre-approval state. Existing untracked `gradle/` excluded. No push or merge.
+- **How it was tested or checked:** Git branch, status and diff inspected. Implementation checks and results are recorded above; no behavior changes in this commit turn, so tests were not rerun.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Commit approval is recorded; human review depth and understanding are not verified. Subtask 2 integration and live-data limitations above remain.

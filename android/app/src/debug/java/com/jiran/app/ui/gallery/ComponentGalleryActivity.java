@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.jiran.app.databinding.ActivityComponentGalleryBinding;
+import com.jiran.app.R;
+import com.jiran.app.ui.listing.BuildingPickerDialog;
 import com.jiran.app.ui.common.JiranSnackbar;
 import com.jiran.app.ui.common.JiranTabBar;
 
@@ -19,6 +21,15 @@ public class ComponentGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityComponentGalleryBinding binding = ActivityComponentGalleryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.previewBuildingPicker.setOnClickListener(button -> {
+            if (getSupportFragmentManager().findFragmentByTag("building-picker") == null) {
+                new SampleBuildingPickerDialog().show(getSupportFragmentManager(), "building-picker");
+            }
+        });
+        getSupportFragmentManager().setFragmentResultListener(BuildingPickerDialog.RESULT_KEY, this,
+                (key, result) -> JiranSnackbar.make(binding.getRoot(),
+                        getString(R.string.gallery_building_result, result.getString("buildingName"),
+                                result.getString("areaName"))).show());
 
         binding.fieldError.setError("Use your @siswa.um.edu.my email");
         binding.showToast.setOnClickListener(v ->
