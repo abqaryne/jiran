@@ -97,7 +97,7 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 | [E10.2](TASKS/E10/E10.2.md) | E10 - Profile, privacy and polish (P1) | backlog | ui | Ary | 20 Dec | Polish: empty states, errors, accessibility |
 | [T1.1](TASKS/T1/T1.1.md) | T1 - Research and validation | inprogress | research | Aly | 8 Nov (launch 31 Oct) | Survey and interviews |
 | [T1.2](TASKS/T1/T1.2.md) | T1 - Research and validation | backlog | research | Aly | 15 Nov | Survey analysis |
-| [T1.3](TASKS/T1/T1.3.md) | T1 - Research and validation | backlog | research | Dafi | 13 Nov | Verify the assumed numbers |
+| [T1.3](TASKS/T1/T1.3.md) | T1 - Research and validation | inprogress | research | Dafi | 13 Nov | Verify the assumed numbers |
 | [T1.4](TASKS/T1/T1.4.md) | T1 - Research and validation | backlog | research | Dafi | 8 Nov (timetable), 13 Nov (estimates) | UM shuttle timetable and commute estimates |
 | [T1.5](TASKS/T1/T1.5.md) | T1 - Research and validation | backlog | process | Dafi | 15 Nov | Requirements freeze |
 | [T2.1](TASKS/T2/T2.1.md) | T2 - Testing and quality | backlog | qa | Aly | 15 Nov (plan), 27 Dec (run) | Test plan and integration tests |
@@ -105,7 +105,7 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 | [T2.3](TASKS/T2/T2.3.md) | T2 - Testing and quality | inprogress | qa / rules | Gathan | 27 Dec | NFR2: privacy and security evidence |
 | [T2.4](TASKS/T2/T2.4.md) | T2 - Testing and quality | backlog | qa / research | Aly | 27 Dec | Usability test |
 | [T2.5](TASKS/T2/T2.5.md) | T2 - Testing and quality | backlog | qa | Aly | 27 Dec | Release check |
-| [T3.1](TASKS/T3/T3.1.md) | T3 - Video | backlog | video | Ary | 20 Dec | Script and screen captures |
+| [T3.1](TASKS/T3/T3.1.md) | T3 - Video | inprogress | video | Ary | 20 Dec | Script and screen captures |
 | [T3.2](TASKS/T3/T3.2.md) | T3 - Video | backlog | video | Aly | 2 Jan | Record, edit and final cut |
-| [T4.1](TASKS/T4/T4.1.md) | T4 - Report and AI Usage Log | backlog | docs | Dafi | 9 Jan | Report sections |
+| [T4.1](TASKS/T4/T4.1.md) | T4 - Report and AI Usage Log | inprogress | docs | Dafi | 9 Jan | Report sections |
 | [T4.2](TASKS/T4/T4.2.md) | T4 - Report and AI Usage Log | inprogress | docs / process | Ilham | 9 Jan | AI Usage Log appendix (Appendix 2(b)) |
