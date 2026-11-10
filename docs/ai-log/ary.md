@@ -737,3 +737,18 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary accepted the draft state and chose to tidy the file without Gathan. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to explain why a draft is hidden until E2.2 adds a priced vacant Room.
 - **Limits:** the owner READMEs are changed in PR #16, not here, to avoid a conflict.
+
+## 2026-11-10 · Final task files: no more open questions or decision lists · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** Ary found the open questions and the cross-file dependencies too complicated and asked to finalize every requirement now, with no *Decisions taken* or *Open questions* sections.
+- **Prompts (exact):**
+  > sumpah yang open questions dan yang bergantungan satu sama lain ini ngeribetin deh, gimana ya
+
+  > sumpah yang masih decisions taken, kayknya finalize sekarang aj dh gaperlu decisions taken lagi atau apapun open pertanyaan itu dan requirement dan segala macemnya finalize sekarang aj a
+- **Output used:** in 61 task files (E2.1 was done in the commit before this one), committed to PR #15 because PR #16 was already merged: every *Decisions taken* line written into *Constraints* as a final rule, without dates or attribution, and history lines dropped (the 29 Oct any-email decision, the 30 Oct gender proposal, "status lives only in ClickUp"); both sections removed; the reverse *Blocks* header line removed (only *Depends on* stays). The 25 open questions were closed: 6 became new subtasks (E0.2 deploy the Worker, E1.1 and E1.2 real-device tests, E3.3 mark open checks, E10.2 Malay reviewer, T3.1 rubric), 9 became constraints (estimates until the 13 Nov survey for E2.2, E3.4, E4.4, E6.2; shuttle leg and row hidden until T1.4; final E10.1 retention text; T1.4; T4.2), and the rest were already answered or covered by a subtask (ADR-0007 final, E1.1 Rules merged with PR #8, E8.1 provider final as Gemini free tier, the postgraduate domain out of scope). E1.1 subtask 6 is now ✅ because Ary's review is enough. The "Open questions waiting for you" and "Decided on 31 Oct" lists were removed from the six owner READMEs; `AGENTS.md`, `master-prompt.md` and `TASK.md` describe the new rule.
+- **How it was tested or checked:** a script did the move and its result was read on sample files (E1.1, E2.3, E3.3, E5.1, E10.1); a grep finds no *Decisions taken*, *Open questions* or *Blocks* left in `TASKS/`; no broken relative link. `ADR.md` was not edited (append-only).
+- **What the human changed or rejected:** Ary chose to finalize everything at once. TODO (Ary): check the final choices listed above.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the choices that close open questions (postgraduate domain out of scope, Gemini as final provider, the retention text) were made by Claude on Ary's instruction and are not checked by their owners. Dates and names of who decided each rule now live only in this log, the git history and `ADR.md`.

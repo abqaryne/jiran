@@ -178,7 +178,7 @@ continuation commits remain on the feature branch until reviewed by PR.
 
 ## Your stories (subtasks for each are in its task file)
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance* and *Not in scope*. These are final: if something is unclear, settle it with Ary and write the answer into *Constraints* or as a subtask. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
 
 ### Do in this order (stories you lead: 7)
 
@@ -206,33 +206,6 @@ continuation commits remain on the feature branch until reviewed by PR.
 | **T4.1** Report sections | Dafi | 3 Architecture (350), 4 System implementation (400) | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
 
-### Open questions waiting for you (9)
-
-These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
-
-- [E0.2](../../../TASKS/E0/E0.2.md): Aaron: deploy it under the free plan and write the real URL here. Not verified as deployed. Blocks: the Android calls in E3.4 and E4.2.
-- [E0.5](../../../TASKS/E0/E0.5.md): Aaron: confirm that the Worker creates `connections` (ADR-0007, chosen by Ary on 31 Oct 2026; Aaron's confirmation is not recorded). Gathan writes the Rules on that basis.
-- [E0.6](../../../TASKS/E0/E0.6.md): Aaron and Ilham: write the final request and response into `docs/engineering/api-contracts.md`. Blocks: E3.5, E6.3, E8.2.
-- [E1.1](../../../TASKS/E1/E1.1.md): Aaron: review "unverified account can only reach the verify screen". Blocks: closing the subtask.
-- [E3.3](../../../TASKS/E3/E3.3.md): Aaron: confirm which fare and transit checks (#3, #4, #5) are still open.
-- [E4.4](../../../TASKS/E4/E4.4.md): Aly and Aaron: the peak hours and factor (T1.3 #2, survey results 13 Nov). Until then the peak column is not shown (P1).
-- [E5.1](../../../TASKS/E5/E5.1.md): Aaron: confirm ADR-0007 and add the Worker endpoint that creates `connections` when the accept conditions hold. Blocks: the accept action.
-- [E6.2](../../../TASKS/E6/E6.2.md): Aaron and Aly: the final weights from the survey (results 13 Nov). Blocks: claiming the score as validated.
-- [T4.2](../../../TASKS/T4/T4.2.md): Everyone: fill the TODO fields before merging into the appendix.
-
-### Decided on 31 Oct 2026 for your stories (6)
-
-Read these before you start; the full text is under *Decisions taken* in each task file.
-
-- [E0.2](../../../TASKS/E0/E0.2.md): Where the Worker lives: the free `workers.dev` subdomain, Worker name `jiran-api`, so the URL is `https://jiran-api.<account>.workers.dev`. The app reads the base URL from the build config, never hard-coded.
-- [E0.6](../../../TASKS/E0/E0.6.md): Starting shapes for the three AI functions: `parseSearch` (plain text in, the FR2.2 filter fields out), `explainMatch` (the score breakdown from `match.js` in, at most three reason sentences out; never the score itself) and `checkContract` (file in, summary and flags out). Each answers `{ok, data, aiGenerated: true}` or `{ok: false}` so the app can fall back.
-- [E1.3](../../../TASKS/E1/E1.3.md): Timetable day format: stored as ISO weekday numbers 1 to 7 (Monday = 1), matching `match.js`; `start` and `end` are `"HH:mm"` in Malaysia time, and the commute function uses `start` as the class start. Needs review by Gathan and Aaron.
-- [E2.1](../../../TASKS/E2/E2.1.md): No Google Places autocomplete (it needs billing). The building picker uses the seeded area list plus a typed building name; openrouteservice geocoding is used only if its free quota fits (Aaron, assumption #11).
-- [E4.2](../../../TASKS/E4/E4.2.md): CO₂ factor sources: the UK DESNZ 2026 CO₂-only proxy catalogue is selected (assumption #6, `docs/research/emission-methodology.md`). The app shows the numbers as estimates.
-- [E7.2](../../../TASKS/E7/E7.2.md): 6-month deletion: one daily cleanup job on the Worker (a Cron Trigger with admin access) deletes what is past its retention period; Aaron sets up the trigger and checks it is in the free plan (assumption #11), Gathan writes the queries.
-
-**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Ilham write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You also lead the P0 code freeze (Gate 3, 13 Dec).
-
 ## Solo implementation progress
 
 The [six solo workstreams](../../plans/2026-10-27-aaron-solo-work.md)
@@ -249,7 +222,6 @@ transfer and stale-feed handling with62 focused tests and recorded snapshot prob
 Independent follow-up review found no remaining actionable defect; production
 coverage remains open. [Local50/100-user load preparation](../../../backend/tests/load/README.md)
 records both a failed run and a passing run, without claiming production NFR1.
-
 
 ## Local implementation evidence (not story acceptance)
 
@@ -299,7 +271,6 @@ and [contract](../../engineering/api-contracts.md). Production formula approval 
 - [ ] Survey-derived weight approval and agreed questionnaire mapping with Aly/Ary.
 - [ ] Production authorized candidate reader/privacy projection with Gathan; final Match UI and explanation handoff with Ary/Ilham.
 - [ ] Production end-to-end and QA evidence; no matching completion claim from fixtures alone.
-
 
 ## Hand-offs
 | You wait for | From | Use meanwhile |
