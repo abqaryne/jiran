@@ -17,7 +17,7 @@ Waiting for another task is shown in *Depends on*, not as a status. ClickUp is u
 
 IDs are assigned once and never reused: `E<epic>.<n>` for the flows built in order, `T<n>.<n>` for the tracks that run in parallel. Commit messages use them (`[E1.2] Add Log in`). Work with no task uses `[Docs]`, `[Infra]` or `[Design]`.
 
-Decisions that are hard to reverse go in [ADR.md](ADR.md) (append-only). The shape of the product is in [docs/product/PRD.md](docs/product/PRD.md), the data in `docs/schema.md` (Gathan's PR #8, not merged on 30 Oct 2026), and the engineering notes in [docs/engineering/architecture.md](docs/engineering/architecture.md).
+Decisions that are hard to reverse go in [ADR.md](ADR.md) (append-only). The shape of the product is in [docs/product/PRD.md](docs/product/PRD.md), the data in [docs/engineering/schema.md](docs/engineering/schema.md) (Gathan, merged with PR #8 on 10 Nov 2026), and the engineering notes in [docs/engineering/architecture.md](docs/engineering/architecture.md).
 
 Statuses below were set from the repository on 31 Oct 2026. Each task file lists its open questions with an owner; an item marked not recorded or not verified was not seen in the repository.
 
@@ -51,7 +51,7 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 | [E0.2](TASKS/E0/E0.2.md) | E0 - Foundations and setup | inprogress | infra | Aaron | 8 Nov | Firebase and the free server are ready |
 | [E0.3](TASKS/E0/E0.3.md) | E0 - Foundations and setup | qa | ui | Ary | 15 Nov | Design system and app shell |
 | [E0.4](TASKS/E0/E0.4.md) | E0 - Foundations and setup | done | process | Dafi | 30 Oct | Project management and docs |
-| [E0.5](TASKS/E0/E0.5.md) | E0 - Foundations and setup | inreview | persistence / rules | Gathan | draft 8 Nov, merged 15 Nov | Data schema and Security Rules |
+| [E0.5](TASKS/E0/E0.5.md) | E0 - Foundations and setup | qa | persistence / rules | Gathan | draft 8 Nov, merged 15 Nov | Data schema and Security Rules |
 | [E0.6](TASKS/E0/E0.6.md) | E0 - Foundations and setup | inprogress | api / docs | Aaron | 15 Nov | Function contracts (stubs) |
 | [E1.1](TASKS/E1/E1.1.md) | E1 - Starting and Profile Setup flows | qa | auth / ui | Ary | 19 Nov | Sign up with a UM email and verify it |
 | [E1.2](TASKS/E1/E1.2.md) | E1 - Starting and Profile Setup flows | qa | auth / ui | Ary | 20 Nov | Log in, log out and reset password |

@@ -693,3 +693,30 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary). Be able to explain why each gap breaks the PRD rule that the address and contact stay hidden until a Connection exists.
 - **Limits:** a reading review only; Aaron's review of PR #8 is still missing.
+
+## 2026-11-10 · Merge PR #8, check E0.5 and E2.1 against their tasks, move E0.5 to qa · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** check Gathan's new commits, approve and merge PR #8, check PR #15 (E2.1) and both task files against the code, then set E0.5 to `qa` and tidy the documents.
+- **Prompts (exact):**
+  > coba cek committan terbaru gathan
+
+  > berarti PR#8 udh oke kah? reviewnya dari aku aja
+
+  > Approve dan merge
+
+  > PR#15 udh oke blm
+
+  > klo cek PR, cek juga secara task apakah tasknya udh selesai semua
+
+  > tapi tadi pr #8 udh oke kan?
+
+  > but alrdy merge right pr #8
+
+  > ya tolong dibenerin klo misalnya dari kode udh oke lanjut ke QA ya
+- **Output used:** PR #8 approved in Ary's name and merged (merge commit `4d725d6`). PR #15 checked by reading (Worker, rules, Android gateway, task file); nothing posted or merged. In this branch: `docs/schema.md` moved to `docs/engineering/schema.md` and every link updated; E0.5 set to `qa` in its task file and `TASK.md`, with a new resolution; the stale "PR #8, not merged" text in E1.1, E1.3 and E5.1 updated; Aaron's "second review of PR #8" question removed (count 10 → 9); `schema.md` added to `docs/README.md`.
+- **How it was tested or checked:** PR #8 CI (android, backend, worker-feasibility) green on `042bebb`; the CI log shows 29 denials and 28 permissions. Every E0.5 *Acceptance* item was compared with the test names in `product-rules-smoke.cjs`. No broken relative link in the repository after the move. not verified: the emulator tests were not run locally; the field list of every collection in `schema.md` was not checked one by one.
+- **What the human changed or rejected:** Ary decided that Ary's review alone was enough to merge PR #8, and that a merged story whose code is fine moves to `qa`. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to say why E0.5 is `qa` and not `done` (Acceptance not ticked, subtask 4 open).
+- **Limits:** Aaron did not review PR #8. PR #15 also edits `docs/schema.md`; a local `git merge-tree` of this branch with PR #15 shows no conflict, so Git follows the move.
