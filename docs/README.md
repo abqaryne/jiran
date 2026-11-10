@@ -15,6 +15,7 @@ docs/
 ├── engineering/    how the system is built
 │   ├── architecture.md       Firebase and backend architecture
 │   ├── api-contracts.md      draft request and response formats of the Functions
+│   ├── schema.md             Firestore collections, fields, who may read and write (Gathan)
 │   └── transit-processing.md bounded GTFS processor
 ├── research/       dated evidence behind the numbers and the free-only stack
 │   ├── commute-input-evidence.md   fares, fuel, parking, five route probes
@@ -42,6 +43,7 @@ docs/
 | [team/TEAM_PLAN.md](team/TEAM_PLAN.md) | Roles, timeline, workflow |
 | [engineering/architecture.md](engineering/architecture.md) | Firebase and backend architecture |
 | [engineering/api-contracts.md](engineering/api-contracts.md) | Draft request and response formats of the Functions |
+| [engineering/schema.md](engineering/schema.md) | Firestore data schema and who may read and write each field |
 | [engineering/transit-processing.md](engineering/transit-processing.md) | Bounded JavaScript GTFS processor, actual snapshot probe results and supported/unsupported semantics |
 | [research/commute-input-evidence.md](research/commute-input-evidence.md) | Dated fare/fuel/parking research and five public-stop route probes; confirmed inputs and gaps |
 | [team/aaron/report-drafts.md](team/aaron/report-drafts.md) | Assisted 350/400-word report drafts and 90-second demo script; needs human review |
