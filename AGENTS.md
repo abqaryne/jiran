@@ -68,9 +68,9 @@ The brief requires **significant and original human contribution** and a real un
 
 ### Task tracking
 
-- Every member has an owner file at `docs/team/<name>/README.md` (role, stories in the order to do them, open questions). Find the
+- Every member has an owner file at `docs/team/<name>/README.md` (role and stories in the order to do them). Find the
   file of the person you work for and read it first, then the task file of the story. Personal notes go in `docs/team/<name>/`.
-- `TASK.md` is the master list, `TASKS/<epic>/<ID>.md` holds the detail of each task, `ADR.md` records decisions that are hard to
+- `TASK.md` is the master list, `TASKS/<epic>/<ID>.md` holds the final requirements of each task (work, constraints, acceptance; no open-question or decision lists: write a settled point straight into *Constraints* or as a subtask), `ADR.md` records decisions that are hard to
   reverse (append-only). Read the task file of your story before you code; if something in it is wrong or out of date, fix it in the same PR and tell Ary.
 - When you finish or change a task, update its file (status, resolution) and its row in `TASK.md` in the same PR. The status follows
   what is in the repository (rules at the top of `TASK.md`), not ClickUp; hours are logged in ClickUp.

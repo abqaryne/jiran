@@ -1,0 +1,12 @@
+name = "jiran-listings"
+main = "index.mjs"
+compatibility_date = "2026-10-23"
+
+[vars]
+MODE = "local"
+FIREBASE_PROJECT_ID = "demo-jiran"
+
+# No credentials or deploy scripts. Production activation requires team review.
+[env.production.vars]
+MODE = "production"
+FIREBASE_PROJECT_ID = "jiran-mad"

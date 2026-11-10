@@ -1,6 +1,7 @@
 const assert = require('node:assert/strict');
 
 function encodeField(val) {
+  if (val instanceof Date) return {timestampValue: val.toISOString()};
   if (val === null || val === undefined) return {nullValue: null};
   if (typeof val === 'string') return {stringValue: val};
   if (typeof val === 'number') {
@@ -29,6 +30,18 @@ function encodeFields(data) {
 function makeClient(base, token, project) {
   const docPrefix = `projects/${project}/databases/(default)/documents`;
   return {
+    async queryListings(field, value) {
+      return fetch(`${base}:runQuery`, {method: 'POST',
+        headers: {'Content-Type': 'application/json', ...(token ? {Authorization: `Bearer ${token}`} : {})},
+        body: JSON.stringify({structuredQuery: {from: [{collectionId: 'listings'}],
+          ...(field ? {where: {fieldFilter: {field: {fieldPath: field}, op: 'EQUAL',
+            value: {stringValue: value}}}} : {})}}), signal: AbortSignal.timeout(10000)});
+    },
+    async commit(writes) {
+      return fetch(`${base}:commit`, {method: 'POST',
+        headers: {'Content-Type': 'application/json', ...(token ? {Authorization: `Bearer ${token}`} : {})},
+        body: JSON.stringify({writes}), signal: AbortSignal.timeout(10000)});
+    },
     async get(path) {
       return fetch(`${base}/${path}`, {
         headers: token ? {Authorization: `Bearer ${token}`} : {},
@@ -41,6 +54,10 @@ function makeClient(base, token, project) {
         fields: encodeFields(data),
       };
       const write = {update};
+      if (/^listings\/[^/]+$/.test(path)) {
+        write.updateTransforms = [{fieldPath: 'updatedAt', setToServerValue: 'REQUEST_TIME'}];
+        delete update.fields.updatedAt;
+      }
       if (maskFields && Array.isArray(maskFields)) {
         write.updateMask = {fieldPaths: maskFields};
       }
@@ -248,9 +265,13 @@ async function checkProductRules({authBase, firestoreHost, project}) {
 
   console.log('5. Testing Listing Requests & Location Privacy...');
   const listingId = `listing_${nonce}`;
+  // Existing published Listing fixture; E2.1 clients create drafts only.
   await assertPermitted(
-    clientA.set(`listings/${listingId}`, {listingId, ownerUid: studentA.uid, totalRentSen: 120000}),
-    'Host A creates listing'
+    admin.set(`listings/${listingId}`, {listingId, ownerUid: studentA.uid, totalRentSen: 120000,
+      areaId: 'sample-area', buildingName: 'Fictional Building', lat: 0, lng: 0, depositSen: 0,
+      genderPref: 'any', amenities: [], photoUrls: [], isSample: true, status: 'active',
+      createdAt: new Date(), expiresAt: new Date(Date.now() + 30 * 86400000)}),
+    'Admin seeds published listing fixture'
   );
 
   // Host cannot change ownerUid on listing update
@@ -298,6 +319,131 @@ async function checkProductRules({authBase, firestoreHost, project}) {
 
   await assertPermitted(clientB.get(`listings/${listingId}/private/location`), 'Accepted applicant B reads exact address');
   await assertDenied(clientC.get(`listings/${listingId}/private/location`), 'Unaccepted student C reads exact address');
+
+  console.log('5b. Testing E2.1 private drafts and field validation...');
+  console.log('Testing E2.1 Building picker area access...');
+  await assertPermitted(admin.set(`areas/sample_${nonce}`, {
+    areaId: `sample_${nonce}`, name: 'Fictional sample area', lat: 0, lng: 0,
+  }), 'Admin seeds fictional area reference');
+  for (const [client, label] of [[anon, 'Anonymous'], [clientUnverified, 'Unverified'],
+    [clientStaff, 'Staff'], [clientOutsider, 'Non-UM']]) {
+    await assertDenied(client.get(`areas/sample_${nonce}`), `${label} reads area reference`);
+  }
+  await assertPermitted(clientA.get(`areas/sample_${nonce}`), 'Verified UM student reads area reference');
+  await assertDenied(clientA.set(`areas/sample_${nonce}`, {lat: 1}, ['lat']), 'Student cannot edit seeded area');
+  const areaQuery = await fetch(`${base}:runQuery`, {
+    method: 'POST', headers: {'Content-Type': 'application/json', Authorization: `Bearer ${studentA.token}`},
+    body: JSON.stringify({structuredQuery: {from: [{collectionId: 'areas'}], limit: 501}}),
+    signal: AbortSignal.timeout(10000),
+  });
+  await assertPermitted(Promise.resolve(areaQuery), 'Picker bounded areas query');
+  const {makeListingDraft} = require('../functions/src/listing-draft');
+  const draftId = `draft_${nonce}`;
+  const draft = makeListingDraft({areaId: 'sample-area', buildingName: 'Fictional Building',
+    coordinateSource: 'area_center_estimate',
+    lat: 0, lng: 0, totalRentSen: 100000, depositSen: 0, genderPref: 'any',
+    amenities: ['wifi'], exactAddress: 'Fictional Unit 1'}, studentA.uid, draftId);
+  const prefix = `projects/${project}/databases/(default)/documents`;
+  const draftWrites = () => [
+    {update: {name: `${prefix}/listings/${draftId}`, fields: encodeFields(draft.listing)},
+      updateTransforms: ['createdAt', 'updatedAt'].map(fieldPath => ({fieldPath, setToServerValue: 'REQUEST_TIME'}))},
+    {update: {name: `${prefix}/listings/${draftId}/private/location`, fields: encodeFields(draft.location)}},
+  ];
+  await assertDenied(clientA.commit(draftWrites().slice(0, 1)), 'Draft missing atomic private location');
+  for (const [client, label] of [[anon, 'Anonymous'], [clientB, 'Forged owner'],
+    [clientUnverified, 'Unverified'], [clientStaff, 'Staff'], [clientOutsider, 'Non-UM']]) {
+    await assertDenied(client.commit(draftWrites()), `${label} draft creation`);
+  }
+  draft.listing.coordinateSource = 'verified';
+  await assertDenied(clientA.commit(draftWrites()), 'Reject invented coordinate provenance on create');
+  draft.listing.coordinateSource = 'area_center_estimate';
+  await assertPermitted(clientA.commit(draftWrites()), 'Host creates draft and private location atomically');
+  await assertDenied(clientA.set(`listings/${draftId}`, {}, ['coordinateSource']), 'Cannot erase estimate source');
+  await assertDenied(clientA.set(`listings/${draftId}`, {coordinateSource: 'verified'}, ['coordinateSource']),
+    'Cannot relabel estimates as verified');
+  await assertPermitted(clientA.get(`listings/${draftId}`), 'Host reads draft');
+  await assertPermitted(clientA.get(`listings/${draftId}/private/location`), 'Host reads draft address');
+  await assertDenied(clientB.get(`listings/${draftId}`), 'Stranger reads draft');
+  await assertDenied(anon.queryListings('status', 'active'), 'Anonymous Listing query');
+  await assertDenied(clientB.queryListings(), 'Unfiltered query could include private drafts');
+  await assertDenied(clientB.queryListings('status', 'draft'), 'Stranger queries all drafts');
+  await assertPermitted(clientA.queryListings('ownerUid', studentA.uid), 'Host queries own Listings');
+  await assertPermitted(clientB.queryListings('status', 'active'), 'Student queries active Listings');
+  await assertDenied(clientB.get(`listings/${draftId}/private/location`), 'Stranger reads draft address');
+  await assertDenied(clientB.set(`listings/${draftId}`, {depositSen: 1}, ['depositSen']), 'Stranger edits draft');
+  for (const change of [{totalRentSen: 1.5}, {depositSen: -1}, {buildingName: 'x'.repeat(201)},
+    {ownerUid: studentB.uid}, {listingId: 'different'}, {status: 'active'}, {isSample: true},
+    {createdAt: new Date(0)}, {exactAddress: 'must stay private'}, {amenities: [false]},
+    {photoUrls: ['http://example.com/x']}, {photoUrls: Array(6).fill('https://res.cloudinary.com/fixture/image/upload/x')},
+    {lat: 91}, {genderPref: 'invalid'}, {expiresAt: new Date()}]) {
+    await assertDenied(clientA.set(`listings/${draftId}`, change, Object.keys(change)),
+      `Invalid draft update ${Object.keys(change)[0]}`);
+  }
+  await assertDenied(clientA.set(`listings/${draftId}`, {}, ['buildingName']), 'Cannot remove required field');
+  await assertPermitted(clientA.set(`listings/${draftId}`, {depositSen: 100}, ['depositSen']), 'Host edits valid draft');
+  await assertPermitted(clientA.set(`listings/${draftId}`, {
+    photoUrls: [`https://res.cloudinary.com/fixture-cloud/image/upload/v1/listings/${draftId}/photo.jpg`],
+  }, ['photoUrls']), 'Host stores Cloudinary URL');
+  await assertDenied(clientA.set(`listings/${draftId}/private/location`,
+    {exactAddress: 'Fictional Unit 1', residentUids: [studentA.uid, studentB.uid]}), 'Draft cannot grant stranger residency');
+  await assertDenied(clientB.set(`listingRequests/${draftId}_${studentB.uid}`, {
+    listingId: draftId, hostUid: studentA.uid, requesterUid: studentB.uid, status: 'pending',
+  }), 'Draft cannot receive viewing requests');
+  await assertDenied(clientA.delete(`listings/${draftId}`), 'Deletion deferred to Listing lifecycle');
+
+  console.log('5c. Testing verified UM Host through the real Worker handler and emulator Rules...');
+  const {createListingWorker} = require('../worker/listings');
+  const {webcrypto} = require('node:crypto');
+  let providerCalls = 0;
+  const worker = createListingWorker({cryptoApi: webcrypto, fetchImpl: async (url, options) => {
+    if (String(url).startsWith('https://api.cloudinary.com/')) {
+      providerCalls++;
+      const id = options.body.get('public_id');
+      return Response.json({public_id: id, resource_type: 'image', format: 'jpg',
+        secure_url: `https://res.cloudinary.com/fixture-cloud/image/upload/v1/${id}.jpg`});
+    }
+    assert.ok(String(url).startsWith('http://127.0.0.1:8080/v1/projects/demo-jiran/'),
+      'Host integration test must never call a live database');
+    return fetch(url, options);
+  }});
+  const workerEnv = {MODE: 'local', FIREBASE_PROJECT_ID: 'demo-jiran', CLOUDINARY_CLOUD_NAME: 'fixture-cloud',
+    CLOUDINARY_API_KEY: 'fake-key', CLOUDINARY_API_SECRET: 'fake-secret', CLOUDINARY_UPLOAD_PRESET: 'fixture'};
+  const hostInput = {areaId: 'sample-area', buildingName: 'Fictional Building', lat: 0, lng: 0,
+    coordinateSource: 'area_center_estimate', totalRentSen: 100000, depositSen: 0,
+    genderPref: 'any', amenities: [], exactAddress: 'Fictional Unit 1'};
+  const workerRequest = (path, token, photo = false) => worker.fetch(new Request(`http://127.0.0.1${path}`, {
+    method: 'POST', headers: {...(token ? {authorization: `Bearer ${token}`} : {}),
+      'content-type': photo ? 'image/jpeg' : 'application/json'},
+    body: photo ? new Uint8Array([255, 216, 255, 0]) : JSON.stringify(hostInput),
+  }), workerEnv);
+  assert.equal((await workerRequest('/listings', null)).status, 401);
+  deniedCount++;
+  const lookalike = await createAuthUser(authBase, `lookalike-${nonce}@siswa.um.edu.my.example.com`, 'pass123', true);
+  for (const account of [unverified, staff, outsider, lookalike]) {
+    await assertDenied(workerRequest('/listings', account.token), 'Worker denies ineligible Host creation');
+  }
+  const created = await workerRequest('/listings', studentA.token);
+  assert.equal(created.status, 201);
+  passedCount++;
+  const savedId = (await created.json()).listingId;
+  const saved = await clientA.get(`listings/${savedId}`);
+  assert.equal(saved.status, 200);
+  const savedFields = (await saved.json()).fields;
+  assert.equal(savedFields.ownerUid.stringValue, studentA.uid);
+  assert.equal(savedFields.status.stringValue, 'draft');
+  assert.ok(!savedFields.exactAddress);
+  await assertPermitted(clientA.get(`listings/${savedId}/private/location`), 'Worker-created address readable by Host');
+  await assertDenied(clientB.get(`listings/${savedId}/private/location`), 'Worker-created address hidden from stranger');
+  for (const account of [unverified, staff, outsider, lookalike, studentB]) {
+    await assertDenied(workerRequest(`/listings/${savedId}/photos`, account.token, true),
+      'Worker denies ineligible or non-owner photo upload');
+  }
+  assert.equal((await workerRequest(`/listings/${savedId}/photos`, null, true)).status, 401);
+  deniedCount++;
+  assert.equal(providerCalls, 0, 'Rejected Hosts never reach the photo provider');
+  await assertPermitted(workerRequest(`/listings/${savedId}/photos`, studentA.token, true),
+    'Verified Host uploads through a stub provider and real Rules');
+  assert.equal(providerCalls, 1);
 
   console.log('6. Testing Household & Co-household Data Isolation (Module 5)...');
   const householdId = `hh_${nonce}`;

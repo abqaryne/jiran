@@ -21,6 +21,10 @@
             android:orientation="vertical"
             android:padding="@dimen/screen_margin">
 
+            <com.google.android.material.button.MaterialButton android:id="@+id/preview_post"
+                style="@style/Widget.Jiran.Button.Soft" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@string/gallery_post_preview" />
+
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
@@ -32,6 +36,14 @@
                 android:layout_height="wrap_content"
                 android:text="Jiran design system"
                 android:textAppearance="@style/TextAppearance.Jiran.Display" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/preview_building_picker"
+                style="@style/Widget.Jiran.Button.Soft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_16"
+                android:text="@string/gallery_building_picker" />
 
             <!-- Typography -->
             <com.jiran.app.ui.common.SectionHeaderView

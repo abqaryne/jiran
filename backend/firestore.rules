@@ -151,25 +151,112 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // E2.1 prototype: schema.md section 2.3. Drafts are Host-only; timestamps/identity immutable.
+    function listingText(value, maximum) {
+      return value is string && value.size() > 0 && value.size() <= maximum;
+    }
+    function listingAmenities(items) {
+      return items is list && items.size() <= 10
+        && (items.size() <= 0 || listingText(items[0], 40))
+        && (items.size() <= 1 || listingText(items[1], 40))
+        && (items.size() <= 2 || listingText(items[2], 40))
+        && (items.size() <= 3 || listingText(items[3], 40))
+        && (items.size() <= 4 || listingText(items[4], 40))
+        && (items.size() <= 5 || listingText(items[5], 40))
+        && (items.size() <= 6 || listingText(items[6], 40))
+        && (items.size() <= 7 || listingText(items[7], 40))
+        && (items.size() <= 8 || listingText(items[8], 40))
+        && (items.size() <= 9 || listingText(items[9], 40));
+    }
+
+    function listingPhoto(value, listingId) {
+      return value is string && value.size() <= 2048
+        && value.matches('https://res[.]cloudinary[.]com/[a-z0-9_-]+/image/upload/v[0-9]+/listings/'
+          + listingId + '/[A-Za-z0-9_-]+[.](jpg|jpeg|png)');
+    }
+    function listingPhotos(items, listingId) {
+      return items is list && items.size() <= 5
+        && (items.size() <= 0 || listingPhoto(items[0], listingId))
+        && (items.size() <= 1 || listingPhoto(items[1], listingId))
+        && (items.size() <= 2 || listingPhoto(items[2], listingId))
+        && (items.size() <= 3 || listingPhoto(items[3], listingId))
+        && (items.size() <= 4 || listingPhoto(items[4], listingId));
+    }
+
+    function validListing(data, listingId) {
+      let required = ['listingId', 'ownerUid', 'areaId', 'buildingName', 'lat', 'lng',
+        'totalRentSen', 'depositSen', 'genderPref', 'amenities', 'photoUrls',
+        'isSample', 'status', 'createdAt', 'updatedAt'];
+      return data.keys().hasAll(required)
+        && data.keys().hasOnly(required.concat(['placeId', 'expiresAt', 'coordinateSource']))
+        && (!('coordinateSource' in data) || data.coordinateSource == 'area_center_estimate')
+        && data.listingId == listingId && listingId.matches('[A-Za-z0-9_-]{1,128}')
+        && listingText(data.ownerUid, 128)
+        && listingText(data.areaId, 128) && data.areaId.matches('[A-Za-z0-9_-]+')
+        && listingText(data.buildingName, 200)
+        && (!('placeId' in data) || listingText(data.placeId, 256))
+        && data.lat is number && data.lat >= -90 && data.lat <= 90
+        && data.lng is number && data.lng >= -180 && data.lng <= 180
+        && data.totalRentSen is int && data.totalRentSen > 0 && data.totalRentSen <= 9007199254740991
+        && data.depositSen is int && data.depositSen >= 0 && data.depositSen <= 9007199254740991
+        && data.genderPref in ['male_only', 'female_only', 'any']
+        && listingAmenities(data.amenities) && listingPhotos(data.photoUrls, listingId)
+        && data.isSample is bool && data.status in ['draft', 'active', 'closed', 'expired']
+        && data.createdAt is timestamp && data.updatedAt is timestamp
+        && (data.status == 'draft'
+          ? !('expiresAt' in data)
+          : ('expiresAt' in data && data.expiresAt is timestamp));
+    }
+
+    function validListingLocation(data) {
+      return data.keys().hasAll(['exactAddress', 'residentUids'])
+        && data.keys().hasOnly(['exactAddress', 'residentUids'])
+        && listingText(data.exactAddress, 500)
+        && data.residentUids is list && data.residentUids.size() <= 10;
+    }
+
+
     // --- 2.3 Listings and Exact Location ---
     match /listings/{listingId} {
-      // Public listing: readable by verified UM students
-      allow read: if isVerifiedUmUser();
-      allow create: if isVerifiedUmUser() && request.resource.data.ownerUid == request.auth.uid;
+      // Drafts never appear in public search; queries must constrain status or ownerUid.
+      allow read: if isVerifiedUmUser()
+        && (resource.data.status in ['active', 'closed', 'expired']
+          || resource.data.ownerUid == request.auth.uid);
+      allow create: if isVerifiedUmUser() && request.resource.data.ownerUid == request.auth.uid
+        && validListing(request.resource.data, listingId)
+        && request.resource.data.status == 'draft' && request.resource.data.isSample == false
+        && request.resource.data.photoUrls.size() == 0
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.updatedAt == request.time
+        && validListingLocation(getAfter(/databases/$(database)/documents/listings/$(listingId)/private/location).data)
+        && getAfter(/databases/$(database)/documents/listings/$(listingId)/private/location).data.residentUids == [request.auth.uid];
       allow update: if isVerifiedUmUser()
         && resource.data.ownerUid == request.auth.uid
-        && request.resource.data.ownerUid == resource.data.ownerUid;
-      allow delete: if isVerifiedUmUser() && resource.data.ownerUid == request.auth.uid;
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && validListing(request.resource.data, listingId)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.updatedAt == request.time
+        && request.resource.data.isSample == resource.data.isSample
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['expiresAt', 'coordinateSource'])
+        && request.resource.data.status == resource.data.status;
+      // Publication (including the priced vacant Room gate) belongs to E2.2.
+      allow delete: if false;
 
       match /private/location {
         // Exact unit address: host, listed co-residents, or accepted requester for this listing
-        allow read: if isVerifiedUmUser() && (
+        allow read: if isVerifiedUmUser() && exists(/databases/$(database)/documents/listings/$(listingId)) && (
           isListingHost(listingId)
-          || request.auth.uid in resource.data.residentUids
-          || isAcceptedListingRequester(listingId)
+          || (get(/databases/$(database)/documents/listings/$(listingId)).data.status != 'draft'
+            && (request.auth.uid in resource.data.residentUids || isAcceptedListingRequester(listingId)))
         );
-        allow create, update: if isListingHost(listingId);
-        allow delete: if isListingHost(listingId);
+        allow create: if isVerifiedUmUser()
+          && getAfter(/databases/$(database)/documents/listings/$(listingId)).data.ownerUid == request.auth.uid
+          && validListingLocation(request.resource.data)
+          && request.resource.data.residentUids == [request.auth.uid];
+        allow update: if isVerifiedUmUser() && isListingHost(listingId)
+          && validListingLocation(request.resource.data)
+          && request.resource.data.residentUids == resource.data.residentUids;
+        allow delete: if false;
       }
     }
 
@@ -186,6 +273,7 @@ service cloud.firestore {
         && request.resource.data.status == 'pending'
         && requestId == request.resource.data.listingId + '_' + request.auth.uid
         && exists(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+        && get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.status == 'active'
         && request.resource.data.hostUid == get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.ownerUid
         && request.resource.data.hostUid != request.auth.uid;
       // Requester can cancel; Host can accept or reject

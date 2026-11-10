@@ -7,7 +7,7 @@
 
 ## Your stories (subtasks for each are in its task file)
 
-**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance*, *Not in scope* and *Open questions*. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
+**How to use this section, for you and for your AI assistant.** Start from the top of "Do in this order". Before writing any code open the story's **task file** (`TASKS/<epic>/<ID>.md`) and read *Description*, *Work needed*, *Constraints*, *Acceptance* and *Not in scope*. These are final: if something is unclear, settle it with Ary and write the answer into *Constraints* or as a subtask. The master list with every task's milestone, status and category is [TASK.md](../../../TASK.md); hours are logged in ClickUp. If a task file is wrong or out of date, fix it in the same PR and tell Ary. Decisions that are hard to reverse are in [ADR.md](../../../ADR.md).
 
 ### Do in this order (stories you lead: 8)
 
@@ -32,29 +32,6 @@
 | **E0.6** Function contracts (stubs) | Aaron | Agree the shape of each AI function | [E0.6.md](../../../TASKS/E0/E0.6.md) | 15 Nov |
 | **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Technical implementation and AI data flow (1:30) | [T3.1.md](../../../TASKS/T3/T3.1.md) | 20 Dec |
 | **T4.1** Report sections | Dafi | AI usage statement in 4, 6 Impact, limitations, future work (150) | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
-
-### Open questions waiting for you (3)
-
-These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
-
-- [E0.6](../../../TASKS/E0/E0.6.md): Aaron and Ilham: write the final request and response into `docs/engineering/api-contracts.md`. Blocks: E3.5, E6.3, E8.2.
-- [E8.1](../../../TASKS/E8/E8.1.md): Ilham: confirm or replace the default by 8 Nov. Blocks: E3.5, E6.3, E8.2.
-- [T4.2](../../../TASKS/T4/T4.2.md): Everyone: fill the TODO fields before merging into the appendix.
-
-### Decided on 31 Oct 2026 for your stories (8)
-
-Read these before you start; the full text is under *Decisions taken* in each task file.
-
-- [E0.6](../../../TASKS/E0/E0.6.md): Starting shapes for the three AI functions: `parseSearch` (plain text in, the FR2.2 filter fields out), `explainMatch` (the score breakdown from `match.js` in, at most three reason sentences out; never the score itself) and `checkContract` (file in, summary and flags out). Each answers `{ok, data, aiGenerated: true}` or `{ok: false}` so the app can fall back.
-- [E3.5](../../../TASKS/E3/E3.5.md): Provider: the Claude API has no free plan, so it is out under free-only. If Ilham has no comparison by 8 Nov, the default is the Gemini API free tier, called only from the Worker. Before contract text is sent, check the free-tier terms on data use (the contract check is private, ADR-0005). Ilham's comparison on the samples (assumption #10) is still required.
-- [E6.3](../../../TASKS/E6/E6.3.md): Provider: the Claude API has no free plan, so it is out under free-only. If Ilham has no comparison by 8 Nov, the default is the Gemini API free tier, called only from the Worker. Before contract text is sent, check the free-tier terms on data use (the contract check is private, ADR-0005). Ilham's comparison on the samples (assumption #10) is still required.
-- [E8.1](../../../TASKS/E8/E8.1.md): The Claude API has no free plan, so it is out under free-only. If Ilham has no comparison by 8 Nov, the default is the Gemini API free tier, called only from the Worker. Before contract text is sent, check the free-tier terms on data use (the contract check is private, ADR-0005). Ilham's comparison on the samples (assumption #10) is still required.
-- [E8.2](../../../TASKS/E8/E8.2.md): No real contracts. The team writes 10 fictional tenancy agreements from common clauses (deposit, notice, repairs, utilities), so nothing needs anonymising. Ilham writes them, Aly checks.
-- [E8.3](../../../TASKS/E8/E8.3.md): Contract files are not stored: the app sends the PDF or photo (at most 5 MB) to the Worker, which reads it in memory and discards it. Only the result is saved in `contractChecks`, deleted after 30 days by the daily cleanup job (E7.2).
-- [E8.4](../../../TASKS/E8/E8.4.md): Reports on AI answers go to an `aiReports` collection (feature, output id, reason, no personal data). Users can write but not read it; Ilham reads it in the console.
-- [E8.5](../../../TASKS/E8/E8.5.md): At least 5 UM students outside the team, recruited by Aly with consent, each rate 10 reasons on a 1 to 5 scale.
-
-**Cloud Functions are Node.js (decided).** Firebase does not support Java, so you and Aaron write the functions in JavaScript: keep each one small and single-purpose, no big framework, and unit-test them with Jest. The rest of the app stays Java. You build your own AI screens with Ary's components. **Start the AI Usage Log today.**
 
 ## Design rules
 - The compatibility score and CO2 are computed by code, never by the AI

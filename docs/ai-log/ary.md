@@ -720,3 +720,61 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary decided that Ary's review alone was enough to merge PR #8, and that a merged story whose code is fine moves to `qa`. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary). Be able to say why E0.5 is `qa` and not `done` (Acceptance not ticked, subtask 4 open).
 - **Limits:** Aaron did not review PR #8. PR #15 also edits `docs/schema.md`; a local `git merge-tree` of this branch with PR #15 shows no conflict, so Git follows the move.
+
+## 2026-11-10 · Accept the E2.1 draft state and align the E2.1 task file · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** Ary accepted Gathan's Host-only draft (ADR-0009) and asked to tidy the E2.1 task file on PR #15 ourselves instead of asking Gathan.
+- **Prompts (exact):**
+  > oke berarti pr#15 udh aman atau blm
+
+  > ya saya setuju PRD nya ya dan kita aja yang rapihin
+
+  > sumpah yang masih decisions taken, kayknya finalize sekarang aj dh gaperlu decisions taken lagi atau apapun open pertanyaan itu dan requirement dan segala macemnya finalize sekarang aj a
+- **Output used:** on Gathan's branch `gathan/e2.1-building-rent` (PR #15): Ary's acceptance added to the two PRD lines and as an update under ADR-0009; the PRD FR2.1 acceptance line about a place search that fills the address rewritten to the 31 Oct decision (seeded Area plus typed building name, Area centre as an estimate). `TASKS/E2/E2.1.md`: Description, Data, Work needed and the five *Acceptance* checks aligned with the draft state and the 31 Oct decision; the stale "Where it stands (30 Oct)" section removed; the resolution now says PR #8 is merged. In the final format agreed the same day, the *Decisions taken* and *Open questions* sections were folded into *Constraints* and three new subtasks (case-insensitive building names; Worker review before activation; real area seeds and deploy). No code changed.
+- **How it was tested or checked:** read against the PR #15 code (`BuildingPickerViewModel.normalizeBuilding`, the listing Rules, the Worker); no broken relative link. not verified: whether Gathan agrees with the new *Acceptance* wording.
+- **What the human changed or rejected:** Ary accepted the draft state and chose to tidy the file without Gathan. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why a draft is hidden until E2.2 adds a priced vacant Room.
+- **Limits:** the owner READMEs are changed in PR #16, not here, to avoid a conflict.
+
+## 2026-11-10 · Final task files: no more open questions or decision lists · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** Ary found the open questions and the cross-file dependencies too complicated and asked to finalize every requirement now, with no *Decisions taken* or *Open questions* sections.
+- **Prompts (exact):**
+  > sumpah yang open questions dan yang bergantungan satu sama lain ini ngeribetin deh, gimana ya
+
+  > sumpah yang masih decisions taken, kayknya finalize sekarang aj dh gaperlu decisions taken lagi atau apapun open pertanyaan itu dan requirement dan segala macemnya finalize sekarang aj a
+- **Output used:** in 61 task files (E2.1 was done in the commit before this one), committed to PR #15 because PR #16 was already merged: every *Decisions taken* line written into *Constraints* as a final rule, without dates or attribution, and history lines dropped (the 29 Oct any-email decision, the 30 Oct gender proposal, "status lives only in ClickUp"); both sections removed; the reverse *Blocks* header line removed (only *Depends on* stays). The 25 open questions were closed: 6 became new subtasks (E0.2 deploy the Worker, E1.1 and E1.2 real-device tests, E3.3 mark open checks, E10.2 Malay reviewer, T3.1 rubric), 9 became constraints (estimates until the 13 Nov survey for E2.2, E3.4, E4.4, E6.2; shuttle leg and row hidden until T1.4; final E10.1 retention text; T1.4; T4.2), and the rest were already answered or covered by a subtask (ADR-0007 final, E1.1 Rules merged with PR #8, E8.1 provider final as Gemini free tier, the postgraduate domain out of scope). E1.1 subtask 6 is now ✅ because Ary's review is enough. The "Open questions waiting for you" and "Decided on 31 Oct" lists were removed from the six owner READMEs; `AGENTS.md`, `master-prompt.md` and `TASK.md` describe the new rule.
+- **How it was tested or checked:** a script did the move and its result was read on sample files (E1.1, E2.3, E3.3, E5.1, E10.1); a grep finds no *Decisions taken*, *Open questions* or *Blocks* left in `TASKS/`; no broken relative link. `ADR.md` was not edited (append-only).
+- **What the human changed or rejected:** Ary chose to finalize everything at once. TODO (Ary): check the final choices listed above.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the choices that close open questions (postgraduate domain out of scope, Gemini as final provider, the retention text) were made by Claude on Ary's instruction and are not checked by their owners. Dates and names of who decided each rule now live only in this log, the git history and `ADR.md`.
+
+## 2026-11-10 · ClickUp synced with the repository · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5), ClickUp connector
+- **Task:** bring the 62 ClickUp stories in line with the repository.
+- **Prompts (exact):**
+  > oiya clickup kita belum terupdate ya, coba di update
+- **Output used:** in the ClickUp list "Jiran", all 62 stories (not their subtasks) got the status from `TASK.md` on PR #15 (2 done, 5 qa, 9 in progress, 46 backlog) and a new short description: FR, owner, due date, *Depends on*, the first sentence of the task description, a link to the task file on GitHub and a note that the status follows the repository. The old descriptions (with "Draft, owner to confirm", "Open questions" and the old `docs/tasks/` paths) were replaced. 15 statuses changed, for example E0.2 done → in progress, E0.5 in review → qa, E1.3 blocked → backlog, E2.2 to E3.2 and E3.5 this week → backlog, E4.2, T1.1, T2.2 and T4.2 backlog → in progress.
+- **How it was tested or checked:** every update call returned success. not verified: the ClickUp board was not opened to look at the result.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the about 180 ClickUp subtasks were not changed; their names and statuses may still be old (for example E2.1's "photo upload to Storage"). The task files are the source for subtasks. Hours logged in ClickUp were not touched.
+
+## 2026-11-10 · Recheck every status against the repository and sync ClickUp subtasks · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5), ClickUp connector
+- **Task:** recheck the real status of every task in the repository, update ClickUp from the latest task files (subtasks too), and add what is missing in ClickUp.
+- **Prompts (exact):**
+  > coba update semua clickup nya berdasarkan update task terbaru kita dan juga tolong di recheck lagi di repo kita gimana status aslinya. kalau misal ada task yang belum ada di clickup di tambahin aj ya
+- **Output used:** repository (PR #15): the Rules and tests merged with PR #8 already cover Gathan's subtasks in E4.3 and E5.1 (✅) and part of E1.3, E2.3, E5.2, E6.1, E7.2, E8.3, E9.1, E9.2, E9.4 and T2.3 (⚠️); Aaron's commute code already computes the E3.4 true cost; Aaron's research and drafts cover part of T1.3, T3.1 and T4.1. Those 16 stories moved from backlog to inprogress, each with a "Rechecked 10 Nov 2026" line. Stale ticks were corrected: E3.3 subtask 1 (no openrouteservice adapter exists; `routes-client.js` is the Google adapter) and E0.2 subtasks 1, 3 and 4. E8.1 and E8.2 subtasks now match their constraints (Gemini; fictional contracts). Totals now: 2 done, 5 qa, 25 inprogress, 30 backlog. ClickUp: the 16 story statuses and 15 subtasks (status, and three names) were updated before the connector's daily limit (100 calls) stopped the run. What is left (23 subtask statuses, 4 renames, 16 new subtasks) is listed in `docs/team/ary/clickup-sync-todo.md`.
+- **How it was tested or checked:** each change is backed by a file or a test name in the repository (`product-rules-smoke.cjs` case names, `commute.js`, `docs/research/`, `docs/team/aaron/report-drafts.md`). ClickUp subtasks were matched to task-file subtasks by text; four were matched by hand. not verified: work that members have not pushed; the ClickUp board was not opened.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why a story counts as inprogress when only its Rules exist.
+- **Limits:** "inprogress" follows the rule at the top of `TASK.md` (part of *Work needed* is in the repository), so several stories are inprogress only because E0.5 already wrote their Rules. ClickUp is only partly synced until the remaining list is run.
