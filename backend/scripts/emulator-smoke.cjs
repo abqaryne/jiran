@@ -3,6 +3,7 @@ const {execFileSync} = require('node:child_process');
 const path = require('node:path');
 const androidDir = path.join(__dirname, '..', '..', 'android');
 const {checkConnectionRules} = require('./firestore-smoke.cjs');
+const {checkProductRules} = require('./product-rules-smoke.cjs');
 const {checkCommuteCallable} = require('./commute-smoke.cjs');
 const {checkMatchCallable} = require('./match-smoke.cjs');
 
@@ -53,6 +54,7 @@ async function main() {
     unverifiedToken: signup.body.idToken, uid: signup.body.localId});
   await checkCommuteCallable({token: login.body.idToken, unverifiedToken: signup.body.idToken});
   await checkMatchCallable({token: login.body.idToken, unverifiedToken: signup.body.idToken});
+  await checkProductRules({authBase, firestoreHost, project});
 
   const docUrl = `http://${firestoreHost}/v1/projects/${project}/databases/(default)/documents/_diagnostics/${signup.body.localId}`;
   const stored = await fetch(docUrl, {headers: {Authorization: 'Bearer owner'}});
