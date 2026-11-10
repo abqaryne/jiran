@@ -765,3 +765,16 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary)
 - **Limits:** the about 180 ClickUp subtasks were not changed; their names and statuses may still be old (for example E2.1's "photo upload to Storage"). The task files are the source for subtasks. Hours logged in ClickUp were not touched.
+
+## 2026-11-10 · Recheck every status against the repository and sync ClickUp subtasks · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5), ClickUp connector
+- **Task:** recheck the real status of every task in the repository, update ClickUp from the latest task files (subtasks too), and add what is missing in ClickUp.
+- **Prompts (exact):**
+  > coba update semua clickup nya berdasarkan update task terbaru kita dan juga tolong di recheck lagi di repo kita gimana status aslinya. kalau misal ada task yang belum ada di clickup di tambahin aj ya
+- **Output used:** repository (PR #15): the Rules and tests merged with PR #8 already cover Gathan's subtasks in E4.3 and E5.1 (✅) and part of E1.3, E2.3, E5.2, E6.1, E7.2, E8.3, E9.1, E9.2, E9.4 and T2.3 (⚠️); Aaron's commute code already computes the E3.4 true cost; Aaron's research and drafts cover part of T1.3, T3.1 and T4.1. Those 16 stories moved from backlog to inprogress, each with a "Rechecked 10 Nov 2026" line. Stale ticks were corrected: E3.3 subtask 1 (no openrouteservice adapter exists; `routes-client.js` is the Google adapter) and E0.2 subtasks 1, 3 and 4. E8.1 and E8.2 subtasks now match their constraints (Gemini; fictional contracts). Totals now: 2 done, 5 qa, 25 inprogress, 30 backlog. ClickUp: the 16 story statuses and 15 subtasks (status, and three names) were updated before the connector's daily limit (100 calls) stopped the run. What is left (23 subtask statuses, 4 renames, 16 new subtasks) is listed in `docs/team/ary/clickup-sync-todo.md`.
+- **How it was tested or checked:** each change is backed by a file or a test name in the repository (`product-rules-smoke.cjs` case names, `commute.js`, `docs/research/`, `docs/team/aaron/report-drafts.md`). ClickUp subtasks were matched to task-file subtasks by text; four were matched by hand. not verified: work that members have not pushed; the ClickUp board was not opened.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Be able to say why a story counts as inprogress when only its Rules exist.
+- **Limits:** "inprogress" follows the rule at the top of `TASK.md` (part of *Work needed* is in the repository), so several stories are inprogress only because E0.5 already wrote their Rules. ClickUp is only partly synced until the remaining list is run.
