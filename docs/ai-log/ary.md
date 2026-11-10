@@ -674,3 +674,20 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary).
 - **What the human understands and can explain:** TODO (Ary).
 - **Limits:** none beyond the earlier entries.
+
+## 2026-11-10 · Accept the E2.1 draft state and align the E2.1 task file · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** Ary accepted Gathan's Host-only draft (ADR-0009) and asked to tidy the E2.1 task file on PR #15 ourselves instead of asking Gathan.
+- **Prompts (exact):**
+  > oke berarti pr#15 udh aman atau blm
+
+  > ya saya setuju PRD nya ya dan kita aja yang rapihin
+
+  > sumpah yang masih decisions taken, kayknya finalize sekarang aj dh gaperlu decisions taken lagi atau apapun open pertanyaan itu dan requirement dan segala macemnya finalize sekarang aj a
+- **Output used:** on Gathan's branch `gathan/e2.1-building-rent` (PR #15): Ary's acceptance added to the two PRD lines and as an update under ADR-0009; the PRD FR2.1 acceptance line about a place search that fills the address rewritten to the 31 Oct decision (seeded Area plus typed building name, Area centre as an estimate). `TASKS/E2/E2.1.md`: Description, Data, Work needed and the five *Acceptance* checks aligned with the draft state and the 31 Oct decision; the stale "Where it stands (30 Oct)" section removed; the resolution now says PR #8 is merged. In the final format agreed the same day, the *Decisions taken* and *Open questions* sections were folded into *Constraints* and three new subtasks (case-insensitive building names; Worker review before activation; real area seeds and deploy). No code changed.
+- **How it was tested or checked:** read against the PR #15 code (`BuildingPickerViewModel.normalizeBuilding`, the listing Rules, the Worker); no broken relative link. not verified: whether Gathan agrees with the new *Acceptance* wording.
+- **What the human changed or rejected:** Ary accepted the draft state and chose to tidy the file without Gathan. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why a draft is hidden until E2.2 adds a priced vacant Room.
+- **Limits:** the owner READMEs are changed in PR #16, not here, to avoid a conflict.

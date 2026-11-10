@@ -119,8 +119,8 @@ Who owns and builds each module is in [TEAM_PLAN.md](../team/TEAM_PLAN.md).
 
 **Acceptance criteria [DRAFT]**
 - A listing cannot be published without property or building name, total rent, deposit, area, at least one photo and at least one vacant room with a price.
-- The property or building name is picked from a place search, which also fills in the address and coordinates used by the commute calculation (not Google Places, which needs billing: the seeded area list and a typed building name, with openrouteservice geocoding only if its free quota fits; decided 31 Oct 2026, E2.1), so hosts and groups do not type an address by hand. A name that is not found can be entered as free text with the area chosen manually.
-- Manual Listing fallback (Gathan approved 9 Nov 2026): the Host enters the exact Unit address in the private location field. The selected Area centre is stored with `coordinateSource: area_center_estimate` and labelled as an estimate, never a verified Building location. Downstream commute screens must preserve that uncertainty; geocoding remains deferred pending assumption #11.
+- The Host chooses the area from the seeded area list and types the property or building name (no Google Places, which needs billing; openrouteservice geocoding only if its free quota fits; decided 31 Oct 2026, E2.1). The commute calculation uses the area centre as an estimated location until geocoding is available.
+- Manual Listing fallback (Gathan approved 9 Nov 2026, accepted by Ary 10 Nov 2026): the Host enters the exact Unit address in the private location field. The selected Area centre is stored with `coordinateSource: area_center_estimate` and labelled as an estimate, never a verified Building location. Downstream commute screens must preserve that uncertainty; geocoding remains deferred pending assumption #11.
 - Listings and evaluations in the same building share the building name, which links them to that building's moderated reviews and to the area page (FR2.3).
 - The host sets each room's price. The sum of all room prices in the unit (vacant and occupied) must not exceed the unit's total rent, so nobody profits from subletting; the app rejects a higher total and shows how much is left to allocate.
 - **Default room price split:** the app divides the unit's total rent by room-type weights (master 1.3, medium 1.0, small 0.7) and rounds to the nearest RM1, giving any rounding remainder to the master room. Example: a RM1,500 unit with one room of each type suggests master RM650, medium RM500, small RM350. The weights are [DRAFT] assumptions to be checked against survey answers on what students actually pay, and are kept in config so they can change without a release.
@@ -358,7 +358,7 @@ Room photos are stored outside Firebase and referenced by URL: Firebase Storage 
 
 ---
 
-**E2.1 clarification (Gathan, 9 Nov 2026):** step 1 saves a Host-only Listing
+**E2.1 clarification (Gathan, 9 Nov 2026; accepted by Ary 10 Nov 2026):** step 1 saves a Host-only Listing
 with `status: draft`. It is excluded from public search and cannot receive
 Connection requests. E2.2 publishes only after the required priced vacant Room
 exists; the 30-day Listing expiry begins at publication. Drafts have no `expiresAt`.

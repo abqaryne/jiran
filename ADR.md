@@ -196,3 +196,5 @@ students cannot read it or send a Connection request. E2.2 owns publication and
 starts the 30-day expiry then. Drafts have no `expiresAt`. Public queries must
 filter published status; Host queries must filter ownership. Draft retention
 and abandoned photo cleanup need later lifecycle review, not invented expiry.
+
+**Update 2026-11-10 (Ary):** Ary accepted the Host-only draft and the PRD clarification on PR #15.
