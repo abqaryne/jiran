@@ -206,13 +206,12 @@ continuation commits remain on the feature branch until reviewed by PR.
 | **T4.1** Report sections | Dafi | 3 Architecture (350), 4 System implementation (400) | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
 
-### Open questions waiting for you (10)
+### Open questions waiting for you (9)
 
 These come from the task files. Answer them in the task file (or in the PR) so the next person does not guess.
 
 - [E0.2](../../../TASKS/E0/E0.2.md): Aaron: deploy it under the free plan and write the real URL here. Not verified as deployed. Blocks: the Android calls in E3.4 and E4.2.
 - [E0.5](../../../TASKS/E0/E0.5.md): Aaron: confirm that the Worker creates `connections` (ADR-0007, chosen by Ary on 31 Oct 2026; Aaron's confirmation is not recorded). Gathan writes the Rules on that basis.
-- [E0.5](../../../TASKS/E0/E0.5.md): Aaron: second review of PR #8. Blocks: merge.
 - [E0.6](../../../TASKS/E0/E0.6.md): Aaron and Ilham: write the final request and response into `docs/engineering/api-contracts.md`. Blocks: E3.5, E6.3, E8.2.
 - [E1.1](../../../TASKS/E1/E1.1.md): Aaron: review "unverified account can only reach the verify screen". Blocks: closing the subtask.
 - [E3.3](../../../TASKS/E3/E3.3.md): Aaron: confirm which fare and transit checks (#3, #4, #5) are still open.

@@ -321,7 +321,7 @@ Full tokens, components and rules are in [DESIGN.md](../design/DESIGN.md) (style
 
 ## 8. Data model
 
-Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms`, `unitEvaluations`, `listingRequests`, `chats` and `config`). Field-level detail, who may write each field and the retention schedule are in [schema.md](../schema.md); this table keeps only the key fields. **Money is stored as whole sen** (45000 = RM 450.00), in fields ending in `Sen`, so splits add up exactly.
+Cloud Firestore collections (the proposal lists nine; this PRD adds `rooms`, `unitEvaluations`, `listingRequests`, `chats` and `config`). Field-level detail, who may write each field and the retention schedule are in [schema.md](../engineering/schema.md); this table keeps only the key fields. **Money is stored as whole sen** (45000 = RM 450.00), in fields ending in `Sen`, so splits add up exactly.
 
 | Collection | Key fields | Used by (module) |
 |---|---|---|
