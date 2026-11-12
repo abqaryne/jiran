@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Profile setup (E1.3, FR1.3). Texts follow the Figma screens "Profile 1 · Faculty" to "Profile 3 · Privacy". -->
+<resources>
+    <string name="profile_back">Back</string>
+    <string name="profile_title">Set up profile</string>
+    <string name="profile_step">%1$d of %2$d</string>
+    <string name="profile_next">Next</string>
+    <string name="profile_saving">Saving…</string>
+    <string name="profile_finish">Finish</string>
+    <string name="profile_loading">Loading your profile…</string>
+
+    <string name="profile_basics_title">Which faculty are you in?</string>
+    <string name="profile_basics_subtitle">See how to get from each room to your faculty, with estimated time and fare per trip.</string>
+    <string name="profile_field_name">Full name</string>
+    <string name="profile_field_faculty_search">Search faculty</string>
+    <string name="profile_faculty_popular">Popular</string>
+    <string name="profile_faculty_none">No faculty matches that name.</string>
+    <string name="profile_year">Year of study</string>
+    <string name="profile_year_n">Year %1$d</string>
+    <string name="profile_year_postgraduate">Postgraduate</string>
+    <string name="profile_gender">Gender</string>
+    <string name="profile_gender_male">Male</string>
+    <string name="profile_gender_female">Female</string>
+
+    <string name="profile_preferences_title">Budget and lifestyle</string>
+    <string name="profile_preferences_subtitle">Set your monthly room budget and tell us about yourself. Your budget stays private.</string>
+    <string name="profile_field_budget_min">Monthly rent from</string>
+    <string name="profile_field_budget_max">Monthly rent to</string>
+    <string name="profile_currency_prefix">RM</string>
+    <string name="profile_has_car">I own a car</string>
+    <string name="profile_has_car_detail">Adds driving to your commute options</string>
+    <string name="profile_lifestyle">About you</string>
+
+    <string name="profile_privacy_title">Choose what stays private</string>
+    <string name="profile_privacy_subtitle">Until you are both connected, people only see your initials, faculty, year and tags.</string>
+    <string name="profile_privacy_phone">Phone number</string>
+    <string name="profile_privacy_phone_detail">Hidden until you share it in chat</string>
+    <string name="profile_privacy_budget">Budget range</string>
+    <string name="profile_privacy_budget_detail">Hidden until a Connection</string>
+    <string name="profile_privacy_photo">Profile photo</string>
+    <string name="profile_privacy_photo_detail">Initials only until you live together</string>
+    <string name="profile_privacy_note">Each switch applies at once and is enforced by the server, not only in the app. Change them any time in Profile.</string>
+
+    <!-- Profile gate in the shell: shown when the check cannot be answered, instead of opening the tabs. -->
+    <string name="shell_gate_retry">Try again</string>
+    <string name="shell_gate_error_network">We could not check your profile. Check your internet and try again.</string>
+    <string name="shell_gate_error_sign_in">Your session has ended. Please log in again.</string>
+    <string name="shell_gate_error_unknown">We could not check your profile. Please try again.</string>
+
+    <string name="profile_error_required">Required</string>
+    <string name="profile_error_choose_one">Choose one</string>
+    <string name="profile_error_budget_amount">Enter an amount in ringgit, for example 450</string>
+    <string name="profile_error_budget_min_above_max">The highest rent must not be below the lowest</string>
+    <string name="profile_error_network">No connection. Check your internet and try again.</string>
+    <string name="profile_error_sign_in">Your session has ended. Please log in again.</string>
+    <string name="profile_error_unknown">Something went wrong. Please try again.</string>
+</resources>

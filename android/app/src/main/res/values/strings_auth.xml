@@ -7,13 +7,13 @@
     <string name="auth_welcome_log_in">Log in</string>
     <string name="auth_welcome_verified_only">Only for verified UM students</string>
         <string name="auth_sample_room_title">Small room · Pantai Dalam</string>
-    <string name="auth_sample_room_subtitle">RM 712 true monthly cost</string>
+    <string name="auth_sample_room_subtitle">See travel time and fare per trip</string>
     <string name="auth_sample_room_value">RM 450</string>
     <string name="auth_sample_match_title">Sofea A. · FSKTM Year 2</string>
-    <string name="auth_sample_match_subtitle">Classes overlap on 3 days</string>
+    <string name="auth_sample_match_subtitle">Similar budget and sleep times</string>
     <string name="auth_sample_match_value">86%</string>
     <string name="auth_sample_commute_title">LRT + UM shuttle</string>
-    <string name="auth_sample_commute_subtitle">Cheapest way to reach class on time</string>
+    <string name="auth_sample_commute_subtitle">Cheapest way to reach your faculty</string>
     <string name="auth_sample_commute_value">34 min</string>
 
     <string name="auth_open_sign_up_flow">Welcome and sign up screens (Module 1)</string>

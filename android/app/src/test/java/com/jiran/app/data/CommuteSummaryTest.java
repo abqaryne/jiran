@@ -58,6 +58,7 @@ public final class CommuteSummaryTest {
         CommuteSummary.Option option = CommuteSummary.from(raw).options.get(3);
         assertEquals("vehicle_unavailable", option.reason);
         assertNull(option.monthlyCostSen);
+        assertNull(option.perTripCostSen);
     }
 
     @Test
@@ -113,6 +114,7 @@ public final class CommuteSummaryTest {
         assertEquals("transit", result.selectedMode);
         assertEquals(Long.valueOf(61200), result.trueMonthlyCostSen);
         assertEquals(Long.valueOf(10000), result.options.get(1).monthlyCostSen);
+        assertEquals(Long.valueOf(250), result.options.get(1).perTripCostSen);
         assertEquals(Long.valueOf(300), result.options.get(1).co2GramsPerTrip);
         assertThrows(UnsupportedOperationException.class, () -> result.options.clear());
     }

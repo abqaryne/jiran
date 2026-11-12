@@ -387,11 +387,11 @@
             <com.jiran.app.ui.common.ListRowView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:rowIcon="@drawable/ic_event"
+                app:rowIcon="@drawable/ic_school"
                 app:rowShowChevron="true"
                 app:rowShowDivider="false"
-                app:rowSubtitle="3 classes · leave by 9:18 on Mon"
-                app:rowTitle="Class timetable" />
+                app:rowSubtitle="FSKTM · commute destination"
+                app:rowTitle="Faculty" />
 
             <!-- Progress -->
             <com.jiran.app.ui.common.SectionHeaderView
@@ -410,25 +410,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_24"
-                app:headerTitle="Commute options" />
+                app:headerTitle="Sample commute · one way" />
             <com.jiran.app.ui.common.CommuteOptionView
                 android:id="@+id/commute_selected"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:selected="true"
-                app:commuteCost="RM 50/mo · 9 kg CO₂"
+                app:commuteCost="Fare estimate unavailable"
                 app:commuteIcon="@drawable/ic_train"
                 app:commuteMode="LRT + UM shuttle"
-                app:commuteNote="Cheapest on time"
+                app:commuteNote="Sample route"
                 app:commuteTime="34 min" />
             <com.jiran.app.ui.common.CommuteOptionView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_8"
-                app:commuteCost="RM 540/mo"
+                app:commuteCost="Fare estimate unavailable"
                 app:commuteIcon="@drawable/ic_local_taxi"
                 app:commuteMode="E-hailing"
-                app:commuteNote="Estimate, surge at peak"
+                app:commuteNote="Estimate only, not a Grab quote"
                 app:commuteTime="17 min" />
 
             <!-- Room cards -->
@@ -449,18 +449,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:roomMeta="2d · 18 min · Pantai Dalam"
-                    app:roomPrice="RM 450"
+                    app:roomPrice="RM 450 / month"
                     app:roomTitle="Small room · Residensi Pantai Dalam"
-                    app:roomTrueCost="RM 712 true cost" />
+                    app:roomCommute="One-way fare unavailable" />
                 <com.jiran.app.ui.common.RoomCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_8"
                     android:layout_weight="1"
                     app:roomMeta="3d · 22 min · Kerinchi"
-                    app:roomPrice="RM 480"
+                    app:roomPrice="RM 480 / month"
                     app:roomTitle="Medium room · Kerinchi Residence"
-                    app:roomTrueCost="RM 748 true cost" />
+                    app:roomCommute="One-way fare unavailable" />
             </LinearLayout>
 
             <!-- Empty state -->

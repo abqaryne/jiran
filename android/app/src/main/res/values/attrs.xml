@@ -25,7 +25,7 @@
         <attr name="roomPrice" format="string" />
         <attr name="roomTitle" format="string" />
         <attr name="roomMeta" format="string" />
-        <attr name="roomTrueCost" format="string" />
+        <attr name="roomCommute" format="string" />
     </declare-styleable>
 
     <declare-styleable name="ListRowView">

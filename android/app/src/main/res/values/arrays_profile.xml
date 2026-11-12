@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Profile setup lists (E1.3). Keys are what Firestore stores; chip labels and full names are what the screen shows,
+  in the same order. The first nine are the "Popular" chips of the Figma screen "Profile 1 · Faculty".
+
+  Faculties: the 17 "Undergraduate Faculties" on https://study.um.edu.my/undergraduate-faculties (page dated
+  "Last Updated: Jun 24, 2026", read on 11 Nov 2026). All 17 names are here. The full names follow the page's
+  link names ("faculty-of-nursing", "faculty-of-engineering", ...); Islamic Studies and Malay Studies have no
+  "faculty-of" link on that page and stay "Academy of ...", which is NOT verified. FSKTM is shown on the page as
+  "Computer Science & IT".
+
+  Lifestyle tags: the eleven "About you" chips of the Figma screen "Profile 2 · Budget and commute"; a DRAFT set
+  until the survey results (T1, 13 Nov 2026).
+-->
+<resources>
+    <integer name="profile_popular_faculties">9</integer>
+
+    <string-array name="profile_faculty_keys" translatable="false">
+        <item>fsktm</item>
+        <item>engineering</item>
+        <item>business_economics</item>
+        <item>arts_social_sciences</item>
+        <item>science</item>
+        <item>law</item>
+        <item>medicine</item>
+        <item>education</item>
+        <item>built_environment</item>
+        <item>dentistry</item>
+        <item>pharmacy</item>
+        <item>nursing</item>
+        <item>languages_linguistics</item>
+        <item>creative_arts</item>
+        <item>sport_exercise</item>
+        <item>islamic_studies</item>
+        <item>malay_studies</item>
+    </string-array>
+    <string-array name="profile_faculty_labels">
+        <item>FSKTM</item>
+        <item>Engineering</item>
+        <item>Business and Economics</item>
+        <item>Arts and Social Sciences</item>
+        <item>Science</item>
+        <item>Law</item>
+        <item>Medicine</item>
+        <item>Education</item>
+        <item>Built Environment</item>
+        <item>Dentistry</item>
+        <item>Pharmacy</item>
+        <item>Nursing</item>
+        <item>Languages and Linguistics</item>
+        <item>Creative Arts</item>
+        <item>Sport and Exercise Sciences</item>
+        <item>Islamic Studies</item>
+        <item>Malay Studies</item>
+    </string-array>
+    <string-array name="profile_faculty_names">
+        <item>Faculty of Computer Science and IT</item>
+        <item>Faculty of Engineering</item>
+        <item>Faculty of Business and Economics</item>
+        <item>Faculty of Arts and Social Sciences</item>
+        <item>Faculty of Science</item>
+        <item>Faculty of Law</item>
+        <item>Faculty of Medicine</item>
+        <item>Faculty of Education</item>
+        <item>Faculty of Built Environment</item>
+        <item>Faculty of Dentistry</item>
+        <item>Faculty of Pharmacy</item>
+        <item>Faculty of Nursing</item>
+        <item>Faculty of Languages and Linguistics</item>
+        <item>Faculty of Creative Arts</item>
+        <item>Faculty of Sport and Exercise Sciences</item>
+        <item>Academy of Islamic Studies</item>
+        <item>Academy of Malay Studies</item>
+    </string-array>
+
+    <string-array name="profile_lifestyle_keys" translatable="false">
+        <item>sleeps_early</item>
+        <item>night_owl</item>
+        <item>tidy</item>
+        <item>relaxed_about_mess</item>
+        <item>cooks_often</item>
+        <item>rarely_cooks</item>
+        <item>quiet</item>
+        <item>social</item>
+        <item>non_smoker</item>
+        <item>has_pets</item>
+        <item>no_pets</item>
+    </string-array>
+    <string-array name="profile_lifestyle_labels">
+        <item>Sleeps early</item>
+        <item>Night owl</item>
+        <item>Tidy</item>
+        <item>Relaxed about mess</item>
+        <item>Cooks often</item>
+        <item>Rarely cooks</item>
+        <item>Quiet</item>
+        <item>Social</item>
+        <item>Non-smoker</item>
+        <item>Has pets</item>
+        <item>No pets</item>
+    </string-array>
+</resources>

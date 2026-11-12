@@ -132,6 +132,7 @@ public final class CommuteSummary {
         public final String reason;
         public final Long durationSeconds;
         public final Long distanceMetres;
+        public final Long perTripCostSen;
         public final Long monthlyCostSen;
         public final Long co2GramsPerTrip;
         public final String emissionSource;
@@ -155,6 +156,7 @@ public final class CommuteSummary {
                         "provider_unavailable", "vehicle_unavailable").contains(reason));
                 durationSeconds = null;
                 distanceMetres = null;
+                perTripCostSen = null;
                 monthlyCostSen = null;
                 co2GramsPerTrip = null;
                 emissionSource = null;
@@ -165,9 +167,9 @@ public final class CommuteSummary {
                 reason = null;
                 durationSeconds = number(raw.get("durationSeconds"));
                 distanceMetres = number(raw.get("distanceMetres"));
-                long perTripCost = number(raw.get("perTripCostSen"));
+                perTripCostSen = number(raw.get("perTripCostSen"));
                 monthlyCostSen = number(raw.get("monthlyCostSen"));
-                require(monthlyCostSen == Math.multiplyExact(perTripCost, monthlyTrips));
+                require(monthlyCostSen == Math.multiplyExact(perTripCostSen, monthlyTrips));
                 co2GramsPerTrip = raw.get("co2GramsPerTrip") == null ? null : number(raw.get("co2GramsPerTrip"));
                 emissionSource = raw.get("emissionSource") == null ? null : text(raw.get("emissionSource"));
                 require((co2GramsPerTrip == null) == (emissionSource == null));

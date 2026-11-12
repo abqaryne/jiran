@@ -12,8 +12,8 @@ import com.jiran.app.R;
 import com.jiran.app.databinding.ComponentCommuteOptionBinding;
 
 /**
- * Figma: Commute option. One travel mode with its time and monthly cost.
- * Call setSelected(true) on the cheapest option that still reaches class on time (blue border, blue note).
+ * Figma: Commute option. One travel mode with its estimated one-way duration and fare.
+ * Call setSelected(true) on the lowest known fare among applicable available modes (blue border, blue note).
  */
 public class CommuteOptionView extends FrameLayout {
 

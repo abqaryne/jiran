@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   Figma: Room card. One card per vacant Room. Two per row in search (use a GridLayoutManager with spanCount 2).
-  Shows ONLY: price, title, meta (age, travel time, area) and true monthly cost. CO2 never appears on this card.
-  Set the photo with Glide/Coil. Bind: price, title, meta, true cost.
+  Shows ONLY: price, title, meta (age, travel time, area) and one-way commute estimate. CO2 never appears on this card.
+  Set the photo with Glide/Coil. Bind: price, title, meta, commute.
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -59,7 +59,7 @@
         tools:text="2d · 18 min · Pantai Dalam" />
 
     <TextView
-        android:id="@+id/true_cost"
+        android:id="@+id/commute"
         android:textAppearance="@style/TextAppearance.Jiran.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -67,5 +67,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/meta"
-        tools:text="RM 712 true cost" />
+        tools:text="Estimated one-way commute" />
 </androidx.constraintlayout.widget.ConstraintLayout>
