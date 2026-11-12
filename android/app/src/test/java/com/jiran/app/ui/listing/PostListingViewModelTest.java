@@ -15,6 +15,7 @@ public class PostListingViewModelTest {
         PostListingViewModel model = new PostListingViewModel(gateway);
         model.form.area = new AreaOption("sample", "Sample Area", 0, 0);
         model.form.buildingName = "Fictional Building";
+        model.form.buildingAddress = "Jalan Fiksi 1";
         model.form.address = "Fictional Unit 1";
         model.form.rent = "10";
         model.form.deposit = "0";
@@ -101,6 +102,7 @@ public class PostListingViewModelTest {
         gateway.callback.success("draft-1");
         assertEquals(0, gateway.uploads);
         assertEquals("", model.form.address);
+        assertEquals("", model.form.buildingAddress);
     }
     private static final class Fake implements ListingGateway {
         Callback callback;

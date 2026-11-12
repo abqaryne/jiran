@@ -13,10 +13,12 @@
     <string name="post_choose_building">Choose Building</string>
     <string name="post_building_help">Choose an Area and enter the Building name.</string>
     <string name="post_building_summary">%1$s · %2$s\nLocation estimate: Area centre, not the exact Building.</string>
+    <string name="post_building_address">Building street address</string>
+    <string name="post_building_address_help">Public. Students see it on the Room card so they know where the Building is.</string>
     <string name="post_address">Unit address (private)</string>
     <string name="post_rent">Unit rent per month (RM)</string>
     <string name="post_deposit">Deposit (RM)</string>
-    <string name="post_private_help">Your address stays private until a Connection. Enter the full address here because this Building was selected manually.</string>
+    <string name="post_private_help">Block, floor and door number stay private until a Connection.</string>
     <string name="post_gender">Gender preference</string>
     <string name="post_any">Any</string>
     <string name="post_male">Male</string>
@@ -36,7 +38,8 @@
     <string name="post_rejected">The save was rejected. Check your details and account before trying again.</string>
     <string name="post_uncertain">Save outcome unknown. A draft or photo may have been saved. Do not submit it again until its saved state has been checked.</string>
     <string name="post_invalid">Check the highlighted fields, choose a Building and add at least one photo.</string>
-    <string name="post_required_address">Enter a private address, up to 500 characters.</string>
+    <string name="post_required_building_address">Enter the Building street address, up to 300 characters.</string>
+    <string name="post_required_address">Enter the Unit address (block, floor, door number), up to 500 characters.</string>
     <string name="post_invalid_rent">Enter a positive amount with at most two decimal places.</string>
     <string name="post_invalid_deposit">Enter zero or a positive amount with at most two decimal places.</string>
     <string name="post_leave_title">Leave this form?</string>

@@ -21,6 +21,7 @@ public class ListingFormTest {
         assertEquals("", form.invalidField());
         assertEquals("area_center_estimate", form.payload().get("coordinateSource"));
         assertEquals("Fictional Unit 1", form.payload().get("exactAddress"));
+        assertEquals("Jalan Fiksi 1", form.payload().get("buildingAddress"));
         assertFalse(form.payload().containsKey("placeId"));
         assertFalse(form.payload().containsKey("status"));
     }
@@ -32,6 +33,13 @@ public class ListingFormTest {
         form.address = " ";
         assertEquals("address", form.invalidField());
         form = valid();
+        form.buildingAddress = " ";
+        assertEquals("buildingAddress", form.invalidField());
+        form.buildingAddress = "x".repeat(301);
+        assertEquals("buildingAddress", form.invalidField());
+        form.buildingAddress = "x".repeat(300);
+        assertEquals("", form.invalidField());
+        form = valid();
         form.amenities.add("x".repeat(41));
         assertEquals("amenities", form.invalidField());
     }
@@ -39,6 +47,7 @@ public class ListingFormTest {
         ListingForm form = new ListingForm();
         form.buildingName = "Fictional Building";
         form.area = new AreaOption("sample", "Sample Area", 0, 0);
+        form.buildingAddress = "Jalan Fiksi 1";
         form.address = "Fictional Unit 1";
         form.rent = "10.01";
         form.deposit = "0";

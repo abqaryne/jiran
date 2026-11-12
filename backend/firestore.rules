@@ -188,12 +188,15 @@ service cloud.firestore {
         'totalRentSen', 'depositSen', 'genderPref', 'amenities', 'photoUrls',
         'isSample', 'status', 'createdAt', 'updatedAt'];
       return data.keys().hasAll(required)
-        && data.keys().hasOnly(required.concat(['placeId', 'expiresAt', 'coordinateSource']))
+        && data.keys().hasOnly(required.concat(['placeId', 'expiresAt', 'coordinateSource', 'buildingAddress']))
         && (!('coordinateSource' in data) || data.coordinateSource == 'area_center_estimate')
         && data.listingId == listingId && listingId.matches('[A-Za-z0-9_-]{1,128}')
         && listingText(data.ownerUid, 128)
         && listingText(data.areaId, 128) && data.areaId.matches('[A-Za-z0-9_-]+')
         && listingText(data.buildingName, 200)
+        // Public street address of the Building (11 Nov 2026). Optional here so older listings still validate;
+        // the Worker requires it for new drafts. The exact Unit stays in private/location.
+        && (!('buildingAddress' in data) || listingText(data.buildingAddress, 300))
         && (!('placeId' in data) || listingText(data.placeId, 256))
         && data.lat is number && data.lat >= -90 && data.lat <= 90
         && data.lng is number && data.lng >= -180 && data.lng <= 180
@@ -309,14 +312,6 @@ service cloud.firestore {
       allow read: if isVerifiedUmUser();
       allow create, update: if isVerifiedUmUser() && isListingHost(request.resource.data.listingId);
       allow delete: if isVerifiedUmUser() && isListingHost(resource.data.listingId);
-    }
-
-    // --- 2.6 Reviews ---
-    match /reviews/{reviewId} {
-      // Building reviews: public read if moderated or if author; created by verified author; update/delete admin only
-      allow read: if isVerifiedUmUser() && (resource.data.moderated == true || resource.data.authorUid == request.auth.uid);
-      allow create: if isVerifiedUmUser() && request.resource.data.authorUid == request.auth.uid && request.resource.data.moderated == false;
-      allow update, delete: if false;
     }
 
     // --- 2.7 Match Profiles ---

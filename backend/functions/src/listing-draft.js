@@ -1,6 +1,6 @@
 'use strict';
 
-const INPUT_FIELDS = ['areaId', 'buildingName', 'placeId', 'lat', 'lng', 'totalRentSen',
+const INPUT_FIELDS = ['areaId', 'buildingName', 'buildingAddress', 'placeId', 'lat', 'lng', 'totalRentSen',
   'depositSen', 'genderPref', 'amenities', 'exactAddress', 'coordinateSource'];
 
 function validText(value, max) {
@@ -13,7 +13,8 @@ function makeListingDraft(input, uid, listingId) {
       || Object.keys(input).some(key => !INPUT_FIELDS.includes(key))
       || !validText(uid, 128) || !/^[A-Za-z0-9_-]{1,128}$/.test(listingId)
       || !validText(input.areaId, 128) || !/^[A-Za-z0-9_-]+$/.test(input.areaId)
-      || !validText(input.buildingName, 200) || !validText(input.exactAddress, 500)
+      || !validText(input.buildingName, 200) || !validText(input.buildingAddress, 300)
+      || !validText(input.exactAddress, 500)
       || (input.placeId !== undefined && !validText(input.placeId, 256))
       || !Number.isFinite(input.lat) || Math.abs(input.lat) > 90
       || !Number.isFinite(input.lng) || Math.abs(input.lng) > 180
@@ -26,7 +27,7 @@ function makeListingDraft(input, uid, listingId) {
     throw new Error('invalid-listing');
   }
   const listing = {listingId, ownerUid: uid, areaId: input.areaId,
-    buildingName: input.buildingName.trim(), lat: input.lat, lng: input.lng,
+    buildingName: input.buildingName.trim(), buildingAddress: input.buildingAddress.trim(), lat: input.lat, lng: input.lng,
     totalRentSen: input.totalRentSen, depositSen: input.depositSen,
     genderPref: input.genderPref, amenities: [...input.amenities], photoUrls: [],
     isSample: false, status: 'draft'};
