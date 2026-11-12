@@ -39,7 +39,7 @@
             android:textAppearance="@style/TextAppearance.Jiran.Label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="LRT + UM shuttle" />
+            tools:text="Public transport" />
 
         <TextView
             android:id="@+id/note"

@@ -318,13 +318,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Utilities included"
+                    android:text="Furnished"
                     android:textAppearance="@style/TextAppearance.Jiran.Label" />
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:contentDescription="Utilities included" />
+                    android:contentDescription="Furnished" />
             </LinearLayout>
 
             <!-- Banners -->
@@ -418,7 +418,7 @@
                 tools:selected="true"
                 app:commuteCost="Fare estimate unavailable"
                 app:commuteIcon="@drawable/ic_train"
-                app:commuteMode="LRT + UM shuttle"
+                app:commuteMode="Public transport"
                 app:commuteNote="Sample route"
                 app:commuteTime="34 min" />
             <com.jiran.app.ui.common.CommuteOptionView

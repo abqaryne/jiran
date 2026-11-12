@@ -12,7 +12,7 @@
     <string name="auth_sample_match_title">Sofea A. · FSKTM Year 2</string>
     <string name="auth_sample_match_subtitle">Similar budget and sleep times</string>
     <string name="auth_sample_match_value">86%</string>
-    <string name="auth_sample_commute_title">LRT + UM shuttle</string>
+    <string name="auth_sample_commute_title">Public transport</string>
     <string name="auth_sample_commute_subtitle">Cheapest way to reach your faculty</string>
     <string name="auth_sample_commute_value">34 min</string>
 
