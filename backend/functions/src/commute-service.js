@@ -1,7 +1,7 @@
 const {session} = require('./session');
 const {parseDepartureTime,validateRouteRequest} = require('./routes-client');
 const {priceRoutes} = require('./commute-pricing');
-const {calculateCommute} = require('./commute');
+const {calculatePerTripCommute} = require('./commute');
 
 class CommuteError extends Error {
   constructor(code,message) { super(message); this.code=code; }
@@ -10,15 +10,17 @@ function fail(code,message) { throw new CommuteError(code,message); }
 function object(value) { return value!==null && typeof value==='object' && !Array.isArray(value); }
 function unavailable(mode,reason) { return {mode,status:'unavailable',reason}; }
 function body(data,clock) {
-  if (!object(data) || Object.keys(data).length!==3
-      || Object.keys(data).some(key=>!['listingId','roomId','departTime'].includes(key))
+  if (!object(data) || Object.keys(data).some(key=>!['listingId','roomId','departTime'].includes(key))
       || ![data.listingId,data.roomId].every(id=>typeof id==='string' && /^[A-Za-z0-9_-]{1,128}$/.test(id))) {
     fail('invalid-argument','Invalid commute request');
   }
-  let departure;
-  try { departure=parseDepartureTime(data.departTime); } catch { fail('invalid-argument','Invalid commute departure'); }
   if (!Number.isFinite(clock)) fail('failed-precondition','Commute clock unavailable');
-  if (departure<clock || departure>clock+100*86400000) fail('invalid-argument','Invalid commute departure');
+  // Estimates are for leaving now (PRD Module 4). A reference departure is optional and only for a later scenario.
+  let departure=clock;
+  if (Object.hasOwn(data,'departTime')) {
+    try { departure=parseDepartureTime(data.departTime); } catch { fail('invalid-argument','Invalid commute departure'); }
+    if (departure<clock || departure>clock+100*86400000) fail('invalid-argument','Invalid commute departure');
+  }
   return {listingId:data.listingId,roomId:data.roomId,departTime:new Date(departure).toISOString(),departure};
 }
 function providerFact(raw,mode) {
@@ -60,11 +62,8 @@ function createCommuteService({loadAuthorizedContext,loadAssumptions,consumeQuot
           || context.roomId!==input.roomId || context.roomListingId!==input.listingId) fail('permission-denied','Commute access denied');
       const origin={latitude:context.origin?.latitude,longitude:context.origin?.longitude};
       const destination={latitude:context.destination?.latitude,longitude:context.destination?.longitude};
-      const calculation={roomPriceSen:context.roomPriceSen,utilitiesShareSen:context.utilitiesShareSen,
-        monthlyTrips:context.monthlyTrips,departTime:input.departTime,classStartTime:context.classStartTime};
       try {
-        if (typeof context.drivingAllowed!=='boolean' || parseDepartureTime(context.classStartTime)<=input.departure) throw new Error();
-        calculateCommute({...calculation,modes:[]});
+        if (typeof context.drivingAllowed!=='boolean') throw new Error();
         validateRouteRequest({origin,destination,travelMode:'TRANSIT',departTime:input.departTime},now());
       } catch { fail('failed-precondition','Commute context unavailable'); }
       const drivingAllowed=context.drivingAllowed;
@@ -125,9 +124,9 @@ function createCommuteService({loadAuthorizedContext,loadAssumptions,consumeQuot
           if (profile!=null) route.emissionProfile=profile;
         }
         const priced=priceRoutes({routes,assumptions});
-        const result=calculateCommute({...calculation,modes:priced.modes});
+        const result=calculatePerTripCommute({modes:priced.modes});
         active();
-        return {...result,assumptionVersion:priced.assumptionVersion,partialProviderFailure};
+        return {...result,departTime:input.departTime,assumptionVersion:priced.assumptionVersion,partialProviderFailure};
       } catch {
         active();
         fail('failed-precondition','Commute calculation inputs unavailable');

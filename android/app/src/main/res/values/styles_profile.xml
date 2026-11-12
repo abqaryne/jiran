@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Profile setup styles built only from design system tokens. -->
+<resources>
+    <!-- Error under a chip group, like the TextInputLayout error under a text field. Hidden until set. -->
+    <style name="Widget.Jiran.ProfileFieldError" parent="">
+        <item name="android:layout_marginTop">@dimen/spacing_4</item>
+        <item name="android:textAppearance">@style/TextAppearance.Jiran.Caption</item>
+        <item name="android:textColor">@color/color_status_danger_text</item>
+        <item name="android:visibility">gone</item>
+    </style>
+</resources>

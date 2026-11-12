@@ -19,6 +19,12 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.CommutePreviewActivity" android:exported="false" />
         <activity android:name=".ui.MatchPreviewActivity" android:exported="false" />
+        <!-- Profile setup (E1.3): the shell sends a student here until all four steps are saved. -->
+        <activity
+            android:name=".ui.profile.ProfileSetupActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Jiran"
+            android:windowSoftInputMode="adjustResize" />
         <!-- Product shell (tabs + navigation). Not launched yet: Ary wires it in after sign-in. -->
         <activity
             android:name=".ui.shell.ShellActivity"

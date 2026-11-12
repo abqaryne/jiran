@@ -1,6 +1,8 @@
 # Ary: Group leader, Frontend Lead, Lead UI/UX
 
 ## You own
+
+**11 Nov 2026:** [commute clarification and file handoff](../../plans/2026-11-11-commute-per-trip.md): remove the profile campus-day requirement and true-monthly-cost UI; build per-trip guidance in E4.2, with basic transit instructions in P0 and full map/scenario view in E4.4 (P1).
 - **Module 1** Authentication and verified profile (FR1.1, FR1.2, FR1.3)
 - **Module 3** Roommate matching screens (FR3.1 questionnaire, FR3.2 match list with score and reasons, FR3.3 connect and group)
 - Figma, the design system, the Android app shell (Activities, Fragments, bottom navigation), theme and shared components
@@ -44,9 +46,8 @@ You do not write the match score (Aaron) or the match reason text (Ilham). You b
 | **E0.1** Repo and CI are healthy | Aaron | Add everyone as collaborators on GitHub; Turn on branch protection: PR required, final check by Ary | [E0.1.md](../../../TASKS/E0/E0.1.md) | 2 Nov |
 | **T1.1** Survey and interviews | Aly | Review the survey wording so the questions match the screens; Share the survey link in your circles | [T1.1.md](../../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
 | **E5.4** Notifications | Gathan | Notifications screen | [E5.4.md](../../../TASKS/E5/E5.4.md) | 13 Dec |
-| **E4.4** Public transport route page, peak and off-peak | Aaron | Public transport route page with the MapLibre map, and the Peak / Off-peak toggle | [E4.4.md](../../../TASKS/E4/E4.4.md) | 14 Dec |
+| **E4.4** Public transport route page | Aaron | Public transport route page with the MapLibre map and timeline | [E4.4.md](../../../TASKS/E4/E4.4.md) | 14 Dec |
 | **E9.1** Evaluate any unit | Gathan | Evaluate form and result screens | [E9.1.md](../../../TASKS/E9/E9.1.md) | 17 Dec |
-| **E9.4** Area page and building reviews | Gathan | Area page and review screens | [E9.4.md](../../../TASKS/E9/E9.4.md) | 20 Dec |
 | **T3.2** Record, edit and final cut | Aly | Check against the rubric | [T3.2.md](../../../TASKS/T3/T3.2.md) | 2 Jan |
 | **T4.1** Report sections | Dafi | 1 Introduction (300 words), UI and colours part of 3 | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |

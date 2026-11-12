@@ -51,8 +51,8 @@ The brief requires **significant and original human contribution** and a real un
 - Use the terms in [docs/product/GLOSSARY.md](docs/product/GLOSSARY.md). UI follows
   [docs/design/DESIGN.md](docs/design/DESIGN.md): only design system tokens and styles, 48 dp touch targets, status with a
   word and an icon, estimates labelled as estimates.
-- Privacy by default (PDPA 2010): no real personal data in examples or tests, the contract check is private, addresses and
-  phones are hidden until a Connection exists.
+- Privacy by default (PDPA 2010): no real personal data in examples or tests, the contract check is private, the exact Unit address (block,
+  floor, door number) and phones are hidden until a Connection exists; a Building's street address is public.
 - Never commit API keys, `google-services.json`, service accounts or keystores. Do not scrape other sites.
 - Do not invent numbers (fares, prices, emission factors, survey results). Use the values in
   [docs/product/ASSUMPTIONS.md](docs/product/ASSUMPTIONS.md) and label them as estimates until their owner verifies them.
@@ -73,7 +73,7 @@ The brief requires **significant and original human contribution** and a real un
 - `TASK.md` is the master list, `TASKS/<epic>/<ID>.md` holds the final requirements of each task (work, constraints, acceptance; no open-question or decision lists: write a settled point straight into *Constraints* or as a subtask), `ADR.md` records decisions that are hard to
   reverse (append-only). Read the task file of your story before you code; if something in it is wrong or out of date, fix it in the same PR and tell Ary.
 - When you finish or change a task, update its file (status, resolution) and its row in `TASK.md` in the same PR. The status follows
-  what is in the repository (rules at the top of `TASK.md`), not ClickUp; hours are logged in ClickUp.
+  what is in the repository (rules at the top of `TASK.md`), not ClickUp; hours are logged in ClickUp. A task goes to `qa` when the code is right; running the *Acceptance* tests is QA's job (Aly), so do not keep a task `inprogress` only because those tests are not run yet, and write what you did not try as `not verified`.
 - Never invent task detail: write `not recorded` or `not verified`, like in the AI log.
 
 ## 5. Firebase and backend

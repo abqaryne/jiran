@@ -150,9 +150,11 @@ public class PostListingFragment extends Fragment {
         return binding.getRoot();
     }
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        binding.buildingAddress.setText(model.form.buildingAddress);
         binding.address.setText(model.form.address);
         binding.rent.setText(model.form.rent);
         binding.deposit.setText(model.form.deposit);
+        binding.buildingAddress.addTextChangedListener(watch(value -> model.form.buildingAddress = value));
         binding.address.addTextChangedListener(watch(value -> model.form.address = value));
         binding.rent.addTextChangedListener(watch(value -> model.form.rent = value));
         binding.deposit.addTextChangedListener(watch(value -> model.form.deposit = value));
@@ -184,11 +186,15 @@ public class PostListingFragment extends Fragment {
         });
         binding.addPhoto.setOnClickListener(button -> pickPhoto.launch(new String[]{"image/jpeg", "image/png"}));
         binding.save.setOnClickListener(button -> {
+            binding.buildingAddressLayout.setError(null);
             binding.addressLayout.setError(null);
             binding.rentLayout.setError(null);
             binding.depositLayout.setError(null);
             String invalid = model.invalidField();
             if (!invalid.isEmpty()) {
+                if (invalid.equals("buildingAddress")) {
+                    binding.buildingAddressLayout.setError(getString(R.string.post_required_building_address));
+                }
                 if (invalid.equals("address")) {
                     binding.addressLayout.setError(getString(R.string.post_required_address));
                 }
@@ -252,7 +258,7 @@ public class PostListingFragment extends Fragment {
     }
     private void render(PostListingViewModel.State state) {
         boolean edit = model.editable();
-        for (View field : new View[]{binding.address, binding.rent, binding.deposit, binding.building,
+        for (View field : new View[]{binding.buildingAddress, binding.address, binding.rent, binding.deposit, binding.building,
             binding.any, binding.male, binding.female, binding.wifi, binding.aircon, binding.washingMachine}) {
             field.setEnabled(edit);
         }

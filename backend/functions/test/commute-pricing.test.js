@@ -1,5 +1,5 @@
 const {priceRoutes} = require('../src/commute-pricing');
-const {calculateCommute} = require('../src/commute');
+const {calculatePerTripCommute} = require('../src/commute');
 const route = (mode,extra={}) => ({mode,status:'available',distanceMetres:6000,durationSeconds:1800,...extra});
 const assumptions = () => ({version:'sample-v1',
   e_hailing:{baseSen:300,rateSenPerKm:100,multiplierBasisPoints:12500,pickupSeconds:120,source:'Synthetic sample fare'},
@@ -11,15 +11,15 @@ test('prices sourced road formulas exactly and adds explicit pickup time',()=>{
   expect(result.modes[2]).toMatchObject({mode:'e_hailing',perTripCostSen:1125,durationSeconds:1920,costSource:'Synthetic sample fare'});
   expect(result.modes[3]).toMatchObject({mode:'driving',perTripCostSen:234,costSource:'Synthetic sample car costs'});
 });
-test('integrates real cost layer into monthly calculator with literal expected result',()=>{
+test('integrates real cost layer into the per-trip calculator with a literal expected result',()=>{
   const priced=run([route('walking',{durationSeconds:4000}),route('transit',{transitFareSen:250}),route('e_hailing'),
     route('driving',{source:'Google Maps',warnings:['Sample provider warning'],trafficFallback:true})]);
-  const result=calculateCommute({roomPriceSen:45000,utilitiesShareSen:6200,monthlyTrips:40,
-    departTime:'2026-11-16T08:00:00+08:00',classStartTime:'2026-11-16T09:00:00+08:00',modes:priced.modes});
-  expect(result.selectedMode).toBe('driving');
-  expect(result.trueMonthlyCostSen).toBe(60560); // 45000+6200+234*40
+  const result=calculatePerTripCommute({modes:priced.modes});
+  expect(result.selectedMode).toBe('walking'); // free walking is the lowest known fare
+  expect(result.options.map(o=>o.perTripCostSen)).toEqual([0,250,1125,234]);
   expect(result.options[3]).toMatchObject({costSource:'Synthetic sample car costs',routeSource:'Google Maps',
     warnings:['Sample provider warning'],trafficFallback:true});
+  expect(result).not.toHaveProperty('trueMonthlyCostSen');
 });
 test('missing road assumptions and missing transit fare never become free',()=>{
   const result=run([route('walking'),route('transit'),route('e_hailing'),route('driving')],{version:'unset'});

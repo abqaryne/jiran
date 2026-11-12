@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Full faculty names wrap in an accessible dropdown row. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/touch_target_min"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="@dimen/spacing_16"
+    android:paddingVertical="@dimen/spacing_12"
+    android:textAppearance="@style/TextAppearance.Jiran.Body"
+    android:textColor="@color/color_text_primary" />

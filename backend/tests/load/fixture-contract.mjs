@@ -18,10 +18,10 @@ export function fixtureResult(status,body,scenario) {
   const result=body?.result;
   if(status!==200 || !result || result.dataSource!=='fixture' || result.scenarioId!==scenario
       || !Array.isArray(result.options) || result.options.length!==4) return false;
-  if(scenario==='on-time') return result.selectedMode==='transit' && result.trueMonthlyCostSen===61200;
-  if(scenario==='no-on-time-route') return result.selectedMode===null && result.trueMonthlyCostSen===null;
+  if(scenario==='per-trip') return result.selectedMode==='walking' && result.options[1]?.perTripCostSen===250;
+  if(scenario==='no-known-fare') return result.selectedMode===null && result.status==='no_known_fare';
   if(scenario==='missing-data') return result.options[1]?.reason==='missing_schedule'
-    && result.options[2]?.reason==='missing_fare_assumption';
+    && result.options[2]?.fareStatus==='unavailable';
   return false;
 }
 export function fixtureAccounts(value,now,minimumLifetimeSeconds) {

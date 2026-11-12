@@ -9,9 +9,11 @@ Master task list for Jiran. Full detail for each task lives in `TASKS/<milestone
 | `backlog` | nothing for this task is in the repository yet |
 | `inprogress` | part of the work is in `main` or on a branch, but not all of *Work needed* |
 | `inreview` | all the work is in an open PR, waiting for review |
-| `qa` | the work is merged in `main`; the *Acceptance* checks are not all ticked yet |
+| `qa` | the work is merged in `main` and the code side is finished: every item of *Work needed* is built and the author's automated checks pass; the *Acceptance* checks are not all ticked yet |
 | `done` | merged in `main` and every *Acceptance* check in the task file is ticked |
 | `dropped` | the team decided not to do it; the task file says why |
+
+**Who tests:** a task moves to `qa` when the code is right; running the *Acceptance* checks (device or emulator walk-throughs, two-account checks, live provider checks) is QA's job (Aly), not a reason to keep the task `inprogress`. The author only runs the automated checks (unit tests, lint, build) and writes in the task file what was not tried. `inprogress` means a code gap remains. Decided by Ary on 11 Nov 2026.
 
 Waiting for another task is shown in *Depends on*, not as a status. ClickUp is used for planning (This week, Blocked) and for logged hours, so its status may differ; when it does, this file follows the repository. Definition of Done: merged by Ary after review, CI green, Aly's QA passed (the *Acceptance* checks ticked), hours logged in ClickUp.
 
@@ -51,25 +53,25 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 | [E0.2](TASKS/E0/E0.2.md) | E0 - Foundations and setup | inprogress | infra | Aaron | 8 Nov | Firebase and the free server are ready |
 | [E0.3](TASKS/E0/E0.3.md) | E0 - Foundations and setup | qa | ui | Ary | 15 Nov | Design system and app shell |
 | [E0.4](TASKS/E0/E0.4.md) | E0 - Foundations and setup | done | process | Dafi | 30 Oct | Project management and docs |
-| [E0.5](TASKS/E0/E0.5.md) | E0 - Foundations and setup | qa | persistence / rules | Gathan | draft 8 Nov, merged 15 Nov | Data schema and Security Rules |
+| [E0.5](TASKS/E0/E0.5.md) | E0 - Foundations and setup | qa | persistence / rules | Gathan | draft 8 Nov, merged 15 Nov | Data schema and rules; campus-day write removed, persistence QA pending |
 | [E0.6](TASKS/E0/E0.6.md) | E0 - Foundations and setup | inprogress | api / docs | Aaron | 15 Nov | Function contracts (stubs) |
 | [E1.1](TASKS/E1/E1.1.md) | E1 - Starting and Profile Setup flows | qa | auth / ui | Ary | 19 Nov | Sign up with a UM email and verify it |
 | [E1.2](TASKS/E1/E1.2.md) | E1 - Starting and Profile Setup flows | qa | auth / ui | Ary | 20 Nov | Log in, log out and reset password |
-| [E1.3](TASKS/E1/E1.3.md) | E1 - Starting and Profile Setup flows | inprogress | ui / persistence | Ary | 22 Nov | Profile setup and privacy |
-| [E1.4](TASKS/E1/E1.4.md) | E1 - Starting and Profile Setup flows | qa | ui | Ary | 22 Nov | Home and the four tabs after sign-in |
-| [E2.1](TASKS/E2/E2.1.md) | E2 - Host Listing flow | inprogress | ui / persistence | Gathan | 25 Nov | Pick the building and enter rent and deposit ([PR #15](https://github.com/abqaryne/jiran/pull/15); subtasks 1–4 local; live/QA gaps remain) |
+| [E1.3](TASKS/E1/E1.3.md) | E1 - Starting and Profile Setup flows | inreview | ui / persistence | Ary | 22 Nov | Profile setup and privacy; all code built, gate fails closed ([PR #17](https://github.com/abqaryne/jiran/pull/17)); QA checks remain |
+| [E1.4](TASKS/E1/E1.4.md) | E1 - Starting and Profile Setup flows | inreview | ui | Ary | 22 Nov | Home and the four tabs after sign-in; the profile gate waits for [PR #17](https://github.com/abqaryne/jiran/pull/17) |
+| [E2.1](TASKS/E2/E2.1.md) | E2 - Host Listing flow | inprogress | ui / persistence | Gathan | 25 Nov | Pick the building and enter rent and deposit ([PR #15](https://github.com/abqaryne/jiran/pull/15); subtasks 1–4 and 8 local; live/QA gaps remain) |
 | [E2.2](TASKS/E2/E2.2.md) | E2 - Host Listing flow | backlog | logic / ui | Gathan | 27 Nov | Rooms and prices with the price rule |
 | [E2.3](TASKS/E2/E2.3.md) | E2 - Host Listing flow | inprogress | ui / rules | Gathan | 29 Nov | My listing: renew, requests and mark occupied |
 | [E2.4](TASKS/E2/E2.4.md) | E2 - Host Listing flow | backlog | data | Gathan | 29 Nov | Fictional seed listings |
-| [E3.1](TASKS/E3/E3.1.md) | E3 - Find a Room flow | backlog | ui | Gathan | 2 Dec | Rooms screen and Room cards |
-| [E3.2](TASKS/E3/E3.2.md) | E3 - Find a Room flow | backlog | ui / logic | Gathan | 3 Dec | Filters |
-| [E3.3](TASKS/E3/E3.3.md) | E3 - Find a Room flow | inprogress | api / logic | Aaron | start now, due 29 Nov | Commute per travel mode |
-| [E3.4](TASKS/E3/E3.4.md) | E3 - Find a Room flow | inprogress | logic / ui | Aaron | 4 Dec | True monthly cost and travel time on the Room card |
+| [E3.1](TASKS/E3/E3.1.md) | E3 - Find a Room flow | backlog | ui | Gathan | 2 Dec | Rooms screen; monthly rent and separate one-way commute estimates |
+| [E3.2](TASKS/E3/E3.2.md) | E3 - Find a Room flow | backlog | ui / logic | Gathan | 3 Dec | Filters; Room rent budget and one-way travel time |
+| [E3.3](TASKS/E3/E3.3.md) | E3 - Find a Room flow | inprogress | api / logic | Aaron | start now, due 29 Nov | Per-trip commute modes and basic transit instructions; legacy migration pending |
+| [E3.4](TASKS/E3/E3.4.md) | E3 - Find a Room flow | inprogress | logic / ui | Aaron | 4 Dec | One-way Room card component updated; product binding / cache pending |
 | [E3.5](TASKS/E3/E3.5.md) | E3 - Find a Room flow | backlog | ai | Ilham | 4 Dec | Plain-language AI search |
-| [E4.1](TASKS/E4/E4.1.md) | E4 - Room Details flow | backlog | ui | Ary | 4 Dec | Room details screen |
-| [E4.2](TASKS/E4/E4.2.md) | E4 - Room Details flow | inprogress | ui | Ary | 7 Dec | Commute options card |
+| [E4.1](TASKS/E4/E4.1.md) | E4 - Room Details flow | backlog | ui | Ary | 4 Dec | Room details; rent separate from per-trip commute |
+| [E4.2](TASKS/E4/E4.2.md) | E4 - Room Details flow | inprogress | ui | Ary | 7 Dec | Per-trip commute component updated; detail UI / instructions pending |
 | [E4.3](TASKS/E4/E4.3.md) | E4 - Room Details flow | inprogress | ui / rules | Ary | 7 Dec | Send a request to the Host |
-| [E4.4](TASKS/E4/E4.4.md) | E4 - Room Details flow | backlog | api / ui | Aaron | 14 Dec | Public transport route page, peak and off-peak |
+| [E4.4](TASKS/E4/E4.4.md) | E4 - Room Details flow | backlog | api / ui | Aaron | 14 Dec | Full transit map/timeline (P1) |
 | [E5.1](TASKS/E5/E5.1.md) | E5 - Request and Chat flow | inprogress | ui / rules | Ary | 7 Dec | Requests inbox and Connection |
 | [E5.2](TASKS/E5/E5.2.md) | E5 - Request and Chat flow | inprogress | ui / persistence | Ary | 9 Dec | Chat and viewing |
 | [E5.3](TASKS/E5/E5.3.md) | E5 - Request and Chat flow | backlog | ui / logic | Ary | 9 Dec | Move-in confirmation |
@@ -89,16 +91,16 @@ P2 stories (shared commute groups, impact dashboard, UM planning dashboard, the 
 | [E8.3](TASKS/E8/E8.3.md) | E8 - Private Contract Check flow | inprogress | ui / rules | Ilham | 20 Dec | Upload and result screens |
 | [E8.4](TASKS/E8/E8.4.md) | E8 - Private Contract Check flow | backlog | ai / ui | Ilham | 20 Dec | AI labels and reporting a wrong result |
 | [E8.5](TASKS/E8/E8.5.md) | E8 - Private Contract Check flow | backlog | ai / research | Ilham | 20 Dec | AI evaluation for the report |
-| [E9.1](TASKS/E9/E9.1.md) | E9 - Evaluate Unit and Group flows (P1) | inprogress | ui / logic | Gathan | 17 Dec | Evaluate any unit |
+| [E9.1](TASKS/E9/E9.1.md) | E9 - Evaluate Unit and Group flows (P1) | inprogress | ui / logic | Gathan | 17 Dec | Evaluate any unit; Room prices and separate per-trip commute |
 | [E9.2](TASKS/E9/E9.2.md) | E9 - Evaluate Unit and Group flows (P1) | inprogress | ui / persistence | Ary | 19 Dec | Group, split options and member status |
-| [E9.3](TASKS/E9/E9.3.md) | E9 - Evaluate Unit and Group flows (P1) | backlog | ui | Ary | 20 Dec | Compare units |
-| [E9.4](TASKS/E9/E9.4.md) | E9 - Evaluate Unit and Group flows (P1) | inprogress | ui / persistence | Gathan | 20 Dec | Area page and building reviews |
-| [E10.1](TASKS/E10/E10.1.md) | E10 - Profile, privacy and polish (P1) | backlog | ui | Ary | 18 Dec | Profile and privacy settings screens |
+| [E9.3](TASKS/E9/E9.3.md) | E9 - Evaluate Unit and Group flows (P1) | backlog | ui | Ary | 20 Dec | Compare Units; Room prices and separate per-trip commute |
+| [E9.4](TASKS/E9/E9.4.md) | E9 - Evaluate Unit and Group flows (P1) | dropped | ui / persistence | Gathan | 20 Dec | Area page and building reviews: dropped on 11 Nov 2026 (no data before there are residents) |
+| [E10.1](TASKS/E10/E10.1.md) | E10 - Profile, privacy and polish (P1) | backlog | ui | Ary | 18 Dec | Profile and privacy settings; no campus-day field |
 | [E10.2](TASKS/E10/E10.2.md) | E10 - Profile, privacy and polish (P1) | backlog | ui | Ary | 20 Dec | Polish: empty states, errors, accessibility |
 | [T1.1](TASKS/T1/T1.1.md) | T1 - Research and validation | inprogress | research | Aly | 8 Nov (launch 31 Oct) | Survey and interviews |
 | [T1.2](TASKS/T1/T1.2.md) | T1 - Research and validation | backlog | research | Aly | 15 Nov | Survey analysis |
 | [T1.3](TASKS/T1/T1.3.md) | T1 - Research and validation | inprogress | research | Dafi | 13 Nov | Verify the assumed numbers |
-| [T1.4](TASKS/T1/T1.4.md) | T1 - Research and validation | backlog | research | Dafi | 8 Nov (timetable), 13 Nov (estimates) | UM shuttle timetable and commute estimates |
+| [T1.4](TASKS/T1/T1.4.md) | T1 - Research and validation | backlog | research | Dafi | 8 Nov (timetable), 13 Nov (estimates) | UM shuttle timetable and per-trip commute evidence |
 | [T1.5](TASKS/T1/T1.5.md) | T1 - Research and validation | backlog | process | Dafi | 15 Nov | Requirements freeze |
 | [T2.1](TASKS/T2/T2.1.md) | T2 - Testing and quality | backlog | qa | Aly | 15 Nov (plan), 27 Dec (run) | Test plan and integration tests |
 | [T2.2](TASKS/T2/T2.2.md) | T2 - Testing and quality | inprogress | qa | Aly | 27 Dec | NFR1: speed under load |

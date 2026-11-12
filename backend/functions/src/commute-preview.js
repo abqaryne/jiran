@@ -1,5 +1,5 @@
 const {session} = require('./session');
-const {calculateCommute} = require('./commute');
+const {calculatePerTripCommute} = require('./commute');
 const scenarios = require('../fixtures/commute-scenarios.json');
 
 /** Local-only fixtures until the production listing/profile contract is agreed. */
@@ -13,7 +13,7 @@ function commutePreview(request) {
     error.code = 'invalid-argument';
     throw error;
   }
-  return {...calculateCommute(scenarios[data.scenarioId]), scenarioId: data.scenarioId,
+  return {...calculatePerTripCommute(scenarios[data.scenarioId]), scenarioId: data.scenarioId,
     dataSource: 'fixture', assumptionVersion: 'fixture-v1'};
 }
 module.exports = {commutePreview};

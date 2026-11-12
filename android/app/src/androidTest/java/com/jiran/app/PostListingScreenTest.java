@@ -73,6 +73,7 @@ public final class PostListingScreenTest {
             instrumentation.runOnMainSync(() -> screen.findViewById(R.id.save).performClick());
             assertTrue(status(instrumentation, screen).contains("Check the highlighted"));
             instrumentation.runOnMainSync(() -> {
+                ((TextView) screen.findViewById(R.id.building_address)).setText("Jalan Fiksi 1");
                 ((TextView) screen.findViewById(R.id.address)).setText("Fictional Unit 1");
                 ((TextView) screen.findViewById(R.id.rent)).setText("10.01");
                 ((TextView) screen.findViewById(R.id.deposit)).setText("0");

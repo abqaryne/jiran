@@ -29,7 +29,7 @@
 | Story | Lead | Your subtask | Task file | Due |
 |---|---|---|---|---|
 | **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../../TASKS/E0/E0.4.md) | 30 Oct |
-| **T1.3** Verify the assumed numbers | Dafi | #1 Room price weights, #7 Utilities estimate · 10 Nov; #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov | [T1.3.md](../../../TASKS/T1/T1.3.md) | 13 Nov |
+| **T1.3** Verify the assumed numbers | Dafi | #1 Room price weights · 10 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov | [T1.3.md](../../../TASKS/T1/T1.3.md) | 13 Nov |
 | **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; NFR verification (1:30); Stakeholder validation (1:00) | [T3.1.md](../../../TASKS/T3/T3.1.md) | 20 Dec |
 | **T4.1** Report sections | Dafi | 2a User study findings (350), 5 Testing and validation (300) | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
@@ -41,9 +41,8 @@
 
 ## Numbers you find (see [ASSUMPTIONS.md](../../product/ASSUMPTIONS.md))
 - **#1 Room price weights** from survey C5 to C7 (due 10 Nov)
-- **#7 Utilities estimate** from survey C9 (due 10 Nov)
-- **#2 Peak hours** from survey E5 and E6 (due 12 Nov)
-- **#3 E-hailing fares:** survey E7 plus a shared sheet where every team member logs Grab fare estimates for about 10 real routes, peak and off-peak (due 13 Nov)
+- ~~#7 Utilities estimate~~ dropped on 12 Nov 2026; survey C9 is for the report only
+- **#3 E-hailing fares:** survey E7 plus a shared sheet where every team member logs Grab fare estimates for about 10 real routes (due 13 Nov)
 - **#9 Match weights** from survey F2 (due 13 Nov)
 
 ## Rules for everyone

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Figma: Tab bar + Post button. A floating white pill with four tabs (Home, Rooms, Match, Unit) and a blue Post button beside it.
+  Figma: Tab bar + Post button. A floating white pill with four tabs (Home, Rooms, Housemates, Unit) and a blue Post button beside it.
   Use it through JiranTabBar. The selected tab gets the filled icon and ink colour. Content above needs ~96 dp bottom padding.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -71,7 +71,7 @@
 
         <LinearLayout
             android:id="@+id/tab_match"
-            android:layout_width="64dp"
+            android:layout_width="76dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/match_title"
             android:gravity="center"
@@ -87,6 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:text="@string/match_title"
                 android:textAppearance="@style/TextAppearance.Jiran.Caption"
                 android:textColor="@color/tab_item_color" />

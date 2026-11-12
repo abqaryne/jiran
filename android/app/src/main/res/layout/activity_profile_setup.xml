@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Profile setup (E1.3), Figma "Profile 1 · Faculty" to "Profile 3 · Privacy": top bar with back and the centred
+  title and "X of 3", step progress, then the current step (each step owns its heading, body and footer).
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/screen_margin"
+        android:paddingEnd="@dimen/screen_margin">
+
+        <FrameLayout
+            android:layout_width="104dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/back"
+                style="@style/Widget.Jiran.IconButton.Soft"
+                android:layout_width="@dimen/icon_button_size"
+                android:layout_height="@dimen/icon_button_size"
+                android:contentDescription="@string/profile_back"
+                app:icon="@drawable/ic_arrow_back" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/profile_title"
+            android:textAppearance="@style/TextAppearance.Jiran.Title" />
+
+        <TextView
+            android:id="@+id/step_label"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textAppearance="@style/TextAppearance.Jiran.Caption"
+            android:textColor="@color/color_text_secondary" />
+    </LinearLayout>
+
+    <!-- 4 dp progress + 6 dp below it = 10 dp block; each step adds the 16 dp heading gap. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/screen_margin"
+        android:paddingTop="@dimen/spacing_8"
+        android:paddingEnd="@dimen/screen_margin"
+        android:paddingBottom="6dp">
+
+        <com.jiran.app.ui.common.StepProgressView
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:stepCurrent="1"
+            app:stepTotal="3" />
+
+        <com.jiran.app.ui.common.InfoBannerView
+            android:id="@+id/error_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_12"
+            android:visibility="gone"
+            app:bannerKind="danger" />
+
+        <TextView
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_16"
+            android:text="@string/profile_loading"
+            android:textAppearance="@style/TextAppearance.Jiran.Body"
+            android:textColor="@color/color_text_secondary"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/step_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+</LinearLayout>

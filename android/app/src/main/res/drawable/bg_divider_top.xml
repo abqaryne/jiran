@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A thin line on top of a screen footer (Figma: footer border-top, border/divider). -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:gravity="top" android:height="@dimen/stroke_thin">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/color_border_divider" />
+        </shape>
+    </item>
+</layer-list>

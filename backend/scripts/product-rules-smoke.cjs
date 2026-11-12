@@ -268,7 +268,7 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   // Existing published Listing fixture; E2.1 clients create drafts only.
   await assertPermitted(
     admin.set(`listings/${listingId}`, {listingId, ownerUid: studentA.uid, totalRentSen: 120000,
-      areaId: 'sample-area', buildingName: 'Fictional Building', lat: 0, lng: 0, depositSen: 0,
+      areaId: 'sample-area', buildingName: 'Fictional Building', buildingAddress: 'Jalan Fiksi 1', lat: 0, lng: 0, depositSen: 0,
       genderPref: 'any', amenities: [], photoUrls: [], isSample: true, status: 'active',
       createdAt: new Date(), expiresAt: new Date(Date.now() + 30 * 86400000)}),
     'Admin seeds published listing fixture'
@@ -290,6 +290,7 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   );
 
   await assertDenied(clientB.get(`listings/${listingId}/private/location`), 'Applicant reads exact address before request accepted');
+  await assertPermitted(clientB.get(`listings/${listingId}`), 'Student reads the public Building address');
 
   const reqId = `${listingId}_${studentB.uid}`;
 
@@ -339,7 +340,7 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertPermitted(Promise.resolve(areaQuery), 'Picker bounded areas query');
   const {makeListingDraft} = require('../functions/src/listing-draft');
   const draftId = `draft_${nonce}`;
-  const draft = makeListingDraft({areaId: 'sample-area', buildingName: 'Fictional Building',
+  const draft = makeListingDraft({areaId: 'sample-area', buildingName: 'Fictional Building', buildingAddress: 'Jalan Fiksi 1',
     coordinateSource: 'area_center_estimate',
     lat: 0, lng: 0, totalRentSen: 100000, depositSen: 0, genderPref: 'any',
     amenities: ['wifi'], exactAddress: 'Fictional Unit 1'}, studentA.uid, draftId);
@@ -372,6 +373,7 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertDenied(clientB.get(`listings/${draftId}/private/location`), 'Stranger reads draft address');
   await assertDenied(clientB.set(`listings/${draftId}`, {depositSen: 1}, ['depositSen']), 'Stranger edits draft');
   for (const change of [{totalRentSen: 1.5}, {depositSen: -1}, {buildingName: 'x'.repeat(201)},
+    {buildingAddress: 'x'.repeat(301)}, {buildingAddress: ''}, {buildingAddress: 42},
     {ownerUid: studentB.uid}, {listingId: 'different'}, {status: 'active'}, {isSample: true},
     {createdAt: new Date(0)}, {exactAddress: 'must stay private'}, {amenities: [false]},
     {photoUrls: ['http://example.com/x']}, {photoUrls: Array(6).fill('https://res.cloudinary.com/fixture/image/upload/x')},
@@ -381,6 +383,8 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   }
   await assertDenied(clientA.set(`listings/${draftId}`, {}, ['buildingName']), 'Cannot remove required field');
   await assertPermitted(clientA.set(`listings/${draftId}`, {depositSen: 100}, ['depositSen']), 'Host edits valid draft');
+  await assertPermitted(clientA.set(`listings/${draftId}`, {buildingAddress: 'Jalan Fiksi 2'}, ['buildingAddress']),
+    'Host edits the public Building address');
   await assertPermitted(clientA.set(`listings/${draftId}`, {
     photoUrls: [`https://res.cloudinary.com/fixture-cloud/image/upload/v1/listings/${draftId}/photo.jpg`],
   }, ['photoUrls']), 'Host stores Cloudinary URL');
@@ -410,7 +414,7 @@ async function checkProductRules({authBase, firestoreHost, project}) {
     CLOUDINARY_API_KEY: 'fake-key', CLOUDINARY_API_SECRET: 'fake-secret', CLOUDINARY_UPLOAD_PRESET: 'fixture'};
   const hostInput = {areaId: 'sample-area', buildingName: 'Fictional Building', lat: 0, lng: 0,
     coordinateSource: 'area_center_estimate', totalRentSen: 100000, depositSen: 0,
-    genderPref: 'any', amenities: [], exactAddress: 'Fictional Unit 1'};
+    genderPref: 'any', amenities: [], exactAddress: 'Fictional Unit 1', buildingAddress: 'Jalan Fiksi 1'};
   const workerRequest = (path, token, photo = false) => worker.fetch(new Request(`http://127.0.0.1${path}`, {
     method: 'POST', headers: {...(token ? {authorization: `Bearer ${token}`} : {}),
       'content-type': photo ? 'image/jpeg' : 'application/json'},

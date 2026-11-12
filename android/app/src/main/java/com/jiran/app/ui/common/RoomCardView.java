@@ -11,7 +11,7 @@ import com.jiran.app.R;
 import com.jiran.app.databinding.ComponentRoomCardBinding;
 
 /**
- * Figma: Room card. One card per vacant Room: photo, price, title, meta and true monthly cost.
+ * Figma: Room card. One card per vacant Room: photo, price, title, meta and a separate one-way commute estimate.
  * CO2 never appears here. Load the photo into {@link #getPhotoView()}.
  */
 public class RoomCardView extends FrameLayout {
@@ -34,7 +34,7 @@ public class RoomCardView extends FrameLayout {
             setPrice(array.getString(R.styleable.RoomCardView_roomPrice));
             setTitle(array.getString(R.styleable.RoomCardView_roomTitle));
             setMeta(array.getString(R.styleable.RoomCardView_roomMeta));
-            setTrueCost(array.getString(R.styleable.RoomCardView_roomTrueCost));
+            setCommute(array.getString(R.styleable.RoomCardView_roomCommute));
             array.recycle();
         }
     }
@@ -51,9 +51,9 @@ public class RoomCardView extends FrameLayout {
         binding.meta.setText(meta);
     }
 
-    /** Shows the true monthly cost line, or a message such as "No travel mode reaches class on time". */
-    public void setTrueCost(CharSequence trueCost) {
-        ViewAttrs.setTextOrHide(binding.trueCost, trueCost);
+    /** Separate one-way travel time/fare with its mode; never a combined monthly total. */
+    public void setCommute(CharSequence commute) {
+        ViewAttrs.setTextOrHide(binding.commute, commute);
     }
 
     public ImageView getPhotoView() {

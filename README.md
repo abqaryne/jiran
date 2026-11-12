@@ -4,6 +4,7 @@ Native Android **Java** app with Firebase **JavaScript / Node 22** Cloud Functio
 Read [Aaron's checklist and master prompt](docs/team/aaron/README.md), [PRD](docs/product/PRD.md) and
 [team ownership](docs/team/TEAM_PLAN.md) before changing the foundation.
 All documents are indexed in [docs/](docs/README.md).
+Current commute file responsibilities and migration order: [per-trip handoff](docs/plans/2026-11-11-commute-per-trip.md) (11 Nov 2026; code migration pending).
 
 ## Repository layout
 
@@ -212,13 +213,13 @@ On branch `feature/aaron-commute-core`, the pure commute calculator and a local
 Android preview implement the calculation behavior of FR4.1–4.3 against explicit
 server-owned fixtures. Run the ordinary **debug** variant with local emulators,
 sign in with a verified local account, and open **Commute calculator preview**.
-Choose an on-time, no-on-time or missing-data scenario and tap **Calculate sample**.
+Choose the per-trip, no-known-fare or missing-data scenario and tap **Calculate sample**.
 
-The preview labels every figure as synthetic sample data, compares four modes,
-and chooses only a known-cost mode that arrives before class. In the on-time
-fixture, late free walking is rejected and transit gives RM612.00: room RM450.00,
-utilities RM62.00 and commute RM100.00. If no option qualifies, no total appears.
-Missing fares/schedules and unknown CO₂ stay explicit. Deposit is excluded.
+The preview labels every figure as synthetic sample data, compares four modes with
+a one-way time and fare for each, and selects the lowest known fare (walking
+counts). A mode with an unknown fare keeps its time and is never shown as free.
+There is no monthly total, rent or utilities. Missing fares/schedules and unknown
+CO₂ stay explicit.
 
 The callable is emulator-only and accepts `{scenarioId}`; production listing/unit
 requests remain draft. See the [API contract](docs/engineering/api-contracts.md) and

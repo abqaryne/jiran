@@ -1,5 +1,5 @@
 const {calculateTripEmissions} = require('../src/emissions');
-const {calculateCommute} = require('../src/commute');
+const {calculatePerTripCommute} = require('../src/commute');
 const {priceRoutes} = require('../src/commute-pricing');
 const catalogue = require('../config/emission-factors.json');
 const leg=(factorId,distanceMetres,occupants)=>({factorId,distanceMetres,...(occupants===undefined?{}:{occupants})});
@@ -71,20 +71,17 @@ test('input is not mutated and source stays within Android display bounds for al
   expect(run(legs).emissionSource.length).toBeLessThanOrEqual(500);
   expect(JSON.stringify(legs)).toBe(before);
 });
-test('monthly calculation consumes mixed-leg CO2 without changing money or eligibility',()=>{
-  const input={roomPriceSen:45000,utilitiesShareSen:6200,monthlyTrips:40,
-    departTime:'2026-11-16T08:00:00+08:00',classStartTime:'2026-11-16T09:00:00+08:00',
-    modes:[{mode:'transit',status:'available',durationSeconds:1800,distanceMetres:6000,perTripCostSen:250,
+test('per-trip calculation consumes mixed-leg CO2 without changing the fare',()=>{
+  const input={modes:[{mode:'transit',status:'available',durationSeconds:1800,distanceMetres:6000,perTripCostSen:250,
       emissionProfile:{allowUkProxy:true,legs:[leg('walking-operational-zero',1000),leg('uk-average-local-bus',2000),leg('uk-light-rail',3000)]}}]};
-  const result=calculateCommute(input);
-  expect(result.trueMonthlyCostSen).toBe(61200);
-  expect(result.options[1]).toMatchObject({co2GramsPerTrip:264,arrivesOnTime:true});
+  const result=calculatePerTripCommute(input);
+  expect(result.options[1]).toMatchObject({co2GramsPerTrip:264,perTripCostSen:250});
   input.modes[0].emissionProfile.allowUkProxy=false;
-  const unknown=calculateCommute(input);
+  const unknown=calculatePerTripCommute(input);
   expect(unknown.options[1].co2GramsPerTrip).toBeNull();
-  expect(unknown.trueMonthlyCostSen).toBe(61200);
+  expect(unknown.options[1].perTripCostSen).toBe(250);
   input.modes[0].emissionFactor={gramsPerKm:1,source:'Conflicting factor'};
-  expect(()=>calculateCommute(input)).toThrow();
+  expect(()=>calculatePerTripCommute(input)).toThrow();
 });
 test('pricing preserves and copies supplied leg profile through the complete calculation path',()=>{
   const emissionProfile={allowUkProxy:true,legs:[leg('walking-operational-zero',1000),leg('uk-average-local-bus',2000),leg('uk-light-rail',3000)]};
@@ -92,11 +89,10 @@ test('pricing preserves and copies supplied leg profile through the complete cal
   const priced=priceRoutes({routes,assumptions:{version:'published-factor-integration'}});
   expect(priced.modes[1].emissionProfile).toEqual(emissionProfile);
   emissionProfile.legs[0].distanceMetres=0;
-  const result=calculateCommute({roomPriceSen:45000,utilitiesShareSen:6200,monthlyTrips:40,
-    departTime:'2026-11-16T08:00:00+08:00',classStartTime:'2026-11-16T09:00:00+08:00',modes:priced.modes});
+  const result=calculatePerTripCommute({modes:priced.modes});
   expect(result.options[1].co2GramsPerTrip).toBe(264);
   expect(result.options[1].emissionSource).toContain('UK DESNZ 2026');
-  expect(result.trueMonthlyCostSen).toBe(61200);
+  expect(result.options[1].perTripCostSen).toBe(250);
 });
 test('pricing rejects malformed/conflicting profiles even if fare is missing',()=>{
   const route={mode:'transit',status:'available',durationSeconds:1800,distanceMetres:6000,emissionProfile:{legs:'bad'}};

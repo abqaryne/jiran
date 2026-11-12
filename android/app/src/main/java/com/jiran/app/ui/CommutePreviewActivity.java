@@ -2,7 +2,6 @@ package com.jiran.app.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,13 +16,10 @@ import com.jiran.app.data.CommuteRepository;
 import com.jiran.app.data.CommuteSummary;
 import com.jiran.app.data.FirebaseSetup;
 import java.math.BigDecimal;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 /** Developer preview with synthetic server fixtures, never a live commute quote. */
 public final class CommutePreviewActivity extends Activity {
-    private static final String[] SCENARIOS = {"on-time", "no-on-time-route", "missing-data"};
+    private static final String[] SCENARIOS = {"per-trip", "no-known-fare", "missing-data"};
     private Spinner scenario;
     private Button calculate;
     private TextView status;
@@ -78,33 +74,23 @@ public final class CommutePreviewActivity extends Activity {
     }
 
     private void render(CommuteSummary summary) {
-        DateTimeFormatter clock = DateTimeFormatter.ofPattern("EEE d MMM, HH:mm", Locale.ENGLISH)
-                .withZone(ZoneId.of("Asia/Kuala_Lumpur"));
-        String timing = getString(R.string.commute_timing, clock.format(summary.departTime),
-                clock.format(summary.classStartTime), summary.monthlyTrips);
-        String total = summary.trueMonthlyCostSen == null ? getString(R.string.commute_none)
-                : getString(R.string.commute_total, money(summary.trueMonthlyCostSen), modeName(summary.selectedMode));
-        status.setText(getString(R.string.commute_summary_lines, total,
-                getString(R.string.commute_components, money(summary.roomPriceSen),
-                        money(summary.utilitiesShareSen)), timing));
+        status.setText(summary.comparisonLimited
+                ? getString(R.string.commute_timing_limited) : getString(R.string.commute_timing));
         for (CommuteSummary.Option option : summary.options) {
             TextView row = new TextView(this);
             row.setTextSize(16);
             row.setPadding(0, 24, 0, 24);
             String title = modeName(option.mode);
-            if (option.mode.equals(summary.selectedMode)) {
-                title = getString(R.string.commute_recommended, title);
-                row.setTypeface(null, Typeface.BOLD);
-            }
             String detail;
             if (option.reason != null) {
                 detail = unavailableReason(option.reason);
             } else {
                 String emissions = option.co2GramsPerTrip == null ? getString(R.string.commute_unknown_co2)
                         : getString(R.string.commute_co2, option.co2GramsPerTrip, option.emissionSource);
-                String route = getString(R.string.commute_option, (option.durationSeconds + 59) / 60,
-                        money(option.monthlyCostSen), getString(option.arrivesOnTime
-                                ? R.string.commute_before_class : R.string.commute_late));
+                String route = option.perTripCostSen == null
+                        ? getString(R.string.commute_option_no_fare, (option.durationSeconds + 59) / 60)
+                        : getString(R.string.commute_option, (option.durationSeconds + 59) / 60,
+                                money(option.perTripCostSen));
                 detail = getString(R.string.commute_row, route, emissions);
                 detail = withMetadata(detail, option);
             }

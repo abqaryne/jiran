@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.jiran.app.R;
 import com.jiran.app.databinding.FragmentPlaceholderBinding;
 
-/** Match tab. Placeholder until the feature is built: replace the layout and add a ViewModel. */
+/** Housemates tab (called Match until 12 Nov 2026). Placeholder until the feature is built: replace the layout and add a ViewModel. */
 public class MatchFragment extends Fragment {
 
     private FragmentPlaceholderBinding binding;

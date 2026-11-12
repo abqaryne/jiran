@@ -5,10 +5,16 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-/** Step 1 values. Private address is only sent to the Worker, never a public document. */
+/**
+ * Step 1 values. The Building street address is public and goes in the public Listing; the Unit address (block,
+ * floor, door number) is private and is only sent to the Worker, never a public document.
+ */
 public final class ListingForm {
     public String buildingName = "";
     public AreaOption area;
+    /** Public Building street address, shown on the Room card. */
+    public String buildingAddress = "";
+    /** Private Unit address (block, floor, door number), hidden until a Connection. */
     public String address = "";
     public String rent = "";
     public String deposit = "";
@@ -27,6 +33,9 @@ public final class ListingForm {
     public String invalidField() {
         if (area == null || !validText(buildingName, 200)) {
             return "building";
+        }
+        if (!validText(buildingAddress, 300)) {
+            return "buildingAddress";
         }
         if (!validText(address, 500)) {
             return "address";
@@ -63,6 +72,7 @@ public final class ListingForm {
         data.put("lat", area.latitude);
         data.put("lng", area.longitude);
         data.put("coordinateSource", "area_center_estimate");
+        data.put("buildingAddress", buildingAddress.trim());
         data.put("exactAddress", address.trim());
         data.put("totalRentSen", moneySen(rent, false));
         data.put("depositSen", moneySen(deposit, true));

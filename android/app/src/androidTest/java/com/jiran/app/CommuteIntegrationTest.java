@@ -1,8 +1,8 @@
 package com.jiran.app;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 import android.os.Bundle;
@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public final class CommuteIntegrationTest {
     @Test
-    public void parsesAllThreeAuthenticatedServerFixturesWithoutInventingCosts() throws Exception {
+    public void parsesAllThreeAuthenticatedServerFixturesWithoutInventingFares() throws Exception {
         assumeTrue(BuildConfig.USE_FIREBASE_EMULATORS);
         Bundle args = InstrumentationRegistry.getArguments();
         String email = args.getString("email");
@@ -29,21 +29,20 @@ public final class CommuteIntegrationTest {
         Tasks.await(FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password),
                 30, TimeUnit.SECONDS);
         CommuteRepository repository = new CommuteRepository();
-        CommuteSummary onTime = Tasks.await(repository.preview("on-time"), 30, TimeUnit.SECONDS);
-        assertEquals("transit", onTime.selectedMode);
-        assertEquals(Long.valueOf(61200), onTime.trueMonthlyCostSen);
-        assertEquals(Long.valueOf(10000), onTime.options.get(1).monthlyCostSen);
-        assertFalse(onTime.options.get(0).arrivesOnTime);
-        assertEquals("Synthetic routing fixture", onTime.options.get(0).routeSource);
-        assertEquals("Synthetic warning: use designated footpaths.", onTime.options.get(0).warnings.get(0));
-        assertEquals("Synthetic fare assumption", onTime.options.get(1).costSource);
-        assertEquals(Boolean.TRUE, onTime.options.get(3).trafficFallback);
-        CommuteSummary late = Tasks.await(repository.preview("no-on-time-route"), 30, TimeUnit.SECONDS);
-        assertNull(late.selectedMode);
-        assertNull(late.trueMonthlyCostSen);
+        CommuteSummary perTrip = Tasks.await(repository.preview("per-trip"), 30, TimeUnit.SECONDS);
+        assertEquals("walking", perTrip.selectedMode);
+        assertEquals(Long.valueOf(250), perTrip.options.get(1).perTripCostSen);
+        assertEquals("Synthetic routing fixture", perTrip.options.get(0).routeSource);
+        assertEquals("Synthetic warning: use designated footpaths.", perTrip.options.get(0).warnings.get(0));
+        assertEquals("Synthetic fare assumption", perTrip.options.get(1).costSource);
+        assertEquals(Boolean.TRUE, perTrip.options.get(3).trafficFallback);
+        CommuteSummary noFare = Tasks.await(repository.preview("no-known-fare"), 30, TimeUnit.SECONDS);
+        assertNull(noFare.selectedMode);
+        assertNull(noFare.options.get(1).perTripCostSen);
+        assertEquals(Long.valueOf(1800), noFare.options.get(1).durationSeconds);
         CommuteSummary missing = Tasks.await(repository.preview("missing-data"), 30, TimeUnit.SECONDS);
         assertEquals("missing_schedule", missing.options.get(1).reason);
-        assertEquals("missing_fare_assumption", missing.options.get(2).reason);
-        assertNull(missing.trueMonthlyCostSen);
+        assertNull(missing.options.get(2).perTripCostSen);
+        assertTrue(missing.comparisonLimited);
     }
 }

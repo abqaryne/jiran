@@ -23,20 +23,20 @@ test('invalid or unbounded phase durations are rejected',()=>{
   for(const value of [0,-1,1.5,301,NaN,'60']) assert.throws(()=>fixtureOptions(value));
 });
 test('fixture response validator requires scenario-specific semantic data',()=>{
-  const body={result:{scenarioId:'on-time',dataSource:'fixture',selectedMode:'transit',trueMonthlyCostSen:61200,options:Array(4).fill({})}};
-  assert.equal(fixtureResult(200,body,'on-time'),true);
-  assert.equal(fixtureResult(200,{error:{status:'INTERNAL'}},'on-time'),false);
-  assert.equal(fixtureResult(200,{result:{...body.result,trueMonthlyCostSen:1}},'on-time'),false);
-  assert.equal(fixtureResult(500,body,'on-time'),false);
-  assert.equal(fixtureResult(200,{result:{...body.result,dataSource:'production'}},'on-time'),false);
+  const body={result:{scenarioId:'per-trip',dataSource:'fixture',selectedMode:'walking',options:[{},{perTripCostSen:250},{},{}]}};
+  assert.equal(fixtureResult(200,body,'per-trip'),true);
+  assert.equal(fixtureResult(200,{error:{status:'INTERNAL'}},'per-trip'),false);
+  assert.equal(fixtureResult(200,{result:{...body.result,selectedMode:'transit'}},'per-trip'),false);
+  assert.equal(fixtureResult(500,body,'per-trip'),false);
+  assert.equal(fixtureResult(200,{result:{...body.result,dataSource:'production'}},'per-trip'),false);
 });
-test('late/missing data cases cannot pass with stale successful values',()=>{
-  const late={result:{scenarioId:'no-on-time-route',dataSource:'fixture',selectedMode:null,trueMonthlyCostSen:null,options:Array(4).fill({})}};
-  assert.equal(fixtureResult(200,late,'no-on-time-route'),true);
-  late.result.trueMonthlyCostSen=61200;
-  assert.equal(fixtureResult(200,late,'no-on-time-route'),false);
+test('no-fare/missing data cases cannot pass with stale successful values',()=>{
+  const none={result:{scenarioId:'no-known-fare',dataSource:'fixture',selectedMode:null,status:'no_known_fare',options:Array(4).fill({})}};
+  assert.equal(fixtureResult(200,none,'no-known-fare'),true);
+  none.result.selectedMode='walking';
+  assert.equal(fixtureResult(200,none,'no-known-fare'),false);
   const missing={result:{scenarioId:'missing-data',dataSource:'fixture',options:[{},
-    {reason:'missing_schedule'},{reason:'missing_fare_assumption'},{}]}};
+    {reason:'missing_schedule'},{fareStatus:'unavailable'},{}]}};
   assert.equal(fixtureResult(200,missing,'missing-data'),true);
   missing.result.options[1]={};
   assert.equal(fixtureResult(200,missing,'missing-data'),false);

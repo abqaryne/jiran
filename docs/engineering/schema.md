@@ -18,10 +18,10 @@ Only UM students may use Jiran (PRD FR1.1 and NFR2, decided 30 Oct 2026). Every 
 
 | Stage | What is visible | What is NOT visible | Isolated Storage Path |
 |---|---|---|---|
-| **Match** | `initials`, `gender`, `faculty`, `year`, `lifestyleTags`, match `score`, `reasons`, `overlappingClassDays` | Full legal name, photo, phone number, exact unit address, detailed timetable, email | `users/{uid}` (Public profile), `matches/{matchId}` |
+| **Match** | `initials`, `gender`, `faculty`, `year`, `lifestyleTags`, match `score`, `reasons` | Full legal name, photo, phone number, exact unit address, budget, email | `users/{uid}` (Public profile), `matches/{matchId}` |
 | **Connection Request** | Match profile + short request message (`message` in `listingRequests` or `matches`) | Full name, photo, phone number, exact unit address | `matches/{matchId}`, `listingRequests/{listingId}_{requesterUid}` |
-| **Connection** (Host accepts `listingRequests` for THAT listing, or pairwise `matches` connected) | Chat, `firstName`, exact unit address (for viewing with Host), `phoneNumber` (if opted in) | Profile photo, detailed timetable | `listings/{listingId}/private/location`, `connections/{pairId}`, `users/{uid}/private/contact`, `users/{uid}/private/phone` |
-| **Household** | Member timetables, shared expenses, chores, rules, profile photo (`photoUrl`), exact unit address | Private contract check results | `users/{uid}/private/timetable`, `users/{uid}/private/photo`, `users/{uid}/private/contact`, `users/{uid}/private/phone`, `users/{uid}/private/membership`, `households/{householdId}`, `listings/{listingId}/private/location` |
+| **Connection** (Host accepts `listingRequests` for THAT listing, or pairwise `matches` connected) | Chat, `firstName`, exact unit address (for viewing with Host), `phoneNumber` (if opted in) | Profile photo | `listings/{listingId}/private/location`, `connections/{pairId}`, `users/{uid}/private/contact`, `users/{uid}/private/phone` |
+| **Household** | Shared expenses, chores, rules, profile photo (`photoUrl`), exact unit address | Private contract check results | `users/{uid}/private/photo`, `users/{uid}/private/contact`, `users/{uid}/private/phone`, `users/{uid}/private/membership`, `households/{householdId}`, `listings/{listingId}/private/location` |
 
 ### Proof of Connection (Single Source of Truth)
 
@@ -65,7 +65,7 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `initials` | string | Yes | Owner | Student initials for Match stage display (e.g., `"M.L."`). `FR1.3`, `E1.3` |
 | `gender` | string | Yes | Owner | Required at profile creation: `"male"` or `"female"`. Public on profile for room and housemate filtering. `FR1.3`, `E1.3`, `Decided 31 Oct 2026` |
 | `faculty` | string | Yes | Owner | UM Faculty (e.g., `"FSKTM"`, `"FBL"`). `FR1.3`, `E1.3` |
-| `year` | number | Yes | Owner | Academic year (1–4). `FR1.3`, `E1.3` |
+| `year` | number | Yes | Owner | Academic year 1–4, or 5 for a postgraduate (the Figma "Postgraduate" chip, 10 Nov 2026). `FR1.3`, `E1.3` |
 | `lifestyleTags` | array<string> | Yes | Owner | Array of tags e.g. `["quiet", "non_smoker", "early_riser"]`. `FR1.3`, `E1.3` |
 | `createdAt` | timestamp | Yes | Owner (on create) | Profile creation timestamp. `[PROPOSED]` |
 | `updatedAt` | timestamp | Yes | Owner | Last update timestamp. `[PROPOSED]` |
@@ -82,8 +82,9 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `budgetMinSen` | number | Yes | Owner | Minimum monthly room budget in integer sen (e.g. 30000 = RM 300). `FR1.3` |
 | `budgetMaxSen` | number | Yes | Owner | Maximum monthly room budget in integer sen (e.g. 60000 = RM 600). `FR1.3` |
 | `hasCar` | boolean | Yes | Owner | Car ownership flag. `FR1.3` |
+| `campusDaysPerWeek` | number | No (deprecated) | Owner | Deprecated by Ary, 11 Nov 2026: Android no longer requires or writes it. Existing values remain private and unused; no destructive deletion or Rules change. Compatibility is covered by local progress tests; live persistence not verified. |
 | `homeAreaId` | string | No | Owner | Foreign key to `areas/{areaId}`. `E1.3` |
-| `privacy` | map | Yes | Owner | Toggles e.g. `{ showPhoneToConnections: boolean, showPhotoToHouseholdOnly: boolean }`. `FR1.3` |
+| `privacy` | map | Yes | Owner | `{ showPhoneToConnections: boolean, showBudgetToConnections: boolean, showPhotoToHouseholdOnly: boolean }`. The setup screen shows switches that mean "hidden" (all on by default), so the defaults are `false`, `false`, `true`. The Rules read only `showPhoneToConnections`; no screen shows the budget or photo to others yet. `FR1.3` |
 
 #### Subcollection: `users/{uid}/private/contact`
 - **Source:** PRD Section 5 Stage Table (Connection stage visibility) and PRD FR1.3.
@@ -116,7 +117,8 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `householdId` | string | No | Server | Foreign key to `households/{householdId}` when user is an active household member; `null` otherwise. `[PROPOSED]` |
 | `updatedAt` | timestamp | Yes | Server | Last update timestamp. `[PROPOSED]` |
 
-#### Subcollection: `users/{uid}/private/timetable`
+#### Subcollection: `users/{uid}/private/timetable` (removed 10 Nov 2026)
+- **Status:** the app no longer writes this document: Ary removed the class timetable from the product on 10 Nov 2026 (campus-day collection was also removed from the target product on 11 Nov 2026; existing code migration pending). The Security Rules for it are still in `backend/firestore.rules` and can be deleted with E7.2.
 - **Source:** PRD FR1.3 (class timetable) and PRD Section 5 (NFR2 timetable privacy).
 - **Purpose:** Stores exact weekly class timetable (building, exact start/end times). Isolated because timetable details reveal daily physical presence.
 - **Document ID:** `timetable` (single document).
@@ -139,10 +141,10 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 ---
 
 ### 2.2 Collection: `areas`
-- **Source:** PRD Section 8 (`areas` collection) and PRD Module 2 / 4 (FR2.2, FR2.3, FR4.1).
-- **Purpose:** Pre-seeded geographic area reference data around UM for searching, route planning, and area guides.
+- **Source:** PRD Section 8 (`areas` collection) and PRD Module 2 / 4 (FR2.2, FR4.1).
+- **Purpose:** Pre-seeded geographic area reference data around UM for searching and route planning.
 - **Document ID:** `{areaId}` (e.g., `"pantai_dalam"`, `"kerinchi"`, `"bangsar_south"`).
-- **Used by:** Module 2 (FR2.2, FR2.3), Module 4 (FR4.1, FR4.2).
+- **Used by:** Module 2 (FR2.2), Module 4 (FR4.1, FR4.2).
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
@@ -150,8 +152,6 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 | `name` | string | Yes | Seed / Admin | Area display name (e.g., "Pantai Dalam"). `FR2.2` |
 | `lat` | number | Yes | Seed / Admin | Latitude of area center. `FR4.1` |
 | `lng` | number | Yes | Seed / Admin | Longitude of area center. `FR4.1` |
-| `rentLowSen` | number | Yes | Seed / Admin / Server | Estimated low room price in area in integer sen (RM). `FR2.3` |
-| `rentHighSen` | number | Yes | Seed / Admin / Server | Estimated high room price in area in integer sen (RM). `FR2.3` |
 | `nearestStations` | array<map> | Yes | Seed / Admin | `[{ stationName: string, mode: string ("LRT"/"MRT"/"Bus"), distanceMeters: number }]`. `FR4.1` |
 
 ---
@@ -179,6 +179,7 @@ change it. Full lifecycle and live provider verification remain pending.
 | `ownerUid` | string | Yes | Host (on create) | Firebase Auth UID of the Host. `FR2.1`, `E2.1` |
 | `areaId` | string | Yes | Host | Foreign key to `areas/{areaId}`. `FR2.1`, `E2.1` |
 | `buildingName` | string | Yes | Host | Building/Property name (picked via place search / Cloudflare Worker place search proxy `[DRAFT]`). `FR2.1`, `E2.1` |
+| `buildingAddress` | string | Yes | Host | Street address of the Building, public so students know where it is (decided 11 Nov 2026, Ary). In the Rules (optional, up to 300 characters), the Worker (required) and the Post form since 11 Nov 2026; needs review by Gathan (E2.1 subtask 8). `[PROPOSED]` `FR2.1`, `E2.1` |
 | `placeId` | string | No | Host | Optional place ID `[DRAFT]`. `FR2.1` |
 | `coordinateSource` | string | Manual picker | Host on create | `area_center_estimate`: `lat`/`lng` describe the selected Area centre, not a verified Building. Immutable in current clients. Absent legacy values have unspecified provenance. Gathan approved 9 Nov 2026; FR2.1. |
 | `lat` | number | Yes | Host | General latitude for commute calculations. `FR4.1` `[PROPOSED]` |
@@ -202,7 +203,7 @@ change it. Full lifecycle and live provider verification remain pending.
 
 | Field Name | Type | Required | Who May Write | Notes |
 |---|---|---|---|---|
-| `exactAddress` | string | Yes | Host | Full address with unit/door number (e.g. "A-12-03, Menara Bangsar"). `NFR2`, `E2.1` |
+| `exactAddress` | string | Yes | Host | The exact Unit: block, floor and door number (e.g. "A-12-03"). Since 11 Nov 2026 the Building's street address is the public `buildingAddress`. `NFR2`, `E2.1` |
 | `residentUids` | array<string> | Yes | Host / Server | Array of Auth UIDs of residents currently living in this listing unit (including the Host). `NFR2`, `[PROPOSED]` |
 
 ---
@@ -270,26 +271,9 @@ change it. Full lifecycle and live provider verification remain pending.
 
 ---
 
-### 2.6 Collection: `reviews`
-- **Source:** PRD Section 8 (`reviews` collection) and PRD Module 2 (FR2.3).
-- **Purpose:** Student-submitted building reviews for area guides and building ratings.
-- **Document ID:** `{reviewId}` (auto-generated ID).
-- **Used by:** Module 2 (FR2.3).
+### 2.6 Collection: `reviews` — removed
 
-| Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
-|---|---|---|---|---|
-| `reviewId` | string | Yes | Author (on create) | Unique review ID. `PRD Section 8` |
-| `buildingName` | string | Yes | Author | Primary key for building reviews. `FR2.3`, `E9.4` |
-| `placeId` | string | No | Author | Optional place ID `[DRAFT]` for building verification. `[PROPOSED]` |
-| `listingId` | string | No | Author | Associated listing ID if reviewed via a listing. `PRD Section 8` |
-| `authorUid` | string | Yes | Author (on create) | Auth UID of the reviewer (must be verified current/former resident). `FR2.3` |
-| `water` | number | Yes | Author | Rating 1–5. `FR2.3` |
-| `internet` | number | Yes | Author | Rating 1–5. `FR2.3` |
-| `security` | number | Yes | Author | Rating 1–5. `FR2.3` |
-| `noise` | number | Yes | Author | Rating 1–5. `FR2.3` |
-| `text` | string | Yes | Author | Detailed review commentary. `FR2.3` |
-| `moderated` | boolean | Yes | Server / Admin | Default `false`. Only `true` reviews are public. `FR2.3` |
-| `createdAt` | timestamp | Yes | Author (on create) | Submission timestamp. `[PROPOSED]` |
+Removed on 11 Nov 2026 (Ary): the area page and building reviews (old FR2.3, E9.4) were dropped because their data only exists once the app has residents. The old FR2.4 (Evaluate unit) is now FR2.3. The `reviews` collection and the `areas.rentLowSen` / `rentHighSen` fields are not part of the schema; the section number is kept so the others stay stable.
 
 ---
 
@@ -331,7 +315,7 @@ change it. Full lifecycle and live provider verification remain pending.
 | `aiReasons` | array<string> | No | Server | AI-generated explanation strings (if AI call succeeded). `FR3.2` |
 | `aiGenerated` | boolean | Yes | Server | `true` if `aiReasons` are AI-generated; `false` if rule fallback was used. `FR3.2`, `FR6.3` |
 | `fallbackUsed` | boolean | Yes | Server | `true` if rule-generated fallback reasons were used. `FR3.2` |
-| `overlappingClassDays` | array<number> \| null | No | Server | ISO weekdays with overlapping classes e.g. `[1, 3]` (Mon, Wed), or `null` if uncalculated / incomplete profile timetable data. `FR3.2` |
+| `overlappingClassDays` | array<number> \| null | No | Server | Always `null` since 10 Nov 2026: there is no class timetable. Kept only because `match.js` still returns it. `FR3.2` |
 | `statusA` | string | Yes | User A | User A response: `"none"`, `"requested"`, `"accepted"`, `"rejected"`. `FR3.3`, `E5.1` |
 | `statusB` | string | Yes | User B | User B response: `"none"`, `"requested"`, `"accepted"`, `"rejected"`. `FR3.3`, `E5.1` |
 | `messageA` | string | No | User A | Optional introduction message from User A when sending request. `FR3.3` |
@@ -342,18 +326,23 @@ change it. Full lifecycle and live provider verification remain pending.
 ---
 
 ### 2.9 Collection: `groups`
-- **Source:** PRD Section 8 (`groups` collection) and PRD Module 3 (FR3.3) / Module 2 (FR2.4).
-- **Purpose:** Group of 2–4 students forming a rental group to rent a whole unit together.
+- **Source:** PRD Section 8 (`groups` collection) and PRD Module 3 (FR3.3) / Module 2 (FR2.3).
+- **Purpose:** Group of 2 to 8 students (the creator sets the maximum) forming a rental group to rent a whole unit together. Created by one student; others join with a code or link and the creator accepts them (Ary, 12 Nov 2026).
 - **Document ID:** `{groupId}` (auto-generated ID).
-- **Used by:** Module 3 (FR3.3), Module 2 (FR2.4).
+- **Used by:** Module 3 (FR3.3), Module 2 (FR2.3).
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
 | `groupId` | string | Yes | Member (on create) | Unique group ID. `PRD Section 8` |
-| `memberUids` | array<string> | Yes | Member | Array of member Auth UIDs (2–4 members). `FR3.3`, `E9.2` |
+| `memberUids` | array<string> | Yes | Member | Array of member Auth UIDs. 1 member while forming (the creator), at most `maxMembers`; 2 or more to confirm. `FR3.3`, `E9.2` |
 | `targetListingId` | string | No | Member | Foreign key to `listings/{listingId}` if targeting a Jiran listing. `FR3.3` |
 | `targetEvalId` | string | No | Member | Foreign key to `unitEvaluations/{evalId}` if targeting an evaluated unit. `[PROPOSED]` |
-| `spots` | number | Yes | Member | Maximum group size (2–4). `FR3.3`, `E9.2` |
+| `maxMembers` | number | Yes | Creator | Maximum group size, integer 2 to 8, never below the current number of members. Replaces `spots`. `FR3.3`, `E9.2` `[PROPOSED]` |
+| `createdByUid` | string | Yes | Creator (on create) | The creator, who accepts or declines join requests. `E9.2` `[PROPOSED]` |
+| `name` | string | No | Creator | Optional group name, up to 60 characters. `[PROPOSED]` |
+| `inviteCode` | string | Yes | Server | 6-character code that lets a student send a join request. Not readable by non-members; checked by the server. `[PROPOSED]` |
+| `inviteExpiresAt` | timestamp | Yes | Server | The code is valid for 7 days; the creator can make a new one. A Group of one is dissolved when the code expires unused. `[PROPOSED]` |
+| `joinRequests` | array<map> | No | Server | `[{ uid: string, requestedAt: timestamp }]`, set by the server when a student sends the code; the creator accepts or declines. `[PROPOSED]` |
 | `roomSplit` | array<map> | Yes | Member | `[{ memberUid: string, roomType: string, priceSen: number }]`. Sum must equal unit total rent in sen. `FR3.3`, `E9.2` |
 | `splitOption` | string | Yes | Member | Option: `"equal"`, `"room_type"`, `"custom"`. `FR3.3`, `E9.2` |
 | `memberStatus` | array<map> | Yes | Member | `[{ uid: string, status: string ("in"/"not_sure"/"needs_changes"), note: string }]`. `FR3.3`, `E9.2` |
@@ -366,24 +355,24 @@ change it. Full lifecycle and live provider verification remain pending.
 ---
 
 ### 2.10 Collection: `unitEvaluations`
-- **Source:** PRD Section 8 (`unitEvaluations` collection) and PRD Module 2 (FR2.4).
+- **Source:** PRD Section 8 (`unitEvaluations` collection) and PRD Module 2 (FR2.3).
 - **Purpose:** Private evaluation of any unit (internal or external) by an individual student or a group.
 - **Document ID:** `{evalId}` (auto-generated ID).
-- **Used by:** Module 2 (FR2.4), Module 3 (FR3.3).
+- **Used by:** Module 2 (FR2.3), Module 3 (FR3.3).
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
 | `evalId` | string | Yes | Creator (on create) | Unique evaluation ID. `PRD Section 8` |
 | `createdByUid` | string | Yes | Creator (on create) | Auth UID of creator. `[PROPOSED]` |
-| `groupId` | string | No | Creator / Member | Foreign key to `groups/{groupId}` if attached to a group. Private to creator/group members. `FR2.4`, `E9.1` |
-| `buildingName` | string | Yes | Creator | Building name (picked via place search / Cloudflare Worker place search proxy `[DRAFT]`). `FR2.4`, `E9.1` |
-| `areaId` | string | No | Creator | Foreign key to `areas/{areaId}`. `FR2.4` |
-| `lat` | number | Yes | Creator | Latitude for commute calculation. `FR2.4` |
-| `lng` | number | Yes | Creator | Longitude for commute calculation. `FR2.4` |
-| `referenceUrl` | string | No | Creator | Text note typed by user (e.g., PropertyGuru note; never fetched by server). `FR2.4` |
-| `totalRentSen` | number | Yes | Creator | Total monthly unit rent in integer sen (RM). `FR2.4`, `E9.1` |
-| `depositSen` | number | No | Creator | Deposit amount in integer sen (RM). `FR2.4`, `E9.1` |
-| `rooms` | array<map> | Yes | Creator | `[{ type: string ("master"/"medium"/"small"), priceSen: number, assignedUid: string }]`. Sum must equal `totalRentSen`. `FR2.4`, `E9.1` |
+| `groupId` | string | No | Creator / Member | Foreign key to `groups/{groupId}` if attached to a group. Private to creator/group members. `FR2.3`, `E9.1` |
+| `buildingName` | string | Yes | Creator | Building name (picked via place search / Cloudflare Worker place search proxy `[DRAFT]`). `FR2.3`, `E9.1` |
+| `areaId` | string | No | Creator | Foreign key to `areas/{areaId}`. `FR2.3` |
+| `lat` | number | Yes | Creator | Latitude for commute calculation. `FR2.3` |
+| `lng` | number | Yes | Creator | Longitude for commute calculation. `FR2.3` |
+| `referenceUrl` | string | No | Creator | Text note typed by user (e.g., PropertyGuru note; never fetched by server). `FR2.3` |
+| `totalRentSen` | number | Yes | Creator | Total monthly unit rent in integer sen (RM). `FR2.3`, `E9.1` |
+| `depositSen` | number | No | Creator | Deposit amount in integer sen (RM). `FR2.3`, `E9.1` |
+| `rooms` | array<map> | Yes | Creator | `[{ type: string ("master"/"medium"/"small"), priceSen: number, assignedUid: string }]`. Sum must equal `totalRentSen`. `FR2.3`, `E9.1` |
 | `createdAt` | timestamp | Yes | Creator (on create) | Creation timestamp. `PRD Section 8` |
 | `expiresAt` | timestamp | Yes | Creator / Server | Auto-deletion timestamp (90 days if not attached to a Group). `PRD Section 8` `[PROPOSED]` |
 
@@ -391,7 +380,7 @@ change it. Full lifecycle and live provider verification remain pending.
 
 ### 2.11 Collection: `households`
 - **Source:** PRD Section 8 (`households` collection) and PRD Module 5 (FR5.1, FR5.2, FR5.3).
-- **Purpose:** Active shared household created when a group tenancy starts or joined via invite code. Proves Connection between active co-residents.
+- **Purpose:** Active shared household created when a group tenancy starts, created directly by students who already live together, or joined via invite code. Proves Connection between active co-residents.
 - **Document ID:** `{householdId}` (auto-generated ID).
 - **Used by:** Module 5 (FR5.1, FR5.2, FR5.3).
 
@@ -399,7 +388,9 @@ change it. Full lifecycle and live provider verification remain pending.
 |---|---|---|---|---|
 | `householdId` | string | Yes | Member (on create) | Unique household ID. `PRD Section 8` |
 | `memberUids` | array<string> | Yes | Member | Auth UIDs of active household members. `FR5.1`, `E7.2` |
-| `hostUid` | string | Yes | Member | Auth UID of designated Host / tenancy holder. `[PROPOSED]` |
+| `hostUid` | string | Yes | Member | Auth UID of designated Host / tenancy holder; the creator when the Household is created directly. `[PROPOSED]` |
+| `name` | string | No | Member | Unit name typed by the creator when the Household is created directly (up to 100 characters). `FR5.1` `[PROPOSED]`, 11 Nov 2026 |
+| `areaId` | string | No | Member | Optional area, only for the commute to the faculty in the Unit tab. `FR5.1` `[PROPOSED]`, 11 Nov 2026 |
 | `listingId` | string | No | Member | Associated listing ID (if converted from a Jiran listing). `PRD Section 8` |
 | `inviteCode` | string | Yes | Member / Server | Secret invite code to join household. `FR5.1` `[PROPOSED]` |
 | `rules` | array<map> | Yes | Member | `[{ text: string, acceptedBy: array<string> }]`. Modifying resets `acceptedBy`. `FR5.3`, `E7.2` |
@@ -501,15 +492,14 @@ change it. Full lifecycle and live provider verification remain pending.
 ---
 
 ### 2.16 Collection: `config` `[PROPOSED]`
-- **Source:** `[PROPOSED]` (PRD FR2.1 / FR2.4 default room price weights, ASSUMPTIONS #1, #7).
+- **Source:** `[PROPOSED]` (PRD FR2.1 / FR2.3 default room price weights, ASSUMPTIONS #1, #7).
 - **Purpose:** Read-only global system application configuration parameters in integer sen.
 - **Document ID:** `app` (single document in `config`).
-- **Used by:** Module 2 (FR2.1, FR2.4), Module 4 (FR4.2).
+- **Used by:** Module 2 (FR2.1, FR2.3), Module 4 (FR4.2).
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
 | `roomPriceWeights` | map | Yes | Admin / Seed | `{ master: 1.3, medium: 1.0, small: 0.7 }`. Default price split weights. `ASSUMPTIONS #1` `[PROPOSED]` |
-| `utilitiesEstimateSen` | number | Yes | Admin / Seed | Default utility estimate per person per month in integer sen (6200 sen = RM 62 sample). `ASSUMPTIONS #7` `[PROPOSED]` |
 | `updatedAt` | timestamp | Yes | Admin / Seed | Configuration update timestamp. `[PROPOSED]` |
 
 ---
@@ -538,7 +528,7 @@ In compliance with the **Retention Principle of PDPA 2010** (personal data must 
 | Collection / Data | PRD / ASSUMPTIONS Value | Schema Retention Policy Value | Deletion Mechanism `[OPEN QUESTION]` | PDPA 2010 Justification `[DRAFT]` |
 |---|---|---|---|---|
 | `contractChecks` | **30 days** (PRD FR6.2 / Section 8, ASSUMPTIONS #8) | **30 days** | `[OPEN QUESTION for Aaron]` | Analysis result is temporary. Tenancy agreements contain highly confidential terms; 30 days allows sufficient time for student review before permanent purge. |
-| Unattached `unitEvaluations` | **90 days** (PRD FR2.4 acceptance criteria, ASSUMPTIONS #8) | **90 days** | `[OPEN QUESTION for Aaron]` | Evaluations not linked to an active Group expire after 90 days as market prices change and search intent ends. |
+| Unattached `unitEvaluations` | **90 days** (PRD FR2.3 acceptance criteria, ASSUMPTIONS #8) | **90 days** | `[OPEN QUESTION for Aaron]` | Evaluations not linked to an active Group expire after 90 days as market prices change and search intent ends. |
 | Closed `listings` | **30 days** (PRD FR2.2 acceptance criteria: listing closes after 30 days if not renewed; ASSUMPTIONS #8) | **30 days** after closing/expiry | `[OPEN QUESTION for Aaron]` | Inactive/closed listings are purged 30 days after closing unless renewed by Host, preventing stale search results. |
 | Closed `households` | **6 months** (PRD FR5.1 acceptance criteria, ASSUMPTIONS #8) | **6 months** after closure | `[OPEN QUESTION for Aaron]` | Retained read-only for 6 months after household dissolution so former housemates can verify and settle lingering debt balances before complete purge. |
 | `chats` & messages | *Not explicitly specified in PRD* | **Duration of Connection + 30 days** (counted from `connections.endedAt`) | `[OPEN QUESTION for Aaron]` | Chat channels and messages are retained for 30 days after a Connection is closed/terminated to allow users to resolve pending viewing arrangements, deposit queries, or safety concerns before permanent purge in compliance with the PDPA 2010 Retention Principle. |
@@ -558,14 +548,11 @@ During schema synthesis across `PRD.md`, `ASSUMPTIONS.md`, and `docs/team/work-b
    - *Conflict:* PRD Section 1.3 & Stage Table state profile photos are shown in the Household stage, but PRD Section 8 `users` table lists NO photo field.
    - *Resolution:* Added `users/{uid}/private/photo` (`photoUrl`), readable strictly by the owner and household members (`users/{uid}/private/membership`).
 
-2. **`reviews` Primary Key (`listingId` vs. `buildingName`):**
-   - *PRD Section 8 `reviews` table:* States `listingId or buildingName`.
-   - *Problem:* Listings expire after 30 days, whereas building reviews must persist permanently on area pages (FR2.3).
-   - *Resolution:* `reviews` uses `buildingName` (and `placeId` `[DRAFT]`) as the primary key reference, with `listingId` marked optional.
+2. **`reviews`: removed (11 Nov 2026).** The area page and building reviews were dropped; there is no `reviews` collection.
 
 3. **`unitEvaluations` Ownership (`groupId` vs. Individual Creator):**
    - *PRD Section 8:* Lists `unitEvaluations` with `groupId`.
-   - *FR2.4:* Mentions an evaluation can be made by an individual student before joining/forming a group, or attached to a group later.
+   - *FR2.3:* Mentions an evaluation can be made by an individual student before joining/forming a group, or attached to a group later.
    - *Resolution:* Added `createdByUid` as required, with `groupId` marked optional.
 
 4. **Contract Check Shared Attachment Access & Storage:**
@@ -585,7 +572,7 @@ Firestore Security Rules cannot execute multi-document aggregations, complex ari
    - *Server Task:* Cloudflare Worker validates or writes room collections atomically (`splitRoomPrices`).
 
 2. **Deterministic Match Score, AI Reasons & Class Overlap (`computeMatchScores`):**
-   - *Server Task:* Reads `matchProfiles` and student timetables, calculates weighted score formula, derives `overlappingClassDays` array, calls Gemini/Claude API for reasons (or uses rule fallback), and writes or returns results for `matches`.
+   - *Server Task:* Reads `matchProfiles`, calculates weighted score formula (no class timetable since 10 Nov 2026, so `overlappingClassDays` is null), calls Gemini/Claude API for reasons (or uses rule fallback), and writes or returns results for `matches`.
    - *Open Question for Aaron:* Does the Cloudflare Worker write `scoreBasisPoints`, `reasons`, and `overlappingClassDays` directly to Firestore using Admin credentials, or return them to the Android app for the app to write?
 
 3. **AI Contract Analysis (`checkContract`):**
@@ -594,6 +581,7 @@ Firestore Security Rules cannot execute multi-document aggregations, complex ari
 
 4. **Household Invite Code Lookup (`joinHousehold`):**
    - *Server Task:* Validates secret household `inviteCode` and adds applicant's UID to `households.memberUids`.
+   - **Group Invite Code Lookup (`requestToJoinGroup`) `[PROPOSED]`:** validates the `groups.inviteCode`, refuses an expired code, a full Group or a student already in a Group, and adds the student to `joinRequests`. The creator's accept adds the UID to `memberUids` (Rules: only the creator, never above `maxMembers`).
 
 5. **Commute Calculation & Route Directions (FR4.1, FR4.2):**
    - *Server Task:* `getCommuteOptions` and `getTransitRoute` endpoints use openrouteservice for walking and road travel times/distances, and Prasarana GTFS timetables for bus and rail schedules/routes, calculating peak/off-peak fares and CO2 estimates, and returning cached results.
@@ -602,5 +590,4 @@ Firestore Security Rules cannot execute multi-document aggregations, complex ari
    - *Server Task:* when a Host accepts a `listingRequests` request or both students accept a `matches` document, create `connections/{pairId}`; or let Rules allow the app to create it after checking the accepted request (see section 2.4.1).
 
 7. **Moderation & Listing Expiry:**
-   - *Server Task:* Moderates review submissions (`moderated` boolean) and manages automated status updates for expired listings.
-   - *Open Question for Aaron:* Does the Worker write `moderated` status directly to Firestore?
+   - *Server Task:* manages automated status updates for expired listings. (Review moderation was removed with the reviews, 11 Nov 2026.)

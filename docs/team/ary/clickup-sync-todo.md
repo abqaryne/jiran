@@ -21,11 +21,11 @@ The ClickUp connector stopped at its daily limit (100 calls) on 10 Nov 2026. The
 - status z8qgvc94fu → in progress (E7.2.1)
 - status z8qgvc94q0 → in progress (E8.3.2)
 - status z8qgvc94qg → in progress (E9.1.1)
-- status z8qgvc94r3 → in progress (E9.4.1)
+- status z8qgvc94r3 (E9.4.1) → do NOT set in progress: E9.4 is dropped (11 Nov 2026); close E9.4 and its subtasks
 - status z8qgvc93h9 → done (manual)
 - status z8qgvc93j3 → done (manual)
 - status z8qgvc94qm → in progress (manual)
-- rename z8qgvc93q8 → (Gathan) Room card shows cost and travel time; "no mode reaches class on time" message
+- rename z8qgvc93q8 → (Gathan) Room card shows monthly Room rent and a separate one-way commute time and fare
 - rename z8qgvc93qf → (Ilham) Function that marks each clause Red flag, Check or OK
 - rename z8qgvc93qg → (Ilham) Write 10 fictional tenancy agreements from common clauses and list the risky clauses of each (Aly checks)
 - rename z8qgvc94p2 → (Ilham) Set up the Gemini API free tier in the Worker and record its quota and data-use terms (#10)
@@ -45,3 +45,16 @@ The ClickUp connector stopped at its daily limit (100 calls) on 10 Nov 2026. The
 - create under E2.1 (z8qgvc906m): (Gathan, Aaron) Seed the real area list and deploy the reviewed Worker [backlog]
 - create under E3.3 (z8qgvc906v): (Aaron) Mark in ASSUMPTIONS.md which fare and transit checks (#3, #4, #5) are still open [backlog]
 - create under T3.1 (z8qgvc9085): (Ary) Check the rubric items and the 10 to 15 minute limit in the brief [backlog]
+
+Delete these ClickUp subtasks (Ary asked on 10 Nov 2026 to drop every "send to the group" task; the task files no longer have them):
+
+- delete z8qgvc90dw (Ary) Announce the component list to the team and how to use it
+- delete z8qgvc93h8 (Aaron) Post the contracts to the group so everyone can build against stubs
+- delete z8qgvc90g3 (Gathan) Send the field list to the group by 15 Nov
+- rename z8qgvc93z7 → (Aly) Write room prices, peak hours, fares and feature importance into docs/product/ASSUMPTIONS.md, where Gathan, Aaron and Dafi read them
+
+- 11 Nov 2026 (Ary, PRD v0.3): no true monthly cost and no campus days. Also rename E3.4 "True monthly cost and travel time on the Room card" to "Per-trip commute on the Room card", E4.2 "Commute options card" to "Getting to your faculty", and replace the E1.3 subtasks about campus days with "Remove campus-day collection" (task files have the final text).
+
+- 12 Nov 2026 (Ary): the Match tab is renamed Housemates and a Group can be created or joined there (maximum members 2 to 8 set by the creator, join with a code or link, creator accepts). Update E6.1 and E6.4 (tab name), E9.2 (new subtask: Housemates entries, Create a group, Invite to the group, join requests; new Rules and `requestToJoinGroup` points) and E5.2 ("Form a group" opens Create a group).
+
+- 12 Nov 2026 (Ary): the utilities estimate is dropped. T1.3: remove #7 from subtask 1 (Aly, Gathan) and rename it "#1 Room price weights · 10 Nov"; E2.4: no utilities estimate in `config/app`.

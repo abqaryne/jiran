@@ -6,7 +6,7 @@
     <!-- Tabs -->
     <string name="home_title">Home</string>
     <string name="rooms_title">Rooms</string>
-    <string name="match_title">Match</string>
+    <string name="match_title">Housemates</string>
     <string name="unit_title">Unit</string>
 
     <!-- Placeholder copy for the empty feature screens -->

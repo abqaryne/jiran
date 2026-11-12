@@ -1,7 +1,9 @@
 # Gathan: Backend and Database Developer
 
 ## You own
-- **Module 2** Housing listings and area guide (FR2.1, FR2.2, FR2.3, FR2.4)
+
+**11 Nov 2026, Ary:** [PRD Module 4](../../product/PRD.md#module-4-apartment-to-faculty-commute-guide) removes true monthly cost and campus-day collection. Coordinate schema compatibility with E1.3; Room cards/Evaluations keep rent separate from one-way commute estimates. See the [file handoff](../../plans/2026-11-11-commute-per-trip.md).
+- **Module 2** Housing listings (FR2.1, FR2.2, FR2.3)
 - The Firestore schema and **Security Rules (NFR2)** for all modules
 - Storage rules, seed data, and FCM notifications
 
@@ -24,9 +26,8 @@ Your schema and rules are the first thing others wait for, so they land first.
 | 7 | **E3.2** Filters | [E3.2.md](../../../TASKS/E3/E3.2.md) | FR2.2, P0 | 3 Dec | E3.1 |
 | 8 | **E7.2** Household data and rules | [E7.2.md](../../../TASKS/E7/E7.2.md) | FR5.1, P0 | 8 Dec | E0.5 |
 | 9 | **E5.4** Notifications | [E5.4.md](../../../TASKS/E5/E5.4.md) | P1 | 13 Dec | E5.1 |
-| 10 | **E9.1** Evaluate any unit | [E9.1.md](../../../TASKS/E9/E9.1.md) | FR2.4, P1 | 17 Dec | E3.4 |
-| 11 | **E9.4** Area page and building reviews | [E9.4.md](../../../TASKS/E9/E9.4.md) | FR2.3, P1 | 20 Dec | E2, E3 |
-| 12 | **T2.3** NFR2: privacy and security evidence | [T2.3.md](../../../TASKS/T2/T2.3.md) | P0 | 27 Dec | all rules |
+| 10 | **E9.1** Evaluate any unit | [E9.1.md](../../../TASKS/E9/E9.1.md) | FR2.3, P1 | 17 Dec | E3.4 |
+| 11 | **T2.3** NFR2: privacy and security evidence | [T2.3.md](../../../TASKS/T2/T2.3.md) | P0 | 27 Dec | all rules |
 
 ### Stories where you do a subtask (14)
 
@@ -34,14 +35,14 @@ Your schema and rules are the first thing others wait for, so they land first.
 |---|---|---|---|---|
 | **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../../TASKS/E0/E0.4.md) | 30 Oct |
 | **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
-| **T1.3** Verify the assumed numbers | Dafi | #1 Room price weights, #7 Utilities estimate · 10 Nov; #8 Data retention against PDPA 2010 · 13 Nov | [T1.3.md](../../../TASKS/T1/T1.3.md) | 13 Nov |
+| **T1.3** Verify the assumed numbers | Dafi | #1 Room price weights · 10 Nov; #8 Data retention against PDPA 2010 · 13 Nov | [T1.3.md](../../../TASKS/T1/T1.3.md) | 13 Nov |
 | **E1.3** Profile setup and privacy | Ary | `users` fields and rules so hidden details stay hidden until a Connection | [E1.3.md](../../../TASKS/E1/E1.3.md) | 22 Nov |
-| **E3.4** True monthly cost and travel time on the Room card | Aaron | Room card shows cost and travel time; "no mode reaches class on time" message | [E3.4.md](../../../TASKS/E3/E3.4.md) | 4 Dec |
+| **E3.4** One-way commute summary on the Room card | Aaron | Room card separates rent from one-way time/fare | [E3.4.md](../../../TASKS/E3/E3.4.md) | 4 Dec |
 | **E4.3** Send a request to the Host | Ary | Connection request data and rules | [E4.3.md](../../../TASKS/E4/E4.3.md) | 7 Dec |
 | **E5.1** Requests inbox and Connection | Ary | `chats` data and rules for what each stage may see (contact details only after both accept) | [E5.1.md](../../../TASKS/E5/E5.1.md) | 7 Dec |
 | **E6.1** Compatibility questions | Ary | `matchProfiles` data | [E6.1.md](../../../TASKS/E6/E6.1.md) | 8 Dec |
 | **E5.2** Chat and viewing | Ary | A contract file shared in a chat is private to the two people | [E5.2.md](../../../TASKS/E5/E5.2.md) | 9 Dec |
-| **E9.2** Group, split options and member status | Ary | `groups` data and rules | [E9.2.md](../../../TASKS/E9/E9.2.md) | 19 Dec |
+| **E9.2** Group, split options and member status | Ary | `groups` data, the code fields (`maxMembers` 2 to 8, `inviteCode`, `inviteExpiresAt`, `joinRequests`) and rules | [E9.2.md](../../../TASKS/E9/E9.2.md) | 19 Dec |
 | **E8.3** Upload and result screens | Ilham | Private file rules and deletion after 30 days | [E8.3.md](../../../TASKS/E8/E8.3.md) | 20 Dec |
 | **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; NFR verification (1:30) | [T3.1.md](../../../TASKS/T3/T3.1.md) | 20 Dec |
 | **T4.1** Report sections | Dafi | 2c Non-functional requirements (150), database schema part of 3 | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
@@ -58,7 +59,7 @@ Your schema and rules are the first thing others wait for, so they land first.
 - **Report:** section 2c Non-functional requirements (150 words), the database schema part of section 3, the rules tests in section 5
 
 ## Numbers you find or use (see [ASSUMPTIONS.md](../../product/ASSUMPTIONS.md))
-- **#1 Room price weights** and **#7 Utilities estimate:** Aly finds them, you put them in config and seed data (by 10 Nov)
+- **#1 Room price weights:** Aly finds them, you put them in config and seed data (by 10 Nov). There is no utilities estimate any more (dropped 12 Nov 2026)
 - **#8 Data retention periods:** you own the reasoning against the PDPA 2010 Retention Principle, with Dafi (due 13 Nov)
 
 ## Rules for everyone

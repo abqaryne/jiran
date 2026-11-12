@@ -125,6 +125,7 @@ public final class PostListingViewModel extends ViewModel {
     public void endSession() {
         cleared = true;
         photos.clear();
+        form.buildingAddress = "";
         form.address = "";
         form.buildingName = "";
         form.area = null;

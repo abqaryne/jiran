@@ -24,8 +24,8 @@ Work is divided **by module**: each module has one owner who builds it end to en
 | Person | Role | Owns | Also responsible for |
 |---|---|---|---|
 | **Ary** | Group leader, Frontend Lead, Lead UI/UX | **Module 1** Auth and verified profile (FR1.1–1.3) and **Module 3** Roommate matching screens (FR3.1–3.3) | Figma and design system; Android app shell, theme and shared components; final check-in (approve and merge) of every PR; main contact with the lecturer |
-| **Aaron** | Software Architect and Backend Lead | **Module 4** Commute planner and true cost (FR4.1–4.3) | Architecture, server (Worker) structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
-| **Gathan** | Backend and Database Developer | **Module 2** Listings and area guide (FR2.1–2.4) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, 10 to 15 fictional seed listings from reference prices (never copied from other sites), FCM notifications |
+| **Aaron** | Software Architect and Backend Lead | **Module 4** Apartment-to-faculty commute guide (FR4.1–4.3) | Architecture, server (Worker) structure, CI and Firebase emulator, branching rules, integration freeze; the match score Cloud Function for Module 3 |
+| **Gathan** | Backend and Database Developer | **Module 2** Listings (FR2.1–2.3) | Firestore schema and Security Rules (NFR2) for all modules, Storage rules, 10 to 15 fictional seed listings from reference prices (never copied from other sites), FCM notifications |
 | **Ilham** | AI Engineer | **Module 6** AI assistant and private contract checker (FR6.1–6.3) | The match-reason text for Module 3 (FR3.2), AI evaluation, API key handling, **AI Usage Log** |
 | **Dafi** | Project Manager | **Module 5** Shared house tools: FR5.1 expenses and balances | ClickUp and sprints, meetings and minutes, deadlines and risks, PRD and requirements, finding the UM shuttle timetable (an email to UM transport only if needed), report assembly, peer-evaluation evidence |
 | **Aly** | QA Engineer and UX Researcher | **Module 5** FR5.2 chores and FR5.3 house rules (with Dafi) | Survey and interviews, test plan, integration tests and load test (NFR1), usability test (SUS), release checklist |
@@ -213,7 +213,7 @@ The epics E1 to E7 are the P0 flows. Each one is built end to end by the team to
 |---|---|---|---|
 | 1 | **E1** Starting and Profile Setup | 16 – 22 Nov | Ary: sign up, log in, profile, Home and the four tabs. Gathan: `users` fields and rules. |
 | 2 | **E2** Host Listing | 23 – 29 Nov | Gathan: post a unit, rooms and prices, My listing, seed listings. |
-| 3 | **E3** Find a Room | 30 Nov – 4 Dec | Gathan: Rooms screen and filters. Aaron: commute engine and true cost. Ilham: plain-language search. |
+| 3 | **E3** Find a Room | 30 Nov – 4 Dec | Gathan: Rooms screen and filters. Aaron: per-trip commute engine and summaries. Ilham: plain-language search. |
 | 4 | **E4** Room Details | 3 – 7 Dec | Ary: Room details and the commute card. Aaron: commute data. Gathan: request data. |
 | 5 | **E5** Request and Chat | 5 – 9 Dec | Ary: requests, chat, viewing, move-in. Gathan: `chats` data and rules. |
 | 6 | **E6** Match | 7 – 11 Dec | Ary: questions and match screens. Aaron: score. Ilham: reasons. |

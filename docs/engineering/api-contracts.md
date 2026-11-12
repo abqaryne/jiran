@@ -5,7 +5,7 @@ Budget update: free-only. A candidate HTTPS Worker alternative is researched in
 has been adopted. Firebase callable SDK/protocol conventions below still describe
 the current local implementation, not a ready Worker API.
 
-Status: **DRAFT**, 27 October 2026. Emulator-only `sessionCheck` and the labelled
+Status: **DRAFT**, 27 October 2026 (commute updated to per-trip on 11 Nov 2026). Emulator-only `sessionCheck` and the labelled
 fixture versions of `getCommuteOptions` and `computeMatchScores` are implemented; production endpoints are
 not exported. JSON uses example fixture values,
 not approved fares, weights or collections. Aaron coordinates approval with Ary,
@@ -31,79 +31,77 @@ Request: `{}`. Response: `{"uid":"local-user-id","status":"ok"}`.
 Missing auth → `unauthenticated`; email not verified → `permission-denied`.
 No production export. This check does not validate UM affiliation.
 
-## getCommuteOptions — implemented local fixture interface
+## getCommuteOptions — implemented local fixture interface (per-trip)
+
+Per-trip format since 11 Nov 2026 (PRD Module 4). The old monthly / before-class response is gone from the code.
 
 Availability: **only** the `demo-jiran` Functions emulator with the expected
 loopback Firestore emulator. Requires authenticated, email-verified caller.
 No live export, listing/profile reads, Maps calls or user-specific data.
 
 ```json
-{"scenarioId":"on-time"}
+{"scenarioId":"per-trip"}
 ```
 
-The only accepted body field is `scenarioId`; valid IDs are `on-time`,
-`no-on-time-route` and `missing-data`. Unknown IDs, production listing/unit
-requests, `userId` and cost overrides return `invalid-argument`. Missing auth
+The only accepted body field is `scenarioId`; valid IDs are `per-trip`,
+`no-known-fare` and `missing-data`. Unknown IDs, production listing/unit
+requests, `userId` and fare overrides return `invalid-argument`. Missing auth
 returns `unauthenticated`; unverified email returns `permission-denied`.
 
-Response includes `dataSource: "fixture"`, `assumptionVersion: "fixture-v1"`,
-`scenarioId`, `isEstimate: true`, `status`, exactly four ordered `options`,
-`selectedMode`, `trueMonthlyCostSen`, component amounts, `monthlyTrips`,
-`departTime` and `classStartTime` (UTC ISO timestamps). Example summary:
+Response: `dataSource: "fixture"`, `assumptionVersion: "fixture-v1"`, `scenarioId`,
+`isEstimate: true`, `status` (`ok` or `no_known_fare`), exactly four ordered `options`
+(walking, transit, e_hailing, driving), `selectedMode` (or null) and
+`comparisonLimited`. Example summary:
 
 ```json
 {
-  "scenarioId":"on-time","dataSource":"fixture","assumptionVersion":"fixture-v1",
-  "isEstimate":true,"status":"ok","selectedMode":"transit",
-  "roomPriceSen":45000,"utilitiesShareSen":6200,"monthlyTrips":40,
-  "trueMonthlyCostSen":61200,
-  "departTime":"2026-11-16T00:00:00.000Z",
-  "classStartTime":"2026-11-16T01:00:00.000Z"
+  "scenarioId":"per-trip","dataSource":"fixture","assumptionVersion":"fixture-v1",
+  "isEstimate":true,"status":"ok","selectedMode":"walking","comparisonLimited":false
 }
 ```
 
-The actual response also includes the ordered walking/transit/e_hailing/driving
-options. Available options contain `durationSeconds`, `distanceMetres`,
-`perTripCostSen`, `monthlyCostSen`, nullable `co2GramsPerTrip`/`emissionSource`,
-`arrivalTime` and `arrivesOnTime`. Unavailable options contain `mode`,
-`status: "unavailable"` and a reason: `missing_route`, `missing_schedule`,
-`missing_fare_assumption` or `provider_unavailable`.
+Available options contain `durationSeconds`, `distanceMetres`, `perTripCostSen`
+(one way, integer sen, or null), `fareStatus` (`known` or `unavailable`), nullable
+`co2GramsPerTrip`/`emissionSource` and optional `routeSource`, `costSource`, `warnings`
+and `trafficFallback`. Unavailable options contain `mode`, `status: "unavailable"` and
+a reason: `missing_route`, `missing_schedule`, `missing_fare_assumption`,
+`provider_unavailable` or `vehicle_unavailable`.
 
-Rules verified by tests:
+Rules verified by tests (`calculatePerTripCommute`, `functions/src/commute.js`):
 
-- Arrival must be **strictly before** class; arriving exactly at class start is
-  ineligible. Offset timestamps compare absolute instants.
-- Monthly commute = integer per-trip sen × explicit `monthlyTrips`. The preview
-  does not infer attendance days, return trips, seasonal passes or parking frequency.
-- Utilities input is the already-calculated equal share; occupancy division and
-  rounding policy stay with the agreed schema/calculation contract.
-- Choose lowest monthly cost among known-cost, available, on-time options; ties
-  prefer shorter duration then walking/transit/e_hailing/driving order.
-- No eligible option → `status: "no_on_time_route"`, null selection and total.
-  Missing fares remain unavailable, never zero. Deposit is excluded.
-- CO₂ = distance in km × explicitly supplied grams/km, rounded to whole grams,
-  with a required source. Unknown factors stay null and do not become zero.
+- Estimates are one way and for leaving now. There is no rent, utilities, class
+  time, campus-day count, monthly trips, arrival time or "on time" logic.
+- `selectedMode` is the lowest known one-way fare among available modes (walking
+  counts); ties prefer shorter duration, then walking/transit/e_hailing/driving order.
+- A mode with an unknown fare keeps its time (`fareStatus: "unavailable"`,
+  `perTripCostSen: null`); it is never ranked as free. `comparisonLimited` is true when
+  a known fare was compared while another available mode has an unknown fare.
+- No known fare on any mode → `status: "no_known_fare"`, `selectedMode: null`.
+- CO₂ = distance in km × explicitly supplied grams/km (or a leg profile), rounded to
+  whole grams, with a required source. Unknown factors stay null and do not become zero.
   The fixture's synthetic factor is **not** a published source or verified assumption.
-- Inputs must have safe nonnegative integer units and valid calendar timestamps.
-  Invalid/overflowing calculations fail rather than emitting NaN or imprecise totals.
+- Inputs must have safe nonnegative integer units. Invalid calculations fail rather
+  than emitting NaN or imprecise numbers.
 
-This completes a calculation/fixture handoff, not production FR4 or NFR1 signoff.
-
-The on-time fixture also exercises optional display metadata: walking has a
+The `per-trip` fixture also exercises optional display metadata: walking has a
 synthetic route source and warning, transit a synthetic cost source, and driving
 a synthetic route source and `trafficFallback: true`. Their labels do not imply
 actual Google data or a verified fare source. Android validates sources up to
-500 UTF-16 units, up to 20 string warnings of 2000 units each, and boolean fallback.
-Absent metadata stays absent/empty; present null/wrong types/overflow are rejected.
-Warnings are copied immutably and rendered as plain text. Sources and a true
-fallback caveat are shown in the local preview. Native instrumentation checks
-bound row text (including offscreen rows); a full-content native render supports
-layout inspection, not viewport visibility or final product UI verification.
+500 UTF-16 units, up to 20 string warnings of 2000 units each, and boolean fallback
+(`CommuteSummary`). Absent metadata stays absent/empty; present null/wrong types are rejected.
+
+### Internal service (not exported)
+
+`createCommuteService` (`functions/src/commute-service.js`) takes `{listingId, roomId}`
+and an optional reference `departTime` (default: the server clock, "leaving now"). It
+needs only the origin, destination and `drivingAllowed` from the authorized context and
+returns the same per-trip shape plus `departTime`, `assumptionVersion` and
+`partialProviderFailure`. It reads no rent, utilities, class time or trips per month.
 
 ### Implemented configurable pricing layer
 
 `priceRoutes({routes,assumptions})` in `functions/src/commute-pricing.js` bridges
-normalized provider facts to `calculateCommute` inputs; it makes no external calls.
+normalized provider facts to `calculatePerTripCommute` inputs; it makes no external calls.
 Returns `{assumptionVersion,modes}`. Routes use calculator mode names and integer
 metres/seconds; transit may include nullable `transitFareSen` from the MYR adapter.
 At most four unique known modes; absent routes stay `missing_route`.
@@ -119,12 +117,11 @@ no configuration/rates are implicitly loaded or considered approved. Fields:
 | driving | `fuelMillilitresPerKm`, `fuelSenPerLitre`, `parkingSenPerTrip`, `tollsSenPerTrip`, `source` | metres × fuelMillilitresPerKm × fuelSenPerLitre / 1000000 + parkingSenPerTrip + tollsSenPerTrip |
 
 All numeric inputs are safe nonnegative integers. Required zero pickup/parking/
-toll values must be explicit. E-hailing pickup seconds are added before the class
-arrival check. Round the final per-trip rational amount half-up using BigInt,
+toll values must be explicit. E-hailing pickup seconds are added to the duration. Round the final per-trip rational amount half-up using BigInt,
 including the multiplier before rounding. Overflow/malformed inputs fail. Missing
 road config returns `missing_fare_assumption`, not free travel. No live Grab fare
-or hidden surge default is claimed. Parking frequency/return trips must be agreed
-when composing monthly trips; this module prices explicitly defined trips only.
+or hidden surge default is claimed. This module prices one one-way trip only; there is no
+monthly composition (PRD, 11 Nov 2026).
 
 Each mode may carry an explicitly sourced `emissionFactor` for the calculator.
 Transit can configure a factor without inventing a fallback fare. The caller must
@@ -133,7 +130,7 @@ e-hailing occupancy/deadheading; the module cannot infer that evidence.
 
 Pricing emits `costSource`; route `source` becomes separate `routeSource` for
 provider attribution. Bounded `warnings` and boolean `trafficFallback` are copied.
-The monthly calculator validates/preserves these optional fields in available
+The per-trip calculator validates/preserves these optional fields in available
 options. Consumers must display them as appropriate before provider activation;
 the fixture preview exercises synthetic metadata, not the real provider/pricing path.
 No production configuration loader, authorization reader or live orchestration
@@ -142,7 +139,7 @@ has been wired to this module. See the [pricing plan](../plans/2026-10-27-commut
 ### Implemented published-factor emission profile
 
 Available normalized route facts may supply `emissionProfile` instead of a legacy
-`emissionFactor`. Pricing validates/copies the profile; monthly calculation uses
+`emissionFactor`. Pricing validates/copies the profile; per-trip calculation uses
 the route's own `distanceMetres` as the required coverage total. Both methods
 together are invalid. Example profile (UK proxy explicitly selected):
 
@@ -166,55 +163,30 @@ for available results, or null grams/source with `reason` for unavailable data:
 `incomplete_distance_coverage`. Malformed inputs fail `invalid-argument`. The
 `legs` array is required; an omitted/non-array field is malformed, whereas an empty
 array returns `missing_legs`. The
-monthly DTO retains its existing CO2/source fields; unknown emissions preserve
-the known-cost route and its timing/total. The existing synthetic fixtures stay
+per-trip DTO keeps the CO2/source fields; unknown emissions preserve
+the known-cost route and its timing and fare. The existing synthetic fixtures stay
 synthetic, and no live callable/route-leg mapper is activated by this library.
 
 See [source values and boundaries](../research/emission-methodology.md). The caller must verify
 factor-to-mode mapping, actual occupancy and any provider distance-rounding mismatch.
 This is not a Malaysian emissions measurement or total lifecycle CO2e estimate.
 
-## getCommuteOptions — proposed production contract, FR4.1–4.3
+## getCommuteOptions — target production contract, FR4.1–4.3
 
-The following listing/unit interface is **not implemented**. The local endpoint
-above deliberately rejects these request shapes until schema and provider inputs
-are agreed.
+**Per-trip (Ary, 11 Nov 2026).** The fixture preview and the internal service above already use this shape; the production wire format is not frozen and Aaron owns producer/parser agreement. See [PRD](../product/PRD.md#module-4-apartment-to-faculty-commute-guide) and [file migration](../plans/2026-11-11-commute-per-trip.md).
 
-Example request:
+| Contract part | Target |
+|---|---|
+| Request | Authorized Listing/Room identity and an optional reference departure/scenario. Resolve faculty from the caller's profile; validate Room belongs to Listing. No caller-selected UID, current-device location, class time, campus-day count, monthly trips, rent or utilities input. Evaluation variant still needs owner/coordinate validation with Gathan. |
+| Origin | Candidate Listing location at its permitted precision; Area-centre fallback explicitly approximate. Public result does not reveal the private exact address. |
+| Response options | Keep mode, availability, `durationSeconds`, `distanceMetres`, `perTripCostSen`, optional `co2GramsPerTrip`/source and warnings. Range and travel-instruction fields are to be agreed by Aaron; do not invent a working endpoint. State whether e-hailing pickup wait is included. |
+| Missing data | Distinguish unavailable route, schedule or fare; preserve known time when fare is missing. Unknown cost never becomes zero. No invented fare, shuttle leg, emissions or provider quote. |
+| Selection | `selectedMode` uses lowest known one-way cost among applicable available modes; ties by duration and stable mode order. No class eligibility. State comparison limits when another mode has missing data. |
+| Removed product fields | `monthlyCostSen`, `monthlyTrips`, `trueMonthlyCostSen`, `utilitiesShareSen`, `classStartTime`, `arrivesOnTime` and `no_on_time_route` must not be required, calculated or displayed by the new flow. Room rent is separate Listing data. The emulator DTO, the service and the Android parser no longer carry them. |
+| Metadata | Estimate label, route/fare source, assumption version, origin precision, destination faculty and reference departure/scenario. No implied live Grab quote/traffic or booking. |
+| P0 / P1 | P0 one-way estimates and basic transit instructions. P1 switches Peak / Off-peak rows and opens the complete map/timeline on demand. No arrival-before-class filtering. |
 
-```json
-{"listingId":"fixture-listing","roomId":"fixture-room","departTime":"2026-11-16T08:00:00+08:00"}
-```
-
-For an Evaluation, propose replacing `listingId` with `unit` coordinates/room
-inputs; agree validation and ownership with Gathan before freezing that variant.
-Load destination/class times from the caller's authorized profile. Validate that
-the Room belongs to the Listing. Monthly attendance/trip assumptions are pending.
-
-Example fixture response:
-
-```json
-{
-  "options":[
-    {"mode":"walking","status":"available","durationSeconds":1800,"distanceMetres":2000,"monthlyCostSen":0,"co2GramsPerTrip":0,"arrivesOnTime":true},
-    {"mode":"transit","status":"unavailable","reason":"missing_schedule"},
-    {"mode":"e_hailing","status":"unavailable","reason":"missing_fare_assumption"},
-    {"mode":"driving","status":"unavailable","reason":"missing_cost_assumption"}
-  ],
-  "selectedMode":"walking",
-  "trueMonthlyCostSen":51200,
-  "roomPriceSen":45000,
-  "utilitiesShareSen":6200,
-  "isEstimate":true,
-  "assumptionVersion":"fixture-only"
-}
-```
-
-The displayed total excludes deposit. Select the cheapest **on-time available**
-mode; if none qualifies, return `selectedMode: null`, `trueMonthlyCostSen: null`
-and a no-on-time-route state. Never represent unknown fares as zero. P0 has one
-class-time result; P1 adds peak/off-peak and route steps. Cite distance/emission
-sources in detail responses; fixture zeros are not published emission factors.
+The scalar fare uses integer sen; any fare range must retain explicit sen units and bounds. Prices need sourced assumptions; no numeric production sample is supplied while these remain unverified.
 
 ## getTransitRoute — P1
 
@@ -283,7 +255,7 @@ Fixture response:
 ```
 
 Available steps must specify walk/board/alight/transfer/shuttle legs, stops,
-scheduled departures and arrivals, total time/fare and source. Label seeded UM
+scheduled departures and arrivals for the requested reference departure, total one-way time/fare and source. No class-start or campus-day dependency. P0 basic instructions come from supported legs in E3.3/E4.2; this P1 interface adds the full route page. Label seeded UM
 shuttle information as scheduled, not live; do not invent missing routes.
 
 ## computeMatchScores — implemented local fixture interface, FR3.2
@@ -382,7 +354,7 @@ return private contact data or raw timetables. Define candidate limits, missing
 answers, tie sorting and weight normalization before implementation. Ilham's
 explanation reads this breakdown; rule-generated reasons cover AI failure.
 
-## splitRoomPrices — shared utility, FR2.1 / FR2.4
+## splitRoomPrices — shared utility, FR2.1 / FR2.3
 
 Fixture request:
 
@@ -421,6 +393,6 @@ approved score breakdown. Rule fallback sets `aiGenerated: false` and
 
 - Ary: UI DTOs/states and Android application ID.
 - Gathan: resource IDs/ownership, fields, UM policy and privacy projection.
-- Aaron/Aly: monthly trip rules, formula configuration and source evidence.
+- Aaron/Aly: formula configuration and source evidence.
 - Ilham: names, AI payloads, limits, jobs and fallback format.
 - Team: error limits, currency rounding, region and contract version.
