@@ -10,7 +10,7 @@ function request(body,options={}) {
 const errorCode=(status,code)=>error=>error.status===status && error.code===code;
 
 test('reads ordinary and exactly2048-byte JSON without trusting Content-Length',async()=>{
-  assert.deepEqual(await readJsonBody(request('{"scenarioId":"on-time"}')),{scenarioId:'on-time'});
+  assert.deepEqual(await readJsonBody(request('{"scenarioId":"per-trip"}')),{scenarioId:'per-trip'});
   const body=JSON.stringify('x'.repeat(2046));
   assert.equal(encoder.encode(body).length,2048);
   assert.equal((await readJsonBody(request(body))).length,2046);

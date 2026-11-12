@@ -5,7 +5,7 @@ const request=(data={listingId:'listing',roomId:'room',departTime:'2026-11-16T08
   ({auth:{uid:'user',token:{email_verified:true}},data});
 const context=()=>({viewerUid:'user',listingId:'listing',roomId:'room',roomListingId:'listing',
   origin:{latitude:3.1,longitude:101.65},destination:{latitude:3.12,longitude:101.66},
-  roomPriceSen:45000,utilitiesShareSen:6200,monthlyTrips:40,classStartTime:'2026-11-16T09:00:00+08:00',drivingAllowed:true,
+  drivingAllowed:true,
   privateEmail:'host-private@example.com',unitAddress:'private house',timetable:['private class']});
 const config=()=>({version:'sample-v1',
   driving:{fuelMillilitresPerKm:70,fuelSenPerLitre:200,parkingSenPerTrip:100,tollsSenPerTrip:50,source:'Synthetic car'},
@@ -17,10 +17,12 @@ function setup(overrides={}) {
     consumeQuota:jest.fn(async()=>true),routesClient:{computeRoute:jest.fn(async input=>fact(input))},now:()=>now,...overrides};
   return {...adapters,service:createCommuteService(adapters)};
 }
-test('connects authorized inputs, distinct facts, exact pricing and monthly response without private projection',async()=>{
+test('connects authorized inputs, distinct facts, exact pricing and a per-trip response without private projection',async()=>{
   const s=setup();
   const result=await s.service(request());
-  expect(result).toMatchObject({selectedMode:'driving',trueMonthlyCostSen:60560,assumptionVersion:'sample-v1',partialProviderFailure:false});
+  expect(result).toMatchObject({selectedMode:'walking',assumptionVersion:'sample-v1',partialProviderFailure:false,departTime:'2026-11-16T00:05:00.000Z'});
+  expect(result.options.map(o=>o.perTripCostSen)).toEqual([0,250,900,234]);
+  expect(result).not.toHaveProperty('trueMonthlyCostSen');
   expect(s.loadAuthorizedContext).toHaveBeenCalledWith(expect.objectContaining({uid:'user',listingId:'listing',roomId:'room',signal:expect.any(AbortSignal)}));
   expect(s.consumeQuota).toHaveBeenCalledWith(expect.objectContaining({uid:'user',maxProviderCalls:3}));
   expect(s.routesClient.computeRoute).toHaveBeenCalledTimes(3);
@@ -41,7 +43,7 @@ test('vehicle unavailable is explicit and never selected; unconfigured road fare
   const ctx=context();ctx.drivingAllowed=false;
   const s=setup({loadAuthorizedContext:jest.fn(async()=>ctx),loadAssumptions:jest.fn(async()=>({version:'unset'}))});
   const result=await s.service(request());
-  expect(result.selectedMode).toBe('transit');
+  expect(result.selectedMode).toBe('walking');
   expect(result.options[2].reason).toBe('missing_fare_assumption');
   expect(result.options[3].reason).toBe('vehicle_unavailable');
   expect(s.routesClient.computeRoute).toHaveBeenCalledTimes(2);
@@ -50,6 +52,11 @@ test.each([null,{auth:{uid:'user',token:{}}},{auth:{uid:true,token:{email_verifi
   const s=setup();
   await expect(s.service(req)).rejects.toMatchObject({code:req?.auth?.uid==='user'?'permission-denied':'unauthenticated'});
   expect(s.loadAuthorizedContext).not.toHaveBeenCalled();expect(s.consumeQuota).not.toHaveBeenCalled();
+});
+test('leaving now is the default: the request needs no departure and uses the server clock',async()=>{
+  const s=setup();
+  const result=await s.service(request({listingId:'listing',roomId:'room'}));
+  expect(result.departTime).toBe('2026-11-16T00:00:00.000Z');
 });
 test.each([{},[],{listingId:'../private',roomId:'room',departTime:'2026-11-16T08:05:00+08:00'},
   {...request().data,userId:'victim'},{...request().data,roomPriceSen:0},{...request().data,origin:{}},
@@ -63,8 +70,7 @@ test.each([{viewerUid:'victim'},{roomListingId:'other-listing'},{listingId:'othe
   await expect(s.service(request())).rejects.toMatchObject({code:'permission-denied'});
   expect(s.loadAssumptions).not.toHaveBeenCalled();expect(s.consumeQuota).not.toHaveBeenCalled();
 });
-test.each([{origin:{latitude:91,longitude:101}},{roomPriceSen:-1},{drivingAllowed:undefined},
-  {classStartTime:'2026-11-16T08:00:00+08:00'}])('invalid server context fails before quota/provider %j',async changes=>{
+test.each([{origin:{latitude:91,longitude:101}},{drivingAllowed:undefined}])('invalid server context fails before quota/provider %j',async changes=>{
   const s=setup({loadAuthorizedContext:jest.fn(async()=>({...context(),...changes}))});
   await expect(s.service(request())).rejects.toMatchObject({code:'failed-precondition'});
   expect(s.consumeQuota).not.toHaveBeenCalled();expect(s.routesClient.computeRoute).not.toHaveBeenCalled();
@@ -82,11 +88,11 @@ test('isolates one provider failure and never leaks provider exception text',asy
     if(input.travelMode==='DRIVE') throw new Error('secret-key private provider message'); return fact(input);
   })}});
   const result=await s.service(request());
-  expect(result).toMatchObject({selectedMode:'transit',trueMonthlyCostSen:61200,partialProviderFailure:true});
+  expect(result).toMatchObject({selectedMode:'walking',partialProviderFailure:true});
   expect(result.options[3].reason).toBe('provider_unavailable');
   expect(JSON.stringify(result)).not.toMatch(/secret-key|private provider/);
 });
-test('all failed providers reject unavailable instead of a false no-on-time determination',async()=>{
+test('all failed providers reject unavailable instead of a false no-fare determination',async()=>{
   const s=setup({routesClient:{computeRoute:jest.fn(async()=>{throw new Error('private upstream');})}});
   await expect(s.service(request())).rejects.toMatchObject({code:'unavailable',message:'Commute routes unavailable'});
 });
@@ -118,7 +124,7 @@ test('uses the actual Routes fetch boundary through full service with no live HT
   });
   const s=setup({routesClient:createRoutesClient({apiKey:'test-server-key',fetchImpl,now:()=>now})});
   const result=await s.service(request());
-  expect(result.trueMonthlyCostSen).toBe(60560);
+  expect(result.options[3].perTripCostSen).toBe(234);
   expect(result.options[3].routeSource).toBe('Google Maps');
   expect(fetchImpl).toHaveBeenCalledTimes(3);
 });

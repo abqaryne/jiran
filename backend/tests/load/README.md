@@ -42,9 +42,9 @@ checks that a missing binary cannot leave the file behind. Usage reporting and
 inherited k6 output integrations are disabled for this local run.
 
 The measured protocol has a5-user warmup, separate50/100-user plateaus, staggered
-first requests and one-second think time. Users rotate on-time, late and
+first requests and one-second think time. Users rotate per-trip, no-known-fare and
 missing-data scenarios. Checks validate fixture labels, scenario identity and
-expected totals/states, not only HTTP200. Participation counters require every
+expected selected modes and states, not only HTTP200. Participation counters require every
 user to complete a first request. Five serial probes check anonymous, unverified,
 invalid-token, invalid-scenario and caller-UID spoofing rejections.
 

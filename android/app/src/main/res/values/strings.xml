@@ -4,8 +4,8 @@
     <string name="commute_fixture_notice">SAMPLE DATA ONLY · These times, one-way fares and emission factors are synthetic fixtures, not real travel estimates.</string>
     <string name="commute_scenario_label">Sample commute scenario</string>
     <string-array name="commute_scenarios">
-        <item>Sample routes A</item>
-        <item>Sample routes B</item>
+        <item>All fares known</item>
+        <item>No known fare</item>
         <item>Missing data</item>
     </string-array>
     <string name="commute_calculate">Calculate sample</string>
@@ -13,7 +13,9 @@
     <string name="commute_sign_in">Sign in with a verified local emulator account using Account setup, then try again.</string>
     <string name="commute_loading">Calculating sample…</string>
     <string name="commute_error">Could not load the sample. Check the local emulators and verified login, then retry.</string>
-    <string name="commute_timing">Reference departure: %1$s · Estimates for one-way trips</string>
+    <string name="commute_timing">Estimated for leaving now · one-way trips</string>
+    <string name="commute_timing_limited">Estimated for leaving now · one-way trips · some fares are unknown, so the comparison is incomplete</string>
+    <string name="commute_option_no_fare">%1$d min · fare unknown (one way)</string>
     <string name="commute_row">%1$s\n%2$s</string>
     <string name="commute_option">%1$d min · %2$s / trip (one way)</string>
     <string name="commute_co2">%1$d g CO₂/trip · %2$s</string>

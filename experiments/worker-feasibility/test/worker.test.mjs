@@ -39,7 +39,7 @@ async function token(changes={},header={},key=privateKey) {
     iat:now-60,auth_time:now-120,exp:now+3600,email_verified:true,email:'private@example.com',...changes})
     .setProtectedHeader({alg:'RS256',kid:'generated-local-key',...header}).sign(key);
 }
-async function call({path='/commute-fixture',body={scenarioId:'on-time'},jwt,method='POST',
+async function call({path='/commute-fixture',body={scenarioId:'per-trip'},jwt,method='POST',
   host='localhost',headers={},instance=mf}={}) {
   return instance.dispatchFetch(`http://${host}${path}`,{method,
     headers:{'content-type':'application/json',...(jwt===undefined?{}:{authorization:`Bearer ${jwt}`}),...headers},
@@ -71,8 +71,9 @@ test('RS256-verified auth runs the existing commute calculator in workerd',async
   const body=await response.json();
   assert.equal(body.researchOnly,true);
   assert.equal(body.result.dataSource,'fixture');
-  assert.equal(body.result.trueMonthlyCostSen,61200);
-  assert.equal(body.result.selectedMode,'transit');
+  assert.equal(Object.hasOwn(body.result,'trueMonthlyCostSen'),false);
+  assert.equal(body.result.selectedMode,'walking');
+  assert.equal(body.result.options.find(o=>o.mode==='transit').perTripCostSen,250);
   assert.doesNotMatch(JSON.stringify(body),/generated-user|private@example|latitude|longitude/);
 });
 test('existing match scoring bundles without Firebase Admin/Functions SDKs',async()=>{
@@ -139,11 +140,11 @@ test('blocks deployed hosts and live project bindings even with valid auth',asyn
 });
 test('bounds JSON and refuses UID/scenario overrides',async()=>{
   const jwt=await token();
-  for(const body of [{scenarioId:'on-time',uid:'victim'},null,[],{scenarioId:'unknown'},'{invalid']) {
+  for(const body of [{scenarioId:'per-trip',uid:'victim'},null,[],{scenarioId:'unknown'},'{invalid']) {
     assert.equal((await call({jwt,body})).status,400);
   }
   assert.equal((await call({jwt,body:' '.repeat(2049)})).status,413);
-  assert.equal((await call({jwt,body:{scenarioId:'on-time'},headers:{'content-type':'text/plain'}})).status,415);
+  assert.equal((await call({jwt,body:{scenarioId:'per-trip'},headers:{'content-type':'text/plain'}})).status,415);
 });
 test('method/path/query errors cannot reach arbitrary operations',async()=>{
   assert.equal((await call({method:'GET'})).status,405);

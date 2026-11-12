@@ -11,7 +11,7 @@ export const options=fixtureOptions(seconds);
 const accounts=new SharedArray('local fixture accounts',()=>fixtureAccounts(
   JSON.parse(open(__ENV.TOKEN_FILE)),Date.now(),2*seconds+150));
 const endpoint='http://127.0.0.1:5001/demo-jiran/us-central1/getCommuteOptions';
-const cases=['on-time','no-on-time-route','missing-data'];
+const cases=['per-trip','no-known-fare','missing-data'];
 const completedUsers=new Counter('completed_users');
 const expected={200:http.expectedStatuses(200),400:http.expectedStatuses(400),
   401:http.expectedStatuses(401),403:http.expectedStatuses(403)};
@@ -33,11 +33,11 @@ export function commute() {
 }
 export function contracts() {
   const probes=[
-    {data:{scenarioId:'on-time'},status:401,error:'UNAUTHENTICATED'},
-    {data:{scenarioId:'on-time'},token:accounts[100].token,status:403,error:'PERMISSION_DENIED'},
-    {data:{scenarioId:'on-time'},token:'invalid-local-fixture-token',status:401,error:'UNAUTHENTICATED'},
+    {data:{scenarioId:'per-trip'},status:401,error:'UNAUTHENTICATED'},
+    {data:{scenarioId:'per-trip'},token:accounts[100].token,status:403,error:'PERMISSION_DENIED'},
+    {data:{scenarioId:'per-trip'},token:'invalid-local-fixture-token',status:401,error:'UNAUTHENTICATED'},
     {data:{scenarioId:'unknown'},token:accounts[0].token,status:400,error:'INVALID_ARGUMENT'},
-    {data:{scenarioId:'on-time',userId:'synthetic-other-user'},token:accounts[0].token,status:400,error:'INVALID_ARGUMENT'},
+    {data:{scenarioId:'per-trip',userId:'synthetic-other-user'},token:accounts[0].token,status:400,error:'INVALID_ARGUMENT'},
   ];
   const probe=probes[exec.vu.iterationInScenario%probes.length];
   const {response,body}=call(probe.data,probe.token,probe.status);
