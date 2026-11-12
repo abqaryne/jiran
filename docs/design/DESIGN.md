@@ -31,7 +31,7 @@ The file has three pages.
 | Page | What is in it |
 |---|---|
 | 🎨 Design System | Foundations board, Core components board, Housing components board, and the **master components** (far below the boards, grouped together). |
-| 📱 UI Design | Every screen, grouped in **12 flows**. Each flow has a gradient header, a **START** screen on the left that shows where the user comes from, and then the flow's screens in order. |
+| 📱 UI Design | Every screen, grouped in **15 flows** that sit inside **6 journey sections** (1 Get started, 2 Find a room and move in, 3 Post a room (Host), 4 Find housemates and rent together, 5 Live together, 6 Profile and safety), read top to bottom. Each flow has a gradient header, a **START** screen on the left that shows where the user comes from, and then the flow's screens in order. A **Journey map** frame at the top shows how the flows connect. A last section, References, keeps the supplied layout screenshot. Rearranged on 12 Nov 2026 (positions only, no screen was redesigned). |
 | 🖼 Thumbnail | Cover. |
 
 **For designers and front-end developers**
@@ -154,11 +154,11 @@ Master components live in Figma → 🎨 Design System. Each row: Figma componen
 | **Avatar** | Size: Small 32, Medium 40, Large 56 · Initial | circle | `AvatarView` (`app:avatarSize`, `app:avatarInitial`) | Initials on soft blue. Real photos only once people live together. |
 | **Field** | State: Default, Focused, Error · Label · Value | 60 dp high, 12 dp radius | `Widget.Jiran.TextInputLayout` | Any text input. Label sits inside the box. |
 | **Search bar** | Placeholder | 44 dp, pill | `SearchBarView` (`app:searchHint`, `app:searchAi`) | Rooms search (also takes plain-language requests; the sparkle icon marks AI). |
-| **Tab item / Tab bar / Post button** | State: Active, Inactive | bar 60 dp, Post 60 dp | `JiranTabBar` (`setSelectedTab`, `setOnTabListener`) | Main navigation: Home, Rooms, Match, Unit + Post. |
-| **Room card** | Price · Title · Meta · True cost | 2 per row in search | `RoomCardView` (`setPrice`, `setTitle`, `setMeta`, `setTrueCost`, `getPhotoView`) | One card per vacant Room. Price, title, meta, true monthly cost. **No CO₂ here.** |
+| **Tab item / Tab bar / Post button** | State: Active, Inactive | bar 60 dp, Post 60 dp | `JiranTabBar` (`setSelectedTab`, `setOnTabListener`) | Main navigation: Home, Rooms, Housemates, Unit + Post. |
+| **Room card** | Monthly Room price · Building name (title) · Area (meta) · One-way time and distance to the faculty (commute) · "Listed 3d ago" · room type badge on the photo | 2 per row in search | `RoomCardView` (`setPrice`, `setTitle`, `setMeta`, `setCommute`, `getPhotoView`) | One card per vacant Room. Rent and one-way commute estimate stay separate. `roomCommute` / `setCommute` shows one-way time/fare; no monthly total. **No CO₂ here.** |
 | **Section header** | Title · Action | 28 dp | `SectionHeaderView` (`app:headerTitle`, `app:headerAction`) | Heading of a list or carousel. |
 | **List row** | Icon · Title · Subtitle · Trailing | min 64 dp | `ListRowView` (`app:rowIcon` or `app:rowAvatarInitial`, `rowShowChevron`, `rowShowDivider`) | Settings, expenses, steps, requests. Divider under every row but the last. |
-| **Commute option** | Selected: False, True · Icon · Mode · Note · Time · Cost | 72 dp, 16 dp radius | `CommuteOptionView`, call `setSelected(true)` on the highlighted one | One travel mode. The cheapest one that is on time is Selected (blue border + blue note). |
+| **Commute option** | Selected: False, True · Icon · Mode · Note · Time · Cost | 72 dp, 16 dp radius | `CommuteOptionView`, call `setSelected(true)` on the highlighted one | One travel mode with one-way time/fare. The lowest known available fare is Selected (blue border + blue note). |
 | **Status bar** (mockups only) | | 28 / 44 | none | Picture only. Do not build it. |
 
 Components made from several parts (use the same pieces, then compose):
@@ -176,7 +176,7 @@ Components made from several parts (use the same pieces, then compose):
 
 ## 5. Patterns
 
-**Navigation.** A floating white pill with four tabs: **Home · Rooms · Match · Unit**, and a blue **Post** button beside it. There is no Ask tab: plain-language AI search lives in the Rooms search bar. Profile opens from the avatar on Home.
+**Navigation.** A floating white pill with four tabs: **Home · Rooms · Housemates · Unit**, and a blue **Post** button beside it. There is no Ask tab: plain-language AI search lives in the Rooms search bar. Profile opens from the avatar on Home.
 
 **Starting a flow.** Every flow in Figma shows its entry point (START screen, tapped control ringed in black). Build navigation so the same control opens the flow.
 
@@ -186,9 +186,9 @@ Components made from several parts (use the same pieces, then compose):
 - AI search shows the filters it understood **before** results load, and the user can edit them. If AI is down, show the manual filters and a "Try again".
 - The match score and CO₂ are computed by code. The AI only writes the reasons.
 
-**Contracts are private.** A tenancy agreement never appears on a listing, Room card or room details page, and the Room details share row has no contract action. It reaches the student in a Connection chat as a private file, or the student uploads their own copy from Profile. Only the uploader sees the file and the result, which can be deleted at once and are removed after 30 days.
+**Contracts are private.** A tenancy agreement never appears on a listing, Room card or room details page, and the Room details share row has no contract action. It reaches the student in a Connection chat as a private file, or the student uploads their own copy from the chat's + menu or from Profile. Only the uploader sees the file and the result, which can be deleted at once and are removed after 30 days.
 
-**Privacy by stage.** Match: initials, faculty, year, tags. Connection: first name, Unit address with the Host, phone only if shared. Household: timetables, expenses, photos. Show clearly what the other side will see before a user sends a request.
+**Privacy by stage.** Match: initials, faculty, year, tags. Connection: first name, exact Unit (block, floor, door number) with the Host, phone only if shared. Household: timetables, expenses, photos. Show clearly what the other side will see before a user sends a request.
 
 **Forms.** Label inside the field. Error: red outline, red 12 sp message with an icon, never only colour. Primary button at the bottom; disabled until valid. Money is always `RM 1,500` with a comma and a space; per month is `/mo`.
 
@@ -201,8 +201,8 @@ Components made from several parts (use the same pieces, then compose):
 ## 6. Content and language
 
 - English first, Malay supported. Keep sentences short and friendly. Say "you", not "the user".
-- Names: **Room**, **Unit**, **Host**, **Match**, **Connection**, **Group**, **Household**, **true monthly cost** (see the glossary). Do not invent synonyms.
-- Times are written in 24-hour style without AM or PM: `9:18` for a departure, `14:00` for a class; durations `34 min`; distance `450 m`.
+- Names: **Room**, **Unit**, **Host**, **Match**, **Connection**, **Group**, **Household**, **Commute per trip** (see the glossary; "true monthly cost" was removed on 11 Nov 2026). Do not invent synonyms.
+- Times are written in 24-hour style without AM or PM: `9:18` for a departure, `14:00` for a reference departure; durations `34 min`; distance `450 m`.
 - Buttons are verbs: Continue, Connect, Send request, Mark done. Not "OK" or "Submit".
 - Placeholder people and places in mockups use UM-realistic examples (Mei Ling, Rina, Aisyah, Pantai Dalam, Kerinchi, FSKTM). The app is for **all UM faculties**: show the user's own faculty, never hard-code FSKTM.
 
@@ -299,6 +299,8 @@ Because `Theme.Jiran` sets the default `materialButtonStyle`, `chipStyle`, `text
 - Use `dp` for sizes and `sp` for text only.
 - RecyclerView rows reuse `component_list_row.xml` and `component_room_card.xml`; do not copy and edit them per screen.
 
+**Profile faculty picker (Ary, 11 Nov 2026).** Always keep Popular chips visible as quick choices, including while typing or after selection. Typed queries show matching full faculty names in a dropdown under the field, matching both names and abbreviations; no Results chip section. Dropdown rows wrap and have a minimum 48 dp height. Figma update not verified.
+
 **Where Android differs from the Figma picture** (accepted, not bugs)
 
 | Figma | Android |
@@ -313,21 +315,25 @@ The Figma page 📱 UI Design is grouped by flow. P0/P1 comes from the [PRD](../
 
 | Flow | Starts from | Screens | FR |
 |---|---|---|---|
-| Core Tabs | After profile setup | Home · Rooms · Match (start) · Unit | nav |
+| Core Tabs | After profile setup | Home · Rooms · Housemates (start) · Unit (commute to the faculty lives here once the student has a home; not on Home). The Unit tab with no Household is the start of the Household Setup Flow | nav |
 | Starting Flow | Opening the app | Welcome · Sign up · Verify email · Log in · Reset password | FR1.1, 1.2 |
-| Profile Setup Flow | Verification link opened | Faculty and year · Timetable · Budget and lifestyle · Privacy · Done | FR1.3 |
-| Find a Room Flow | Home → Rooms tab | Plain-language search · Filters · AI unavailable · Saved rooms · Area page (P1) · Building review (P1) | FR2.2, 2.3, 6.1 |
-| Room Details Flow | Tap a room card | Room details · Commute options · **Public transport route** · Send request · Report listing | FR4.1 to 4.3, 3.3 |
-| Request and Chat Flow | Message the Host from a room | Messages (Requests) · Chat (with the private agreement card) · Confirm move-in | FR3.3, 5.1 |
-| Contract Check Flow | The agreement the Host shares in a Connection chat (also from Profile) | Contract upload · Contract result | FR6.2, 6.3 |
+| Profile Setup Flow | Verification link opened | Faculty, year and gender · Budget and lifestyle · Privacy · Done (three steps, no timetable or campus days) | FR1.3 |
+| Find a Room Flow | Home → Rooms tab | Plain-language search · Filters · **No results** (empty state) · AI unavailable · Saved rooms | FR2.2, 6.1 |
+| Room Details Flow | Tap a room card | Room details (with the "Getting to [faculty]" card) · **Public transport route** (opens when the student taps the "Public transport" row; the other three modes do not open anything) · Send request · Report listing | FR4.1 to 4.3, 3.3 |
+| Request and Chat Flow | Message the Host from a room | Messages (Requests) · **Messages (Chats)** · Chat (with the private agreement card and a + button) · **Add to this chat** (drawer) · **Arrange a viewing** (sheet) · **Pick a date** · **Pick a time** · Confirm move-in | FR3.3, 5.1 |
+| Contract Check Flow | The + menu in a Connection chat, the agreement the Host shares there, or Profile | Contract upload · Contract result | FR6.2, 6.3 |
 | Host Listing Flow | Tap Post | New listing · Pick building · Rooms and prices · My listing · Request (host view) · Mark room occupied | FR2.1 |
-| Match Flow | Match tab → Start questions | Questions · Match results · Match profile · Connect request | FR3.1 to 3.3 |
-| Evaluate Unit Flow (P1) | In a Group, choose the Target Unit | Pick a Unit · Evaluate form · Evaluate result · Compare Units | FR2.4, 3.3 |
-| Group Flow (P1) | From a Connection chat | Group · Split options · Before you sign · Choose Host | FR3.3 |
-| Household Flow | Confirm your move-in | Welcome · Add expense · Balances · Chores (P1) · House rules (P1) · Move out | FR5.1 to 5.3 |
+| Match Flow | Housemates tab → Start questions | Housemates (no Group: Create a group and Join with a code above the list) · Questions · Match results · **Housemates · Your group** (results with a Group card and an "In a group" badge) · Match profile · Connect request | FR3.1 to 3.3 |
+| Evaluate Unit Flow (P1) | In a Group, choose the Target Unit | Pick a Unit · Evaluate form · Evaluate result (with a **Compare Units** row) · Compare Units (opened from the Group screen or an Evaluation result) · **Add another Unit** (the Units in the comparison, at most 3, with Remove; Evaluate a Unit; Pick a Listing) | FR2.3, 3.3 |
+| Group Flow (P1) | The Housemates tab (Create a group or Join with a code), the + menu in a Connection chat, or the "Rent a Unit together" card in the Unit tab with no Household | **Create a group** (name, maximum members 2 to 8) · Group (members, spots left, join requests, Target Unit) · **Invite to the group** (code, link, or a Connection) · **Join a group with a code** · Split options · Before you sign · Choose Host | FR3.3 |
+| Join a Group Flow (P1) | The Housemates tab, "Join with a code" (or a link opened from a friend) | **Join a group with a code** (6-character code, the creator accepts) · **Request sent** (waiting, no contact details shared) | FR3.3 |
+| Household Setup Flow | The Unit tab with no Household | Unit · No Household · **Create a Household** · **Invite housemates** (code) · **Join with a code** | FR5.1 |
+| Household Flow | Confirm your move-in, or joining with a code | Welcome · Unit · Add expense · Balances · Chores (P1) · House rules (P1) · **Household settings** (gear in the Unit tab: name, code, members, move out) · Move out | FR5.1 to 5.3 |
 | Profile and Safety Flow | Avatar on Home | Profile (with Contract check) · Privacy · Notifications | FR1.3 |
 
-Public transport route (the page opened by the LRT + UM shuttle option): map on top, then summary (leave, arrive, per month), leave-at chips, a Peak/Off-peak toggle, the timeline with the transfer chip, the cost per month, and an estimate note. P0 shows one column for the user's class time; the toggle and route steps are P1.
+Chat actions (Ary, 11 Nov 2026): the chat composer has a **+** button that opens a bottom drawer, "Add to this chat", with three actions: **Arrange a viewing** (a sheet with a Date field and a Time field that open a date picker and a time picker, no fixed time slots; past dates are disabled and time is 24-hour; sending posts the viewing card), **Upload a contract** (opens the private Contract check upload; only the student sees the result) and **Form a group** (opens Create a group with that Connection already invited; "Open group" if the student already has one). These actions are never pushed into the thread as prompt cards; the viewing card and the agreement card appear only as the result of an action or a shared file.
+
+Room details commute (Ary, 11 Nov 2026; supplied screenshot is a layout reference): retain Room rent and deposit, remove the true-monthly-cost headline and combined rent/utilities/commute line. Keep “Getting to [faculty]”; rows show duration and `RM … / trip` (one way), with optional sourced CO₂ per trip. Basic transit instructions are P0. Label approximate origins and estimates; no schedule or campus-day prompt. Peak / Off-peak switches the same rows in P1; the full map/timeline page then shows reference departure, supported legs, transfers and one-way time/fare. No class arrival eligibility, monthly commute amount or live Grab-price claim. Highlighting must include free walking or explicitly say “Cheapest paid transport”. See [PRD Module 4](../product/PRD.md#module-4-apartment-to-faculty-commute-guide) and [file handoff](../plans/2026-11-11-commute-per-trip.md). Figma not updated in this docs change.
 
 ## 10. Adding or changing things
 

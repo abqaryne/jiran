@@ -778,3 +778,663 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** TODO (Ary)
 - **What the human understands and can explain:** TODO (Ary). Be able to say why a story counts as inprogress when only its Rules exist.
 - **Limits:** "inprogress" follows the rule at the top of `TASK.md` (part of *Work needed* is in the repository), so several stories are inprogress only because E0.5 already wrote their Rules. ClickUp is only partly synced until the remaining list is run.
+
+## 2026-11-10 · Merge PR #15 and start E1.3 with the profile field checks · E1.3 (FR1.3)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** merge PR #15 (E2.1 stays inprogress), then start E1.3 Profile setup with the smallest piece: the field checks in plain Java with unit tests.
+- **Prompts (exact):**
+  > ok berarti kita sekarang lanjut task kita dh, apa yang bisa kita kerjain
+
+  > merge dlu kah? tasknya gathan yang E2.1 belum selesai kan tapi
+
+  > Approve dan merge
+
+  Ary's answers to three design questions: the timetable step "Boleh dilewati (Recommended)"; the name "Dari nama saat sign up (Recommended)"; setup progress "Dari dokumen yang sudah ada (Recommended)".
+- **Output used:** PR #15 approved in Ary's name and merged (`50023f9`). Branch `feature/e1.3-profile`: the three decisions written into E1.3 *Constraints* (a skipped timetable is saved as an empty `entries` list so the step counts as passed); new package `domain/profile` with `DisplayName` (initials from the first two words, first name), `TimetableEntry` (ISO weekday 1 to 7, "HH:mm", end after start, building required) and `ProfileCheck` (gender male or female, faculty, year 1 to 4, budget in sen with min not above max); 12 JUnit tests in three test classes. E1.3 item 9 set to ⚠️.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed; 101 unit tests in the project, 0 failures.
+- **What the human changed or rejected:** Ary chose the three design answers. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Needs human review: the initials rule (first two words) and the year range 1 to 4 from the schema.
+- **Limits:** no screen, repository or Firestore write yet; the year range 1 to 4 comes from the schema and does not fit five-year programmes (for example medicine), not verified with UM.
+
+## 2026-11-10 · Drop the "send to the group" subtasks · Project management
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** remove every subtask whose work is sending something to the team chat; results live in the repository instead.
+- **Prompts (exact):**
+  > berarti tadi task gathan yang kurang apa?
+
+  > coba delete semua task yang kirim ke grup atau apapun itu
+- **Output used:** removed E0.3 subtask 6 (announce the component list, already done), E0.5 subtask 4 and its work line (send the field list by 15 Nov; the schema is in `docs/engineering/schema.md`), E0.6 subtask 3 and its work line (post the contracts; they are in `docs/engineering/api-contracts.md`). T1.2 subtask 1 now says Aly writes the numbers into `docs/product/ASSUMPTIONS.md` instead of sending them to each person. Kept: survey outreach to students (T1.1 share the link, ask Telegram admins) and the email to UM transport (T1.4), because they reach people outside the team. The matching ClickUp deletions are added to `docs/team/ary/clickup-sync-todo.md`.
+- **How it was tested or checked:** a grep for "to the group" and "Announce" finds nothing left in `TASKS/`.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** ClickUp is not changed yet (daily limit); the three subtasks are deleted there when the sync continues.
+
+## 2026-11-10 · Build the rest of E1.3 Profile setup · E1.3 (FR1.3)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** finish E1.3 first; Ary will study the code afterwards.
+- **Prompts (exact):**
+  > E1.3 kelarin dlu deh nanti akhiran baru kita pahamin
+- **Output used:** branch `feature/e1.3-profile`. `domain/profile`: `SetupProgress` (which step to resume, read from the documents that exist) and `Ringgit` (typed ringgit to integer sen). `data`: `ProfileRepository` and `FirestoreProfileRepository` (step 1 writes `users/{uid}` plus `private/profile.fullName` and `private/contact.firstName`; step 2 `private/timetable`; step 3 `lifestyleTags` and budget and car; step 4 the `privacy` map). `ui/profile`: `ProfileSetupActivity`, `ProfileSetupViewModel`, four step fragments, `Chips`, layouts, strings, arrays and one style built from tokens. `ShellActivity` now sends an account with an unfinished profile to setup (the profile gate, E1.3 item 7 and E1.4 item 4). E1.3 and E1.4 task files updated.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed: 116 unit tests, 0 failures, including 10 new `ProfileSetupViewModelTest` cases with a fake repository. Two lint warnings in the new layouts were fixed. not verified: the app was not run on a device or emulator; the Firestore writes were not tested against the emulator Rules; the two-account privacy check was not done.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Ary chose to finish the story first and study it afterwards. Needs human review: the profile gate keeps the shell open when the check fails, the initials rule, and the default privacy toggles.
+- **Limits:** the faculty list in `res/values/arrays_profile.xml` was written from general knowledge because the UM site could not be opened; it is marked unverified and needs a source link. Lifestyle tags are a draft until the survey results. The web tools failed during this task, so nothing was checked online.
+
+## 2026-11-10 · Walk through E1.3 on the emulator · E1.3 (FR1.3)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** try the new profile setup in the Android emulator before opening the PR.
+- **Prompts (exact):**
+  > Coba di emulator dulu
+- **Output used:** the Firebase Auth and Firestore emulators (`demo-jiran`, the repository's `firestore.rules`) and the Pixel_9 Android emulator. Two fictional test accounts were made in the Auth emulator (passwords generated, not kept). Found and fixed: the tabs flashed for about a second before setup opened (the shell now stays hidden until the profile check answers), and the remove-class button was a heavy filled button (now the soft icon button). E1.3 items 1 and 5 and the resolution updated.
+- **How it was tested or checked:** driven with `adb` and screenshots: step 1 empty shows "Choose one"; a class ending before it starts shows "The class must end after it starts"; min rent 600 above max 300 shows the max-field error; killing the app at step 4 reopens step 4; Finish opens the tabs; reopening goes straight to the tabs. The saved documents were read back from the emulator and match the schema. A second account reading `private/profile`, `private/timetable` and `private/contact` got 403; the public `users` document 200. The Android checks passed again after the two fixes.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** emulator only, no real phone; the phone opt-in toggle was not tried with a Connection; the first-time flow for an account without a name was not tried.
+
+## 2026-11-10 · Remove the class timetable: campus days in the app, the docs and Figma · E1.3 (FR1.3), FR4
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5), Figma connector
+- **Task:** drop the class timetable from the product; the commute only needs to say which mode is fastest or cheapest to the faculty.
+- **Prompts (exact):**
+  > kayaknya jadwal kelas itu keribetan deh implementasinya gasi?
+
+  > gausah ada jadwal kelas gini deh, buat ribet. kan tujuannya buat tau aja kalau misalnya mau commute ke fakultas naik apa yang paling cepet gitu gasi
+
+  Ary's answers: arrival time "Tanpa jam sama sekali"; monthly trips "Ditanya: berapa hari ke kampus per minggu (Recommended)".
+
+  > Tolong update juga buat screen kita yang masi ada jadwal kelas di figma ya (with the Figma link)
+- **Output used:** app (branch `feature/e1.3-profile`): the timetable step, `TimetableEntry`, its layouts and tests removed; setup is now three steps; the budget step asks "Days a week you go to campus" (1 to 7) saved as `campusDaysPerWeek` in `private/profile`; the Welcome sample texts changed. Docs: PRD FR1.3, FR3.2, FR4.1 to FR4.3, their acceptance lines, the stage and data tables and Module 7; GLOSSARY (true monthly cost); USER-FLOW; schema (`campusDaysPerWeek` added, `private/timetable` marked removed, `overlappingClassDays` always null); DESIGN.md; task files E0.5, E1.3, E3.2, E3.3, E3.4, E4.2, E4.4, E6.2, E6.3, E6.4, E7.2, E10.1; Aaron's and Gathan's owner files. New subtasks for Aaron: E3.4 #4 (remove the class start time and on-time check from the commute code; trips from campus days; one fixed weekday-morning departure as an assumption) and E6.2 #2 (drop `classDays` from `match.js`). Figma (UI Design page): the "Profile 2 · Timetable" screen deleted; profile setup renumbered to three steps with campus-day chips on the budget step; the timetable rows removed from both privacy screens; 40 texts on 20 screens changed from class times and class overlap to faculty travel time, "Cheapest" and budget or habit reasons.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed (111 unit tests, 0 failures); no broken relative link; a search of the Figma page finds no "10:00 class", "leave by", "Late for", "Class overlap" or "Class timetable" text left; screenshots of the changed Figma screens were checked. not verified: the three-step setup was not walked through on the emulator (Ary stopped that run to ask for the Figma update).
+- **What the human changed or rejected:** Ary removed the timetable and chose no arrival time. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why the commute no longer says "on time" and how campus days give the monthly cost.
+- **Limits:** the commute code (Aaron) still expects a class start time until E3.4 subtask 4 is done; the `private/timetable` Rules are still in `firestore.rules`; the survey (already sent) still asks about the class timetable in F5; the Figma Design System page was not searched.
+
+## 2026-11-10 · Make the profile setup screens match Figma · E1.3 (FR1.3)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5), Figma connector
+- **Task:** Ary saw that the setup screens in the app did not match Figma; make them match.
+- **Prompts (exact):**
+  > Dan aku liat masi banyak UI di setup profile yang ga sesuai sama di figma deh. coba benerin
+- **Output used:** read the Figma frames "Profile 1 · Faculty", "Profile 2 · Budget and commute" and "Profile 3 · Privacy" with the design-context tool, then rebuilt the Android layouts from the existing design-system styles: top bar with back and the centred "Set up profile", progress with "Step X of 3", footer with a top divider and "Next"/"Finish"; step 1 heading "Which faculty are you in?", a faculty search field that filters the chips (Popular shows nine, full name fills the field), Year 1 to 4 and Postgraduate (stored as year 5), gender kept below; step 2 budget from and to side by side, campus days on one row, a new reusable switch row for "I own a car", the eleven About you tags; step 3 three switch rows (phone, budget range, photo; on = hidden, all on) and the info banner. `privacy.showBudgetToConnections` added (repository, view model, fake, tests, schema). New files: `item_profile_switch_row.xml`, `bg_divider_top.xml`. In Figma: added the required Gender chips to "Profile 1 · Faculty" and removed "Skip" from step 2, because setup is required.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed. On the Pixel_9 emulator with the Firebase emulators and a fresh fictional account: each step was compared by screenshot with its Figma frame, picking FSKTM filled the field with the full name, Finish opened the tabs, and the saved documents hold `year` 2, `campusDaysPerWeek` 4, budget 40000 and 55000 sen, the two tags, and privacy `false`, `false`, `true`.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** chips keep the 48 dp touch area, so rows sit a little further apart than in Figma; the switch is the design-system switch, smaller than the Figma one; during the work "Profile 1 · Faculty" in Figma changed to "1 of 3" in the top bar while steps 2 and 3 still show "Step X of 3" under the progress, so the app keeps "Step X of 3" on all three until Ary decides.
+
+
+## 2026-11-11 · Profile setup spacing · E1.3 (FR1.3)
+
+- **Human owner:** Ary
+- **AI tool and model:** Codex (GPT-6; exact model variant not recorded)
+- **Task:** continue the existing profile UI work using the spacing supplied by Ary, verify locally, and commit.
+- **Prompts (exact):**
+  > Lanjutkan setup UI buat jarak profile
+  >
+  > **Belum dikerjakan (hasil pembacaan Figma terbaru):**
+  > 1. **Jarak progress:** tambah `paddingBottom` 6 dp di bawah progress. Tinggi blok progress di Figma 10 dp, lalu gap 16 dp ke judul.
+  > 2. **Jarak chip:** Figma memakai tinggi chip 36 dan gap 8 antar chip, tapi app memakai area sentuh 48 dp sehingga jarak vertikalnya jadi sekitar 56 dp.
+  >    - Perbaikannya: di semua ChipGroup pakai `chipSpacingVertical="-4dp"`, `layout_marginTop="10dp"` dan `layout_marginBottom="-6dp"`. Area sentuh 48 dp tetap terjaga.
+  >    - Khusus chip hari kampus (1–7) pakai `chipSpacingHorizontal="-8dp"` supaya muat satu baris.
+  > 3. **Cek dan commit:** jalankan `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug`, bandingkan lagi dengan Figma di emulator, tambahkan entri AI log, lalu commit.
+  >
+  > Ada 6 commit lokal di `feature/e1.3-profile` yang belum di-push, ditambah perubahan label step ini yang belum di-commit.
+- **Output used:** spacing in `activity_profile_setup.xml`, `fragment_profile_basics.xml`, `fragment_profile_preferences.xml`; preserved the existing pending top-bar step label change in `activity_profile_setup.xml` and `strings_profile.xml`. Updated `TASKS/E1/E1.3.md` and its `TASK.md` row. Local commit on `feature/e1.3-profile`; no push or merge. Unrelated pre-existing `android/gradle/gradle-daemon-jvm.properties` excluded.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed (111 unit tests, 0 failures/errors). Initial sandbox run failed with `gradle-9.6.0-bin.zip.lck (Operation not permitted)`; rerun with approved local cache access succeeded. A temporary instrumentation harness rendered the three real profile fragments with a fake repository on Pixel_9 at 1024 px / 420 dpi (about 390 dp width); one preview check passed, asserting all seven campus chips share a row and each has at least 48 dp height. Screenshots inspected by the assistant, saved under `/private/tmp/jiran-profile-spacing/`; temporary harness removed and emulator resolution restored. `git diff --check` passed. Human verification: not recorded.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** needs human review. Figma tools are unavailable and opening the design URL failed, so direct comparison with current Figma is not verified; measurements come from Ary's prompt. Preview uses a fake repository, with no sign-in or persistence check; screenshots draw the root view with transparent background and use approximate system-bar padding. No real phone, accessibility hit-region audit or CI run. Existing chip style still enables the minimum touch target; the preview assertion checks height only.
+
+## 2026-11-11 · Open interactive profile preview · E1.3 (FR1.3)
+
+- **Human owner:** Ary
+- **AI tool and model:** Codex (GPT-6; exact model variant not recorded)
+- **Task:** open profile setup in the local Android emulator for Ary to inspect.
+- **Prompts (exact):**
+  > coba buka di simulator dong aku pengen liat
+- **Output used:** locally installed debug APK with a temporary interactive `ProfilePreviewActivity`, using the existing profile layouts, fragments and view model with a fake in-memory repository. Temporary Java source removed and debug manifest restored after building; no production source change and no push.
+- **How it was tested or checked:** `./gradlew assembleDebug` passed. Local ADB installation and activity launch; emulator window brought to the front. Direct shell launch of the production profile activity was denied because it is not exported, so the local preview was used. No backend reads/writes performed by the preview repository. Human visual review: not recorded.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** needs human review; preview data is not persisted and Finish returns to step 1. Temporary preview exists in the installed emulator APK only and is absent from repository source. Full lint/test suite not rerun for this temporary preview; it was run for the preceding spacing commit.
+
+## 2026-11-11 · Faculty dropdown and Popular shortcuts · E1.3 (FR1.3)
+
+- **Human owner:** Ary
+- **AI tool and model:** Codex (GPT-6; exact model variant not recorded)
+- **Task:** replace the faculty search Results chip section with a dropdown and retain Popular shortcut chips.
+- **Prompts (exact):**
+  > oke buat search fakultasnya kayaknya better dalam dropdown deh jangan buat results nya dalam bentuk section results baru dengan pill gitu
+  > tapi mungkin tambahin baru aja section popular dengan pill buat pilihan cepat
+- **Output used:** `BasicsStepFragment.java`, `fragment_profile_basics.xml`, `item_profile_faculty_dropdown.xml`, `strings_profile.xml`; task constraints/resolution in `TASKS/E1/E1.3.md`, its `TASK.md` row, and the picker pattern in `docs/design/DESIGN.md`. Native autocomplete matches full names and abbreviations, displays full names in rows at least 48 dp high, and retains Popular chips for an empty query. Typing after selection invalidates the old code; no-match text uses field helper text. No backend/schema changes, push or merge.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed (111 unit tests, no failures). A local debug-only preview using the actual fragments/view model and a fake repository was built and installed on Pixel_9; typing `eng` displayed `Faculty of Engineering` in the dropdown (screenshot inspected), and selecting it populated the full name (UI hierarchy checked). Temporary preview source removed and debug manifest restored after building. `git diff --check` passed. Human review: not recorded.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** needs human review. Current Figma not read or updated; this UI adjustment follows Ary's request. Existing faculty data remains unverified against UM's official list. Runtime backend persistence, screen reader interaction and rotation not verified in this session. The installed emulator APK includes the temporary local preview; repository source does not.
+
+- **Follow-up prompts (exact):**
+  > tetep keep section popularnya jangan diapus, itu buat pilihan cepet buat orang yang gamau search
+- **Follow-up adjustment:** Popular now always stays visible, including while searching and after selection; this supersedes the empty-query visibility described above. The no-match helper text was also checked in the emulator with `zzzzz`.
+
+
+## 2026-11-11 · Review current profile task readiness · E1.3 (FR1.3)
+
+- **Human owner:** Ary
+- **AI tool and model:** Codex (GPT-6; exact model variant not recorded)
+- **Task:** assess whether the current profile setup work meets E1.3 and is ready to finish.
+- **Prompts (exact):**
+  > ok coba cek apakah task yang kita kerjain sekarang sudah oke?
+- **Output used:** review findings in chat and a review resolution in `TASKS/E1/E1.3.md`; updated `TASK.md` row while retaining `inprogress`. No app code changed in this review.
+- **How it was tested or checked:** read the E1.3 requirements, current faculty picker and chip helper, privacy screen, faculty resources and shell gate. Reused the immediately preceding full Gradle run because app code has not changed since it passed; read its JUnit XML (111 tests, 0 failures/errors/skips) and lint XML (warnings, no errors). `git diff --check` passed. No fresh backend, network failure or lifecycle runtime test in this review.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** needs human review. Static review shows that the shell exposes tabs on profile-load error and skips the gate on activity restoration; this conflicts with the setup-before-tabs acceptance. Privacy opt-in/toggle enforcement and faculty source verification remain outstanding per the task record. The emulator preview uses a fake repository. Current faculty UI changes remain uncommitted; no push or merge.
+
+## 2026-11-11 · Clarify per-trip commute and retire true monthly cost · FR1.3, FR4.1–FR4.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Codex (GPT-6; exact model variant not recorded)
+- **Task:** update the PRD and file/task structure so commute helps a student understand how to travel from a candidate apartment to their faculty, with estimated one-way time and fare, including e-hailing; remove true monthly cost following Ary's explicit clarification.
+- **Prompts (exact):**
+  > eh kayaknya ada miss comm deh, aku pengennya fitur commute itu biar si user itu tau gimana caranya commute dari apartemen yang dia pengen coba ke fakultas dia berapa lama. dan kalau pake grab berapa lama dan harga perkiraannya dari tempat dia ke fakulti berapa buat gambaran karena kan mahasiswa tahun pertama blm tau dia jadwalnya gimana
+  >
+  > Ini ui yang sekarang. coba diupdate PRD nya ya dan struktur filenya
+  > hapus true monthly cost karena itu tidak fixed dan sangat relative tergantung pemakaian
+- **Input reference:** Ary attached a Room-details UI screenshot with monthly rent, a true-monthly-cost headline/breakdown, “Getting to FSKTM”, Peak/Off-peak and transit/e-hailing/walking rows. Used only for layout context, not verified fares, route times or seed data. The second prompt above was the answer to the assistant's question about keeping monthly cost optional; Ary rejected it and requested removal instead.
+- **Output used:** updated `docs/product/PRD.md` (v0.3, FR1.3 and FR4.1–FR4.3 plus affected journeys), `GLOSSARY.md`, `USER-FLOW.md`, `ASSUMPTIONS.md`; aligned design, target API contract, schema deprecation note and architecture. Added `docs/plans/2026-11-11-commute-per-trip.md` with existing/proposed file responsibilities, owners and migration order, linked from the docs index and repository README. Updated 13 affected task files/master rows and Ary/Aaron/Gathan/team ownership notes. Appended ADR-0010. Existing Java/JavaScript files were not moved or migrated in this documentation task; prior faculty dropdown edits remain in the working tree.
+- **How it was tested or checked:** read the current commute/profile requirements, target/legacy contracts, task and ownership files and inspected the supplied screenshot. `git diff --check` passed. A temporary local Python check verified 52 added relative Markdown links (0 broken), 13 affected task/master statuses (0 mismatches), three retained Module 4 FR rows and removal of schedule/monthly-total requirements from the target PRD. No Android/backend tests rerun for this docs-only change; the earlier Android pass does not verify the new commute requirements.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** needs human review. This records target requirements and a migration handoff, not implemented or deployed functionality. Current profile still requires campus days; backend/Android legacy DTO and fixtures still use monthly totals/class-time selection until assigned migration work. Old fixture documentation/history is retained and labelled legacy. Target wire format still needs Aaron/Gathan agreement. No live Figma update, provider call, fare/route verification, Firebase rules change or destructive data migration. No push or merge; no fare, peak factor or emission value invented.
+
+## 2026-11-11 · Update existing UI for per-trip commute · E1.3, E3.4, E4.2
+
+- **Human owner:** Ary
+- **AI tool and model:** Codex (GPT-6; exact model variant not recorded)
+- **Task:** update existing profile UI, shared Room/commute components, Welcome text and previews after removing true monthly cost. Ary explicitly limited the work to existing screens/components.
+- **Prompts (exact):**
+  > oke coba update ui nya berdasarkan update terbaru ini
+  > jangan buat baru, benerin yang ada dulu aja
+- **Output used:** removed campus-day chips, validation, save argument and write from existing profile classes/layout; `SetupProgress.fromFields` accepts profiles with or without legacy attendance data. Budget screen now says Budget and lifestyle and uses monthly Room rent labels. Existing `RoomCardView`/XML use `roomCommute` and `setCommute` instead of the true-cost slot; existing commute component/gallery use one-way/unavailable fare labels and wrap long fare text. Welcome no longer advertises true monthly cost; gallery's old timetable example is now Faculty. Existing `CommuteSummary` exposes the server's already-validated `perTripCostSen`; existing developer preview renders it with departure/source/warnings, without monthly total/class eligibility. Updated existing regression tests, task/master resolutions, design/schema notes and file handoff. No new product page or screen was created. No push or merge.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed (112 unit tests, 0 failures/errors). `npm test -- --runInBand` in `backend/functions` passed (16 suites, 380 tests). New regressions in the existing progress test cover profiles without campus days, legacy values and absent documents; existing view-model budget test verifies advance to privacy without attendance. Existing DTO tests check per-trip fare exposure and unavailable null. On Pixel_9, the actual profile preference fragment was rendered using a temporary local debug host and fake repository; screenshot inspected, then sample budget 400–550 advanced to “Choose what stays private” / “3 of 3” without days (UI hierarchy checked). Existing gallery screenshot inspected for commute rows and Room rent; an obsolete timetable example found there was then replaced and the full Android checks rerun. Temporary preview source removed and debug manifest restored. `git diff --check` and document-link/task-status checks passed. An initial shell invocation used the wrong working-directory-relative path and the sandbox blocked Gradle's cache lock; corrected commands with approved local cache access passed.
+- **Skill/source used:** official [Firebase Firestore skill](https://github.com/firebase/agent-skills/blob/main/skills/firebase-firestore/SKILL.md) and its [Standard Android reference](https://github.com/firebase/agent-skills/blob/main/skills/firebase-firestore/references/standard/android_sdk_usage.md), read before repository changes. Existing project/Standard edition and Java stack retained; no provisioning, dependency upgrade, live Firebase operation or Rules change.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** needs human review, especially profile progress and backward compatibility. Runtime persistence with real Firestore/emulators not exercised; native preview used a fake repository. Existing Rules were inspected and contain no campus-day field requirement, but their enforcement was not newly integration-tested here. Backend fixture calculator/parser still validates legacy monthly/class-time fields internally; full server/DTO migration is pending. No real fare/route lookup or published fare invented; gallery unavailable fares are explicit. Current Figma and a real phone were not checked. No new detail screen, routing feature or profile-gate error fix was implemented; those task gaps remain. Temporary native-preview APK contained only a debug host for existing fragments, absent from final repository source.
+
+## 2026-11-11 · Bring everything in line with PRD v0.3 (per-trip commute) · FR1.3, FR4
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** Ary updated the PRD (no true monthly cost, no campus days, one-way time and fare per trip) and asked to update everything from it.
+- **Prompts (exact):**
+  > coba kamu cek update an prd terbaru aku, update semuanya berdasarkan update itu
+
+  Earlier the same day: "1 of 3 di step bar liat figma ini: (Figma link) buat detail spacing terupdate".
+- **Output used:** found that the working tree already followed PRD v0.3 for the task files, the profile code (no campus days), the room card (`setCommute`) and the plan `docs/plans/2026-11-11-commute-per-trip.md`; this session added: `docs/design/DESIGN.md` (term list, three-step profile flow), `docs/team/ary/clickup-sync-todo.md` (new ClickUp renames), the "N of 3" label in the profile top bar, and in Figma 28 texts changed from monthly cost to per-trip copy (Welcome, Room details, Send request, Commute options, Public transport route), the campus-days question and the Profile "Days on campus" row removed, Profile 2 renamed "Budget and lifestyle".
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed (112 unit tests). Figma screenshots of the profile and route screens checked. not verified: backend (`api-contracts.md` and the commute code still use the legacy monthly DTO, listed as Aaron's migration), the chip spacing details from the Figma update, the emulator after this change.
+- **What the human changed or rejected:** Ary changed the product (PRD v0.3). TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the example fares in Figma (RM 1.15, RM 13, RM 6 per trip) are mock values, not sourced; Figma "Evaluate unit · Result" still shows "True monthly cost", "Your monthly cost" and "Share of utilities"; ClickUp is not changed; the survey already sent still mentions a class timetable and the true monthly cost.
+
+## 2026-11-11 · Finish the PRD v0.3 follow-ups (spacing, Figma, per-trip engine) · FR1.3, FR4
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** "beresin semuanya": finish what was left after the PRD v0.3 update.
+- **Prompts (exact):**
+  > beresin semuanya lha
+- **Output used:** profile step 1 checked on the emulator against Figma (chip spacing, "1 of 3"); Figma "Evaluate unit · Result" no longer has "True monthly cost" (it shows rent, utilities estimate and commute per trip separately); `calculatePerTripCommute` and 11 Jest tests added next to the legacy `calculateCommute` (not wired to the callable, preview or Android parser); E3.3 subtask 6 added.
+- **How it was tested or checked:** `npm test` in `backend/functions` passed (17 suites, 391 tests). The Android checks passed earlier the same day (112 tests); nothing in `android/` changed after that. not verified: the other steps and the colour of the Figma change on a device.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary). Core logic: be able to explain why an unknown fare is not ranked as free.
+- **Limits:** the callable, `commute-preview.js`, `api-contracts.md` and the Android `CommuteSummary` parser still use the legacy monthly format (Aaron's migration); ClickUp could not be updated (daily limit, about 2 hours to reset); the Figma mock fares are not sourced.
+
+## 2026-11-11 · Update all Figma screens to PRD v0.3 · FR4, FR2.4
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** bring every Figma screen and the design system in line with the per-trip commute decision.
+- **Prompts (exact):**
+  > coba update juga ya semuanya di figma
+- **Output used:** UI Design page: the six "true cost" lines on Room cards (Rooms, Home, Filters, Saved rooms, Start flows) now show one-way time and fare; Home commute line, Welcome tagline and the Profile 1 subtitle follow the new copy; the four housemate posts no longer mention classes; "Compare Units" rows "X pays" (a monthly total) became "X's room" with the Room price, and "travels" became "trip". Design System page: Room card and Commute option samples, and the two component descriptions, rewritten; "Upload your class timetable" changed to "Upload your tenancy agreement". Earlier the same day: profile frames, Evaluate unit result, route page.
+- **How it was tested or checked:** a text search of both pages for "true", "monthly", "on time", "class", "timetable" and "leave by" finds no commute-related leftovers; screenshots of Rooms, Compare Units and the Housing components section checked. not verified: the other Start flow frames were checked by text only, not by screenshot.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** all fares in Figma (RM 1.15, 2.30, 13, 6 per trip) and the Compare Units room prices (385, 550, 715, 420, 600, 780) are mock values, not sourced; the Peak / Off-peak toggle stays in the Room details design although the PRD makes it P1.
+
+## 2026-11-11 · "Rooms in this unit": chevron and a marker for the viewed room · E4.1 (FR2.2)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** Ary asked whether the cards should show Units instead of Rooms; after the answer (Room stays the main card, a Unit card belongs to the P1 "Whole units" tab) Ary chose to improve the "Rooms in this unit" section on Room details.
+- **Prompts (exact):**
+  > ini kok cuma ada room doang dh di figma, kenapa gaada yang unit, kan host listingnya unit gitu jadi yang ditampilin emang bagusan room gitu ya? ga lebih bagus unit gitu
+
+  > kayak gini aja "Rooms in the Unit" kalau misalnya vacant itu dia ada chevron buat arahin ke room detail itu dan tambahin kayak pembeda yang ngasih tau bahwa yang lagi dia liat sekarang itu yang mana di section rooms in the unit itu
+- **Output used:** Figma, four frames (Room details, Send request, Report listing, Start · Room details → message): the section has Master (occupied, no chevron), Medium (vacant, chevron) and Small (vacant, the viewed room: tinted row and "Vacant · viewing now"); prices set to RM 650, 400 and 450 so they add up to RM 1,500 and match the RM 450 headline; the vacant and viewed rows were detached from the List row component to hold the chevron. E4.1 task: constraint and one Acceptance check.
+- **How it was tested or checked:** screenshots of the section in Room details. not verified: the other three frames by screenshot, and the Design System sample of this section, which was not changed.
+- **What the human changed or rejected:** Ary chose this design over a Unit card. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the prices (Medium RM 400 below Small RM 450) are mock values; a Unit card for the "Whole units" tab is not designed.
+
+## 2026-11-11 · Commute: the transit row opens the route page · FR4.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** decide when the "Commute options" page opens; Ary pointed out there are only four modes, so the room details should lead straight to the Public transport route page.
+- **Prompts (exact):**
+  > page commute options kebuka pas user klik apa
+
+  > opsinya emang cuma 4 kan ya, jadi dari detail room langsung ngarah ke page public transport route gitu kali ya
+- **Output used:** Figma: the frame "Commute options" deleted (it duplicated the card on Room details); prototype links from the "LRT + UM shuttle" row in "Room details" and "Start · Room details → message" to "Public transport route", and a Back action on that page's back button. Docs: DESIGN.md Room Details Flow, PRD FR4.3 and the Room details row, E4.2 subtask 2.
+- **How it was tested or checked:** the links were set through the Figma API and the frame list was read back; not verified: the prototype was not played, and the transit row has no visible hint that it opens (no chevron yet).
+- **What the human changed or rejected:** Ary decided the flow. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** P0 still needs the route page to show text instructions only; the map and timeline are P1 (E4.4).
+
+## 2026-11-11 · Chevron on the transit row · FR4.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** show that the "LRT + UM shuttle" row can be opened.
+- **Prompts (exact):**
+  > tambahin chevron di baris transport
+- **Output used:** Figma, four frames (Room details, Send request, Report listing, Start · Room details → message): a chevron at the end of the transit row (the row was detached from the Commute option component to hold it), the other mode rows get a 52 dp right padding so the price column lines up, and the prototype link to "Public transport route" was set again on the detached rows. E4.2 subtask 2 mentions the chevron.
+- **How it was tested or checked:** screenshot of the commute list; the reaction count and destination of one row read back. not verified: the prototype was not played; the Android `CommuteOptionView` has no chevron yet.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the Design System "Commute option" component does not have the chevron, so new screens built from it will not either.
+
+## 2026-11-11 · Undo the chevron on the transit row · FR4.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** Ary asked to go back to the version before the chevron was added in Figma.
+- **Prompts (exact):**
+  > gausah balikin ke sebelumnya dh
+
+  > maksud aku balikin ke sebelum ditambahin chevron di figma
+- **Output used:** Figma, four frames: the detached transit rows replaced by Commute option component instances (Selected = True, same texts), no chevron; the other rows' right padding back to 16; the prototype link to "Public transport route" kept. E4.2 subtask 2 no longer mentions the chevron. The "Rooms in this unit" chevrons and the viewing marker were not touched.
+- **How it was tested or checked:** screenshot of the commute list; the texts of all four new instances read back and none holds a chevron. not verified: the prototype was not played; my first reply ("gausah balikin") misread the request and nothing was changed then.
+- **What the human changed or rejected:** Ary rejected the chevron on the transit row. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the transit row now has no visible hint that it opens the route page.
+
+## 2026-11-11 · Remove Peak / Off-peak: estimates are for leaving now · FR4
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** Ary removed the Peak / Off-peak choice; the price and time depend on the time of use ("sekarang").
+- **Prompts (exact):**
+  > peak off peak apus aja soalnya ribet deh, jadi harganya itu tergantung waktu sekarang
+- **Output used:** PRD (11 Nov 2026 decision): FR4.3 and the P0/P1 table without Peak / Off-peak and surge ranges; the acceptance line now says every estimate is for leaving now, labelled "Estimated for leaving now", that time and fare change with the clock only where the data supports it (scheduled transit, sourced fare rules), that road times without live traffic are typical times, and that the route cache key uses a time-of-day bucket. GLOSSARY ("Peak and off-peak" marked removed), ASSUMPTIONS (#2 dropped, #3 without the peak ratio, no reference departure), USER-FLOW, task files E3.3, E4.2, E4.4 (renamed "Public transport route page"), E0.2, T1.2, T1.3 (#2 dropped), TASK.md and the owner files of Ary, Aly and Aaron. Figma: the Peak / Off-peak toggles removed in Send request, Report listing, Public transport route, Start · Room details → message and the Design System sample; the Home badge "Peak" became "Leaving now"; "Estimate, surge at peak" became "Estimate, fare formula"; "Weekday morning · estimate" became "Estimated for leaving now".
+- **How it was tested or checked:** a search of PRD, tasks, owner files, Figma (both pages) and the Android and backend code finds no Peak / Off-peak left except the lines that record its removal. Screenshots of Home and the route page. not verified: the survey already sent still asks about peak hours (E5 to E7); `api-contracts.md` was not changed (it describes a "reference departure" for the legacy format); Aly and Aaron were not told, so assumption #2 work may already have started.
+- **What the human changed or rejected:** Ary removed Peak / Off-peak. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain how "leaving now" works when the free routing has no live traffic.
+- **Limits:** the "leaving now" rule means the same Room card can show a different time later; whether the Room card list refreshes the commute or caches it by time bucket is not decided (Aaron, E3.3).
+
+## 2026-11-11 · Saved rooms follow the latest Room card · FR2.2
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** make the content of the "Saved rooms" list match the newest Room card.
+- **Prompts (exact):**
+  > page saved room list nya tolong diupdate contentnya jadi kayak card room yang terbaru
+- **Output used:** Figma "Saved rooms": each row now has the Room card fields: room type badge on the photo (Small, Medium, Master), the price without "/mo", the title with the building, the meta line, the blue one-way time and fare line and "Listed 3d ago"; the three rooms are RM 450, 480 and 550 from the Rooms screen. The badge got a white fill so it shows on the light photo. Also fixed on the "Rooms" screen: two cards showed the badge "Small" although their titles say Medium and Master.
+- **How it was tested or checked:** screenshots of the Saved rooms frame. not verified: the Design System sample of the row card ("Listing cards") was not changed; the bookmark icon was kept as it was.
+- **What the human changed or rejected:** TODO (Ary)
+- **What the human understands and can explain:** TODO (Ary)
+- **Limits:** the data are mock values; the row layout (96 dp photo, text column) was kept, it only follows the card's content.
+
+## 2026-11-11 · Room card content: price, Building, area, time to faculty, listed time · FR2.2, FR4.2
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** change the content of the Room card (and the Saved rooms rows) to five items.
+- **Prompts (exact):**
+  > (pasted) RM 450 / Residensi Pantai Dalam / Jalan Oramga no32 / 12 min (500m) to your faculty / Listed 3d ago
+
+  > Kontennya juga kayak diatas. Harga, Nama Apartement, Lokasi, Waktu untuk ke fakulti, Waktu di listingnya
+- **Output used:** Figma (UI Design and Design System pages): every Room card and saved row now shows the price without "/mo", the Building name as the title (the room type stays as a badge on the photo), the area as the location, "N min (X km) to your faculty" and "Listed 3d ago"; the fare is gone from the card; badges hug their text. PRD (the search-results rule, FR4.2, the design principle and the user story), `DESIGN.md` Room card row, E3.1 and E3.4 updated.
+- **How it was tested or checked:** screenshots of the Rooms and Saved rooms frames; a text rewrite counted 18 titles, 18 meta lines and 17 time lines. not verified: the Android `RoomCardView` still has the previous slots (price, title, meta, commute) and was not changed; the Design System sample of the row card was not changed; the other frames by screenshot.
+- **What the human changed or rejected:** Ary decided the five items. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the location is the area name (for example "Pantai Dalam"), not the street and house number from the pasted example, because the PRD hides the address until a Connection; the distances (6.1, 4.8, 7.4, 8.9, 5.6 and 4.2 km) are mock values, and the 34 min in the card is the transit time while Room details also lists a walk of 48 min.
+
+## 2026-11-11 · No commute card on Home; commute lives in the Unit tab · FR4, E7.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** Ary removed the "Next class" commute card from Home and asked to note that the commute detail is for the Unit tab once the student's home is fixed.
+- **Prompts (exact):**
+  > card next class aku apus ya, buat user kalau mau liat detail commute itu nanti di unit aja kalau udh fix dia tinggal dimana tolong dicatet ya
+- **Output used:** found that Ary had already removed the card in Figma (Home and the Start frames) and changed the Room card content, so no Figma change was made. Docs: PRD (Unit row in the tab table, journey step 6, and an acceptance line: no commute card on Home; the Unit tab shows "Getting to [faculty]" with the Unit as origin only for a Household member), DESIGN.md (Core Tabs), E7.3 (new subtask 3 and a constraint), E1.4 (constraint).
+- **How it was tested or checked:** a text search of the UI page finds no "Your commute · FSKTM" left; a screenshot of Home. not verified: the Unit tab screen was not designed; the other Start frames were not viewed.
+- **What the human changed or rejected:** Ary decided where the commute is seen. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** "home is fixed" is taken to mean being a member of a Household (the only place the app knows the student's Unit); a student who lives somewhere not in Jiran has no commute guide for it. The Room cards in Figma now show "Jalan Oramga no32", a street and house number: that is Ary's edit and the PRD still says the address is hidden until a Connection (see the open point in the previous entry).
+
+## 2026-11-11 · The Building's street address is public · FR2.1, NFR2
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** change the PRD so the Room card can show the apartment's address ("Jalan Oramga no32").
+- **Prompts (exact):**
+  > ubah prd, kan biar dia tau apartementnya itu alamatnya dimana bjir
+- **Output used:** the rule is now: the Building's street address is public, only the exact Unit (block, floor, door number) is hidden until a Connection. PRD (Manual Listing fallback, Room card items, the approximate-location line, NFR2, design principle 4, data table with `buildingAddress`), GLOSSARY (Building), `AGENTS.md` (privacy rule), DESIGN.md (privacy by stage), schema (`buildingAddress` `[PROPOSED]`, `exactAddress` now the Unit), E3.1, E4.1 and a new E2.1 subtask 8 for Gathan and Aaron.
+- **How it was tested or checked:** each replaced sentence was found exactly once; no code changed. not verified: the Rules, the Worker and the Post form do not have `buildingAddress` yet, so the Room card cannot show a real address until E2.1 subtask 8 is done; the PRD can still conflict with older mentions of "address" in files I did not search (for example the survey).
+- **What the human changed or rejected:** Ary decided the address rule. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why the Building address is public but the Unit is not, and what a stranger could still learn.
+- **Limits:** a Host who is the only resident of a small building could be identified by its street address; this was not discussed.
+
+## 2026-11-11 · Public `buildingAddress` in the Worker, Rules and Post form · FR2.1, NFR2, E2.1 subtask 8
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** implement the public Building street address in the code, after the PRD change.
+- **Prompts (exact):**
+  > ya coba update sekalian kodenya
+- **Output used:** `backend/functions/src/listing-draft.js` (required text, up to 300 characters, written to the public listing and never to `private/location`), `backend/firestore.rules` (`validListing` allows an optional `buildingAddress` up to 300 characters, so older drafts still validate), Jest tests in `listing-draft.test.js` and `listing-worker.test.js`, new cases in `backend/scripts/product-rules-smoke.cjs`; Android `ListingForm`, Post form layout, strings, `PostListingFragment`, `PostListingViewModel.endSession`, `ListingFormTest`, `PostListingViewModelTest`, `PostListingScreenTest` (only edited, not run); E2.1 subtask 8, `schema.md` and the TASK.md row.
+- **How it was tested or checked:** `npm test` in `backend/functions`: 17 suites, 395 tests pass. Emulator smoke suite (`firebase emulators:exec --only auth,firestore,functions`): passed, 83 denials and 43 permissions in the Rules check; the storage emulator was left out because port 9199 was held by another process. `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug`: build successful. not verified: the Post screen on an emulator or device; the instrumented `PostListingScreenTest`; the live Worker; storage-emulator part of the smoke test.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why the Rules treat the field as optional but the Worker requires it, and which collection each of `buildingAddress` and `exactAddress` lives in.
+- **Limits:** the Rules change **needs human review** by Gathan. Listings made before this change have no `buildingAddress`, so the Room card must handle a missing value. The Android Room card (`RoomCardView`) and the read side do not use the field yet.
+
+## 2026-11-11 · Profile gate fails closed · FR1.3, E1.3 item 7
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** close the gap found in review: the shell opened the tabs when the profile check failed, and skipped the check when the activity was restored.
+- **Prompts (exact):**
+  > ok coba perbaiki yang no 1, dan intinya tuh aku pengen kalau misalnya secara kode itu udh oke berarti tinggal di test aja
+- **Output used:** `ui/shell/ProfileGate.java` (new, decides tabs / setup / failed, ignores late answers), `ShellActivity.java` (uses it, hides the tabs until the answer, retry screen, check also on restore), `activity_shell.xml` (retry overlay), `strings_profile.xml` (three messages and the button), `ProfileGateTest` (7 tests), E1.3 task file.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug`: build successful, 119 unit tests, 0 failures. not verified: the retry screen and the restore case on an emulator or device; the layout was not viewed.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why a failed check must not open the tabs, and why late answers are ignored after the screen is destroyed.
+- **Limits:** the gate runs again on every activity recreation (for example rotation), so the tabs are briefly hidden then. The gate only protects the screens; the Security Rules still protect the data. Needs human review.
+
+## 2026-11-11 · Rule: `qa` means the code is right; QA runs the tests · TASK.md, AGENTS.md
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** record how a task reaches `qa`.
+- **Prompts (exact):**
+  > intinya status naik ke qa itu kalau udh oke secara kode, yang berhubungan dengan testing itu harus dilakuin sama qa ya coba tolong catet ini
+- **Output used:** `TASK.md` (the `qa` row and a "Who tests" paragraph), `AGENTS.md` (task tracking rule), E1.3 (status `inreview` because all its work is built and PR #17 is open; the manual checks are listed for QA).
+- **How it was tested or checked:** text only; no code changed. not verified: whether Aly agrees with taking the manual checks; other task files with `inprogress` and only test gaps were not reviewed against the new rule.
+- **What the human changed or rejected:** Ary decided the rule. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the Definition of Done is unchanged (Aly's QA passed, Acceptance ticked); only the point where the status becomes `qa` moved.
+
+## 2026-11-11 · Check every task status against the new `qa` rule · TASK.md, E1.4
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** go through all tasks marked `inprogress` or `qa` and see which ones the rule "qa = the code is right, QA runs the tests" changes.
+- **Prompts (exact):**
+  > ya cek satu per satu dedngan aturan baru ini
+- **Output used:** only E1.4 changed: `qa` to `inreview` because its profile gate is still in the open PR #17; its Post button item and acceptance line were out of date (the button opens New Listing since E2.1) and were corrected.
+- **How it was tested or checked:** the subtask markers (✅ ⚠️ ⬜ ❓) of the 17 `inprogress` task files with a work item, the 7 tracks, and the 5 `qa` task files were read; the Post button was checked in `origin/main`'s `ShellActivity`. not verified: whether the ⚠️ and ⬜ markers in each task file are current (they were taken as written); the `backlog` tasks were not read.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** every other `inprogress` task still has at least one ⬜ item that is code or a document to write (for example E2.1 subtasks 5 to 7, E3.3 subtasks 2 and 5, the screens of E4.2, E5.x, E6.1, E9.x), so none moves to `qa`. E1.1 and E1.2 stay `qa`: their only ⬜ is a real-device test, which is QA's job.
+
+## 2026-11-11 · Match the faculty list with UM's website · FR1.3, E1.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** compare the faculty list in the app with the 17 study areas Ary copied from UM's website.
+- **Prompts (exact):**
+  > coba cocokin lha sama um, ini list yang aku dapet dari web nya (with a screenshot of 17 study areas)
+- **Output used:** `arrays_profile.xml`: "Nursing" added (key, label and full name, after Pharmacy); the file comment and the E1.3 constraint now say where the list comes from.
+- **How it was tested or checked:** the 16 existing entries were compared one by one with the 17 names in the screenshot: all matched except that Nursing was missing. `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug`: build successful. not verified: the official full names ("Faculty of ...", "Academy of ..."); the screenshot has no source link; the Figma faculty list and the Nursing chip on a screen.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the website calls these "study areas", not faculties; a student of a faculty that sits inside one area (for example Computer Science and IT) picks the area's name. If UM has faculties that are not on this list, they are missing.
+
+## 2026-11-11 · Source link for the faculty list · FR1.3, E1.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** read the page Ary gave and confirm the faculty list.
+- **Prompts (exact):**
+  > https://study.um.edu.my/undergraduate-faculties
+- **Output used:** the page was fetched with curl and its text read: the same 17 names as the screenshot, "Last Updated: Jun 24, 2026", and links named `faculty-of-...` for 15 of them. "Nursing" is now "Faculty of Nursing"; the source link and date are in `arrays_profile.xml` and the E1.3 constraint.
+- **How it was tested or checked:** read the page text and its link names. not verified: the official full names beyond the link names; "Academy of Islamic Studies" and "Academy of Malay Studies" (no faculty link for them on the page); the Android checks pass after this change.
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the page lists undergraduate faculties only; postgraduate students choose from the same list.
+
+## 2026-11-11 · Wire the per-trip commute function into the callable, service, Android parser and docs · FR4.1-4.3, E3.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** replace the legacy monthly / before-class commute code with `calculatePerTripCommute`, which was written earlier but not used.
+- **Prompts (exact):**
+  > maksudnya backend per trip belum tersambung itu maksudnya apa
+
+  > yaudh coba update dlu aja ke fungsi yang terbaru
+- **Output used:** backend: `commute.js` (legacy `calculateCommute` removed), `commute-service.js` (request is `{listingId, roomId}` plus an optional reference departure, default now; no rent, utilities, class time or trips per month), `commute-preview.js`, fixtures (`per-trip`, `no-known-fare`, `missing-data`), tests (`commute.test.js` rewritten, pricing, emissions, preview and service tests changed), `commute-smoke.cjs`, k6 and fixture-contract files. Android: `CommuteSummary` (new parser with the lowest-fare and comparison checks), `CommutePreviewActivity`, strings, `CommuteSummaryTest` (rewritten), `CommuteIntegrationTest`. Docs: `api-contracts.md`, E3.3, E3.4, E4.2, the file-migration plan.
+- **How it was tested or checked:** `npm test` in `backend/functions`: 17 suites, 377 tests pass; `node --test backend/tests/load/fixture-contract.test.mjs`: 7 pass; emulator smoke (auth, firestore, functions): all PASS including the commute callable; `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug assembleDebugAndroidTest`: build successful, 122 unit tests, 0 failures. not verified: the instrumented `CommuteIntegrationTest` was compiled but not run; the k6 load run; the preview screen on a device; the Cloudflare Worker (it does not use these files yet).
+- **What the human changed or rejected:** TODO (Ary).
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why the free walking route is selected whenever it is available (lowest known fare, as in the PRD), and what `comparisonLimited` means.
+- **Limits:** this changes Aaron's code and the response shape of the local fixture callable; Aaron should read `commute.js` and `commute-service.js`. The scenario IDs changed (`on-time` and `no-on-time-route` are gone), so any other client that sends them now gets `invalid-argument`. The internal service is still not exported. Needs human review.
+
+## 2026-11-11 · Drop the area page and building reviews (old FR2.3, E9.4) · PRD, schema, Rules, Figma
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** remove the area page and building reviews, which need data that does not exist before there are residents.
+- **Prompts (exact):**
+  > tapi itu agak susah gasi dapetin data datanya? apa better kita apus aja
+
+  > ya tolong diapus
+- **Output used:** PRD (FR2.3 removed, the old FR2.4 Evaluate unit renumbered to FR2.3 in every file except the AI logs, `reviews` and `areas.rentLowSen`/`rentHighSen` removed from the data table, risks), GLOSSARY, DESIGN.md, `schema.md` (section 2.6 replaced by a removal note), `firestore.rules` (the `reviews` rule removed, so the collection is denied by default), E9.4 rewritten as `dropped` with the reason, E2.1, E2.4, TASK.md, team READMEs, `clickup-sync-todo.md`. Figma: the frames "Area page" and "Building review", and the "Areas" tab in three Rooms frames and in the Design System tab row, were deleted.
+- **How it was tested or checked:** `npm test` (377 pass) and the emulator smoke suite (83 denials, 43 permissions, all PASS) after the Rules change; text search for "area page" and "building review" finds only the dropped task and the removal notes; a screenshot of the Rooms frame shows the tabs "Rooms" and "Whole units". not verified: Android code and layouts were not searched for the area page (an earlier search of `android/` found none); the other Rooms frames were not viewed; ClickUp was not changed (limit); the report text and survey were not searched for "area page" beyond the docs folder.
+- **What the human changed or rejected:** Ary decided to drop the feature. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why FR2.4 became FR2.3 and that Module 2 still has three requirements.
+- **Limits:** this removes a requirement and a Rules block that Gathan wrote (E0.5), so Gathan must read the change. Deleted Figma frames can only be recovered from Figma's version history. The FR renumbering also changes the requirement ID used in Gathan's and Ary's task files.
+
+## 2026-11-11 · Entry points for upload contract, form a group and arrange a viewing (chat + drawer) · FR3.3, FR6.2, E5.2
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** the group prompt card and the viewing / agreement cards appeared in the chat "out of nowhere"; add real entry points, as a drawer.
+- **Prompts (exact):**
+  > sama juga tolong tambahin pintu masuk buat upload kontrak, buat grup dan janjian appointment. mungkin kayak drawer gitu karena yang sekarang ada di figma itu out of no where ada notifikasi pop up di pagenya
+- **Output used:** Figma (UI Design, Request and Chat Flow): a **+** button in the chat composer (three chat frames); a new drawer frame "Chat · Add to chat" (Arrange a viewing, Upload a contract, Form a group), a new sheet frame "Chat · Arrange a viewing" (three time options, Send proposal), both built from the Report listing sheet pattern; the "Rent a Unit together?" prompt card was removed from "Start · Chat → + → Form a group" and its tap highlight now points at the +; prototype links: + to the drawer, rows to the viewing sheet, Contract check · Upload and Group, close and scrim back; the flow header was made wider. Docs: PRD (contract check entry), DESIGN.md (flow table and a "Chat actions" paragraph), USER-FLOW, E5.2 (new work item, subtask 3 and an acceptance line), E8.3 and E9.2 (entry points).
+- **How it was tested or checked:** screenshots of the Start group frame, the drawer and the viewing sheet. not verified: the prototype links were set but not played; the other chat frames (Messages, Confirm move-in) were not changed or viewed; the sample times ("Saturday, 10:00" and so on) are mock values; nothing was built in Android.
+- **What the human changed or rejected:** Ary chose a drawer. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain what each of the three actions opens and why none is pushed as a card.
+- **Limits:** I took "drawer" to mean a bottom sheet opened from a + button in the chat composer; if a side drawer or a menu on the top bar was meant, the frames need redoing. "Upload a contract" opens the private Contract check upload (your own copy, not shared in the chat), because E5.2 says contract files never go into a chat. The "Check contract" card for an agreement the Host shares is still in the chat frames. Group still opens the existing "Group" screen, not a new "choose people" step.
+
+## 2026-11-12 · Start a Household without a Listing; more ways into a Group · FR5.1, E5.3, E7.2, E7.3
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** a Group should not only start from chat, and a student who only wants the Household features needs a way to create one.
+- **Prompts (exact):**
+  > sama juga mungkin buat group itu ga harus selau di chat gasi, mungkin ada juga user yang pengen make jiran buat fitur householdnya, nah itu gimana?
+
+  > maksud usulan tampilan kamu apa, jelasin yang lengkap dong
+
+  > ya kerjakan, area opsional, update di figma ya
+- **Output used:** Figma (UI Design): new frames "Unit · No Household" (Core Tabs row; three cards: create, join, rent together), "Household · Create" (Unit name, optional area), "Household · Invite housemates" (6-character code, valid 7 days, Share code) and "Household · Join with a code"; prototype links between them, to Group and to Household · Welcome; two flow headers made wider. Docs: PRD FR5.1 and acceptance lines, DESIGN.md flow table, USER-FLOW (new diagram), E5.3, E7.2, E7.3, E9.2, E1.4, and `schema.md` (`households.name` and `areaId`, `[PROPOSED]`).
+- **How it was tested or checked:** screenshots of the four new frames. not verified: the prototype links were not played; no Android code or Rules were changed, so Gathan has not checked that one student can create a Household alone; the sample code "K7M2QX" and unit name are mock values.
+- **What the human changed or rejected:** Ary decided the area is optional. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain who becomes Host in a Household created directly and why rent there is split equally or by custom amounts.
+- **Limits:** I did not add a "Form a group" button to Match results or the Match profile, although I first proposed it: those screens only offer "Connect", and a Group is made of people the student is already connected with, so Group stays in the chat + menu and the Unit tab card. The Unit tab card opens the existing Group screen, not a new "pick people" step. A Household made without a Listing has no Room prices; E7.3 already allows equal and custom splits, but this was not checked in code. The `inviteCode` already existed in the schema; its 6 characters and 7 days come from E5.3.
+
+## 2026-11-12 · Rename the "LRT + UM shuttle" label to "Public transport"
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** use one label for the public transport mode.
+- **Prompts (exact):**
+  > sama tolong ganti semua text yang LRT+UM Shuttle jadi public transport
+- **Output used:** Figma: ten text nodes "LRT + UM shuttle" (the Commute option component, the Welcome, Send request, Request · Host view, Report listing, Start · Room details and Public transport route frames, the Housing components instance) and "Commute · LRT + UM shuttle" in Evaluate unit · Result now say "Public transport"; one "Public Transportation" in Room details was made "Public transport" too. Repo: DESIGN.md and E4.2 (the row that opens the route page), `strings_auth.xml`, `component_commute_option.xml` (tools text) and the debug gallery layout.
+- **How it was tested or checked:** a text search of the whole Figma file finds no "LRT + UM shuttle" left; a text search of the repo finds none outside the AI logs; `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passes. not verified: the frames were not viewed after the change.
+- **What the human changed or rejected:** Ary decided the label. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** I left descriptive text unchanged: the PRD, tasks and survey still say "bus/LRT plus UM shuttle" where they describe what the mode includes, and the route steps on the Public transport route page ("UM shuttle to FSKTM", "Walk to Kerinchi LRT") are real steps, not the mode label.
+
+## 2026-11-12 · What the Match tab shows when the student has a Group · FR3.3, E6.4, E9.2
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** design and write down the Match tab for a student who already formed a Group.
+- **Prompts (exact):**
+  > kalau misalnya dia udh buat group nanti berarti tampilan match nya ini gimana ya pas dia buka
+
+  > Ya, kerjakan
+- **Output used:** Figma: new frame "Match · Your group" (a "Your group · 3 of 4 in" card with avatars, "Choosing a Unit · 1 spot left" and an Open group button linked to the Group screen; the list titled "Find more housemates"; an "In a group" badge on one Match; Match flow header widened). Docs: PRD Module 3 (one Group at a time, the card, the full-Group state, the badge, "Open group" wording), DESIGN.md, USER-FLOW, E6.4, E9.2.
+- **How it was tested or checked:** screenshot of the new frame. not verified: the prototype link was not played; the "Your group is full" state and the "Open group" wording in the chat drawer and Unit tab were written down but not drawn; no code or Rules were changed.
+- **What the human changed or rejected:** Ary approved the proposal. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why a student can be in only one Group and what each Match tab state shows.
+- **Limits:** "one Group at a time" is a new rule I proposed and Ary accepted by saying yes; Gathan has not checked that the Rules can enforce it. E6.4 still mentions class-day overlap, which is stale since the timetable was removed (E6.2 subtask 2 covers the code, not this task text).
+
+## 2026-11-12 · Arrange a viewing: date picker and time picker instead of fixed options
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** replace the three fixed time options with real pickers.
+- **Prompts (exact):**
+  > Sama arrange a viewing itu buat jadi date picker sama time picker aja jangan fixed kayak gitu dong
+- **Output used:** Figma (Request and Chat Flow): the "Chat · Arrange a viewing" sheet now has a Date field ("Saturday, 14 Nov", calendar icon) and a Time field ("10:00", clock icon); two new frames, "Chat · Pick a date" (a November 2026 calendar, past days greyed out, today outlined, 14 selected) and "Chat · Pick a time" (hour and minute wheels, 24-hour); prototype links from the fields to the pickers and from OK and Cancel back to the sheet; the flow header was widened. Docs: DESIGN.md and E5.2.
+- **How it was tested or checked:** screenshots of the sheet and both pickers. not verified: the links were not played; the pickers are drawn as custom dialogs, so the Android build must choose between the Material date and time pickers (the dial style differs from the wheels drawn here); the "greyed out past dates" rule is a design choice, not in the PRD; the dates are mock values.
+- **What the human changed or rejected:** Ary asked for pickers. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** a viewing cannot be proposed at a time that has passed, and I did not decide a latest date or office hours. The earlier "three time options" in the AI log entry of 11 Nov no longer apply.
+
+## 2026-11-12 · Rearrange the Figma UI page into end-to-end journeys, and add the missing pages
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** the UI Design page was hard to read as a whole; arrange it as end-to-end flows without changing any screen, and add pages that were missing.
+- **Prompts (exact):**
+  > Kayaknya perlu dibuat flownya end to end biar lebih kebayang karena struktur di figma sekarang masih berantakan. Coba di ubah strukturnya ya di figma. Inget keep the design, dont change anything just rearrange. if theres a page that you think kita harus add, tambahin aja ya.
+- **Output used:** Figma (UI Design): the existing frames, flow headers, START labels and arrows were moved (positions only) into six journey sections, each flow in a row with its screens in order and no gaps; the old stray items moved (the cover to the top, the reference screenshot into a References section); a Journey map frame at the top; one new row header "Household Setup Flow". New pages (cloned from existing screens, same components): "Messages · Chats", "Group · Invite a housemate", "Household · Settings", "Rooms · No results". New prototype links: Invite a housemate row to its page, the gear in both Unit frames to Household settings, Move out row to Move out, the Chats and Requests tabs to each other, a Chats row to the chat; the pickers' scrims now return to the Arrange a viewing sheet (they pointed at the drawer by mistake). Docs: DESIGN.md (Figma structure and flow table).
+- **How it was tested or checked:** a script checked that every top-level frame is inside a section and that no frame changed size (all 390 wide, 844, 1480 or 1300 high); screenshots of sections 2 and 5, the four new pages and the Journey map. not verified: sections 1, 3, 4 and 6 were not viewed one by one; the new pages and the prototype links were not played; the rest of the prototype still has few links between screens.
+- **What the human changed or rejected:** Ary asked for the rearrangement and the additions. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain which journey each flow belongs to and which four pages were added and why.
+- **Limits:** the order of flows and the grouping into journeys are my judgment (for example Contract Check sits in journey 2 and Evaluate Unit in journey 4). The Journey map is a drawing, not linked to the sections. The four new pages are first drafts with sample text and need Ary's review; "Rooms · No results" is not linked from Filters yet. DESIGN.md says 14 flows, counting Household Setup as new.
+
+## 2026-11-12 · Housemates tab and Groups with a code or link and a custom size
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** explain the Group flow, then make the Match tab more general (Housemates), let a Group be created there and joined with a code or link, and let the creator choose the maximum size instead of a fixed 4.
+- **Prompts (exact):**
+  > yang group flow masi agak bingungin, coba kamu jelasin
+  >
+  > kayaknya menu match kurang cocok deh, bisa lebih yang general ga. jad di menu ini bisa langsung buat group juga dan bisa invite menggunakan link atau kode.
+  >
+  > dan maksimal anggota  group jangan 4 dong, bisa custom berapa max nya
+  
+  Answers Ary chose to three questions: tab name "Housemates", the creator can set the maximum up to 8, and a join request needs the creator's acceptance.
+- **Output used:** docs (PRD FR3.3 and Group rules, GLOSSARY Group and Group code, USER-FLOW section 4, DESIGN flows, schema `groups` fields and the proposed `requestToJoinGroup`, TASKS E5.2, E6.1, E6.4, E9.2, Gathan README row, clickup-sync-todo); Android strings and tab width (`tab_match`, `match_title`, `component_tab_bar.xml`); Figma: tab label in the Tab bar component, Create a group and Join with a code cards on Housemates · Start, new frames Group · Create, Group · Join requests, Group · Join with a code, Group · Request sent, a new row "Join a Group Flow", and edited Invite to the group, Your group and Group screens, with prototype links.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed; screenshots of the new and edited frames. not verified: the Join a Group row could not be screenshotted in place (the screenshot tool returned blank for frames below the old section edge), so its frames were checked after moving them temporarily; the prototype links were not played; the longer "Housemates" tab label was not seen on a device.
+- **What the human changed or rejected:** Ary asked for the change and chose the three answers above. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain who can create, invite and accept, why 2 to 8, and why joining a Group does not open contact details.
+- **Limits:** the 2 to 8 range comes from Ary's choice, not from a survey. "Joining does not open contact details; members become Connections only through the normal request" and "a Group of one is dissolved when its code expires" are my proposals, not yet agreed with Gathan. The Rules still allow any member to update `groups`; `maxMembers`, the code fields and `requestToJoinGroup` do not exist in the Rules or in code yet. The Journey map chip still says "Group Flow" for both rows.
+## 2026-11-12 · Extra onboarding pages (tried, then dropped)
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Mobbin connector, Figma connector
+- **Task:** add two onboarding screens that explain more features, in the style of the Welcome screen.
+- **Prompts (exact):**
+  > coba onboarding ditambah 2 screen lagi buat ngejelasin lebih banyak tentang fitur fitur jiran. aku suka design yang kamu buat untuk onboarding
+  >
+  > dibedain dong assetsnya coba search for mobbin for onboarding inspiration
+  >
+  > no, jelek banget itu bisa dibuat graphicnya lebih kayak page yang ketiga, make UI component yang kita punya aja jangan buat ilustrasi baru
+  >
+  > jangan stuck di card card gitu dong yang lain, ganti lagi untuk page 1 dan 2
+  >
+  > masih gasuka, udh deh satu aja biar simple yang page 3 ya
+- **Output used:** none. Three versions of two intro frames were made in Figma (a card panel, drawn illustrations after two Mobbin searches, then component compositions) and all were rejected; the Figma frames and the doc changes were removed and the onboarding stays the single Welcome screen. Mobbin screens were only looked at, nothing was copied. These commits were later removed from the branch at Ary's request; this entry stays because the AI was used.
+- **How it was tested or checked:** screenshots only. Nothing reached the repository.
+- **What the human changed or rejected:** Ary rejected all three versions and chose the single Welcome page.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** none that remain in the repository.
+
+## 2026-11-12 · Compare Units entry points and the Add another Unit page
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** answer where Compare Units is opened from, then add the missing entries and the missing "Add another Unit" page.
+- **Prompts (exact):**
+  > compare unit ini pintu masuknya dari man
+  >
+  > oke boleh sama page add another unit belum ada.
+- **Output used:** Figma (Evaluate Unit Flow and Group Flow): a "Compare Units" row at the bottom of the Evaluate result ("Room prices"), a new frame "Group · Add another Unit" (Units in the comparison with Remove, Evaluate a Unit, Pick a Listing, a Compare 3 Units button), and prototype links: the Compare units button on Group and on the start frame, the new Result row, Add another Unit on the compare screen, Use Pantai Dalam back to Group, and the rows and buttons of the new page. The body spacing of the Result frame was reduced from 14 to 10 to fit the new row. Docs: TASKS/E9/E9.3.md (entries, page, one acceptance line), DESIGN.md Evaluate Unit Flow row.
+- **How it was tested or checked:** screenshots of the new page and the Result screen. not verified: the links were not played; my first answer said "Use Pantai Dalam" and "Add another Unit" were on the Evaluate result, which was wrong, they are on the compare screen.
+- **What the human changed or rejected:** Ary approved the proposal. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the "at most 3 Units" comes from the PRD ("two or three"); the sample Units on the new page reuse the names already in the compare screen. The row on the Result screen is always shown in the mockup; the proposal was to show it only when the group has two or more saved Units, which the app must decide.
+
+## 2026-11-12 · Drop the utilities estimate
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5), Figma connector
+- **Task:** discuss the "Share of utilities" line (it depends on use, so the data is hard to get), then remove it.
+- **Prompts (exact):**
+  > share of utilities itu kayaknya susah deh buat dapetin datanya karena itu bener bener tergantung pemakaian. menurut kamu gimana? coba discuss dlu jangan diapa apain
+  >
+  > hapus aja deh biar lebih simple
+- **Output used:** Figma: the "Share of utilities" line is gone from the Evaluate result, "Utilities estimate RM 62 · deposit RM 900" became "Deposit RM 900" in the Send request and Report listing frames, a caption in the design system lost "utilities are split equally", and the sample switch "Utilities included" became "Furnished" (also in the Android debug component gallery). Docs: PRD (utilities not priced anywhere, `config` without `utilitiesEstimateSen`), schema.md (`utilitiesEstimateSen` removed), ASSUMPTIONS.md (#7 marked dropped), TASKS E0.6, E2.2, E2.4, T1.1, T1.2, T1.3, the Aly, Gathan and Aaron READMEs, clickup-sync-todo. The root README paragraph on the commute preview was still describing the old on-time scenario with rent, utilities and a RM612 total; it now describes the per-trip preview. Kept on purpose: the Household still splits real shared bills equally (FR5.1, E7), and the survey question C9 stays for the report.
+- **How it was tested or checked:** screenshots of the Evaluate result and the Send request title block; `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` (passed). not verified: ClickUp is not updated; Gathan has not seen the change to `config` in the schema.
+- **What the human changed or rejected:** Ary chose to drop the estimate instead of replacing it with a yes or no "utilities included". TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why the estimate was dropped and where utilities still appear (real bills in the Household).
+- **Limits:** the ADR file still mentions `utilitiesShareSen` as an example field name because ADR.md is append-only; old plans in `docs/plans/` still describe the earlier calculation.
+
+## 2026-11-12 · Fix the worker-feasibility CI check
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** CI check `worker-feasibility` failed on PR #17.
+- **Prompts (exact):**
+  > ya force push setelah itu fix CI ya
+- **Output used:** the failed log showed two tests of `experiments/worker-feasibility` still calling the commute fixture with the old scenario `on-time` (removed in the per-trip migration, so the Worker returned 400) and one asserting `trueMonthlyCostSen` 61200. `test/worker.test.mjs` and `test/read-json.test.mjs` now use `per-trip` and assert no monthly total, `selectedMode` walking and the transit per-trip fare of 250 sen.
+- **How it was tested or checked:** `npm test --prefix experiments/worker-feasibility`: 75 of 75 pass locally (before: 2 failed in CI). The CI result after the push is not recorded here.
+- **What the human changed or rejected:** none. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why the Worker experiment broke when the fixtures changed.
+- **Limits:** this is a fixture-only experiment; the production Worker does not use the per-trip format yet.
+
+## 2026-11-12 · Squash the design and docs commits into one
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** many commits only recorded Figma and document updates; group them in one commit and keep the code commits separate.
+- **Prompts (exact):**
+  > coba kayaknya banyak commit ini sebenernya dalam bentuk design bukan dalam bentuk kode kan ya. coba klo cuma update design di figma, jadiin satu commit aja bisa ga
+- **Output used:** the branch history was rebuilt so that 6 code commits keep only their code, and one "[Design]" commit holds every change to docs, task files, the Figma notes and the AI log. The final files are the same as before the rebuild except for this entry. The Figma file itself is not in git. The earlier history is kept in the local branch `backup/e1.3-before-design-squash`.
+- **How it was tested or checked:** a diff of the code folders (android, backend, experiments) between the new and the old history was empty; the diff of everything else was only this entry. `npm test` and the Gradle checks were not re-run for this step because no file changed.
+- **What the human changed or rejected:** Ary asked for the squash. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why code and design are separate commits.
+- **Limits:** the task and docs updates of a code story now sit in the design commit, not next to its code commit; pushing needs a force-push.
+
+## 2026-11-12 · Squash the whole PR history into four code commits and one design commit
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Sonnet 5.5)
+- **Task:** the 25 older commits of PR #17 (10 to 11 Nov) had the same problem: 13 only changed docs or Figma notes, and the profile work contained steps that were later removed (a class timetable, then days on campus, then neither).
+- **Prompts (exact):**
+  > itu yang 25 commit 2 hari lalu gimana?
+  >
+  > Ya, siapkan
+- **Output used:** the history of the branch was rebuilt on top of `main`: four code commits (`[E1.3]` profile setup, `[E2.1]` public Building address and the reviews rule, `[E3.3]` per-trip commute, `[E4.2]` label and tab renames) and one `[Design]` commit with every change to docs, task files, ADR, AGENTS and the AI log. The code files are identical to the previous history. The previous history is kept in the local branch `backup/e1.3-before-25-squash`.
+- **How it was tested or checked:** a diff of android, backend and experiments between the new and the previous history was empty; everything else differs only by this entry. The tests were not re-run for this step because no file changed.
+- **What the human changed or rejected:** Ary asked for the squash. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary).
+- **Limits:** the per-commit history of the profile work (timetable, campus days) is gone from git; the AI log and task files still describe it. Pushing needs a force-push.

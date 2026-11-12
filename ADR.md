@@ -198,3 +198,21 @@ filter published status; Host queries must filter ownership. Draft retention
 and abandoned photo cleanup need later lifecycle review, not invented expiry.
 
 **Update 2026-11-10 (Ary):** Ary accepted the Host-only draft and the PRD clarification on PR #15.
+
+## ADR-0010: Commute guidance is per trip, without true monthly cost
+
+- **Status:** Product decision accepted by Ary; implementation migration pending
+- **Date:** 2026-11-11
+- **Decided by:** Ary, in this Codex chat
+
+### Context
+
+Ary clarified that a student evaluating an apartment wants to know how to reach their faculty, the duration and an estimated Grab/e-hailing fare. First-years may not yet know their timetable. Ary explicitly removed true monthly cost because travel usage varies by person.
+
+### Decision
+
+[PRD Module 4](docs/product/PRD.md#module-4-apartment-to-faculty-commute-guide) defines one-way Listing-to-faculty time/fare and travel instructions. Room rent remains monthly and separate; no monthly commute simulation or combined rent/utilities/commute total. No class timetable, class-start eligibility or campus-day input. P0 includes basic transit instructions from supported data; the full map/timeline and Peak / Off-peak scenarios remain P1. Estimates require sources and missing-data states; this does not authorize invented fares, live Grab quotes or billable providers.
+
+### Consequences
+
+E1.3 removes campus-day collection; E0.5 coordinates schema compatibility. Aaron migrates legacy monthly/class-time code, fixtures and DTO in E3.3; E3.4/Gathan update Room summaries; Ary updates E4.1/E4.2. Existing private campus-day values remain unused until any reviewed migration. Existing code/tests and historical records are not retroactively relabelled as the new implementation. See the [file handoff](docs/plans/2026-11-11-commute-per-trip.md). Java Android / JavaScript backend and the free-only budget remain in place. No deployment, provider activation or source-file move is made by this documentation decision.

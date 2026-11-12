@@ -23,7 +23,8 @@ docs/
 │   ├── free-transit-evidence.md    official GTFS snapshot
 │   ├── maps-readiness.md           Maps pricing and limits
 │   └── no-billing-production.md    free-only production candidate
-├── plans/          implementation plans and verification notes (Aaron, 27 Oct 2026)
+├── plans/          implementation handoffs and verification notes
+│   └── 2026-11-11-commute-per-trip.md  file responsibilities and pending migration
 ├── team/           who does what and when
 │   ├── TEAM_PLAN.md      roles, timeline, workflow, order of work and ClickUp set-up
 │   ├── master-prompt.md  prompt to start an AI assistant on your story
@@ -36,6 +37,7 @@ docs/
 | Read this | For |
 |---|---|
 | [product/PRD.md](product/PRD.md) | What we build (source of truth) |
+| [plans/2026-11-11-commute-per-trip.md](plans/2026-11-11-commute-per-trip.md) | Commute file structure, ownership and migration order |
 | [product/GLOSSARY.md](product/GLOSSARY.md) | The words we use |
 | [product/USER-FLOW.md](product/USER-FLOW.md) | Flowcharts |
 | [product/ASSUMPTIONS.md](product/ASSUMPTIONS.md) | Numbers to verify |

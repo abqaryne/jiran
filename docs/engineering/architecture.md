@@ -47,3 +47,8 @@ cache entries must not contain user identities or private schedules. NFR1 is p95
 
 Open decisions: Functions region; UI shell agreement; schema; UM domain policy; monthly trip/rounding rules;
 Maps coverage and fares; emission factors; match scales/weights; AI provider.
+
+
+## Commute responsibility split (11 Nov 2026)
+
+The [PRD Module 4](../product/PRD.md#module-4-apartment-to-faculty-commute-guide) now defines a candidate-Listing-to-faculty guide, with independent route/time, per-trip fare and optional per-trip emissions. No schedule, attendance days or monthly combined total is needed. The [file handoff](../plans/2026-11-11-commute-per-trip.md) separates profile cleanup, server calculation, DTO migration and UI; existing local monthly/class-time code remains a migration task, not production behaviour. No runtime/provider change is made by this clarification.

@@ -52,7 +52,7 @@ In Android Studio, confirm SDK packages/licences, select the build JDK and boot 
 - **Billing:** identify the team's billing owner. Cloud Functions deployment requires the Blaze plan; local emulator development can start before deployment. Maps requires its own enabled APIs and billing setup. Agree quotas and budget alerts before paid calls; a budget alert does not impose a spending cap.
 - **Maps credentials:** enable only needed APIs (Routes, and Places/Maps SDK where the app uses them). Use separate credentials appropriate to Android and server calls. Restrict the Android key by package and signing certificate and restrict APIs; keep server credentials in managed secrets with supported restrictions. Never commit keys or service-account files.
 - **Figma:** [Jiran UI design](https://www.figma.com/design/kjYgovwDJBU9ArWSfMa3OD/Jiran?node-id=5-3). Metadata access was confirmed for page `5:3`, including Room details `14:152` and its commute section `14:205`. Use it as the UI reference with Ary. Sample fares, times and totals are mock values, and iOS-named design assets do not change the Android platform decision.
-- **Gathan:** agree listing/room coordinates and prices, utilities/occupancy, faculty destinations, profile/timetable fields, schema, rules and seed-data ownership. Use labelled stub fixtures until these are agreed.
+- **Gathan:** agree listing/room coordinates and prices, occupancy, faculty destinations, profile/timetable fields, schema, rules and seed-data ownership. Use labelled stub fixtures until these are agreed.
 - **Ary:** agree Android package structure (`ui`, `data`, `util`), shared components and API-facing states. **Ilham:** agree AI request/response shapes and score-to-explanation handoff. **Aly/Dafi:** obtain survey assumptions and UM shuttle information through their existing responsibilities.
 
 Do not run `firebase init` over existing configuration or create duplicate cloud projects. Missing cloud access does not block writing contracts, pure calculation tests or using local stub data.
@@ -62,10 +62,10 @@ Do not run `firebase init` over existing configuration or create duplicate cloud
 1. **Now, Step 0 (through 8 November 2026):** verify tools and access; coordinate the Java app foundation with Ary; establish feature branches/PR rules, CI, Firebase connection, small JavaScript Functions skeleton and Emulator Suite. CI must run Android lint and unit tests, include Checkstyle for the Definition of Done, and test Functions with Jest. Protect the default branch with required reviews/checks where the repository plan supports it.
 2. **Before paid commute integration:** verify Maps pricing/quotas and transit coverage on real Pantai Dalam/Kerinchi-to-UM routes. Record evidence for assumptions #11 and #5 by 8 November. If UM shuttle coverage is missing, coordinate seeded stops/timetables with Dafi and Gathan; do not invent service availability.
 3. **By 15 November:** write `docs/engineering/api-contracts.md` with agreed inputs, outputs, units, time zone, authentication/authorization, validation, errors and sample fixtures for `getCommuteOptions`, `getTransitRoute`, `computeMatchScores`, `splitRoomPrices` and AI functions agreed with Ilham. Names below are planned interfaces, not implemented endpoints.
-4. **Wave A, 16–29 November:** Module 4 P0, including all four modes, class-time arrival checks, per-room true monthly cost and sourced CO₂ estimates. Monthly total is room price + equal utilities share + cheapest commute that arrives on time. Deposit is separate. If no mode arrives on time, show that state rather than a fabricated monthly figure. Decide monthly trip/day counts, return trips, rounding and missing-data behavior explicitly.
-5. **Wave B, 30 November–13 December:** deterministic weighted match score with Jest tests, coordinated with Ary/Ilham. Add P1 peak/off-peak and transit steps after P0 works. Lead the P0 integration freeze on 13 December.
+4. **Wave A, 16–29 November:** Module 4 P0 now follows [PRD Module 4](../../product/PRD.md#module-4-apartment-to-faculty-commute-guide), clarified by Ary on 11 Nov 2026: Listing-to-faculty one-way time/fare and basic travel instructions, without class times, attendance counts or true monthly cost. Rent/deposit stay separate. Migrate legacy engine, DTO and fixtures; [file ownership](../../plans/2026-11-11-commute-per-trip.md).
+5. **Wave B, 30 November–13 December:** deterministic weighted match score with Jest tests, coordinated with Ary/Ilham. The Peak / Off-peak scenario was removed on 11 Nov 2026. Lead the P0 integration freeze on 13 December.
 
-Use [ASSUMPTIONS.md](../../product/ASSUMPTIONS.md) as the canonical numbered list: #2 peak windows with Aly due 12 November; #3 e-hailing, #4 car cost, #5 transit fares, #6 CO₂ and #9 match weights due 13 November.
+Use [ASSUMPTIONS.md](../../product/ASSUMPTIONS.md) as the canonical numbered list: #3 e-hailing, #4 car cost, #5 transit fares, #6 CO₂ and #9 match weights due 13 November.
 
 **First technical readiness milestone:** the Java app runs on an Android device/emulator, connects to local Auth/Firestore/Functions, and successfully calls one small local Function; relevant Android and Jest checks pass. Verify the Android emulator's host connection (normally `10.0.2.2`) and use debug-only emulator routing. Never mark cloud setup, security or NFR performance complete from tool installation alone. NFR1 ultimately requires p95 ≤3 seconds at 100 concurrent users; NFR2 requires unauthorized-access denial tests with Gathan/Aly.
 
@@ -106,14 +106,13 @@ Read existing Firebase configuration before initialization and verify project
 identity before cloud changes; do not create duplicate projects.
 
 Preserve P0 before P1/P2. Module 4 P0 compares walking, transit plus UM shuttle
-where data exists, estimated e-hailing and driving at actual class times.
-True monthly cost = room price + equal utilities share + cheapest on-time
-commute. Keep deposit separate. Never recommend a late/unavailable route;
-show an explicit no-on-time-route state. CO2 belongs on detail commute cards,
+where data exists, estimated e-hailing and driving for a labelled reference departure.
+Show one-way duration/fare separately from Room rent and deposit. No class times,
+attendance count, monthly total or on-time eligibility in the product. CO2 belongs on detail commute cards,
 not Room search cards. Treat Figma numbers as fixtures, not verified data.
 Use a transparent deterministic formula for match scores; AI only explains.
 
-Keep fares, peak windows, monthly trip counts, emission factors and score
+Keep fares, emission factors and score
 weights configurable and sourced. Mark unverified values as assumptions and
 record findings in docs/product/ASSUMPTIONS.md. Check current Maps pricing, coverage,
 runtime support and API limitations using official sources. Design caching
@@ -149,7 +148,9 @@ Acceptance criteria: <insert what must be demonstrably true>
 - [Maps credential restrictions](https://developers.google.com/maps/api-security-best-practices). Recheck SDK, runtime and pricing details when implementing; they change independently of this role plan.
 
 ## You own
-- **Module 4** Commute planner and true monthly cost (FR4.1, FR4.2, FR4.3)
+
+**11 Nov 2026, Ary:** current commute work follows the [per-trip handoff](../../plans/2026-11-11-commute-per-trip.md). Historical checked items about monthly/before-class fixtures describe existing code to migrate, not current product requirements.
+- **Module 4** Apartment-to-faculty commute guide (FR4.1, FR4.2, FR4.3)
 - The architecture, Cloud Functions structure, Google Maps and Routes integration
 - Repo, branching rules, CI, the Firebase emulator, and the integration freeze
 - The **match score** Cloud Function for Module 3
@@ -188,9 +189,9 @@ continuation commits remain on the feature branch until reviewed by PR.
 | 2 | **E0.2** Firebase and the free server are ready | [E0.2.md](../../../TASKS/E0/E0.2.md) | P0 | 8 Nov | - |
 | 3 | **E0.6** Function contracts (stubs) | [E0.6.md](../../../TASKS/E0/E0.6.md) | P0 | 15 Nov | - |
 | 4 | **E3.3** Commute per travel mode | [E3.3.md](../../../TASKS/E3/E3.3.md) | FR4.1, P0 | start now, due 29 Nov | may start early · transit coverage and fares (#3, #4, #5), shuttle timetable (T1) |
-| 5 | **E3.4** True monthly cost and travel time on the Room card | [E3.4.md](../../../TASKS/E3/E3.4.md) | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
+| 5 | **E3.4** One-way commute summary on the Room card | [E3.4.md](../../../TASKS/E3/E3.4.md) | FR4.2, P0 | 4 Dec | E3.1, E3.3 |
 | 6 | **E6.2** Match score function | [E6.2.md](../../../TASKS/E6/E6.2.md) | FR3.2, P0 | 10 Dec | may start early · match weights (#9), `matchProfiles` (E6.1) |
-| 7 | **E4.4** Public transport route page, peak and off-peak | [E4.4.md](../../../TASKS/E4/E4.4.md) | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
+| 7 | **E4.4** Public transport route page | [E4.4.md](../../../TASKS/E4/E4.4.md) | FR4.1, FR4.3, P1 | 14 Dec | E4.2 |
 
 ### Stories where you do a subtask (9)
 
@@ -199,9 +200,9 @@ continuation commits remain on the feature branch until reviewed by PR.
 | **E0.4** Project management and docs | Dafi | Create your own file in `docs/ai-log/` and start the AI Usage Log | [E0.4.md](../../../TASKS/E0/E0.4.md) | 30 Oct |
 | **T1.1** Survey and interviews | Aly | Share the survey link in your circles | [T1.1.md](../../../TASKS/T1/T1.1.md) | 8 Nov (launch 31 Oct) |
 | **T1.4** UM shuttle timetable and commute estimates | Dafi | Estimate commute time and cost for a few example routes; write them as estimates with sources | [T1.4.md](../../../TASKS/T1/T1.4.md) | 8 Nov (timetable), 13 Nov (estimates) |
-| **T1.3** Verify the assumed numbers | Dafi | #2 Peak hours · 12 Nov; #3 E-hailing fares, #9 Match score weights · 13 Nov; #4 Car cost, #5 Public transport (coverage 8 Nov, data 13 Nov); #6 CO₂ factors · 13 Nov, #11 Maps cost and quota · 8 Nov | [T1.3.md](../../../TASKS/T1/T1.3.md) | 13 Nov |
+| **T1.3** Verify the assumed numbers | Dafi | #3 E-hailing fares, #9 Match score weights · 13 Nov; #4 Car cost, #5 Public transport (coverage 8 Nov, data 13 Nov); #6 CO₂ factors · 13 Nov, #11 Maps cost and quota · 8 Nov | [T1.3.md](../../../TASKS/T1/T1.3.md) | 13 Nov |
 | **E1.1** Sign up with a UM email and verify it | Ary | An unverified account can only reach the verify screen (done in the app by `StartRoute`; Aaron still to review) | [E1.1.md](../../../TASKS/E1/E1.1.md) | 19 Nov |
-| **E4.2** Commute options card | Ary | Response with time, cost and CO₂ per mode and the cheapest on-time option; CO₂ factors from a published source (#6) | [E4.2.md](../../../TASKS/E4/E4.2.md) | 7 Dec |
+| **E4.2** Commute options card | Ary | Response with one-way time/fare, basic transit instructions and CO₂ per trip; CO₂ factors from a published source (#6) | [E4.2.md](../../../TASKS/E4/E4.2.md) | 7 Dec |
 | **T3.1** Script and screen captures | Ary | Record your own screen capture and name the FRs you show; Technical implementation and AI data flow (1:30) | [T3.1.md](../../../TASKS/T3/T3.1.md) | 20 Dec |
 | **T4.1** Report sections | Dafi | 3 Architecture (350), 4 System implementation (400) | [T4.1.md](../../../TASKS/T4/T4.1.md) | 9 Jan |
 | **T4.2** AI Usage Log appendix (Appendix 2(b)) | Ilham | Keep your own `docs/ai-log/<name>.md` current, with exact prompts | [T4.2.md](../../../TASKS/T4/T4.2.md) | 9 Jan |
@@ -277,7 +278,7 @@ and [contract](../../engineering/api-contracts.md). Production formula approval 
 |---|---|---|
 | Listing and area fields | Gathan | Stub listings |
 | Profile and timetable data | Ary and Gathan | Stub users |
-| Survey data: peak windows, Grab fares | Aly (survey) | Config values to change later |
+| Survey data: Grab fares | Aly (survey) | Config values to change later |
 
 ## Your parts in the graded deliverables
 - **Video:** the commute card in the demo, segment 4 technical implementation (1:30, with Ilham 20 s on the AI flow)
@@ -286,7 +287,6 @@ and [contract](../../engineering/api-contracts.md). Production formula approval 
 
 ## Numbers you find (see [ASSUMPTIONS.md](../../product/ASSUMPTIONS.md))
 - **#11 Maps cost and quota** and **#5 transit coverage** (due 8 Nov)
-- **#2 Peak hours** with Aly (due 12 Nov)
 - **#3 E-hailing fare formula**, **#4 car cost**, **#5 public transport fares**, **#6 CO₂ emission factors**, **#9 Match score weights** (due 13 Nov)
 
 ## Rules for everyone

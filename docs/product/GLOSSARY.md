@@ -11,7 +11,7 @@ The physical flat or house that is rented, with one or more rooms and one tenanc
 _Avoid_: Property, apartment, flat, house, home
 
 **Building**:
-The named block or development a Unit belongs to (for example Residensi Pantai Dalam). Reviews and the area page attach to a Building.
+The named block or development a Unit belongs to (for example Residensi Pantai Dalam). Its street address is public; the exact Unit inside it is not.
 _Avoid_: Property name, condo, complex
 
 **Room**:
@@ -31,7 +31,7 @@ A public announcement for one Unit that offers one or more vacant Rooms. A stude
 _Avoid_: Ad, post (as a noun), property listing
 
 **Room card**:
-The search-result tile for one vacant Room, showing its price, travel time and true monthly cost.
+The search-result tile for one vacant Room, showing monthly Room price and separate estimated one-way travel time/fare to the faculty.
 _Avoid_: Listing card
 
 **Host**:
@@ -61,8 +61,12 @@ The state where both sides have accepted. Only a Connection opens chat and conta
 _Avoid_: Match, contact, friendship
 
 **Group**:
-Two to four people who plan to rent a whole Unit together and agree on a Room price split before anyone signs. If a member leaves, the split must be agreed again; a Group of fewer than two dissolves. It ends when the tenancy starts.
+Two to eight people (the creator sets the maximum) who plan to rent a whole Unit together and agree on a Room price split before anyone signs. Others join with the Group code or link and the creator accepts them. If a member leaves, the split must be agreed again; a Group left with fewer than two dissolves. It ends when the tenancy starts.
 _Avoid_: Team, party, roommates
+
+**Group code**:
+The 6-character code (or the link that carries it) that lets a student ask to join a Group. It is valid for 7 days. Entering it sends a join request; the creator decides.
+_Avoid_: Invite link, PIN, join key
 
 **Split option**:
 One way of dividing the Unit rent among a Group's members (equal, by room type, or custom). Every option adds up exactly to the Unit rent.
@@ -94,14 +98,15 @@ _Avoid_: Roommate, flatmate
 
 ### Money and commuting
 
-**True monthly cost**:
-A Room price plus the person's equal share of utilities plus the commute cost of the cheapest travel mode that still reaches class on time at their real departure time. If no mode is on time, no figure is shown.
-_Avoid_: Total cost, real cost, all-in cost
+**Commute estimate**:
+The estimated duration and fare for one one-way trip from a candidate Listing to the student's faculty. It does not require a class schedule or attendance count. Rent stays separate; **true monthly cost** was removed by Ary on 11 Nov 2026 and is not a current product label.
+_Avoid_: Monthly commute cost, all-in cost, live Grab price
 
 **Commute option**:
-One way of getting from a Room to the student's faculty (walk, bus or LRT plus shuttle, e-hailing, drive alone), with its time, monthly cost and CO₂ estimate.
-_Avoid_: Route, transport mode
+One way of making that trip (walk, bus/LRT with shuttle where supported, e-hailing, drive alone), with estimated time, fare per trip, travel instructions and optional sourced CO₂ per trip.
+_Avoid_: Monthly cost (for a trip), guaranteed fare
 
 **Peak and off-peak**:
-The two times of day for which each Commute option is shown, because road time and e-hailing price change between them.
+Removed on 11 Nov 2026. Estimates are for leaving now; there is no peak or off-peak choice.
+_Avoid_: Peak toggle, rush-hour scenario
 _Avoid_: Rush hour, busy time
