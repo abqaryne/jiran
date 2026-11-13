@@ -10,6 +10,7 @@ import com.jiran.app.data.AreaOption;
 import com.jiran.app.data.AreaSource;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,8 +75,40 @@ public final class BuildingPickerViewModelTest {
 
     @Test
     public void normalizesWhitespaceAndUnicodeWithoutInventingBuildingIdentity() {
-        assertEquals("Bangunan A", BuildingPickerViewModel.normalizeBuilding("  Bangunan\u00a0 A \n"));
-        assertEquals("Café", BuildingPickerViewModel.normalizeBuilding("Cafe\u0301"));
+        assertEquals("bangunan a", BuildingPickerViewModel.normalizeBuilding("  Bangunan\u00a0 A \n"));
+        assertEquals("café", BuildingPickerViewModel.normalizeBuilding("Cafe\u0301"));
+    }
+
+    @Test
+    public void caseAndWhitespaceVariantsProduceSameConfirmedName() {
+        ready();
+        model.selectArea(area.id);
+        for (String name : Arrays.asList("Pantai Hillpark", "pantai hillpark", "PANTAI HILLPARK",
+                "  PaNtAi\u00a0 HILLPARK\t")) {
+            model.setBuilding(name);
+            assertTrue(model.canConfirm().getValue());
+            assertEquals("pantai hillpark", BuildingPickerViewModel.normalizeBuilding(model.building()));
+        }
+    }
+
+    @Test
+    public void normalizationDoesNotDependOnPhoneLocale() {
+        Locale previous = Locale.getDefault();
+        try {
+            Locale.setDefault(new Locale("tr", "TR"));
+            assertEquals("pantai hillpark", BuildingPickerViewModel.normalizeBuilding("PANTAI HILLPARK"));
+        } finally {
+            Locale.setDefault(previous);
+        }
+    }
+
+    @Test
+    public void normalizationKeepsDistinctNamesAndIsIdempotent() {
+        String normalized = BuildingPickerViewModel.normalizeBuilding("  CAFÉ\u00a0 A ");
+        assertEquals("café a", normalized);
+        assertEquals(normalized, BuildingPickerViewModel.normalizeBuilding(normalized));
+        assertFalse(normalized.equals(BuildingPickerViewModel.normalizeBuilding("Café B")));
+        assertFalse(normalized.equals(BuildingPickerViewModel.normalizeBuilding("Cafe A")));
     }
 
     @Test
