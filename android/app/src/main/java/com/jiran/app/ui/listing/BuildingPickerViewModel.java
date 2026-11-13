@@ -9,6 +9,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /** Form state only: no geocoding, Listing writes, or private address lookup. */
 public final class BuildingPickerViewModel extends ViewModel {
@@ -110,7 +111,7 @@ public final class BuildingPickerViewModel extends ViewModel {
 
     public static String normalizeBuilding(String value) {
         return Normalizer.normalize(value, Normalizer.Form.NFC)
-                .replaceAll("[\\p{Z}\\s]+", " ").trim();
+                .replaceAll("[\\p{Z}\\s]+", " ").trim().toLowerCase(Locale.ROOT);
     }
 
     public boolean validBuilding() {
