@@ -207,3 +207,38 @@
 - **What the human changed or rejected:** TODO (Gathan)
 - **What the human understands and can explain:** TODO (Gathan)
 - **Limits:** Still inprogress; live integration and human QA remain unverified. Security Rules and authorization need human review. PR #8 is not merged. Human understanding and actual hours not recorded.
+
+## 2026-11-15 · E2.2 Subtask 1 room price rule · FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact runtime model identifier not recorded.
+- **Task:** Implement only the plain Java room price rule and JUnit tests; document approved edge handling and stop before staging/committing.
+- **Prompts (exact, task message rendered without transport escaping):**
+  > We are starting Epic **E2.2: Rooms and prices with the price rule** (`TASKS/E2/E2.2.md`). My local `main` branch is updated.
+  >
+  > Please inspect `TASKS/E2/E2.2.md`, `docs/engineering/api-contracts.md` (`splitRoomPrices`), `docs/product/ASSUMPTIONS.md`, and `firestore.rules` / schema docs for `rooms/{roomId}` and `config/app.roomPriceWeights`.
+  >
+  > ### Instructions for this turn:
+  > 1. Create a clean feature branch from `main` named `gathan/e2.2-room-prices`.
+  > 2. **Work strictly on Subtask 1 ONLY**:
+  >   - Implement the plain Java room price rule class supporting configurable weights (`config/app.roomPriceWeights`, defaulting to master `1.3`, medium `1.0`, small `0.7`), rounding to the nearest RM1 (`100 sen`), assigning rounding remainders to the master room, and validating `sum(priceSen) <= totalRentSen` (returning remaining unallocated `sen`).
+  >   - Note the constraint in `E2.2.md`: *"Absent master, several masters and a tiny rent are not defined in the contract yet; agree before coding the edge cases."* Before finalizing edge-case behavior, document your proposed deterministic handling (e.g., if no master exists, give remainder to the highest-weighted/first room; if multiple masters exist, give to the first master; if tiny rent rounds to 0, ensure non-negative integers).
+  >   - Write comprehensive JUnit tests covering:
+  >     1. The RM1,500 example (`150000 sen` with 1 master, 1 medium, 1 small -> RM650 / RM500 / RM350).
+  >     2. Rounding remainder behavior.
+  >     3. Single room allocation.
+  >     4. Total exceeding `totalRentSen` (over-allocation rejection).
+  >     5. Occupied rooms counted in the total sum alongside vacant rooms.
+  >     6. Custom weights loaded dynamically from config.
+  > 3. Run all local checks, linters, Checkstyle, and JUnit tests.
+  > 4. **STOP and present the edge-case decisions, implementation, and test results for my review before staging or committing.** Do not touch UI screens (Subtask 2) yet.
+- **Clarification asked (exact):**
+  > The contract requires agreement before coding these edge cases. May I use: no master → highest-weight room (first in input order on ties); multiple masters → first master; tiny rent → if the remainder would make that room negative, reduce other rounded allocations in input order until it can absorb the remainder without going below zero? The remainder recipient may have a non-RM1 price.
+- **Human reply (exact):**
+  > Approve these deterministic rules
+- **Output used:** `RoomPriceRule.java` and `RoomPriceRuleTest.java` under Android domain/listing; task status and notes in `TASK.md` and `TASKS/E2/E2.2.md`; clarification in `docs/engineering/api-contracts.md`. Branch `gathan/e2.2-room-prices` from local main. No staging, commit or PR. Existing untracked Gradle daemon configuration paths preserved.
+- **How it was tested or checked:** Android `gradlew.bat lintDebug testDebugUnitTest checkstyleMain assembleDebug --continue` passed; 142 tests including 20 new price-rule tests. Initial Gradle cache access denied; succeeded with elevated cache access. First JUnit run reported `RoomPriceRuleTest > negativeRemainderSubtractsFromMaster FAILED`; corrected the test's mistaken expectation, reran successfully. Backend `npm test`: 17 suites / 377 tests passed; `npm run check`: passed; `npm run test:load`: 7 passed (fixture checks, not a live load test). Firebase emulator smoke could not start: `The term 'firebase' is not recognized`.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** Needs human review. Default weights remain estimates. Config is supplied as a fresh map per calculation; Firestore loading, UI, persistence and aggregate server enforcement are outside this change. Caller must pass every room price, including occupied rooms. QA acceptance and human code review not verified.
+- **Additional checks:** Worker test first failed with `ERR_MODULE_NOT_FOUND` for `esbuild`; installed locked dependencies with `npm ci --prefix experiments/worker-feasibility`. Sandbox registry access failed with `ENOTFOUND` and loopback tests with `connect EACCES`; elevated retries succeeded. Final Worker tests: 75 passed. Temporary `.npm-cache` removed. Node 26.13.0 differs from required CI Node 22 (engine warning); CI parity not verified. `git diff --check` passed. No staging or commits.

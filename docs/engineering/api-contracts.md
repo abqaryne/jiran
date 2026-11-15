@@ -368,10 +368,23 @@ Fixture response using current draft 1.3/1.0/0.7 weights:
 {"rooms":[{"id":"r1","priceSen":65000},{"id":"r2","priceSen":50000},{"id":"r3","priceSen":35000}],"totalRentSen":150000,"assumptionVersion":"draft-room-weights"}
 ```
 
-PRD rounds suggested prices to RM1 and assigns remainder to master. Agree absent
-master/tied-master/tiny-rent behavior before implementing. Explicit allocations
+PRD rounds suggested prices to RM1 and assigns remainder to master. Gathan approved
+the following deterministic handling on 15 Nov 2026: use the first master in input
+order; without a master, use the highest configured weight (first on ties). Round
+half up to 100 sen, then add the signed remainder to that recipient. If this would
+make its price negative, reduce other rounded prices in input order by the deficit
+(each no lower than zero), then assign the corrected recipient price. Correction
+can produce prices that are not multiples of 100 sen. Explicit allocations
 must not exceed Unit rent for Listings; Evaluation/group splits must equal it.
 Weights stay configurable. This function does not create listings or households.
+
+The E2.2 plain Java rule reads a supplied `config/app` map on every call. Missing
+config/weight entries use the draft defaults; supplied weights must be positive,
+finite numbers. Negative rent/prices, unknown room types and duplicate room IDs
+are rejected. Zero rent gives zero prices; no rooms leaves all rent unallocated.
+The validator accepts all room prices regardless of occupancy and returns remaining
+sen, rejecting over-allocation. Loading Firestore config and adapting the fixture
+response metadata (`assumptionVersion`) remain caller/integration responsibilities.
 
 ## AI interfaces — proposed names, Ilham approval required
 
