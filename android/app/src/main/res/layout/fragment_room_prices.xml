@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/room_prices_scroll" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/color_bg_surface" android:fillViewport="true">
+    <LinearLayout android:id="@+id/room_prices_content" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:orientation="vertical" android:padding="@dimen/screen_margin">
+        <com.google.android.material.button.MaterialButton android:id="@+id/room_prices_back"
+            style="@style/Widget.Jiran.Button.Soft" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@string/post_back" app:icon="@drawable/ic_arrow_back"
+            app:iconTint="@color/color_text_primary" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_16" android:text="@string/room_prices_title"
+            android:textAppearance="@style/TextAppearance.Jiran.Headline" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_8" android:text="@string/room_prices_intro"
+            android:textAppearance="@style/TextAppearance.Jiran.Body" />
+        <TextView android:id="@+id/room_prices_rent" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_16"
+            android:textAppearance="@style/TextAppearance.Jiran.Title" />
+        <com.jiran.app.ui.common.InfoBannerView android:id="@+id/room_prices_status"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_16" android:accessibilityLiveRegion="polite" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/room_prices_reload"
+            style="@style/Widget.Jiran.Button.Soft" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:text="@string/room_prices_reload" android:visibility="gone" />
+        <TextView android:id="@+id/room_prices_estimate" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_16"
+            android:textAppearance="@style/TextAppearance.Jiran.Meta" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/room_prices_apply"
+            style="@style/Widget.Jiran.Button.Soft" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_8"
+            android:text="@string/room_prices_apply" />
+        <LinearLayout android:id="@+id/room_price_rows" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="vertical" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/room_prices_add"
+            style="@style/Widget.Jiran.Button.Soft" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_16"
+            android:text="@string/room_prices_add" app:icon="@drawable/ic_add" app:iconTint="@color/color_text_primary" />
+        <com.jiran.app.ui.common.InfoBannerView android:id="@+id/room_prices_remaining"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_16" android:accessibilityLiveRegion="polite" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/room_prices_save"
+            style="@style/Widget.Jiran.Button.Primary" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_16"
+            android:text="@string/room_prices_save" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

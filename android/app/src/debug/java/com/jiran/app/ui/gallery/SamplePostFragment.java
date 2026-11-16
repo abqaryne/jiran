@@ -15,6 +15,9 @@ public final class SamplePostFragment extends PostListingFragment {
     @Override protected void closeForm() {
         requireActivity().finish();
     }
+    @Override protected void openRooms(String listingId) {
+        startActivity(new android.content.Intent(requireContext(), RoomPricesPreviewActivity.class));
+    }
     @Override protected ListingGateway createGateway() {
         return new ListingGateway() {
             private final Handler main = new Handler(Looper.getMainLooper());

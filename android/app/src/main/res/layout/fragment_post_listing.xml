@@ -109,5 +109,9 @@
         <com.google.android.material.button.MaterialButton android:id="@+id/save"
             style="@style/Widget.Jiran.Button.Primary" android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_24" android:text="@string/post_save"/>
+        <com.google.android.material.button.MaterialButton android:id="@+id/continue_rooms"
+            style="@style/Widget.Jiran.Button.Primary" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_16"
+            android:text="@string/room_prices_continue" android:visibility="gone" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

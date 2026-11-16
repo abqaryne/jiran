@@ -212,6 +212,7 @@ public class PostListingFragment extends Fragment {
             model.save();
         });
         binding.back.setOnClickListener(button -> leave());
+        binding.continueRooms.setOnClickListener(button -> openRooms(model.listingId()));
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
             @Override public void handleOnBackPressed() {
                 leave();
@@ -257,6 +258,8 @@ public class PostListingFragment extends Fragment {
             : getString(R.string.post_building_summary, model.form.buildingName, model.form.area.name));
     }
     private void render(PostListingViewModel.State state) {
+        binding.continueRooms.setVisibility(state == PostListingViewModel.State.SAVED ? View.VISIBLE : View.GONE);
+        binding.save.setVisibility(state == PostListingViewModel.State.SAVED ? View.GONE : View.VISIBLE);
         boolean edit = model.editable();
         for (View field : new View[]{binding.buildingAddress, binding.address, binding.rent, binding.deposit, binding.building,
             binding.any, binding.male, binding.female, binding.wifi, binding.aircon, binding.washingMachine}) {
@@ -337,6 +340,11 @@ public class PostListingFragment extends Fragment {
     }
     protected void closeForm() {
         NavHostFragment.findNavController(this).popBackStack();
+    }
+    protected void openRooms(String listingId) {
+        Bundle args = new Bundle();
+        args.putString("listingId", listingId);
+        NavHostFragment.findNavController(this).navigate(R.id.roomPricesFragment, args);
     }
     @Override public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

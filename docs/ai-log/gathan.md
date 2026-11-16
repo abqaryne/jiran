@@ -242,3 +242,42 @@
 - **What the human understands and can explain:** TODO (owner)
 - **Limits:** Needs human review. Default weights remain estimates. Config is supplied as a fresh map per calculation; Firestore loading, UI, persistence and aggregate server enforcement are outside this change. Caller must pass every room price, including occupied rooms. QA acceptance and human code review not verified.
 - **Additional checks:** Worker test first failed with `ERR_MODULE_NOT_FOUND` for `esbuild`; installed locked dependencies with `npm ci --prefix experiments/worker-feasibility`. Sandbox registry access failed with `ENOTFOUND` and loopback tests with `connect EACCES`; elevated retries succeeded. Final Worker tests: 75 passed. Temporary `.npm-cache` removed. Node 26.13.0 differs from required CI Node 22 (engine warning); CI parity not verified. `git diff --check` passed. No staging or commits.
+
+## 2026-11-15 · E2.2 Subtask 1 commit and Subtask 2 editor · FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact runtime model identifier not recorded.
+- **Task:** Commit reviewed Subtask 1, then implement the Rooms editor, Firestore persistence and offline design-system preview; stop before staging Subtask 2.
+- **Prompt (exact, rendered without transport escaping):**
+  > Subtask 1 looks great! Please stage and commit the Subtask 1 changes to `gathan/e2.2-room-prices`.
+  >
+  > Once committed, please proceed to **Subtask 2 of E2.2**: Rooms and prices screen, `rooms/{roomId}` persistence, and over-allocation UI.
+  >
+  > Guardrails:
+  > 1. Build the Rooms and prices screen allowing the Host to add rooms (`master`, `medium`, `small`), toggle `vacant` vs `occupied`, apply the default split from `RoomPriceRule`, and manually edit prices.
+  > 2. Show the live remaining unallocated rent (`totalRentSen - sum`) and display the over-allocation error when `sum(priceSen) > listing.totalRentSen`, blocking progression while over-allocated.
+  > 3. Enforce no utilities pricing on any Listing or Room card.
+  > 4. Wire up `rooms/{roomId}` persistence and add a debug/design-system preview so I can test the demo scenario.
+  > 5. Run all Android unit tests, lint, Checkstyle, and debug build checks, then STOP and present your work for my review before staging or committing Subtask 2.
+- **Output used:** Commit `12088cc` contains Subtask 1 only. Subtask 2: `RoomPricesFragment`, `RoomPricesViewModel`, `RoomAllocation`, `RoomRepository`, `FirestoreRoomRepository`; editor layouts/strings; Post navigation and shell integration; debug `RoomPricesPreviewActivity` / `SampleRoomPricesFragment` and gallery entry; two JUnit suites, two instrumentation tests, `backend/scripts/room-prices-fixture.cjs`; task/review notes. No Subtask 2 staging/commit, push or deployment.
+- **Sources/skills:** Official [Firebase Firestore skill](https://github.com/firebase/agent-skills/blob/main/skills/firebase-firestore/SKILL.md) and [Standard Android reference](https://github.com/firebase/agent-skills/blob/main/skills/firebase-firestore/references/standard/android_sdk_usage.md). Also read [Rules creation guidance](https://github.com/firebase/agent-skills/blob/main/skills/firestore-rules-creation/SKILL.md) while assessing existing limitations; Rules were not changed. Standard edition established from repository setup records and local emulator output. Resolved Android Firestore SDK: 27.1.0. Existing Java stack/dependencies retained.
+- **How it was tested or checked:** Android `gradlew.bat lintDebug testDebugUnitTest checkstyleMain assembleDebug --continue` passed with 159 JUnit tests, including 17 added for Subtask 2. Lint reports warnings (not a zero-warning claim). Initial Checkstyle run failed on 13 `OneStatementPerLine` violations; formatting corrected. The initial screen test failed `Split confirmation is accessible` because its accessibility lookup did not find the dialog button; replaced with the public WindowInspector API. API 37 instrumented screen test then passed: split example, occupied-room over-allocation, rotation and sample save. Persistence test passed (not skipped) against local `demo-jiran`: server reads/writes, preserved occupant/timestamps, rejected excessive sum without modifying data, stale-editor rejection and signed-out rejection. Fixture initially failed module resolution; corrected to `createRequire`. Firebase CLI initially rejected the old shell JDK; rerun with Studio JBR succeeded. Backend `npm test`: 17 suites / 377 tests passed; `npm run check` and fixture `node --check` passed. No live operations.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** Needs human review. User approved Subtask 1; Subtask 2 human review and Aly's QA not verified. Draft saving only, no publication. Aggregate rent enforcement is client-side; unchanged Rules allow verified UM users to read draft Rooms and lack strict Room field/aggregate validation. Host-to-Room identity/rule hardening remains a review concern. Full live Post flow/Worker configuration not verified. Node 26 differs from CI Node 22. Existing untracked Gradle configuration paths untouched.
+- **Final visual/check results:** All required Android checks passed after icon-tint/readability polish; 159 JUnit tests, lint 0 errors / 99 warnings, Checkstyle and debug APK passed. Final screen test passed again. An initial screenshot was obscured by an emulator System UI warning; dismissed it and inspected the final unobscured rendered scroll content at normal font scale. Capture: `android/app/build/reports/room-prices-preview/full-editor.png` (generated, not committed), showing the RM0.01 over-allocation banner and disabled Save. Large-font/device QA and exact Figma-frame comparison not verified. `git diff --check` passed; staged diff is empty.
+
+## 2026-11-16 · E2.2 commit and pull request · FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact runtime model identifier not recorded.
+- **Task:** Commit approved Subtask 2, push the E2.2 branch and open a PR into main summarizing both subtasks and remaining Security Rules limitations.
+- **Prompt (exact, rendered without transport escaping):**
+  > Subtask 2 looks great! Please stage and commit these changes for E2.2 Subtask 2 (Rooms and prices screen and persistence) on `gathan/e2.2-room-prices`.
+  >
+  > Once committed, please push the branch `gathan/e2.2-room-prices` to origin and open a Pull Request into `main` using `gh pr create` summarizing both subtasks of Epic E2.2, including the verification results and remaining live Security Rules notes.
+- **Output used:** Subtask 2 code, tests, local fixture and review documentation approved for commit. Task notes updated to record Gathan's approval; PR details recorded after creation.
+- **How it was tested or checked:** Reviewed Git status, branch, diff scope and whitespace. Existing JUnit XML confirms 159 tests, 0 failures/errors; lint report confirms 0 errors / 99 warnings. Earlier recorded Android build/Checkstyle, 377 backend tests and both targeted API 37 emulator tests passed. No implementation changes or test rerun in this commit/PR turn. Existing Git credential authenticates gh without recording its secret value.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** No live deployment or Rules changes. Aggregate enforcement/draft Room privacy and strict Room validation remain review concerns. Ary's final review, Aly's QA, ClickUp hours and CI results not verified. Pre-existing untracked Gradle configuration excluded.

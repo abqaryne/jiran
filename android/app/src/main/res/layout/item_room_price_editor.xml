@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_24" android:orientation="vertical">
+    <TextView android:id="@+id/room_editor_title" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:textAppearance="@style/TextAppearance.Jiran.Title" />
+    <com.google.android.material.chip.ChipGroup android:id="@+id/room_editor_occupancy"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        app:singleSelection="true" app:selectionRequired="true">
+        <com.google.android.material.chip.Chip android:id="@+id/room_editor_vacant"
+            style="@style/Widget.Jiran.Chip.Filter" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@string/room_prices_vacant"
+            android:minHeight="@dimen/touch_target_min" app:ensureMinTouchTargetSize="true"
+            app:chipIcon="@drawable/ic_bed" app:chipIconVisible="true" app:chipIconTint="@color/color_text_primary" />
+        <com.google.android.material.chip.Chip android:id="@+id/room_editor_occupied"
+            style="@style/Widget.Jiran.Chip.Filter" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@string/room_prices_occupied"
+            android:minHeight="@dimen/touch_target_min" app:ensureMinTouchTargetSize="true"
+            app:chipIcon="@drawable/ic_check_circle" app:chipIconVisible="true" app:chipIconTint="@color/color_text_primary" />
+    </com.google.android.material.chip.ChipGroup>
+    <com.google.android.material.textfield.TextInputLayout android:id="@+id/room_editor_price_layout"
+        style="@style/Widget.Jiran.TextInputLayout" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_8"
+        android:hint="@string/room_prices_price">
+        <com.google.android.material.textfield.TextInputEditText android:id="@+id/room_editor_price"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:minHeight="@dimen/touch_target_min" android:inputType="numberDecimal"
+            android:importantForAutofill="no" android:saveEnabled="false" android:maxLength="16" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton android:id="@+id/room_editor_remove"
+        style="@style/Widget.Jiran.Button.Soft" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="@string/room_prices_remove" app:icon="@drawable/ic_close"
+        app:iconTint="@color/color_text_primary" />
+</LinearLayout>
