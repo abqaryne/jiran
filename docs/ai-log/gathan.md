@@ -281,3 +281,4 @@
 - **What the human changed or rejected:** TODO (owner)
 - **What the human understands and can explain:** TODO (owner)
 - **Limits:** No live deployment or Rules changes. Aggregate enforcement/draft Room privacy and strict Room validation remain review concerns. Ary's final review, Aly's QA, ClickUp hours and CI results not verified. Pre-existing untracked Gradle configuration excluded.
+- **Submission result:** Subtask 2 committed as `bd9e996`; pushed `gathan/e2.2-room-prices` to origin. Created [PR #19](https://github.com/abqaryne/jiran/pull/19) into `main` using `gh pr create`; description covers both subtasks, recorded verification and remaining live Rules notes. Updated E2.2 to `inreview`. Initial PR attempts could not access the sandbox temporary body file; writing the body under ignored `android/app/build/` resolved it. No merge or deployment.
