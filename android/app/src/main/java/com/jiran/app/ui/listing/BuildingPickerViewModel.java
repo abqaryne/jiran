@@ -109,9 +109,19 @@ public final class BuildingPickerViewModel extends ViewModel {
         return null;
     }
 
+    /** Display name: Unicode and spaces tidied, the Host's typed case kept. */
     public static String normalizeBuilding(String value) {
         return Normalizer.normalize(value, Normalizer.Form.NFC)
-                .replaceAll("[\\p{Z}\\s]+", " ").trim().toLowerCase(Locale.ROOT);
+                .replaceAll("[\\p{Z}\\s]+", " ").trim();
+    }
+
+    /** Comparison key only, never shown: case removed independent of the phone language. */
+    public static String buildingKey(String value) {
+        return normalizeBuilding(value).toLowerCase(Locale.ROOT);
+    }
+
+    public static boolean sameBuilding(String first, String second) {
+        return buildingKey(first).equals(buildingKey(second));
     }
 
     public boolean validBuilding() {

@@ -75,40 +75,46 @@ public final class BuildingPickerViewModelTest {
 
     @Test
     public void normalizesWhitespaceAndUnicodeWithoutInventingBuildingIdentity() {
-        assertEquals("bangunan a", BuildingPickerViewModel.normalizeBuilding("  Bangunan\u00a0 A \n"));
-        assertEquals("café", BuildingPickerViewModel.normalizeBuilding("Cafe\u0301"));
+        assertEquals("Bangunan A", BuildingPickerViewModel.normalizeBuilding("  Bangunan  A \n"));
+        assertEquals("Café", BuildingPickerViewModel.normalizeBuilding("Café"));
     }
 
     @Test
-    public void caseAndWhitespaceVariantsProduceSameConfirmedName() {
+    public void displayNameKeepsTypedCase() {
+        assertEquals("Pantai Hillpark", BuildingPickerViewModel.normalizeBuilding("  Pantai  Hillpark\t"));
+    }
+
+    @Test
+    public void caseAndWhitespaceVariantsAreTheSameBuilding() {
         ready();
         model.selectArea(area.id);
         for (String name : Arrays.asList("Pantai Hillpark", "pantai hillpark", "PANTAI HILLPARK",
-                "  PaNtAi\u00a0 HILLPARK\t")) {
+                "  PaNtAi  HILLPARK\t")) {
             model.setBuilding(name);
             assertTrue(model.canConfirm().getValue());
-            assertEquals("pantai hillpark", BuildingPickerViewModel.normalizeBuilding(model.building()));
+            assertEquals("pantai hillpark", BuildingPickerViewModel.buildingKey(model.building()));
+            assertTrue(BuildingPickerViewModel.sameBuilding("Pantai Hillpark", model.building()));
         }
     }
 
     @Test
-    public void normalizationDoesNotDependOnPhoneLocale() {
+    public void buildingKeyDoesNotDependOnPhoneLocale() {
         Locale previous = Locale.getDefault();
         try {
-            Locale.setDefault(new Locale("tr", "TR"));
-            assertEquals("pantai hillpark", BuildingPickerViewModel.normalizeBuilding("PANTAI HILLPARK"));
+            Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+            assertEquals("pantai hillpark", BuildingPickerViewModel.buildingKey("PANTAI HILLPARK"));
         } finally {
             Locale.setDefault(previous);
         }
     }
 
     @Test
-    public void normalizationKeepsDistinctNamesAndIsIdempotent() {
-        String normalized = BuildingPickerViewModel.normalizeBuilding("  CAFÉ\u00a0 A ");
-        assertEquals("café a", normalized);
-        assertEquals(normalized, BuildingPickerViewModel.normalizeBuilding(normalized));
-        assertFalse(normalized.equals(BuildingPickerViewModel.normalizeBuilding("Café B")));
-        assertFalse(normalized.equals(BuildingPickerViewModel.normalizeBuilding("Cafe A")));
+    public void buildingKeyKeepsDistinctNamesAndIsIdempotent() {
+        String key = BuildingPickerViewModel.buildingKey("  CAFÉ  A ");
+        assertEquals("café a", key);
+        assertEquals(key, BuildingPickerViewModel.buildingKey(key));
+        assertFalse(BuildingPickerViewModel.sameBuilding("CAFÉ A", "Café B"));
+        assertFalse(BuildingPickerViewModel.sameBuilding("CAFÉ A", "Cafe A"));
     }
 
     @Test
