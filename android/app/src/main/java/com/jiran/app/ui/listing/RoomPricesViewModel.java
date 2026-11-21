@@ -46,6 +46,7 @@ public final class RoomPricesViewModel extends ViewModel {
     private State state = State.LOADING;
     private RoomRepository.Problem problem;
     private long rent;
+    private long deposit = -1;
     private boolean configFallback = true;
     private boolean configInvalid;
     private boolean ended;
@@ -88,6 +89,8 @@ public final class RoomPricesViewModel extends ViewModel {
     public State state() { return state; }
     public RoomRepository.Problem problem() { return problem; }
     public long rent() { return rent; }
+    /** Deposit from step 1, or -1 when the repository did not provide it. Display only. */
+    public long deposit() { return deposit; }
     public boolean configFallback() { return configFallback; }
     public boolean configInvalid() { return configInvalid; }
     public boolean dirty() { return dirty; }
@@ -105,6 +108,7 @@ public final class RoomPricesViewModel extends ViewModel {
                     rows.add(new Row(room, true));
                 }
                 rent = value.totalRentSen;
+                deposit = value.depositSen;
                 dirty = false;
                 state = State.EDITING;
                 changed();
@@ -149,12 +153,21 @@ public final class RoomPricesViewModel extends ViewModel {
     }
 
     public void applySplit() {
-        if (!editable() || configInvalid || rows.isEmpty()) { return; }
+        List<Long> split = suggestedSplit();
+        if (!editable() || split == null) { return; }
+        for (int i = 0; i < rows.size(); i++) { rows.get(i).price = money(BigInteger.valueOf(split.get(i))); }
+        edited();
+    }
+
+    /** Suggested price per row in row order, or null when there is nothing to suggest. Not applied. */
+    public List<Long> suggestedSplit() {
+        if (configInvalid || rows.isEmpty() || rent <= 0) { return null; }
         List<RoomPriceRule.Room> input = new ArrayList<>();
         for (Row row : rows) { input.add(new RoomPriceRule.Room(row.id, row.type)); }
         RoomPriceRule.Split split = new RoomPriceRule(() -> config).splitRoomPrices(rent, input);
-        for (Row row : rows) { row.price = money(BigInteger.valueOf(split.pricesSen.get(row.id))); }
-        edited();
+        List<Long> prices = new ArrayList<>();
+        for (Row row : rows) { prices.add(split.pricesSen.get(row.id)); }
+        return prices;
     }
 
     /** Null means some price is incomplete/invalid; never treat an empty field as zero. */
@@ -212,7 +225,26 @@ public final class RoomPricesViewModel extends ViewModel {
         changed();
     }
     private void changed() { changes.setValue(changes.getValue() + 1); }
-    public static String money(BigInteger sen) { return new BigDecimal(sen, 2).toPlainString(); }
+    /** Text for the price box: "650" for whole ringgit, "650.50" otherwise, so it fits the compact field. */
+    public static String money(BigInteger sen) {
+        return sen.mod(BigInteger.valueOf(100)).signum() == 0 ? sen.divide(BigInteger.valueOf(100)).toString()
+                : new BigDecimal(sen, 2).toPlainString();
+    }
+
+    /** Display form for labels: thousands separators, no ".00" for whole ringgit (150000 sen -> "1,500"). */
+    public static String display(BigInteger sen) {
+        BigDecimal value = new BigDecimal(sen, 2);
+        boolean whole = sen.mod(BigInteger.valueOf(100)).signum() == 0;
+        java.text.DecimalFormat format = new java.text.DecimalFormat(whole ? "#,##0" : "#,##0.00",
+                java.text.DecimalFormatSymbols.getInstance(java.util.Locale.ROOT));
+        return format.format(value);
+    }
+
+    /** Sum of all valid prices, or null while a price is incomplete. */
+    public BigInteger allocatedSen() {
+        BigInteger remaining = remainingSen();
+        return remaining == null ? null : BigInteger.valueOf(rent).subtract(remaining);
+    }
 
     public void endSession() {
         ended = true;

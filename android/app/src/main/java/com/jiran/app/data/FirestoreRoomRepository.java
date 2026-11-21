@@ -78,7 +78,9 @@ public final class FirestoreRoomRepository implements RoomRepository {
                             listingBaseline = listing.getData();
                             roomBaseline = baseline;
                             loadedId = listingId;
-                            callback.success(new Loaded(listing.getLong("totalRentSen"), rooms));
+                            Long deposit = listing.get("depositSen") instanceof Long ? listing.getLong("depositSen") : null;
+                            callback.success(new Loaded(listing.getLong("totalRentSen"),
+                                    deposit == null ? -1 : deposit, rooms));
                         } catch (IllegalArgumentException | ClassCastException error) {
                             callback.failure(Problem.INVALID);
                         }

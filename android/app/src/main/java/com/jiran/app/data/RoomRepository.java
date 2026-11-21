@@ -14,9 +14,15 @@ public interface RoomRepository {
     }
     final class Loaded {
         public final long totalRentSen;
+        /** Draft deposit for display; -1 when unknown. */
+        public final long depositSen;
         public final List<RoomAllocation> rooms;
         public Loaded(long totalRentSen, List<RoomAllocation> rooms) {
+            this(totalRentSen, -1, rooms);
+        }
+        public Loaded(long totalRentSen, long depositSen, List<RoomAllocation> rooms) {
             this.totalRentSen = totalRentSen;
+            this.depositSen = depositSen;
             this.rooms = java.util.Collections.unmodifiableList(new java.util.ArrayList<>(rooms));
         }
     }

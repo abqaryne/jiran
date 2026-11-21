@@ -51,13 +51,36 @@ public final class RoomPricesViewModelTest {
 
     @Test public void defaultSplitAndManualPriceShowExactRemainingSen() {
         RoomPricesViewModel model = trio();
-        assertEquals("650.00", model.rows().get(0).price());
-        assertEquals("500.00", model.rows().get(1).price());
-        assertEquals("350.00", model.rows().get(2).price());
+        assertEquals("650", model.rows().get(0).price());
+        assertEquals("500", model.rows().get(1).price());
+        assertEquals("350", model.rows().get(2).price());
         assertEquals(BigInteger.ZERO, model.remainingSen());
         model.price(model.rows().get(2).id, "349.99");
         assertEquals(BigInteger.ONE, model.remainingSen());
         assertTrue(model.canSave());
+    }
+
+    @Test public void suggestedSplitPreviewDoesNotChangePricesAndAllocatedFollowsEdits() {
+        RoomPricesViewModel model = loaded();
+        model.add("master");
+        model.add("medium");
+        model.add("small");
+        assertEquals(Arrays.asList(65000L, 50000L, 35000L), model.suggestedSplit());
+        assertEquals("", model.rows().get(0).price());
+        assertNull(model.allocatedSen());
+        model.applySplit();
+        model.price(model.rows().get(2).id, "550");
+        assertEquals(BigInteger.valueOf(170000), model.allocatedSen());
+        assertEquals(BigInteger.valueOf(-20000), model.remainingSen());
+        assertEquals(-1, model.deposit());
+    }
+
+    @Test public void displayAndFieldMoneyFormats() {
+        assertEquals("1,500", RoomPricesViewModel.display(BigInteger.valueOf(150000)));
+        assertEquals("0.01", RoomPricesViewModel.display(BigInteger.ONE));
+        assertEquals("1,234.50", RoomPricesViewModel.display(BigInteger.valueOf(123450)));
+        assertEquals("650", RoomPricesViewModel.money(BigInteger.valueOf(65000)));
+        assertEquals("650.01", RoomPricesViewModel.money(BigInteger.valueOf(65001)));
     }
 
     @Test public void occupiedRoomCannotBeExcludedToHideOverAllocation() {
@@ -79,10 +102,10 @@ public final class RoomPricesViewModelTest {
         RoomPricesViewModel model = trio();
         repository.config.success(Collections.singletonMap("roomPriceWeights",
                 Map.of("master", 2, "medium", 1, "small", 1)));
-        assertEquals("650.00", model.rows().get(0).price());
+        assertEquals("650", model.rows().get(0).price());
         model.applySplit();
-        assertEquals("750.00", model.rows().get(0).price());
-        assertEquals("375.00", model.rows().get(1).price());
+        assertEquals("750", model.rows().get(0).price());
+        assertEquals("375", model.rows().get(1).price());
         assertFalse(model.configFallback());
     }
 
@@ -91,7 +114,7 @@ public final class RoomPricesViewModelTest {
         repository.config.failure(RoomRepository.Problem.NETWORK);
         assertTrue(model.configFallback());
         model.applySplit();
-        assertEquals("650.00", model.rows().get(0).price());
+        assertEquals("650", model.rows().get(0).price());
         repository.config.success(Collections.singletonMap("roomPriceWeights", "bad"));
         assertTrue(model.configInvalid());
         model.price(model.rows().get(0).id, "600");
@@ -121,7 +144,7 @@ public final class RoomPricesViewModelTest {
         model.add("small");
         assertEquals(1, repository.saves);
         assertEquals(3, model.rows().size());
-        assertEquals("650.00", model.rows().get(0).price());
+        assertEquals("650", model.rows().get(0).price());
         assertFalse(model.rows().get(0).occupied());
         assertEquals(RoomPricesViewModel.State.SAVING, model.state());
         repository.save.success(null);
@@ -135,7 +158,7 @@ public final class RoomPricesViewModelTest {
         model.save();
         repository.save.failure(RoomRepository.Problem.NETWORK);
         assertEquals(RoomPricesViewModel.State.SAVE_ERROR, model.state());
-        assertEquals("650.00", model.rows().get(0).price());
+        assertEquals("650", model.rows().get(0).price());
         model.save();
         assertEquals(1, repository.saves);
         model.reload();

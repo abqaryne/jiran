@@ -39,14 +39,14 @@ public final class RoomPricesScreenTest {
             });
             instrumentation.waitForIdleSync();
             scenario.onActivity(screen -> {
-                assertEquals("650.00", price(screen, 0).getText().toString());
-                assertEquals("500.00", price(screen, 1).getText().toString());
-                assertEquals("350.00", price(screen, 2).getText().toString());
+                assertEquals("650", price(screen, 0).getText().toString());
+                assertEquals("500", price(screen, 1).getText().toString());
+                assertEquals("350", price(screen, 2).getText().toString());
                 row(screen, 0).findViewById(R.id.room_editor_occupied).performClick();
                 price(screen, 0).setText("650.01");
                 assertFalse(screen.findViewById(R.id.room_prices_save).isEnabled());
                 TextView error = screen.findViewById(R.id.room_prices_remaining).findViewById(R.id.banner_text);
-                assertTrue(error.getText().toString().contains("Over-allocated by RM 0.01"));
+                assertTrue(error.getText().toString().contains("RM 0.01 over the Unit rent"));
             });
             screenshot(instrumentation, scenario, "e2.2-rooms-full-review.png");
             scenario.recreate();

@@ -21,7 +21,7 @@ public final class SampleRoomPricesFragment extends RoomPricesFragment {
                     new RoomAllocation("sample-medium", "medium", 0, false, null),
                     new RoomAllocation("sample-small", "small", 0, false, null));
             @Override public void load(String id, Callback<Loaded> callback) {
-                callback.success(new Loaded(150000, saved));
+                callback.success(new Loaded(150000, 300000, saved));
             }
             @Override public Subscription observeConfig(Callback<Map<String, ?>> callback) {
                 callback.success(Collections.emptyMap());

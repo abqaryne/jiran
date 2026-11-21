@@ -307,10 +307,35 @@ service cloud.firestore {
     }
 
     // --- 2.5 Rooms ---
+    // E2.2: one Room's rent. Rules cannot add up all Rooms of a Listing, so the total
+    // (sum of priceSen <= totalRentSen) is checked by the app on save and again by the
+    // server at publication; here each price is capped at the Unit rent.
+    function validRoom(data, roomId) {
+      let required = ['roomId', 'listingId', 'type', 'priceSen', 'status', 'createdAt', 'updatedAt'];
+      return data.keys().hasAll(required)
+        && data.keys().hasOnly(required.concat(['occupiedByUid']))
+        && data.roomId == roomId && roomId.matches('[A-Za-z0-9_-]{1,128}')
+        && data.listingId is string && data.listingId.matches('[A-Za-z0-9_-]{1,128}')
+        && data.type in ['master', 'medium', 'small']
+        && data.priceSen is int && data.priceSen >= 0
+        && data.priceSen <= get(/databases/$(database)/documents/listings/$(data.listingId)).data.totalRentSen
+        && data.status in ['vacant', 'occupied']
+        && (!('occupiedByUid' in data) || (data.status == 'occupied' && listingText(data.occupiedByUid, 128)))
+        && data.createdAt is timestamp && data.updatedAt == request.time;
+    }
+
     match /rooms/{roomId} {
-      // Rooms in a listing: readable by verified UM students; writable by the listing's host
-      allow read: if isVerifiedUmUser();
-      allow create, update: if isVerifiedUmUser() && isListingHost(request.resource.data.listingId);
+      // Same visibility as the parent Listing: draft Rooms only for the Host.
+      allow read: if isVerifiedUmUser()
+        && (get(/databases/$(database)/documents/listings/$(resource.data.listingId)).data.status != 'draft'
+          || get(/databases/$(database)/documents/listings/$(resource.data.listingId)).data.ownerUid == request.auth.uid);
+      allow create: if isVerifiedUmUser() && isListingHost(request.resource.data.listingId)
+        && validRoom(request.resource.data, roomId)
+        && request.resource.data.createdAt == request.time;
+      allow update: if isVerifiedUmUser() && isListingHost(resource.data.listingId)
+        && validRoom(request.resource.data, roomId)
+        && request.resource.data.listingId == resource.data.listingId
+        && request.resource.data.createdAt == resource.data.createdAt;
       allow delete: if isVerifiedUmUser() && isListingHost(resource.data.listingId);
     }
 

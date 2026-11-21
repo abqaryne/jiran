@@ -1,15 +1,19 @@
 package com.jiran.app.ui.listing;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
@@ -125,39 +129,65 @@ public class RoomPricesFragment extends Fragment {
             renderedIds.addAll(ids);
             for (RoomPricesViewModel.Row row : model.rows()) { addRow(row); }
         }
+        BigInteger allocated = model.allocatedSen();
+        BigInteger remaining = model.remainingSen();
+        boolean over = remaining != null && remaining.signum() < 0;
         for (int i = 0; i < rowViews.size(); i++) {
             ItemRoomPriceEditorBinding item = rowViews.get(i);
             RoomPricesViewModel.Row row = model.rows().get(i);
-            item.roomEditorTitle.setText(getString(R.string.room_prices_row, i + 1, typeLabel(row.type)));
-            item.roomEditorPriceLayout.setHint(getString(R.string.room_prices_row, i + 1, typeLabel(row.type))
+            String name = typeLabel(row.type);
+            item.roomEditorTitle.setText(name);
+            item.roomEditorDot.setBackground(dot(row.type));
+            item.roomEditorPrice.setContentDescription(getString(R.string.room_prices_row, i + 1, name)
                     + " · " + getString(R.string.room_prices_price));
             if (!item.roomEditorPrice.getText().toString().equals(row.price())) {
                 item.roomEditorPrice.setText(row.price());
             }
-            item.roomEditorPriceLayout.setError(!row.price().isEmpty() && Ringgit.toSen(row.price()) == null
-                    ? getString(R.string.room_prices_price_error) : null);
-            item.roomEditorOccupancy.check(row.occupied() ? R.id.room_editor_occupied : R.id.room_editor_vacant);
+            boolean invalid = !row.price().isEmpty() && Ringgit.toSen(row.price()) == null;
+            item.roomEditorPriceLayout.setBoxStrokeColorStateList(ColorStateList.valueOf(color(invalid
+                    ? R.color.color_status_danger_text : R.color.color_border_strong)));
+            item.roomEditorPriceLayout.setPrefixTextColor(ColorStateList.valueOf(color(R.color.color_text_primary)));
+            item.roomEditorOccupied.setChecked(row.occupied());
+            item.roomEditorOccupied.setText(row.occupied() ? R.string.room_prices_occupied : R.string.room_prices_vacant);
+            item.roomEditorOccupied.setChipIconResource(row.occupied() ? R.drawable.ic_person : R.drawable.ic_door_front);
+            item.roomEditorOccupied.setContentDescription(getString(R.string.room_prices_occupancy_hint,
+                    getString(row.occupied() ? R.string.room_prices_occupied : R.string.room_prices_vacant)));
             item.roomEditorPrice.setEnabled(edit);
-            item.roomEditorVacant.setEnabled(edit);
             item.roomEditorOccupied.setEnabled(edit);
             item.roomEditorRemove.setEnabled(edit);
         }
-        binding.roomPricesRent.setText(getString(R.string.room_prices_rent,
-                RoomPricesViewModel.money(BigInteger.valueOf(model.rent()))));
+        binding.roomPricesRent.setText(getString(R.string.room_prices_money,
+                RoomPricesViewModel.display(BigInteger.valueOf(model.rent()))));
+        binding.roomPricesDeposit.setText(model.deposit() < 0 ? getString(R.string.room_prices_unknown)
+                : getString(R.string.room_prices_money, RoomPricesViewModel.display(BigInteger.valueOf(model.deposit()))));
+        binding.roomPricesAllocated.setVisibility(allocated == null ? View.INVISIBLE : View.VISIBLE);
+        if (allocated != null) {
+            binding.roomPricesAllocated.setText(getString(R.string.room_prices_allocated,
+                    RoomPricesViewModel.display(allocated), RoomPricesViewModel.display(BigInteger.valueOf(model.rent()))));
+            binding.roomPricesAllocated.setTextColor(color(over ? R.color.color_status_danger_text
+                    : R.color.color_text_primary));
+        }
+        renderBar(remaining);
         binding.roomPricesEstimate.setText(model.configInvalid() ? R.string.room_prices_bad_config
                 : model.configFallback() ? R.string.room_prices_fallback : R.string.room_prices_estimate);
-        binding.roomPricesApply.setEnabled(edit && !model.configInvalid() && !model.rows().isEmpty());
+        List<Long> split = model.suggestedSplit();
+        if (split == null) {
+            binding.roomPricesApply.setText(R.string.room_prices_apply);
+        } else {
+            List<String> parts = new ArrayList<>();
+            for (Long price : split) { parts.add(RoomPricesViewModel.display(BigInteger.valueOf(price))); }
+            binding.roomPricesApply.setText(getString(R.string.room_prices_apply_values, String.join(" / ", parts)));
+        }
+        binding.roomPricesApply.setEnabled(edit && split != null);
         binding.roomPricesAdd.setEnabled(edit && model.rows().size() < RoomRepository.MAX_ROOMS);
         binding.roomPricesBack.setEnabled(model.state() != RoomPricesViewModel.State.SAVING);
         binding.roomPricesSave.setEnabled(model.canSave() || model.state() == RoomPricesViewModel.State.SAVED);
         binding.roomPricesSave.setText(model.state() == RoomPricesViewModel.State.SAVED
                 ? R.string.room_prices_done : R.string.room_prices_save);
-        BigInteger remaining = model.remainingSen();
-        boolean over = remaining != null && remaining.signum() < 0;
         binding.roomPricesRemaining.setKind(over ? InfoBannerView.Kind.DANGER : InfoBannerView.Kind.INFO);
         binding.roomPricesRemaining.setText(remaining == null ? getString(R.string.room_prices_incomplete)
                 : getString(over ? R.string.room_prices_over : R.string.room_prices_remaining,
-                        RoomPricesViewModel.money(over ? remaining.negate() : remaining)));
+                        RoomPricesViewModel.display(over ? remaining.negate() : remaining)));
         renderStatus();
         rendering = false;
     }
@@ -184,6 +214,8 @@ public class RoomPricesFragment extends Fragment {
                 break;
             default: break;
         }
+        boolean quiet = model.state() == RoomPricesViewModel.State.EDITING && message == R.string.room_prices_ready;
+        binding.roomPricesStatus.setVisibility(quiet && !allowsSampleData() ? View.GONE : View.VISIBLE);
         binding.roomPricesStatus.setKind(kind);
         binding.roomPricesStatus.setText(allowsSampleData() ? getString(R.string.post_sample, getString(message))
                 : getString(message));
@@ -201,14 +233,74 @@ public class RoomPricesFragment extends Fragment {
             }
             @Override public void afterTextChanged(Editable s) { }
         });
-        item.roomEditorOccupancy.setOnCheckedStateChangeListener((group, checked) -> {
-            if (!rendering) { model.occupied(row.id, checked.contains(R.id.room_editor_occupied)); }
+        item.roomEditorOccupied.setOnCheckedChangeListener((chip, checked) -> {
+            if (!rendering) { model.occupied(row.id, checked); }
         });
         item.roomEditorRemove.setVisibility(row.persisted ? View.GONE : View.VISIBLE);
         item.roomEditorRemove.setOnClickListener(button -> model.removeNew(row.id));
         rowViews.add(item);
         binding.roomPriceRows.addView(item.getRoot());
     }
+
+    private void renderBar(BigInteger remaining) {
+        binding.roomPricesBar.removeAllViews();
+        List<BigInteger> prices = new ArrayList<>();
+        BigInteger allocated = BigInteger.ZERO;
+        for (RoomPricesViewModel.Row row : model.rows()) {
+            Long price = Ringgit.toSen(row.price());
+            BigInteger value = price == null ? BigInteger.ZERO : BigInteger.valueOf(price);
+            prices.add(value);
+            allocated = allocated.add(value);
+        }
+        BigInteger rent = BigInteger.valueOf(model.rent());
+        BigInteger scale = allocated.max(rent);
+        if (scale.signum() <= 0) {
+            addSegment(1f, R.color.color_bg_fill);
+            return;
+        }
+        // Rooms fill the bar in order; past the Unit rent the overflow is red, any unallocated rent stays grey.
+        BigInteger used = BigInteger.ZERO;
+        for (int i = 0; i < prices.size(); i++) {
+            BigInteger start = used.min(rent);
+            used = used.add(prices.get(i));
+            BigInteger inside = used.min(rent).subtract(start);
+            if (inside.signum() > 0) {
+                addSegment(weight(inside, scale), barColor(model.rows().get(i).type));
+            }
+        }
+        if (allocated.compareTo(rent) > 0) {
+            addSegment(weight(allocated.subtract(rent), scale), R.color.color_status_danger_text);
+        } else if (allocated.compareTo(rent) < 0) {
+            addSegment(weight(rent.subtract(allocated), scale), R.color.color_bg_fill);
+        }
+    }
+
+    private static float weight(BigInteger part, BigInteger whole) {
+        return new java.math.BigDecimal(part).divide(new java.math.BigDecimal(whole), 6,
+                java.math.RoundingMode.HALF_UP).floatValue();
+    }
+
+    private void addSegment(float weight, int colorRes) {
+        View segment = new View(requireContext());
+        segment.setBackgroundColor(color(colorRes));
+        binding.roomPricesBar.addView(segment, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, weight));
+    }
+
+    private static int barColor(String type) {
+        // DESIGN.md: brand/300 and brand/100 only for the allocation bar and chart-like fills.
+        return "master".equals(type) ? R.color.color_brand_primary
+                : "medium".equals(type) ? R.color.brand_300 : R.color.brand_100;
+    }
+
+    private GradientDrawable dot(String type) {
+        GradientDrawable shape = new GradientDrawable();
+        shape.setShape(GradientDrawable.RECTANGLE);
+        shape.setCornerRadius(getResources().getDisplayMetrics().density * 2);
+        shape.setColor(color(barColor(type)));
+        return shape;
+    }
+
+    private int color(int res) { return ContextCompat.getColor(requireContext(), res); }
 
     private String typeLabel(String type) {
         return getString("master".equals(type) ? R.string.room_prices_master

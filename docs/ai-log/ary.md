@@ -1438,3 +1438,22 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human changed or rejected:** Ary asked for the squash. TODO (Ary): anything else.
 - **What the human understands and can explain:** TODO (Ary).
 - **Limits:** the per-commit history of the profile work (timetable, campus days) is gone from git; the AI log and task files still describe it. Pushing needs a force-push.
+
+## 2026-11-21 · Review Gathan's PR #19: Room Rules and the Figma layout
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** check whether Gathan's PR #19 (Room price rule, editor and persistence) is ready to merge, then fix the gaps the review found: Security Rules for `rooms` and a screen that did not match the Figma frame "Listing · Rooms and prices".
+- **Prompts (exact):**
+  > coba cek 2 pr gathan, apakah sudah oke untuk di merge?
+  >
+  > yaudh langsung benerin aja trus commit dan kabarin klo dh selesai
+- **Output used:**
+  - `backend/firestore.rules`: new `validRoom` (exact fields, type and status values, integer price from 0 to the Unit rent, `occupiedByUid` only on an occupied Room, `updatedAt` = request time), draft Rooms readable only by the Host, `listingId` and `createdAt` fixed on update. 18 new cases in `backend/scripts/product-rules-smoke.cjs`.
+  - Android: `fragment_room_prices.xml` and `item_room_price_editor.xml` re-laid out after the Figma frame (top bar, step 2 of 3, read-only Unit rent and Deposit, "RM x of RM y", allocation bar, compact rows with a tappable Occupied / Vacant badge, over-rent banner, "Use suggested split: …", fixed footer). `RoomPricesViewModel` gained `deposit`, `suggestedSplit`, `allocatedSen` and `display`; `money` now writes whole ringgit without ".00". `RoomRepository.Loaded` carries the deposit. New icon `ic_person` and two colour selectors.
+  - Docs: `TASKS/E2/E2.2.md` (subtasks 3 to 5, constraint on `occupiedByUid`), `docs/engineering/schema.md` (rooms access rule), `docs/team/gathan/e2.2-room-prices.md`.
+  - Committed on Gathan's branch `gathan/e2.2-room-prices`, not pushed.
+- **How it was tested or checked:** Firebase emulator smoke (`emulator-smoke.cjs`): all Rules checks passed, 98 denials and 50 permissions. `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed (159 unit tests, 0 failures, before the 2 new ViewModel tests; those 2 passed on their own run). `RoomPricesScreenTest` passed on the Pixel 9 emulator. Screenshots of the sample preview compared with the Figma frame by Claude. Backend `npm test`: 17 suites, 377 tests passed. `RoomPricesPersistenceTest` **not verified**: its fixture `room-prices-fixture.cjs` failed to start ("Failed to initialize Google Cloud Firestore client with the available credentials").
+- **What the human changed or rejected:** Ary asked for the fix. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why Rules cannot check the sum over all Rooms and where that check will live.
+- **Limits:** the total over all Rooms is still only checked by the app (server check is E2.2 subtask 3, with publication). The footer says "Save Rooms", not "Publish listing". Large fonts and TalkBack not checked. Gathan has not read these changes (needs human review).
