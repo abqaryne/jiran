@@ -9,6 +9,11 @@
     <fragment android:id="@+id/postListingFragment"
         android:name="com.jiran.app.ui.listing.PostListingFragment"
         android:label="@string/post_title" />
+    <fragment android:id="@+id/roomPricesFragment"
+        android:name="com.jiran.app.ui.listing.RoomPricesFragment"
+        android:label="@string/room_prices_title">
+        <argument android:name="listingId" app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.jiran.app.ui.home.HomeFragment"

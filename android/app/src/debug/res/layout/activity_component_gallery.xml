@@ -24,6 +24,9 @@
             <com.google.android.material.button.MaterialButton android:id="@+id/preview_post"
                 style="@style/Widget.Jiran.Button.Soft" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:text="@string/gallery_post_preview" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/preview_room_prices"
+                style="@style/Widget.Jiran.Button.Soft" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:text="@string/gallery_room_prices_preview" />
 
             <ImageView
                 android:layout_width="64dp"

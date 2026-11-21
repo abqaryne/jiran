@@ -46,7 +46,8 @@ public class ShellActivity extends AppCompatActivity {
                 binding.gateError.setVisibility(View.GONE);
                 binding.navHost.setVisibility(View.VISIBLE);
                 binding.tabBar.setVisibility(navController.getCurrentDestination() != null
-                        && navController.getCurrentDestination().getId() == R.id.postListingFragment
+                        && (navController.getCurrentDestination().getId() == R.id.postListingFragment
+                            || navController.getCurrentDestination().getId() == R.id.roomPricesFragment)
                         ? View.GONE : View.VISIBLE);
             }
 
@@ -118,7 +119,8 @@ public class ShellActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             int id = destination.getId();
             if (binding.navHost.getVisibility() == View.VISIBLE) {
-                binding.tabBar.setVisibility(id == R.id.postListingFragment ? View.GONE : View.VISIBLE);
+                binding.tabBar.setVisibility(id == R.id.postListingFragment || id == R.id.roomPricesFragment
+                        ? View.GONE : View.VISIBLE);
             }
             if (id == R.id.homeFragment) {
                 binding.tabBar.setSelectedTab(JiranTabBar.Tab.HOME);

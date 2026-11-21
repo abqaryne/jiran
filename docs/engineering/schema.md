@@ -256,7 +256,7 @@ change it. Full lifecycle and live provider verification remain pending.
 - **Purpose:** Individual rooms within a posted listing. Room search operates on vacant room cards.
 - **Document ID:** `{roomId}` (auto-generated ID).
 - **Used by:** Module 2 (FR2.1, FR2.2), Module 4 (FR4.2).
-- **Access Rule:** Readable by verified UM students. Writable only by the Host of the associated listing (`isListingHost(listingId)`).
+- **Access Rule:** Same visibility as the parent Listing: Rooms of a draft are readable only by its Host; Rooms of an active, closed or expired Listing by verified UM students. Writable only by the Host of the associated listing (`isListingHost(listingId)`), with field checks (`validRoom`, 21 Nov 2026): exact fields, type and status values, `priceSen` an integer from 0 to the Unit's `totalRentSen`, `occupiedByUid` only on an occupied Room, `listingId` and `createdAt` unchanged on update, `updatedAt` = request time. The sum over all Rooms is not checked by Rules (section 5).
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
@@ -569,7 +569,7 @@ Firestore Security Rules cannot execute multi-document aggregations, complex ari
 1. **Room Price Cap Rule Validation (FR2.1):**
    - *Rule:* Sum of room prices (`rooms` collection) for a listing must not exceed `listings.totalRentSen`.
    - *Why Rules fail:* Security Rules cannot aggregate prices across multiple `rooms` documents when individual room documents are created or updated.
-   - *Server Task:* Cloudflare Worker validates or writes room collections atomically (`splitRoomPrices`).
+   - *Server Task:* Cloudflare Worker validates or writes room collections atomically (`splitRoomPrices`). Until publication exists, the Android editor checks the sum in its save transaction and Rules cap each Room at the Unit rent; the server check must run before a Listing becomes `active` (E2.2 subtask 3).
 
 2. **Deterministic Match Score, AI Reasons & Class Overlap (`computeMatchScores`):**
    - *Server Task:* Reads `matchProfiles`, calculates weighted score formula (no class timetable since 10 Nov 2026, so `overlappingClassDays` is null), calls Gemini/Claude API for reasons (or uses rule fallback), and writes or returns results for `matches`.

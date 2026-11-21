@@ -395,6 +395,43 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   }), 'Draft cannot receive viewing requests');
   await assertDenied(clientA.delete(`listings/${draftId}`), 'Deletion deferred to Listing lifecycle');
 
+  console.log('5b-2. Testing E2.2 Room prices...');
+  const roomWrite = (roomId, fields, create) => ({
+    update: {name: `${prefix}/rooms/${roomId}`, fields: encodeFields(fields)},
+    updateTransforms: (create ? ['createdAt', 'updatedAt'] : ['updatedAt'])
+      .map(fieldPath => ({fieldPath, setToServerValue: 'REQUEST_TIME'})),
+    ...(create ? {currentDocument: {exists: false}} : {updateMask: {fieldPaths: Object.keys(fields).concat('updatedAt')}}),
+  });
+  const draftRoomId = `room_draft_${nonce}`;
+  const draftRoom = {roomId: draftRoomId, listingId: draftId, type: 'master', priceSen: 45000, status: 'vacant'};
+  await assertDenied(clientB.commit([roomWrite(draftRoomId, draftRoom, true)]), 'Stranger adds Room to a draft');
+  for (const change of [{type: 'penthouse'}, {priceSen: 1.5}, {priceSen: -1}, {priceSen: 100001},
+    {status: 'rented'}, {roomId: 'different'}, {occupiedByUid: 'resident-of-vacant-room'}, {exactAddress: 'private'}]) {
+    await assertDenied(clientA.commit([roomWrite(draftRoomId, {...draftRoom, ...change}, true)]),
+      `Invalid Room ${Object.keys(change)[0]}`);
+  }
+  await assertPermitted(clientA.commit([roomWrite(draftRoomId, draftRoom, true)]), 'Host adds a priced Room to the draft');
+  await assertPermitted(clientA.get(`rooms/${draftRoomId}`), 'Host reads draft Room');
+  await assertDenied(clientB.get(`rooms/${draftRoomId}`), 'Stranger reads draft Room price');
+  await assertPermitted(clientA.commit([roomWrite(draftRoomId, {priceSen: 50000}, false)]), 'Host changes the Room price');
+  await assertDenied(clientA.commit([roomWrite(draftRoomId, {listingId}, false)]), 'Room cannot move to another Listing');
+  await assertDenied(clientA.commit([roomWrite(draftRoomId, {priceSen: 100001}, false)]), 'Room price above the Unit rent');
+  await assertDenied(clientB.commit([roomWrite(draftRoomId, {priceSen: 1}, false)]), 'Stranger changes a Room price');
+  const activeRoomId = `room_active_${nonce}`;
+  await assertPermitted(clientA.commit([roomWrite(activeRoomId,
+    {roomId: activeRoomId, listingId, type: 'small', priceSen: 30000, status: 'occupied', occupiedByUid: studentA.uid}, true)]),
+  'Host adds an occupied Room to a published Listing');
+  await assertPermitted(clientB.get(`rooms/${activeRoomId}`), 'Student reads a published Room price');
+  await assertDenied(clientUnverified.get(`rooms/${activeRoomId}`), 'Unverified student reads a Room');
+  const roomQuery = (token, id) => fetch(`${base}:runQuery`, {method: 'POST',
+    headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`},
+    body: JSON.stringify({structuredQuery: {from: [{collectionId: 'rooms'}],
+      where: {fieldFilter: {field: {fieldPath: 'listingId'}, op: 'EQUAL', value: {stringValue: id}}}, limit: 101}}),
+    signal: AbortSignal.timeout(10000)});
+  await assertPermitted(roomQuery(studentA.token, draftId), 'Host queries the Rooms of a draft');
+  await assertDenied(roomQuery(studentB.token, draftId), 'Stranger queries the Rooms of a draft');
+  await assertPermitted(roomQuery(studentB.token, listingId), 'Student queries the Rooms of a published Listing');
+
   console.log('5c. Testing verified UM Host through the real Worker handler and emulator Rules...');
   const {createListingWorker} = require('../worker/listings');
   const {webcrypto} = require('node:crypto');

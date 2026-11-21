@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  One Room row (Figma "room Master room"): type dot, name, occupancy badge (tap to switch Vacant / Occupied),
+  compact price box. A Room added in this session also has a remove button; saved Rooms cannot be removed here.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_divider_bottom"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/spacing_8"
+    android:paddingBottom="@dimen/spacing_8">
+
+    <View
+        android:id="@+id/room_editor_dot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/room_editor_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_8"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.Jiran.Label" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/room_editor_occupied"
+        style="@style/Widget.Jiran.Chip.Filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:textAppearance="@style/TextAppearance.Jiran.Caption"
+        android:textColor="@color/room_occupancy_text"
+        app:chipBackgroundColor="@color/room_occupancy_bg"
+        app:chipIconSize="16dp"
+        app:chipIconTint="@color/room_occupancy_text"
+        app:chipIconVisible="true"
+        app:chipMinHeight="@dimen/badge_height"
+        app:chipStrokeWidth="0dp"
+        app:ensureMinTouchTargetSize="true" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/room_editor_price_layout"
+        style="@style/Widget.Jiran.TextInputLayout"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_8"
+        app:hintEnabled="false"
+        app:prefixText="@string/room_prices_currency">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/room_editor_price"
+            style="@style/Widget.Jiran.TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:maxLength="16"
+            android:minHeight="@dimen/touch_target_min"
+            android:saveEnabled="false"
+            android:textAppearance="@style/TextAppearance.Jiran.Label" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/room_editor_remove"
+        style="@style/Widget.Jiran.IconButton.Soft"
+        android:layout_width="@dimen/icon_button_size"
+        android:layout_height="@dimen/icon_button_size"
+        android:layout_marginStart="@dimen/spacing_8"
+        android:contentDescription="@string/room_prices_remove"
+        app:icon="@drawable/ic_close" />
+</LinearLayout>

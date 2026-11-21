@@ -21,6 +21,8 @@ public class ComponentGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityComponentGalleryBinding binding = ActivityComponentGalleryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.previewRoomPrices.setOnClickListener(button -> startActivity(
+                new android.content.Intent(this, RoomPricesPreviewActivity.class)));
         binding.previewPost.setOnClickListener(button -> startActivity(
                 new android.content.Intent(this, PostPreviewActivity.class)));
         binding.previewBuildingPicker.setOnClickListener(button -> {
