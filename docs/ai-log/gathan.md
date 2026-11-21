@@ -207,3 +207,39 @@
 - **What the human changed or rejected:** TODO (Gathan)
 - **What the human understands and can explain:** TODO (Gathan)
 - **Limits:** Still inprogress; live integration and human QA remain unverified. Security Rules and authorization need human review. PR #8 is not merged. Human understanding and actual hours not recorded.
+
+## 2026-11-13 · Case-insensitive Building names · E2.1 Item 5 / FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact model not recorded
+- **Task:** Implement only revision Item 5, run local checks and stop before staging or committing.
+- **Prompts (exact, including supplied Markdown escapes):**
+```text
+We are on a new branch \`gathan/e2.1-revisions\` branched from \`main\`. \
+\
+Please implement \*\*Item 5\*\* from the E2.1 revision notes: make building name matching/normalization case-insensitive (so "Pantai Hillpark" and "pantai hillpark" are treated as the same building).\
+\
+Guardrails:\
+1\. Update the building normalization/picker logic and add unit tests covering case-insensitive building names.\
+2\. Run all local tests and lint checks.\
+3\. STOP and present the changes for my review before committing.
+```
+- **Output used:** `BuildingPickerViewModel.normalizeBuilding` lowercases with `Locale.ROOT` after existing NFC/whitespace normalization. The picker already uses this method for confirmed names. Three new JUnit tests cover case/space variants with a valid Area, Turkish default locale, distinct names and idempotence; existing Unicode/whitespace assertions updated. Updated Item 5, TASK.md row and picker handoff. No schema, Rules, backend, migration or other revision implementation changes. Nothing staged, committed or pushed; pre-existing untracked Gradle files preserved.
+- **How it was tested or checked:** Android `gradlew.bat lintDebug testDebugUnitTest checkstyleMain assembleDebug --console=plain` passed using Studio JBR: 125 tests, zero failures/errors/skips. Backend/functions `npm test` passed 377 tests in 17 suites; `npm run check` passed; `npm run test:load` passed 7 fixture-contract tests (not an actual load run). Git whitespace check passed. Confirmed branch `gathan/e2.1-revisions`. Dependencies exist in backend/functions/node_modules; backend has no root package.json/node_modules.
+- **Failures and warnings:** Initial Android command failed before tests: `java.io.FileNotFoundException: C:\Users\Gatha\.gradle\wrapper\dists\gradle-9.6.0-bin\42k10rwplmzkhuboz9kdazi7s\gradle-9.6.0-bin.zip.lck (Access is denied)`. Retried with approved cache access and all required tasks passed. Java reported the test's Locale constructor as deprecated; no failed checks. An exploratory read of backend/package.json failed because that file does not exist; actual npm commands ran from backend/functions.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Awaiting human review. Confirmed names are lowercase for display/saving; typed input retains case until confirmation. Existing saved names are not migrated, server callers are unchanged, and spelling aliases/real-world Building identity are not resolved. Device/emulator UI, Firebase integration and live data were not verified this turn; this change is pure local Java normalization. Story remains inprogress because other implementation items remain. No QA acceptance claimed.
+
+## 2026-11-13 · Commit and publication approval · E2.1 Item 5
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex; exact model not recorded
+- **Task:** Commit the reviewed Item 5 changes, push gathan/e2.1-revisions and create a PR into main using gh.
+- **Prompts (exact):**
+  > Looks good! Please commit these changes for E2.1 Item 5 (case-insensitive building name normalization), push the branch \`gathan/e2.1-revisions\` to origin, and open a Pull Request into \`main\` using \`gh pr create\`.
+- **Output used:** Approved Item 5 implementation/tests and handoff/task documentation prepared for publication with commit message `[E2.1] Normalize Building names without case differences`. This entry records authorization; publication outcome is recorded by the resulting Git commit and PR. Unrelated untracked Gradle files excluded. No merge authorized.
+- **How it was tested or checked:** Branch, diff and scope inspected. Previous local checks above passed: Android lint/Checkstyle/build and 125 unit tests; 377 Jest tests, backend syntax checks and 7 load-fixture tests. Implementation unchanged since those checks; tests not rerun solely for publication.
+- **What the human changed or rejected:** TODO (Gathan)
+- **What the human understands and can explain:** TODO (Gathan)
+- **Limits:** Commit/push/PR approval recorded; human understanding not verified. Device/live integration and existing-name migration remain outside this change. PR CI not verified at preparation time.
