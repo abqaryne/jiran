@@ -10,6 +10,7 @@ import com.jiran.app.data.AreaOption;
 import com.jiran.app.data.AreaSource;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,8 +75,46 @@ public final class BuildingPickerViewModelTest {
 
     @Test
     public void normalizesWhitespaceAndUnicodeWithoutInventingBuildingIdentity() {
-        assertEquals("Bangunan A", BuildingPickerViewModel.normalizeBuilding("  Bangunan\u00a0 A \n"));
-        assertEquals("Café", BuildingPickerViewModel.normalizeBuilding("Cafe\u0301"));
+        assertEquals("Bangunan A", BuildingPickerViewModel.normalizeBuilding("  Bangunan  A \n"));
+        assertEquals("Café", BuildingPickerViewModel.normalizeBuilding("Café"));
+    }
+
+    @Test
+    public void displayNameKeepsTypedCase() {
+        assertEquals("Pantai Hillpark", BuildingPickerViewModel.normalizeBuilding("  Pantai  Hillpark\t"));
+    }
+
+    @Test
+    public void caseAndWhitespaceVariantsAreTheSameBuilding() {
+        ready();
+        model.selectArea(area.id);
+        for (String name : Arrays.asList("Pantai Hillpark", "pantai hillpark", "PANTAI HILLPARK",
+                "  PaNtAi  HILLPARK\t")) {
+            model.setBuilding(name);
+            assertTrue(model.canConfirm().getValue());
+            assertEquals("pantai hillpark", BuildingPickerViewModel.buildingKey(model.building()));
+            assertTrue(BuildingPickerViewModel.sameBuilding("Pantai Hillpark", model.building()));
+        }
+    }
+
+    @Test
+    public void buildingKeyDoesNotDependOnPhoneLocale() {
+        Locale previous = Locale.getDefault();
+        try {
+            Locale.setDefault(Locale.forLanguageTag("tr-TR"));
+            assertEquals("pantai hillpark", BuildingPickerViewModel.buildingKey("PANTAI HILLPARK"));
+        } finally {
+            Locale.setDefault(previous);
+        }
+    }
+
+    @Test
+    public void buildingKeyKeepsDistinctNamesAndIsIdempotent() {
+        String key = BuildingPickerViewModel.buildingKey("  CAFÉ  A ");
+        assertEquals("café a", key);
+        assertEquals(key, BuildingPickerViewModel.buildingKey(key));
+        assertFalse(BuildingPickerViewModel.sameBuilding("CAFÉ A", "Café B"));
+        assertFalse(BuildingPickerViewModel.sameBuilding("CAFÉ A", "Cafe A"));
     }
 
     @Test

@@ -1439,6 +1439,21 @@ exported by the Claude Code app and must be kept as the complete prompt record. 
 - **What the human understands and can explain:** TODO (Ary).
 - **Limits:** the per-commit history of the profile work (timetable, campus days) is gone from git; the AI log and task files still describe it. Pushing needs a force-push.
 
+## 2026-11-21 · Review Gathan's PR #18 and keep the typed Building name
+
+- **Human owner:** Ary
+- **AI tool and model:** Claude Code (Claude Opus 5.5)
+- **Task:** check whether Gathan's PR #18 (case-insensitive Building name) is ready to merge, then fix what the review found.
+- **Prompts (exact):**
+  > coba cek 2 pr gathan, apakah sudah oke untuk di merge?
+  >
+  > yaudh langsung benerin aja trus commit dan kabarin klo dh selesai
+- **Output used:** the review found that `normalizeBuilding` lowercased the name that is saved and shown on public cards. Now `normalizeBuilding` keeps the typed case (Unicode and spaces tidied), a new `buildingKey` lowercases with `Locale.ROOT` for comparison only, and `sameBuilding` compares two names. Tests in `BuildingPickerViewModelTest` updated; the deprecated `Locale` constructor replaced with `Locale.forLanguageTag`. `TASKS/E2/E2.1.md` item 5 and `docs/team/gathan/e2.1-building-picker.md` updated. Committed on Gathan's branch `gathan/e2.1-revisions`, not pushed.
+- **How it was tested or checked:** `./gradlew lintDebug testDebugUnitTest checkstyleMain assembleDebug` passed (126 unit tests, 0 failures). Not run on a device or emulator.
+- **What the human changed or rejected:** Ary asked for the fix. TODO (Ary): anything else.
+- **What the human understands and can explain:** TODO (Ary). Be able to explain why the display name and the comparison key are separate.
+- **Limits:** no stored key and no migration; nothing in the app compares Buildings yet. Gathan has not read this change (needs human review).
+
 ## 2026-11-21 · Review Gathan's PR #19: Room Rules and the Figma layout
 
 - **Human owner:** Ary

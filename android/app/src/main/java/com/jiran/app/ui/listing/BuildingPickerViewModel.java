@@ -9,6 +9,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /** Form state only: no geocoding, Listing writes, or private address lookup. */
 public final class BuildingPickerViewModel extends ViewModel {
@@ -108,9 +109,19 @@ public final class BuildingPickerViewModel extends ViewModel {
         return null;
     }
 
+    /** Display name: Unicode and spaces tidied, the Host's typed case kept. */
     public static String normalizeBuilding(String value) {
         return Normalizer.normalize(value, Normalizer.Form.NFC)
                 .replaceAll("[\\p{Z}\\s]+", " ").trim();
+    }
+
+    /** Comparison key only, never shown: case removed independent of the phone language. */
+    public static String buildingKey(String value) {
+        return normalizeBuilding(value).toLowerCase(Locale.ROOT);
+    }
+
+    public static boolean sameBuilding(String first, String second) {
+        return buildingKey(first).equals(buildingKey(second));
     }
 
     public boolean validBuilding() {
