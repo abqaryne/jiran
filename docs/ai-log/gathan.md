@@ -362,3 +362,50 @@ Guardrails:\
 - **What the human changed or rejected:** TODO (owner)
 - **What the human understands and can explain:** TODO (owner)
 - **Limits:** Approval to commit is recorded; detailed human testing not recorded. Lifecycle writes remain blocked by current Rules pending Subtask 3; publication remains an upstream gap. Device/Firebase walkthroughs and Aly’s QA not verified.
+
+
+## 2026-11-23 · E2.3 Subtask 3: published Listing Security Rules · FR2.1 / NFR2
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex (GPT-6; exact runtime variant not recorded)
+- **Task:** Implement only Subtask 3 Rules and comprehensive real-emulator tests; stop for review before staging/commit.
+- **Prompt (exact, rendered without transport escaping):**
+  > Let's move on to **Subtask 3 of E2.3**: Firestore Security Rules and tests for published/active listings, rooms, and listing requests.
+  >
+  > Note from `E2.3.md`: Draft owner-only writes were already tested in PR #15, but **published/active listings** (including renewal and auto-close updates) and `listingRequests` still need coverage.
+  >
+  > ### Instructions for this turn:
+  > 1. **Work strictly on Subtask 3 ONLY**:
+  >   - Inspect `firestore.rules` and existing rules test suites.
+  >   - Update `firestore.rules` so that:
+  >     - Only the listing's Host owner can write/renew/close a **published/active** listing (non-owners/strangers are denied).
+  >     - Students/strangers cannot modify another user's `rooms/{roomId}` documents.
+  >     - Only the listing's Host can update `listingRequests/{listingId}_{requesterUid}` to `accepted` or `rejected` (while the requester can create/cancel their own request per schema rules).
+  >   - Add comprehensive rules tests covering:
+  >     1. Published/active listing owner-only writes and renewals (allowed for Host, denied for stranger).
+  >     2. Unauthorized `rooms/{roomId}` edits by strangers/students (denied).
+  >     3. `listingRequests` status transitions (accept/reject allowed for Host, denied for non-Host).
+  > 2. Run the rules/backend test suite (and emulator checks if available) plus existing project checks.
+  > 3. **STOP and present your work and handoff notes for my review before staging or committing.**
+- **Output used:** `backend/firestore.rules`; `backend/scripts/listing-lifecycle-rules.cjs`; integration and schema-correct fixtures in `product-rules-smoke.cjs`; backend syntax-check script; schema, story/master task tracking and `docs/team/gathan/e2.3-subtask3-review.md`. No Android implementation changes, staging, commit, push or deployment.
+- **Sources/skills:** Official [Firebase Rules creation skill](https://github.com/firebase/agent-skills/blob/main/skills/firestore-rules-creation/SKILL.md), following its direct-author workflow (specialized firestore-rules-author agent not installed). Earlier-read Firestore skill used with existing Standard-edition project records; emulator confirmed Standard edition. Existing Java/JavaScript stack retained.
+- **How it was tested or checked:** Targeted emulator suite passed (370 denials / 102 permissions), then full Auth/Firestore/Functions/Storage smoke passed after extra baseline-owner/publication cases (381 denials / 107 permissions, including existing regressions/fixture setup). All real-emulator calls constrained to loopback/demo-jiran; Rules syntax compiled there. Backend: 377 Jest tests, 7 load-fixture contract tests and syntax checks passed. Android lint, unit-test task, Checkstyle and debug build passed with unchanged cached outputs (179 tests; lint 0 errors / 104 warnings in existing reports). No test failures. Full emulator warned about Storage Java Unsafe deprecation and ran host Node 26 instead of configured Node 22. Attack outcomes recorded in handoff notes; no live verification claimed.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** Prototype Rules need human review. Renewal allows five-minute clock/network tolerance around 30 days; Rules cannot count vacant Rooms or enforce aggregate prices. Move-in/Host transfer/publication remain separate work. Stale-Host/legacy malformed requests fail closed. No production inventory, deployment, Android SDK/device walkthrough, Node 22 CI verification or Aly acceptance tests. Pre-existing untracked Gradle files preserved.
+
+
+## 2026-11-23 · Submit E2.3 for review · FR2.1 / NFR2
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex (GPT-6; exact runtime variant not recorded)
+- **Task:** Commit approved Subtask 3, push `gathan/e2.3-my-listing`, and create a PR into `main` using `gh pr create` covering Subtasks 1 and 3 and the E5.3 occupancy deferral.
+- **Prompt (exact, rendered without transport escaping):**
+  > Subtask 3 looks great! Please stage and commit the Subtask 3 changes (Firestore Security Rules and tests for published listings, rooms, and listing requests) to `gathan/e2.3-my-listing`.
+  >
+  > Once committed, please push the branch `gathan/e2.3-my-listing` to origin and open a Pull Request into `main` using `gh pr create` summarizing Epic E2.3 (My listing screen with 30-day check-on-read expiry & renewal, request accept/reject flow, and owner-only Security Rules coverage, noting that room occupancy UI is deferred to E5.3 per `E2.3.md`).
+- **Output used:** Approved Subtask 3 Rules/tests, schema and handoff notes; PR description covering both E2.3 subtasks. Pre-existing untracked Gradle files excluded. No merge or deployment authorized.
+- **How it was tested or checked:** Branch, diff scope and whitespace checked. Prior implementation verification: 381 denied / 107 permitted emulator Rules checks, 377 backend tests, 7 load-fixture tests, syntax checks and Android lint/unit-test/Checkstyle/debug build tasks passed. No implementation edits or test rerun in this submission turn.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** Gathan approved submission; detailed human verification not recorded. Occupancy UI deferred to E5.3. Live deployment, device persistence, publication, Node 22 CI and Aly’s QA remain not verified.
