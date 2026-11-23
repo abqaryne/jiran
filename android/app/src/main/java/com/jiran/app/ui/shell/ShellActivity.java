@@ -47,7 +47,8 @@ public class ShellActivity extends AppCompatActivity {
                 binding.navHost.setVisibility(View.VISIBLE);
                 binding.tabBar.setVisibility(navController.getCurrentDestination() != null
                         && (navController.getCurrentDestination().getId() == R.id.postListingFragment
-                            || navController.getCurrentDestination().getId() == R.id.roomPricesFragment)
+                            || navController.getCurrentDestination().getId() == R.id.roomPricesFragment
+                            || navController.getCurrentDestination().getId() == R.id.myListingFragment)
                         ? View.GONE : View.VISIBLE);
             }
 
@@ -120,6 +121,7 @@ public class ShellActivity extends AppCompatActivity {
             int id = destination.getId();
             if (binding.navHost.getVisibility() == View.VISIBLE) {
                 binding.tabBar.setVisibility(id == R.id.postListingFragment || id == R.id.roomPricesFragment
+                        || id == R.id.myListingFragment
                         ? View.GONE : View.VISIBLE);
             }
             if (id == R.id.homeFragment) {

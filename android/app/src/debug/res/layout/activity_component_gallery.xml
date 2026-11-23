@@ -28,6 +28,11 @@
                 style="@style/Widget.Jiran.Button.Soft" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:text="@string/gallery_room_prices_preview" />
 
+            <com.google.android.material.button.MaterialButton android:id="@+id/preview_my_listing"
+                style="@style/Widget.Jiran.Button.Soft" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:minHeight="@dimen/touch_target_min"
+                android:text="@string/gallery_my_listing_preview" />
+
             <ImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
