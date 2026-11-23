@@ -409,3 +409,5 @@ Guardrails:\
 - **What the human changed or rejected:** TODO (owner)
 - **What the human understands and can explain:** TODO (owner)
 - **Limits:** Gathan approved submission; detailed human verification not recorded. Occupancy UI deferred to E5.3. Live deployment, device persistence, publication, Node 22 CI and Aly’s QA remain not verified.
+
+- **Submission result:** Subtask 3 committed as `a2e81b1`; branch pushed to origin. Created [PR #20](https://github.com/abqaryne/jiran/pull/20) into `main` using `gh pr create`. GitHub CLI had no saved login; existing Git credential was used only in process memory without printing or saving it. PR link recorded in task tracking in a follow-up documentation commit. No merge/deployment.
