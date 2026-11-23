@@ -24,6 +24,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding.myListing.setOnClickListener(button -> androidx.navigation.fragment.NavHostFragment
+                .findNavController(this).navigate(com.jiran.app.R.id.myListingFragment));
         binding.logOut.setOnClickListener(button -> {
             new FirebaseAccountService().signOut();
             // Start again from the front door and drop every screen of the signed-in session.

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_listing_title">My listing</string>
+    <string name="my_listing_renew">Renew for 30 days</string>
+    <string name="my_listing_refresh">Refresh</string>
+    <string name="my_listing_back">Back</string>
+    <string name="my_listing_active">Active · %1$d day(s) remaining</string>
+    <string name="my_listing_expired">Expired · Renew to make this listing active again.</string>
+    <string name="my_listing_closed">Closed</string>
+    <string name="my_listing_full">Closed · No vacant Rooms remain.</string>
+    <string name="my_listing_rooms">Rooms and monthly Room prices</string>
+    <string name="my_listing_requests">Incoming requests</string>
+    <string name="my_listing_request">Request %1$d · %2$s</string>
+    <string name="my_listing_room">%1$s · RM %2$s / month · %3$s</string>
+    <string name="my_listing_no_requests">No incoming requests yet.</string>
+    <string name="my_listing_no_rooms">No Rooms listed.</string>
+    <string name="my_listing_pending">Pending</string>
+    <string name="my_listing_accepted">Accepted</string>
+    <string name="my_listing_rejected">Rejected</string>
+    <string name="my_listing_cancelled">Cancelled</string>
+    <string name="my_listing_accept">Accept</string>
+    <string name="my_listing_reject">Reject</string>
+    <string name="my_listing_dismiss">Close</string>
+    <string name="my_listing_request_body">%1$s
+
+%2$s
+
+Accepting shares the exact Unit address with this requester. It does not mark a Room occupied.</string>
+    <string name="my_listing_loading">Loading your listing…</string>
+    <string name="my_listing_saving">Saving changes…</string>
+    <string name="my_listing_empty">No published listing yet. Drafts stay in the Post flow.</string>
+    <string name="my_listing_load_error">Could not load your listing. Check your connection and refresh.</string>
+    <string name="my_listing_save_error">The change was not saved. Refresh and try again.</string>
+    <string name="my_listing_close_error">No vacant Rooms remain, but closing could not be saved. Refresh and try again.</string>
+    <string name="my_listing_conflict">This listing or request changed. Refresh before trying again.</string>
+    <string name="my_listing_sample">Sample data · Offline demo. Prices are fictional; changes stay in this preview.</string>
+    <string name="gallery_my_listing_preview">My listing preview (offline)</string>
+</resources>

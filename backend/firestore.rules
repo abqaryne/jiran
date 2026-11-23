@@ -1,3 +1,6 @@
+// E2.3 prototype: schema.md sections 2.3–2.5. Listings/Rooms keep existing validators.
+// Requests require requestId/listingId/hostUid/requesterUid/message/status and timestamps;
+// identity, message and createdAt are immutable after creation. No client publication.
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -211,6 +214,23 @@ service cloud.firestore {
           : ('expiresAt' in data && data.expiresAt is timestamp));
     }
 
+    // Existing Android renewal uses client now + 30 days. Allow at most five minutes
+    // clock/network skew in either direction; updatedAt must still be server request.time.
+    function validListingLifecycle(before, after) {
+      let changed = after.diff(before).affectedKeys();
+      return (after.status == before.status && !changed.hasAny(['expiresAt']))
+        || (before.status in ['active', 'expired', 'closed']
+          && changed.hasOnly(['status', 'expiresAt', 'updatedAt'])
+          && (
+            (after.status == 'active' && changed.hasAny(['expiresAt'])
+              && after.expiresAt >= request.time + duration.value(30, 'd') - duration.value(5, 'm')
+              && after.expiresAt <= request.time + duration.value(30, 'd') + duration.value(5, 'm'))
+            || (after.status == 'closed' && after.expiresAt == before.expiresAt)
+            || (before.status == 'active' && after.status == 'expired'
+              && before.expiresAt <= request.time && after.expiresAt == before.expiresAt)
+          ));
+    }
+
     function validListingLocation(data) {
       return data.keys().hasAll(['exactAddress', 'residentUids'])
         && data.keys().hasOnly(['exactAddress', 'residentUids'])
@@ -240,8 +260,8 @@ service cloud.firestore {
         && request.resource.data.createdAt == resource.data.createdAt
         && request.resource.data.updatedAt == request.time
         && request.resource.data.isSample == resource.data.isSample
-        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['expiresAt', 'coordinateSource'])
-        && request.resource.data.status == resource.data.status;
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['coordinateSource'])
+        && validListingLifecycle(resource.data, request.resource.data);
       // Publication (including the priced vacant Room gate) belongs to E2.2.
       allow delete: if false;
 
@@ -264,29 +284,50 @@ service cloud.firestore {
     }
 
     // --- 2.4 Listing Requests ---
+    function validListingRequest(data, requestId) {
+      let fields = ['requestId', 'listingId', 'hostUid', 'requesterUid', 'message',
+        'status', 'createdAt', 'updatedAt'];
+      return data.keys().hasAll(fields) && data.keys().hasOnly(fields)
+        && data.listingId is string && data.listingId.matches('[A-Za-z0-9_-]{1,128}')
+        && listingText(data.hostUid, 128) && listingText(data.requesterUid, 128)
+        && !data.hostUid.matches('.*[/].*') && !data.requesterUid.matches('.*[/].*')
+        && data.hostUid != data.requesterUid
+        && data.requestId == requestId && requestId == data.listingId + '_' + data.requesterUid
+        && listingText(data.message, 1000)
+        && data.status in ['pending', 'accepted', 'rejected', 'cancelled']
+        && data.createdAt is timestamp && data.updatedAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    function requestHasCurrentHost(data) {
+      return exists(/databases/$(database)/documents/listings/$(data.listingId))
+        && data.hostUid == get(/databases/$(database)/documents/listings/$(data.listingId)).data.ownerUid;
+    }
+
     match /listingRequests/{requestId} {
-      // Deterministic ID: {listingId}_{requesterUid}
       allow read: if isVerifiedUmUser() && (
         request.auth.uid == resource.data.requesterUid
         || request.auth.uid == resource.data.hostUid
       );
-      // Requester can create a pending request (host must match listing owner and cannot be requester)
       allow create: if isVerifiedUmUser()
+        && validListingRequest(request.resource.data, requestId)
         && request.auth.uid == request.resource.data.requesterUid
         && request.resource.data.status == 'pending'
-        && requestId == request.resource.data.listingId + '_' + request.auth.uid
-        && exists(/databases/$(database)/documents/listings/$(request.resource.data.listingId))
+        && request.resource.data.createdAt == request.time
+        && requestHasCurrentHost(request.resource.data)
         && get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.status == 'active'
-        && request.resource.data.hostUid == get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.ownerUid
-        && request.resource.data.hostUid != request.auth.uid;
-      // Requester can cancel; Host can accept or reject
-      allow update: if isVerifiedUmUser() && (
-        (request.auth.uid == resource.data.requesterUid && request.resource.data.status == 'cancelled'
-          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt']))
-        ||
-        (request.auth.uid == resource.data.hostUid && (request.resource.data.status == 'accepted' || request.resource.data.status == 'rejected')
-          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt']))
-      );
+        && get(/databases/$(database)/documents/listings/$(request.resource.data.listingId)).data.expiresAt > request.time;
+      // Pending requests can be decided once. No resurrection/reversal of terminal states.
+      allow update: if isVerifiedUmUser()
+        && validListingRequest(request.resource.data, requestId)
+        && requestHasCurrentHost(resource.data)
+        && resource.data.status == 'pending'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'updatedAt'])
+        && (
+          (request.auth.uid == resource.data.requesterUid && request.resource.data.status == 'cancelled')
+          || (request.auth.uid == resource.data.hostUid
+            && request.resource.data.status in ['accepted', 'rejected'])
+        );
       allow delete: if false;
     }
 

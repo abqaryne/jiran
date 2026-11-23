@@ -318,3 +318,96 @@ Guardrails:\
 - **What the human understands and can explain:** TODO (owner)
 - **Limits:** No live deployment or Rules changes. Aggregate enforcement/draft Room privacy and strict Room validation remain review concerns. Ary's final review, Aly's QA, ClickUp hours and CI results not verified. Pre-existing untracked Gradle configuration excluded.
 - **Submission result:** Subtask 2 committed as `bd9e996`; pushed `gathan/e2.2-room-prices` to origin. Created [PR #19](https://github.com/abqaryne/jiran/pull/19) into `main` using `gh pr create`; description covers both subtasks, recorded verification and remaining live Rules notes. Updated E2.2 to `inreview`. Initial PR attempts could not access the sandbox temporary body file; writing the body under ignored `android/app/build/` resolved it. No merge or deployment.
+
+
+## 2026-11-23 · E2.3 Subtask 1: My listing · FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex (GPT-6; exact runtime variant not recorded)
+- **Task:** Implement only Subtask 1 with domain/repository/ViewModel/UI, offline preview and unit tests; stop before staging or committing.
+- **Prompt (exact, rendered without transport escaping):**
+  > We are starting Epic **E2.3: My listing: renew, requests and mark occupied** (`TASKS/E2/E2.3.md`). My local `main` branch is updated with the merged E2.2 changes.
+  >
+  > Please inspect `TASKS/E2/E2.3.md`, `docs/engineering/schema.md`, `docs/engineering/api-contracts.md`, and `firestore.rules` (specifically around `listings`, `rooms`, and `listingRequests/{listingId}_{requesterUid}`).
+  >
+  > ### Instructions for this turn:
+  > 1. Create a clean feature branch from `main` named `gathan/e2.3-my-listing`.
+  > 2. **Work strictly on Subtask 1 ONLY**:
+  >   - Implement the **My listing** domain logic, repository methods, ViewModel, and UI screen showing:
+  >     - Listing status (`active` vs `expired` / `closed`), calculated days remaining before `expiresAt`, the list of rooms with their prices (no utilities pricing), and incoming `listingRequests/{listingId}_{requesterUid}` (allowing the Host to open each request and set status to `accepted` or `rejected`).
+  >     - **Check-on-read auto-expiry**: treat listings where `expiresAt <= now` as expired (`status` / read filter `expiresAt > now`) rather than using a scheduled job, and show an **Expired** state with a **Renew** button.
+  >     - **Renew action**: sets `expiresAt = now + 30 days` and keeps/restores `status = active`.
+  >     - **Auto-close when full**: ensure domain/repository logic closes the listing if 0 vacant rooms remain (note: full move-in confirmation UI is deferred to E5.3 per `E2.3.md`).
+  >   - Add a debug/design-system preview so I can test the demo scenario (showing My listing with an incoming request, and clicking Renew to reset the 30 days).
+  > 3. Write unit tests covering check-on-read expiry, 30-day renewal calculation, auto-close on 0 vacant rooms, and request accept/reject state transitions.
+  > 4. Run all Android unit tests, lint, Checkstyle, and debug build checks.
+  > 5. **STOP and present your work for my review before staging or committing.** Do not modify `firestore.rules` or emulator tests (Subtask 3) yet.
+- **Output used:** `ListingLifecycle`, `MyListingRepository`, `FirestoreMyListingRepository`, `MyListingViewModel`, `MyListingFragment`; layouts and English strings; Home navigation; debug preview and gallery entry; lifecycle/ViewModel JUnit tests; `TASK.md`, story file and `docs/team/gathan/e2.3-subtask1-review.md`. Branch created from local `main`; no staging, commit, push, PR or deployment.
+- **Sources/skills:** Official [Firebase Firestore skill](https://github.com/firebase/agent-skills/blob/main/skills/firebase-firestore/SKILL.md) and [Standard Android SDK reference](https://github.com/firebase/agent-skills/blob/main/skills/firebase-firestore/references/standard/android_sdk_usage.md). Standard edition identified from existing project records; no registration, dependency or infrastructure changes.
+- **How it was tested or checked:** Backend `npm.cmd test -- --silent`: 17 suites / 377 tests passed. Initial Android attempt stopped before compilation with Gradle cache lock `Access is denied`; retried with elevated cache access. First compiled run failed Checkstyle with 14 `OneStatementPerLine` violations; corrected. Android `gradlew.bat lintDebug testDebugUnitTest checkstyleMain assembleDebug --continue --console=plain` passed: 179 tests, 0 failures/errors/skips, Checkstyle and debug build passed, lint 0 errors (warnings remain). An attempted partial Malay locale triggered 317 MissingTranslation errors in existing resources on two intermediate runs; removed the partial locale rather than suppressing lint or translating unrelated screens. Rules and emulator tests are unchanged; no emulator tests run.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** Needs human review. Current Rules deny persisted renewal/closure; Subtask 3 intentionally deferred. Publication remains an E2.2 upstream gap. Check-on-read effective expiry/closure works without a write; later search must filter active + future expiry. E5.3 occupancy changes must integrate closure with parent/room serialization. No Worker Connection creation, private profile fetches or move-in UI. Malay localization (app currently has no Malay locale), device/visual/accessibility checks, real Firebase persistence and Aly’s QA not verified. Existing untracked Gradle files preserved.
+
+
+## 2026-11-23 · Commit approved E2.3 Subtask 1 · FR2.1
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex (GPT-6; exact runtime variant not recorded)
+- **Task:** Stage and commit the approved Subtask 1 changes on `gathan/e2.3-my-listing`.
+- **Prompt (exact):**
+  > Looks great please stage and commit
+- **Output used:** E2.3 Subtask 1 implementation, tests, preview, task tracking and review notes approved for a local commit. Pre-existing untracked Gradle files excluded. No push, PR, Rules changes or emulator-test changes.
+- **How it was tested or checked:** Branch, working-tree scope and whitespace checked before staging. Prior implementation turn passed 179 Android unit tests, lint (0 errors, 104 warnings), Checkstyle, debug build and 377 backend tests. No implementation changes in this commit turn; checks not rerun.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** Approval to commit is recorded; detailed human testing not recorded. Lifecycle writes remain blocked by current Rules pending Subtask 3; publication remains an upstream gap. Device/Firebase walkthroughs and Aly’s QA not verified.
+
+
+## 2026-11-23 · E2.3 Subtask 3: published Listing Security Rules · FR2.1 / NFR2
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex (GPT-6; exact runtime variant not recorded)
+- **Task:** Implement only Subtask 3 Rules and comprehensive real-emulator tests; stop for review before staging/commit.
+- **Prompt (exact, rendered without transport escaping):**
+  > Let's move on to **Subtask 3 of E2.3**: Firestore Security Rules and tests for published/active listings, rooms, and listing requests.
+  >
+  > Note from `E2.3.md`: Draft owner-only writes were already tested in PR #15, but **published/active listings** (including renewal and auto-close updates) and `listingRequests` still need coverage.
+  >
+  > ### Instructions for this turn:
+  > 1. **Work strictly on Subtask 3 ONLY**:
+  >   - Inspect `firestore.rules` and existing rules test suites.
+  >   - Update `firestore.rules` so that:
+  >     - Only the listing's Host owner can write/renew/close a **published/active** listing (non-owners/strangers are denied).
+  >     - Students/strangers cannot modify another user's `rooms/{roomId}` documents.
+  >     - Only the listing's Host can update `listingRequests/{listingId}_{requesterUid}` to `accepted` or `rejected` (while the requester can create/cancel their own request per schema rules).
+  >   - Add comprehensive rules tests covering:
+  >     1. Published/active listing owner-only writes and renewals (allowed for Host, denied for stranger).
+  >     2. Unauthorized `rooms/{roomId}` edits by strangers/students (denied).
+  >     3. `listingRequests` status transitions (accept/reject allowed for Host, denied for non-Host).
+  > 2. Run the rules/backend test suite (and emulator checks if available) plus existing project checks.
+  > 3. **STOP and present your work and handoff notes for my review before staging or committing.**
+- **Output used:** `backend/firestore.rules`; `backend/scripts/listing-lifecycle-rules.cjs`; integration and schema-correct fixtures in `product-rules-smoke.cjs`; backend syntax-check script; schema, story/master task tracking and `docs/team/gathan/e2.3-subtask3-review.md`. No Android implementation changes, staging, commit, push or deployment.
+- **Sources/skills:** Official [Firebase Rules creation skill](https://github.com/firebase/agent-skills/blob/main/skills/firestore-rules-creation/SKILL.md), following its direct-author workflow (specialized firestore-rules-author agent not installed). Earlier-read Firestore skill used with existing Standard-edition project records; emulator confirmed Standard edition. Existing Java/JavaScript stack retained.
+- **How it was tested or checked:** Targeted emulator suite passed (370 denials / 102 permissions), then full Auth/Firestore/Functions/Storage smoke passed after extra baseline-owner/publication cases (381 denials / 107 permissions, including existing regressions/fixture setup). All real-emulator calls constrained to loopback/demo-jiran; Rules syntax compiled there. Backend: 377 Jest tests, 7 load-fixture contract tests and syntax checks passed. Android lint, unit-test task, Checkstyle and debug build passed with unchanged cached outputs (179 tests; lint 0 errors / 104 warnings in existing reports). No test failures. Full emulator warned about Storage Java Unsafe deprecation and ran host Node 26 instead of configured Node 22. Attack outcomes recorded in handoff notes; no live verification claimed.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** Prototype Rules need human review. Renewal allows five-minute clock/network tolerance around 30 days; Rules cannot count vacant Rooms or enforce aggregate prices. Move-in/Host transfer/publication remain separate work. Stale-Host/legacy malformed requests fail closed. No production inventory, deployment, Android SDK/device walkthrough, Node 22 CI verification or Aly acceptance tests. Pre-existing untracked Gradle files preserved.
+
+
+## 2026-11-23 · Submit E2.3 for review · FR2.1 / NFR2
+
+- **Human owner:** Gathan
+- **AI tool and model:** Codex (GPT-6; exact runtime variant not recorded)
+- **Task:** Commit approved Subtask 3, push `gathan/e2.3-my-listing`, and create a PR into `main` using `gh pr create` covering Subtasks 1 and 3 and the E5.3 occupancy deferral.
+- **Prompt (exact, rendered without transport escaping):**
+  > Subtask 3 looks great! Please stage and commit the Subtask 3 changes (Firestore Security Rules and tests for published listings, rooms, and listing requests) to `gathan/e2.3-my-listing`.
+  >
+  > Once committed, please push the branch `gathan/e2.3-my-listing` to origin and open a Pull Request into `main` using `gh pr create` summarizing Epic E2.3 (My listing screen with 30-day check-on-read expiry & renewal, request accept/reject flow, and owner-only Security Rules coverage, noting that room occupancy UI is deferred to E5.3 per `E2.3.md`).
+- **Output used:** Approved Subtask 3 Rules/tests, schema and handoff notes; PR description covering both E2.3 subtasks. Pre-existing untracked Gradle files excluded. No merge or deployment authorized.
+- **How it was tested or checked:** Branch, diff scope and whitespace checked. Prior implementation verification: 381 denied / 107 permitted emulator Rules checks, 377 backend tests, 7 load-fixture tests, syntax checks and Android lint/unit-test/Checkstyle/debug build tasks passed. No implementation edits or test rerun in this submission turn.
+- **What the human changed or rejected:** TODO (owner)
+- **What the human understands and can explain:** TODO (owner)
+- **Limits:** Gathan approved submission; detailed human verification not recorded. Occupancy UI deferred to E5.3. Live deployment, device persistence, publication, Node 22 CI and Aly’s QA remain not verified.
+
+- **Submission result:** Subtask 3 committed as `a2e81b1`; branch pushed to origin. Created [PR #20](https://github.com/abqaryne/jiran/pull/20) into `main` using `gh pr create`. GitHub CLI had no saved login; existing Git credential was used only in process memory without printing or saving it. PR link recorded in task tracking in a follow-up documentation commit. No merge/deployment.

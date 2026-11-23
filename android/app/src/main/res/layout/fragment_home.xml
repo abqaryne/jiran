@@ -23,6 +23,11 @@
         android:textAppearance="@style/TextAppearance.Jiran.Meta" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/my_listing" style="@style/Widget.Jiran.Button.Soft"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:minHeight="@dimen/touch_target_min" android:text="@string/my_listing_title" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/log_out"
         style="@style/Widget.Jiran.Button.Soft"
         android:layout_width="wrap_content"

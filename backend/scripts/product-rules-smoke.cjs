@@ -30,6 +30,14 @@ function encodeFields(data) {
 function makeClient(base, token, project) {
   const docPrefix = `projects/${project}/databases/(default)/documents`;
   return {
+    async query(collection, filters) {
+      return fetch(`${base}:runQuery`, {method: 'POST',
+        headers: {'Content-Type': 'application/json', ...(token ? {Authorization: `Bearer ${token}`} : {})},
+        body: JSON.stringify({structuredQuery: {from: [{collectionId: collection}],
+          where: {compositeFilter: {op: 'AND', filters: filters.map(([field, value]) => ({
+            fieldFilter: {field: {fieldPath: field}, op: 'EQUAL', value: {stringValue: value}},
+          }))}}}}), signal: AbortSignal.timeout(10000)});
+    },
     async queryListings(field, value) {
       return fetch(`${base}:runQuery`, {method: 'POST',
         headers: {'Content-Type': 'application/json', ...(token ? {Authorization: `Bearer ${token}`} : {})},
@@ -57,6 +65,10 @@ function makeClient(base, token, project) {
       if (/^listings\/[^/]+$/.test(path)) {
         write.updateTransforms = [{fieldPath: 'updatedAt', setToServerValue: 'REQUEST_TIME'}];
         delete update.fields.updatedAt;
+      }
+      if (/^listingRequests\/[^/]+$/.test(path)) {
+        write.updateTransforms = (maskFields ? ['updatedAt'] : ['createdAt', 'updatedAt'])
+          .map(fieldPath => ({fieldPath, setToServerValue: 'REQUEST_TIME'}));
       }
       if (maskFields && Array.isArray(maskFields)) {
         write.updateMask = {fieldPaths: maskFields};
@@ -116,6 +128,9 @@ async function createAuthUser(authBase, email, password, emailVerified = true) {
 }
 
 async function checkProductRules({authBase, firestoreHost, project}) {
+  assert.equal(project, 'demo-jiran', 'Rules tests must never target a live project');
+  assert.equal(firestoreHost, '127.0.0.1:8080', 'Rules tests require local Firestore');
+  assert.equal(authBase, 'http://127.0.0.1:9099/identitytoolkit.googleapis.com/v1', 'Rules tests require local Auth');
   const base = `http://${firestoreHost}/v1/projects/${project}/databases/(default)/documents`;
   const admin = makeClient(base, 'owner', project);
   const anon = makeClient(base, null, project);
@@ -296,19 +311,19 @@ async function checkProductRules({authBase, firestoreHost, project}) {
 
   // Requester cannot set hostUid to self to attempt self-acceptance
   await assertDenied(
-    clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentB.uid, requesterUid: studentB.uid, status: 'pending'}),
+    clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentB.uid, requesterUid: studentB.uid, message: 'Fictional viewing request', status: 'pending'}),
     'Requester B sets hostUid to self to attempt self-acceptance'
   );
 
   // Requester cannot set mismatched hostUid
   await assertDenied(
-    clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentC.uid, requesterUid: studentB.uid, status: 'pending'}),
+    clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentC.uid, requesterUid: studentB.uid, message: 'Fictional viewing request', status: 'pending'}),
     'Requester B sets hostUid to mismatched third party'
   );
 
   // Valid request: hostUid matches listing ownerUid and is not requester
   await assertPermitted(
-    clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentA.uid, requesterUid: studentB.uid, status: 'pending'}),
+    clientB.set(`listingRequests/${reqId}`, {requestId: reqId, listingId, hostUid: studentA.uid, requesterUid: studentB.uid, message: 'Fictional viewing request', status: 'pending'}),
     'Student B sends viewing request to Host A'
   );
   await assertDenied(clientC.get(`listingRequests/${reqId}`), 'Third-party reads listing request');
@@ -431,6 +446,15 @@ async function checkProductRules({authBase, firestoreHost, project}) {
   await assertPermitted(roomQuery(studentA.token, draftId), 'Host queries the Rooms of a draft');
   await assertDenied(roomQuery(studentB.token, draftId), 'Stranger queries the Rooms of a draft');
   await assertPermitted(roomQuery(studentB.token, listingId), 'Student queries the Rooms of a published Listing');
+
+  await require('./listing-lifecycle-rules.cjs').checkListingLifecycleRules({
+    base, prefix, admin, host: clientA, requester: clientB, stranger: clientC,
+    blocked: [[anon, 'Anonymous'], [clientUnverified, 'Unverified'], [clientStaff, 'Staff'], [clientOutsider, 'Non-UM']],
+    hostUid: studentA.uid, requesterUid: studentB.uid, strangerUid: studentC.uid,
+    ineligibleOwners: [[clientUnverified, unverified.uid, 'Unverified'],
+      [clientStaff, staff.uid, 'Staff'], [clientOutsider, outsider.uid, 'Non-UM']],
+    encodeFields, assertDenied, assertPermitted, nonce,
+  });
 
   console.log('5c. Testing verified UM Host through the real Worker handler and emulator Rules...');
   const {createListingWorker} = require('../worker/listings');

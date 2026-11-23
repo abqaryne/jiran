@@ -159,13 +159,23 @@ Firestore Security Rules cannot execute queries across collections; they can onl
 ### 2.3 Collection: `listings`
 **E2.1 implementation (9 Nov 2026):** new Listings are private drafts, readable
 only by their verified UM Host. Create the Listing and `private/location` in one
-atomic commit. Client creation of active Listings and status changes are denied
-until E2.2 implements the publication gate. Query own Listings by `ownerUid`,
-public Listings by `status == active`. Drafts have no expiry timestamp.
+atomic commit. Client creation of active Listings and draft publication remain denied
+until E2.2 implements the publication gate. Query own Listings by `ownerUid`;
+future public search must filter `status == active` and `expiresAt > now`. Drafts have no expiry timestamp.
 Listing writes validate allowed fields, integer sen, coordinates, immutable
 identity/creation time and server update time. Photo URLs must use the Listing's
 Cloudinary path. Initial `residentUids` is `[ownerUid]` and client updates cannot
-change it. Full lifecycle and live provider verification remain pending.
+change it. Live provider verification remains pending.
+
+**E2.3 Subtask 3 (23 Nov 2026, prototype for review):** verified UM Hosts may edit
+their published Listings without changing identity, creation time, sample flag or
+coordinate provenance. Lifecycle writes change only `status`, `expiresAt` and
+server `updatedAt`: active/expired/closed → active needs a changed expiry within
+30 days ± 5 minutes of server request time (compatibility tolerance for the
+client clock/network, not a different product duration); published → closed keeps
+expiry unchanged; active → expired is allowed only at/after expiry. Draft → active
+is still denied. Rules authorize closure but cannot query/count all vacant Rooms;
+zero-vacancy detection remains in the repository/E5.3. Changes are local, not deployed.
 
 - **Source:** PRD Section 8 (`listings` collection) and PRD Module 2 (FR2.1, FR2.2).
 - **Purpose:** Property listings posted by student Hosts. Public document contains general property metadata and search attributes.
@@ -214,6 +224,19 @@ change it. Full lifecycle and live provider verification remain pending.
 - **Document ID:** `{listingId}_{requesterUid}` (deterministic ID combining `listingId` and applicant's Auth UID).
 - **Used by:** Module 3 (FR3.3), Module 2 (FR2.1).
 - **Access Rule:** Requester (`request.auth.uid == requesterUid`) may only create a request with `status == "pending"`, and may cancel it (`status == "cancelled"`). On create, `hostUid` must equal `listings/{listingId}.ownerUid` and must not equal `request.auth.uid` (preventing self-acceptance to unlock private address). Only the Host (`request.auth.uid == hostUid`) may set `status` to `"accepted"` or `"rejected"`.
+
+**E2.3 request validation (23 Nov 2026, prototype for review):** the exact fields
+below are required, with no extras. IDs must match the deterministic document
+path; `hostUid` must match the current parent owner and differ from the requester.
+The non-empty message is bounded at 1,000 characters (operational input bound).
+Creation requires a currently active, unexpired Listing and server creation/update
+timestamps. Only pending → accepted/rejected (Host) or pending → cancelled
+(requester) is permitted; only status and server update time may change.
+Accepted/rejected/cancelled are terminal in this flow. Stale-Host or orphan
+requests fail closed on update; E7.4 must migrate requests during Host transfer.
+Existing pending requests may be decided after Listing expiry/closure. Reads stay
+participant-only; acceptance unlocks that Listing's address but does not create a
+Worker-owned Connection document.
 
 | Field Name | Type | Required | Who May Write | Notes & FR / Story Reference |
 |---|---|---|---|---|
